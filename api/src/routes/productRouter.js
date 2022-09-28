@@ -2,13 +2,13 @@ const { Router } = require('express');
 const router = Router();
 
 router.use('/getAll',(req,res)=>{
-    res.send('return all products');
+    if(!req.query.str){
+        res.send('return all products');
+    }else{
+        res.send('return products that match that string');
+    }
     return;
 })
 
-router.use('/getByString',(req,res)=>{
-    res.send('return products by string');
-    return;
-})
 
 module.exports = router;
