@@ -5,7 +5,7 @@ import ".AnimalCard.module.css";
 export default function AnimalCard({id, name, main_image, sex, size}) {
 
     return (
-        <Link to={`/home/animal${id}`} className="link">
+        <Link to={`/home/animal/${id}`} className="link">
             <div className="animal-card">
                 <div>
                     <h2 className="animal-name">{`Nombre: ${name}`}</h2>
