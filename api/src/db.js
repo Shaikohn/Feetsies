@@ -38,11 +38,6 @@ Product.belongsToMany(Product_type,{through:'product_product_types'});
 Product_type.belongsToMany(Product,{through:'product_product_types'});
 
 
-/*Product.hasMany(Photo)
-Animal.hasMany(Photo)
-Animal.belongsTo(User)
-Product.hasMany(Review)*/
-
 
 module.exports = {
   ...sequelize.models, 
