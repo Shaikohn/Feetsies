@@ -1,27 +1,16 @@
-//                       _oo0oo_
-//                      o8888888o
-//                      88" . "88
-//                      (| -_- |)
-//                      0\  =  /0
-//                    ___/`---'\___
-//                  .' \\|     |// '.
-//                 / \\|||  :  |||// \
-//                / _||||| -:- |||||- \
-//               |   | \\\  -  /// |   |
-//               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /
-//             ___'. .'  /--.--\  `. .'___
-//          ."" '<  `.___\_<|>_/___.' >' "".
-//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//         \  \ `_.   \_ __\ /__ _/   .-` /  /
-//     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
-//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const {writeProducts,initialRelations} = require('./src/controllers/Product.controller')
+const {writeAnimalTypes} = require('./src/controllers/Animal_type.controller')
+const {writeProductTypes} = require('./src/controllers/Product_type.controller')
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: true })
+.then(()=>{return writeProducts()})
+.then(()=>{return writeAnimalTypes()})
+.then(()=>{return writeProductTypes()})
+.then(()=>{initialRelations()})
+.then(() => {//Leave force true until we need to deploy. This way, testing datatypes and responses will be easier.
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
