@@ -6,11 +6,8 @@ const animalRouter = require('./animal')
 
 
 const router = Router();
-
-
-
-router.use('/products', productRouter);
 router.use('/animals', animalRouter);
+router.use('/products', productRouter);
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);

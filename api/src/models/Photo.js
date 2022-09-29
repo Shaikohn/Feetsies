@@ -5,15 +5,11 @@ const {DataTypes} = require('sequelize')
 module.exports= (sequelize) => {
     sequelize.define('photo', {
         url: {
-            type: DataTypes.STRING,
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
             validate: {
                 isUrl: true
             }
-        },
-        alt: {
-            type: DataTypes.STRING,
-            allowNull: false,
         },
         id: {
             type: DataTypes.UUID,

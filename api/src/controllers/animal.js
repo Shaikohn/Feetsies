@@ -22,12 +22,12 @@ async function getAllAnimals(req, res) {
 }
 
 async function getAnimalDetail(req, res) {
-    let {id, name} = req.params;
+    let {id} = req.params;
+   
     try {
         let animalDetail = await Animal.findOne({
             where: {
-                id: id,
-                name: name
+                id: id
             }
         })
         if(!animalDetail || animalDetail.length === 0) {
@@ -42,6 +42,46 @@ async function getAnimalDetail(req, res) {
     }
 }
 
+async function createAnimal(req,res) {
+    let {name, description, sex, breed, size, age} = req.body
+    
+    try {
+        let newAnimal = await Animal.create({
+            name: name,
+            description: description,
+            size: size,
+            sex: sex,
+            breed: breed,
+            age: age
+        })
+        return res.status(201).send(newAnimal)
+    } catch (error) {
+        return res.status(500).send(errorVar)
+    }
+}
+
+async function delateAnimal(req,res) {
+    let {id} = req.params
+    try {
+        let queryAnimal = await Animal.findOne({
+            where: {
+                id: id
+            }
+        })
+        if (queryAnimal.length === 0 || !queryAnimal) {
+            return res.status(404).send(notFoundVar)
+        } else {
+            queryAnimal.destroy()
+            res.status(204).json({
+                msg: 'The content has been deleted successfully'
+            })
+        }
+    } catch (error) {
+        res.status(500).send(errorVar)
+    }
+}
+
+
 
 
 
@@ -49,5 +89,7 @@ async function getAnimalDetail(req, res) {
 module.exports = {
     getAllAnimals,
     getAnimalDetail,
+    createAnimal,
+    delateAnimal
   
 }
