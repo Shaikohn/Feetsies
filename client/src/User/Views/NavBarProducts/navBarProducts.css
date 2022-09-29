@@ -1,0 +1,42 @@
+.container-navBar{
+    background-color: #c0c0c0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.container-navBar ul{
+    display: flex;
+    flex-direction: row;
+    
+}
+.container-navBar ul li{
+    display: flex;
+    flex-direction: column;
+    margin-right: 7rem;
+    position: relative;
+
+}
+.container-navBar ul li ul{
+    display: none;
+    position: absolute;
+    top: 100%;
+    
+}
+
+.container-navBar ul li:hover ul{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(219, 219, 219);
+    margin: 0;
+    padding: 0;
+
+}
+.container-navBar ul li ul li {
+    display: block;
+    flex: 1 0 100%;
+    padding: 0;
+}
+.container-navBar ul li ul li:hover {
+    background-color: blueviolet;
+}
