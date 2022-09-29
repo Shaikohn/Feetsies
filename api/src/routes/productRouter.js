@@ -1,11 +1,12 @@
 const { Router } = require('express');
 const router = Router();
+const {getProducts} = require('../controllers/Product')
 
-router.use('/getAll',(req,res)=>{
+router.use('/getAll',async (req,res)=>{
     if(!req.query.str){
-        res.send('return all products');
+        res.send(await getProducts());
     }else{
-        res.send('return products that match that string');
+        res.send(await getProducts(req.query.str));
     }
     return;
 })

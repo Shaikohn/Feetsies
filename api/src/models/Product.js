@@ -21,7 +21,7 @@ module.exports= (sequelize) => {
             allowNull: true,
             defaultValue:defaultImgUrl,
             validate:{
-                min: 0,
+                isUrl: true
             }
         },
         description: {
@@ -32,6 +32,7 @@ module.exports= (sequelize) => {
         stock: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            defaultValue:0,
             validate:{
                 min: 0,
             }
@@ -39,6 +40,7 @@ module.exports= (sequelize) => {
         price: {
             type: DataTypes.FLOAT,
             allowNull: false,
+            defaultValue:0.00,
             validate:{
                 min: 0.10,
                 isFloat: true,
