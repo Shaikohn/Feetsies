@@ -39,7 +39,6 @@ Product_type.belongsToMany(Product,{through:'product_product_types'});
 
 
 
-
 module.exports = {
   ...sequelize.models, 
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
