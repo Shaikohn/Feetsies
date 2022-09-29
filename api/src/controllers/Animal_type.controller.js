@@ -10,7 +10,6 @@ const notFoundVar = {
 }
 
 async function getTypes(req, res) {
-    console.log('GET TYPES!!')
     
     try {
         let data = await Animal_type.findAll()
