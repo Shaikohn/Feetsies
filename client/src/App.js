@@ -4,13 +4,16 @@ import AnimalDetails from "./User/Views/AnimalDetails/AnimalDetails.jsx";
 import ProductDetails from "./User/Views/ProductDetails/ProductDetails.jsx";
 import Adoption from "./User/Features/Form/Adoption.jsx";
 import AltaAdoption from "./User/Features/Form/AltaAdoption.jsx";
+import HomeProducts from "./User/Views/ProductHome/ProductHome.jsx";
+import HomeAnimals from "./User/Views/AnimalHome/AnimalHome.jsx";
 
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/home/products" element={<ProductDetails />}/>
+        <Route exact path="/home/products" element={<HomeProducts />}/>
+        <Route exact path="/home/animals" element={<HomeAnimals />}/>
         <Route exact path="/home/products/:id" element={<ProductDetails />}/>
         <Route exact path="/home/animals/:id" element={<AnimalDetails />}/>
         <Route exact path="/home/animals/:id/adoption" element={<Adoption />}/>
