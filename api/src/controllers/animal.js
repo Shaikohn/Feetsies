@@ -71,6 +71,7 @@ async function delateAnimal(req,res) {
         if (queryAnimal.length === 0 || !queryAnimal) {
             return res.status(404).send(notFoundVar)
         } else {
+            queryAnimal.destroy()
             res.status(204).json({
                 msg: 'The content has been deleted successfully'
             })
