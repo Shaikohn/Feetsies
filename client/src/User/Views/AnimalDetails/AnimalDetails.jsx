@@ -37,9 +37,9 @@ export default function AnimalDetails({id, name, main_image, sex, size, descript
                         <h3>{`Description: ${description}`}</h3>
                         <h3>{`Age: ${age}`}</h3>
                         <h3>{`Birth date: ${birth_date}`}</h3>
-                    </div>
-                    <div>
-                        <button>Request adoption</button>
+                        <div>
+                            <button>Request adoption</button>
+                        </div>
                     </div>
             </div>
     )
