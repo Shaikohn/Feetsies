@@ -22,12 +22,17 @@ async function getAllAnimals(req, res) {
 }
 
 async function getAnimalDetail(req, res) {
-    let {id, name} = req.params;
+    let {id} = req.params;
+    let {name, description, size, age, breed} = req.body;
     try {
         let animalDetail = await Animal.findOne({
             where: {
                 id: id,
-                name: name
+                name: name,
+                description: description,
+                size: size,
+                age: age,
+                breed: breed
             }
         })
         if(!animalDetail || animalDetail.length === 0) {
