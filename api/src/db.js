@@ -29,10 +29,15 @@ let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].s
 sequelize.models = Object.fromEntries(capsEntries);
 
 
-const { Product,Animal_type,Product_type } = sequelize.models;
+const { Product, Animal_type,Product_type,Product_product_type,Product_animal_type } = sequelize.models;
 
 // Relations
 // Product.hasMany(Reviews);
+Product.belongsToMany(Animal_type,{through:'product_animal_types'});
+Animal_type.belongsToMany(Product,{through:'product_animal_types'});
+Product.belongsToMany(Product_type,{through:'product_product_types'});
+Product_type.belongsToMany(Product,{through:'product_product_types'});
+
 
 module.exports = {
   ...sequelize.models, 
