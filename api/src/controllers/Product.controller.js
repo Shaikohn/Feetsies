@@ -2,10 +2,26 @@ const {Product,Product_type,Animal_type} = require('../db');
 const {Op} = require('sequelize');
 const sequelize = require('sequelize');
 
+async function createElementWithTypes(element){
+    let productTypes = await element.getProduct_types();
+    let animalTypes = await element.getAnimal_types();
+    productTypes=productTypes.map(e=>e.dataValues.name)
+    animalTypes=animalTypes.map(e=>e.dataValues.name)
+    return {
+        ...element.dataValues,
+        productTypes,
+        animalTypes
+    }
+}
+
 async function getProducts(str){
     if(!str){
         let data = await Product.findAll();
-        return data;
+        let result =[];
+        for (let i = 0; i < data.length; i++) {
+            result.push(await createElementWithTypes(data[i]))
+        }
+        return result;
     }else{
         str = str.toLowerCase();
         const searchValue = '%'+str+'%';
@@ -17,7 +33,10 @@ async function getProducts(str){
             }
         })
         if(lecture.length > 0){
-            const result = lecture.map((elem)=>{return elem['dataValues']});
+            let result =[];
+            for (let i = 0; i < lecture.length; i++) {
+                result.push(await createElementWithTypes(lecture[i]))
+            }
             return result;
         }else{
             return 'Not found';
@@ -69,6 +88,7 @@ async function initialRelations(){
     productType = await Product_type.findAll();
     animalType = await Animal_type.findAll();
     product.addAnimal_types(animalType);
+    product.addProduct_types(productType);
 }
 
 module.exports={
