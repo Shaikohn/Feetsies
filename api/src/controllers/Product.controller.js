@@ -2,6 +2,11 @@ const {Product,Product_type,Animal_type} = require('../db');
 const {Op} = require('sequelize');
 const sequelize = require('sequelize');
 
+/*async function getOneProduct(numId){
+    const lecture= await Product.findOne({where:{id:numId}});
+    console.log(lecture);
+}*/
+
 async function getProducts(str){
     if(!str){
         let data = await Product.findAll();
