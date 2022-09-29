@@ -26,13 +26,13 @@
 
 .mainImg {
     float: left;
-    height: 200px;
+    height: 300px;
     margin-left: 100px;
-    margin-top: 30px;
     width: 300px;
 }
 
 .infoContainer {
+    float: center;
     margin-top: 150px;
     text-align: center;
 }
