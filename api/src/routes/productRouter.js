@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
-const {getProducts} = require('../controllers/Product.controller')
+const {getProducts,getOneProduct} = require('../controllers/Product.controller')
+const {getTypes} = require('../controllers/Product_type.controller')
 
 router.use('/getAll',async (req,res)=>{
     if(!req.query.str){
@@ -10,6 +11,23 @@ router.use('/getAll',async (req,res)=>{
     }
     return;
 })
+
+router.use('/types',async (req,res)=>{
+    let info = await getTypes();
+    info = info.map(e=>e.dataValues.name)
+    res.send(info)
+    return;
+})
+
+/*router.use('/getOne',async (req,res)=>{
+    
+    if(!req.query.str){
+        res.status(400).send('Not Found, query value absent');
+    }else{
+        res.send(await getOneProduct(req.query.id));
+    }
+    return;
+})*/
 
 
 module.exports = router;

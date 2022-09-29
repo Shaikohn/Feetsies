@@ -1,0 +1,12 @@
+.mainImg {
+    float: left;
+    height: 200px;
+    margin-left: 100px;
+    /* margin-top: 10px; */
+    width: 300px;
+}
+
+.infoContainer {
+    margin-top: 200px;
+    text-align: center;
+}
