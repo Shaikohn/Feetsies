@@ -18,7 +18,7 @@ router.use('/types',async (req,res)=>{
     res.send(info)
     return;
 })
-
+//
 router.use('/:id',async (req,res)=>{
     if(!req.params.id){
         res.send('Bad request')
