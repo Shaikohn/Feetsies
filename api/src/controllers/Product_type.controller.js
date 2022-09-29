@@ -1,5 +1,10 @@
 const {Product_type} = require('../db');
 
+async function getTypes(){
+    let data = await Product_type.findAll();
+    return  data;
+}
+
 function writeProductTypes(){
     let mock = [
         {
@@ -23,4 +28,5 @@ function writeProductTypes(){
 
 module.exports={
     writeProductTypes,
+    getTypes
 }

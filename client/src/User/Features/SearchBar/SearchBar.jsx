@@ -3,26 +3,19 @@ import {useState} from 'react';
 function SearchBar() {
     const[name,setName] = useState("");
 
-    // const eventHandlerInput = (e)=>{
-    //     setName(e.target.value)
-    // }
-
-    // const searchProduct = (e)=>{
-    //     e.preventDefault();
-    //     dispatch(getProductByName(e.target.value))
-    // }
+    
 
     return (
         <div className='container-searchBar'>
             <input
-            placeholder='Busqueda por nombre'
+            placeholder='Search by name'
             autoComplete='off'
             value={name}
-            onChange={(e)=>eventHandlerInput(e)}
+            // onChange={(e)=>eventHandlerInput(e)}
             ></input>
             <button
-            onClick={(e)=>searchProduct(e)}
-            >Buscar</button>
+            // onClick={(e)=>searchProduct(e)}
+            >Search</button>
         
         </div>
       );
