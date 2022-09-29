@@ -5,8 +5,10 @@ const{ getAllAnimals, getAnimalDetail, createAnimal} = require('../controllers/a
 const router = Router()
 
 
-router.get('/', getAllAnimals)
+router.get('/', getAllAnimals);
+router.post('/', createAnimal)
 router.get('/:id', getAnimalDetail)
+
 
 
 

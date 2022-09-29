@@ -23,16 +23,11 @@ async function getAllAnimals(req, res) {
 
 async function getAnimalDetail(req, res) {
     let {id} = req.params;
-    let {name, description, size, age, breed} = req.body;
+   
     try {
         let animalDetail = await Animal.findOne({
             where: {
-                id: id,
-                name: name,
-                description: description,
-                size: size,
-                age: age,
-                breed: breed
+                id: id
             }
         })
         if(!animalDetail || animalDetail.length === 0) {
@@ -47,6 +42,25 @@ async function getAnimalDetail(req, res) {
     }
 }
 
+async function createAnimal(req,res) {
+    let {name, description, sex, breed, size, age} = req.body
+    
+    try {
+        let newAnimal = await Animal.create({
+            name: name,
+            description: description,
+            size: size,
+            sex: sex,
+            breed: breed,
+            age: age
+        })
+        return res.status(201).send(newAnimal)
+    } catch (error) {
+        return res.status(500).send(errorVar)
+    }
+}
+
+
 
 
 
@@ -54,5 +68,6 @@ async function getAnimalDetail(req, res) {
 module.exports = {
     getAllAnimals,
     getAnimalDetail,
+    createAnimal
   
 }
