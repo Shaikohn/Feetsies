@@ -5,8 +5,7 @@ const sequelize = require('sequelize');
 async function getProducts(str){
     if(!str){
         let data = await Product.findAll();
-        const result = data.map((elem)=>{return elem['dataValues']});
-        return result;
+        return data;
     }else{
         str = str.toLowerCase();
         const searchValue = '%'+str+'%';
