@@ -2,6 +2,7 @@ const {Product,Product_type,Animal_type} = require('../db');
 const {Op} = require('sequelize');
 const sequelize = require('sequelize');
 
+
 async function createElementWithTypes(element){
     let productTypes = await element.getProduct_types();
     let animalTypes = await element.getAnimal_types();
@@ -13,6 +14,7 @@ async function createElementWithTypes(element){
         animalTypes
     }
 }
+
 
 async function getProducts(str){
     if(!str){
