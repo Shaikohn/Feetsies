@@ -6,13 +6,14 @@ const initialState = {
 
 }
 
-const animalsReducer = (state= initialState,{action,payload})=>{
+const animalsReducer = (state= initialState,{type,payload})=>{
 
-    switch(action){
+    switch(type){
         case GET_ALL_ANIMALS:
             return{
-                allAnimals:payload,
-                allAnimalsCopy:payload
+                ...state,
+                allAnimals: payload,
+                allAnimalsCopy: payload
             }
         
         default:

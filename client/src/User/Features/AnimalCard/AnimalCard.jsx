@@ -6,7 +6,7 @@ export default function AnimalCard({id, name, main_image, sex, size}) {
 
     return (
         <Link to={`/animals/${id}`} className="link">
-            <div className="animal-card">
+            <div className="animal-card" key={id}>
                 <div>
                     <h2 className="animal-name">{`Name: ${name}`}</h2>
                     <div>

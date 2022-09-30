@@ -4,16 +4,15 @@ const initialstate = {
     allProductsCopy:[]
 }
 
-const productsReducer = (state = initialstate,{action,payload} )=>{
-    switch (action){
+const productsReducer = (state = initialstate, {type, payload} )=>{
+    switch (type) {
         case GET_ALL_PRODUCTS:{
             return {
-                allProducts:payload,
-                allProductsCopy:payload
+                ...state,
+                allProducts: payload,
+                allProductsCopy: payload
             }
         }
-
-
         default:
             return state
     }
