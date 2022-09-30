@@ -1,7 +1,7 @@
 import AnimalCard from "../../Features/AnimalCard/AnimalCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import getAllAnimals from "../../../redux/actions/getAnimalsA";
+import { getAllAnimals } from "../../../redux/actions/getAnimalsA";
 
 export default function AnimalHome() {
 
