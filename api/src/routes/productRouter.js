@@ -2,7 +2,8 @@ const { Router } = require('express');
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = Router();
-const {getProducts,/*getDetail,*/createProduct} = require('../controllers/Product.controller')
+
+const {getProducts,getDetail,createProduct} = require('../controllers/Product.controller')
 const {getTypes} = require('../controllers/Product_type.controller')
 
 router.get('/getAll',async (req,res)=>{
@@ -17,6 +18,15 @@ router.get('/getAll',async (req,res)=>{
 router.get('/types',async (req,res)=>{
     let info = await getTypes();
     info = info.map(e=>e.dataValues.name)
+    res.send(info)
+    return;
+})
+//
+router.use('/:id',async (req,res)=>{
+    if(!req.params.id){
+        res.send('Bad request')
+    }
+    let info = await getDetail(req.params.id);
     res.send(info)
     return;
 })
