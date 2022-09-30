@@ -1,6 +1,5 @@
-import SearchBar from "../SearchBar/SearchBar";
 
-//holala
+import SearchBar from "../SearchBar/SearchBar.jsx";
 
 function NavBarAnimals() {
   return (

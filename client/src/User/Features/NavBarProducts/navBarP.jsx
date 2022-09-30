@@ -1,3 +1,4 @@
+
 import { useDispatch } from "react-redux";
 import orderProductPrice from "../../../redux/actions/Products/orderPrice.js";
 import orderProductName from "../../../redux/actions/Products/orderName.js";
@@ -69,4 +70,6 @@ function NavBarProducts() {
   );
 }
 
+
 export default NavBarProducts;
+

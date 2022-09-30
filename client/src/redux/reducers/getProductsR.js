@@ -1,17 +1,23 @@
+
 import { GET_ALL_PRODUCTS  } from "../actions/getProductsA"
 import {ORDER_PRODUCT_PRICE} from "../actions/orderPrice";
 import {ORDER_PRODUCT_NAME} from "../actions/orderName";
+
+
 const initialstate = {
     allProducts:[],
     allProductsCopy:[]
 }
 
-const productsReducer = (state = initialstate,{type,payload} )=>{
-    switch (type){
+
+const productsReducer = (state = initialstate, {type, payload} )=>{
+    switch (type) {
+
         case GET_ALL_PRODUCTS:{
             return {
-                allProducts:payload,
-                allProductsCopy:payload
+                ...state,
+                allProducts: payload,
+                allProductsCopy: payload
             }
         }
 
@@ -42,6 +48,7 @@ const productsReducer = (state = initialstate,{type,payload} )=>{
                     ...state,
                     allProductsCopy:orderedPrice
                 }
+                
         case ORDER_PRODUCT_NAME:
           const orderedName = 
                 payload === "asc"
@@ -68,6 +75,11 @@ const productsReducer = (state = initialstate,{type,payload} )=>{
             return{
               ...state,
               allProductsCopy:orderedName
+            }
+
+        case GET_PRODUCT_NAME:
+            return {
+                allProducts: payload
             }
 
         default:
