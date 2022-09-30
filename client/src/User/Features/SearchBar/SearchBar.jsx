@@ -42,8 +42,8 @@ export default function SearchBar() {
             onChange={(e) => handlerInputChange(e)}
             onKeyDown={(e) => e.key === "Enter" && handlerSubmit(e)}
             />
-            <button className="btn-search" type="submit" onClick={(e) => handleSubmit(e)}>
-                <img className="lupa-icon" src={lupa} alt=""/>
+            <button className="btn-search" type="submit" onClick={(e) => handlerSubmit(e)}>
+                <img className="lupa-icon" src={lupa} alt="" weight="16px" height="16px" />
             </button>
         </div>
     );

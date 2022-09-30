@@ -1,5 +1,5 @@
 
-import { GET_ALL_PRODUCTS  } from "../actions/getProductsA"
+import { GET_ALL_PRODUCTS, GET_PRODUCT_NAME  } from "../actions/getProductsA"
 import {ORDER_PRODUCT_PRICE} from "../actions/orderPrice";
 import {ORDER_PRODUCT_NAME} from "../actions/orderName";
 
