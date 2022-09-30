@@ -16,7 +16,7 @@ export const getAllProducts = ()=>(dispatch)=>{
 export function getProductName(name) {
     return async function(dispatch) {
         try {
-            var json = await axios.get(`http://localhost:3001/products/getAll?name=${name}`);
+            var json = await axios.get(`http://localhost:3001/products/getAll?str=${name}`);
             return dispatch({
                 type: GET_PRODUCT_NAME,
                 payload: json.data
