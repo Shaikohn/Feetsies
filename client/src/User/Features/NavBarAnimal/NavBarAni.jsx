@@ -1,5 +1,5 @@
-import SearchBar from "../SearchBar/SearchBar.jsx";
 
+import SearchBar from "../SearchBar/SearchBar.jsx";
 
 function NavBarAnimals() {
   return (
