@@ -2,6 +2,7 @@
 import { GET_ALL_PRODUCTS, GET_PRODUCT_NAME } from "../actions/getProductsA"
 import {ORDER_PRODUCT_PRICE} from "../actions/orderPrice";
 import {ORDER_PRODUCT_NAME} from "../actions/orderName";
+import { FILTER_TYPE_PRODUCTS } from "../actions/filterTypeProducts";
 
 
 const initialstate = {
@@ -78,10 +79,25 @@ const productsReducer = (state = initialstate, {type, payload} )=>{
             }
 
         case GET_PRODUCT_NAME:
-          return {
+            return {
+                allProductsCopy: payload
+            }
+            
+        case FILTER_TYPE_PRODUCTS:
+           const filtered  = payload === "All"
+           ?state.allProducts
+           :state.allProducts.filter(p=>{
+            for(let i = 0; i < p.productTypes.length; i++){
+              if(p.productTypes[i] === payload){
+                return true
+              }
+              return false
+            }
+           })
+           return {
             ...state,
-            allProductsCopy: payload
-          }
+            allProductsCopy: filtered
+           }
 
         default:
             return state
