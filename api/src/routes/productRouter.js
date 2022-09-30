@@ -1,6 +1,4 @@
 const { Router } = require('express');
-const express = require('express');
-const bodyParser = require('body-parser');
 const router = Router();
 
 const {getProducts,getDetail,createProduct} = require('../controllers/Product.controller')
@@ -22,7 +20,7 @@ router.get('/types',async (req,res)=>{
     return;
 })
 //
-router.use('/:id',async (req,res)=>{
+router.get('/:id',async (req,res)=>{
     if(!req.params.id){
         res.send('Bad request')
     }
@@ -30,15 +28,6 @@ router.use('/:id',async (req,res)=>{
     res.send(info)
     return;
 })
-
-/*router.use('/:id',async (req,res)=>{
-    if(!req.params.id){
-        res.send('Bad request')
-    }
-    let info = await getDetail(req.params.id);
-    res.send(info)
-    return;
-})*/
 
 router.post('/create',async (req,res)=>{
     console.log('this is the request body',req.body);
@@ -60,16 +49,6 @@ router.post('/create',async (req,res)=>{
     let newReg = await createProduct(obj);
     res.send(newReg);
 })
-
-/*router.use('/getOne',async (req,res)=>{
-    
-    if(!req.query.str){
-        res.status(400).send('Not Found, query value absent');
-    }else{
-        res.send(await getOneProduct(req.query.id));
-    }
-    return;
-})*/
 
 
 module.exports = router;
