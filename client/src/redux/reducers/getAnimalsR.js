@@ -1,4 +1,5 @@
-import { GET_ALL_ANIMALS } from "../actions/getAnimalsA";
+import { GET_ALL_ANIMALS, GET_ANIMAL_NAME } from "../actions/getAnimalsA";
+
 
 const initialState = {
     allAnimals:[],
@@ -14,6 +15,11 @@ const animalsReducer = (state= initialState,{type,payload})=>{
                 ...state,
                 allAnimals: payload,
                 allAnimalsCopy: payload
+            }
+
+        case GET_ANIMAL_NAME:
+            return {
+                allAnimals: action.payload
             }
         
         default:

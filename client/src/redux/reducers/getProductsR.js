@@ -1,4 +1,5 @@
-import { GET_ALL_PRODUCTS } from "../actions/getProductsA"
+import { GET_ALL_PRODUCTS, GET_PRODUCT_NAME } from "../actions/getProductsA";
+
 const initialstate = {
     allProducts:[],
     allProductsCopy:[]
@@ -13,6 +14,10 @@ const productsReducer = (state = initialstate, {type, payload} )=>{
                 allProductsCopy: payload
             }
         }
+        case GET_PRODUCT_NAME:
+            return {
+                allProducts: action.payload
+            }
         default:
             return state
     }
