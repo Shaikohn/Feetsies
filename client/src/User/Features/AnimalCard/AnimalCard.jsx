@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./AnimalCard.module.css";
+// import ".AnimalCard.module.css";
 
 export default function AnimalCard({id, name, main_image, sex, size}) {
 
