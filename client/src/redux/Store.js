@@ -4,11 +4,15 @@ import thunk from "redux-thunk";
 import productsReducer from "./reducers/getProductsR";
 import animalsReducer from "./reducers/getAnimalsR";
 import paginadoReducer from "./reducers/paginadoR";
-
-export const store = createStore(
-    combineReducers({
-        products: productsReducer,
-        animals: animalsReducer,
-        currentPage: paginadoReducer
-    }), 
-    composeWithDevTools(applyMiddleware(thunk)));
+import animalDetailsReducer from "./reducers/animalDetailsReducer.js";
+import productDetailsReducer from "./reducers/productDetailsReducer.js";
+    
+    export const store = createStore(
+        combineReducers({
+            products: productsReducer,
+            animals: animalsReducer,
+            currentPage: paginadoReducer,
+            ProductDetails: productDetailsReducer,
+            AnimalDetails: animalDetailsReducer
+        }), 
+        composeWithDevTools(applyMiddleware(thunk)));

@@ -5,12 +5,12 @@ import styles from "./AnimalDetails.module.css"
 /* LAS COSAS COMENTADAS SON NECESARIAS POR SI EN ALGÚN MOMENTO SE LE AGREGAN 
 MAS IMAGENES A LOS DETALLES DE LOS PERROS */
 
-export default function AnimalDetails({id, name, main_image, sex, size, description, age, birth_date}) {
+export default function AnimalDetails({animal}) {
 
     /* const [selectedImg, setSelectedImg] = useState(images[0]) */
 
     return (
-            <div key={id}>
+            <div key={animal?.id}>
                     {/* <div className={styles.imagesContainer}>
                         <img className={styles.selected} src={selectedImg} alt="" />
                         <div className={styles.notSelected}>
@@ -28,15 +28,15 @@ export default function AnimalDetails({id, name, main_image, sex, size, descript
                         </div>
                     </div> */}
                     <div>
-                        <img alt={name} className={styles.mainImg} src={main_image} />
+                        <img alt={animal?.name} className={styles.mainImg} src={animal?.main_image} />
                     </div>
                     <div className={styles.infoContainer}>
-                        <h2>{`Name: ${name}`}</h2>
-                        <h3>{`Sex: ${sex}`}</h3>
-                        <h3>{`Size: ${size}`}</h3>
-                        <h3>{`Description: ${description}`}</h3>
-                        <h3>{`Age: ${age}`}</h3>
-                        <h3>{`Birth date: ${birth_date}`}</h3>
+                        <h2>{`Name: ${animal?.name}`}</h2>
+                        <h3>{`Sex: ${animal?.sex}`}</h3>
+                        <h3>{`Size: ${animal?.size}`}</h3>
+                        <h3>{`Description: ${animal?.description}`}</h3>
+                        <h3>{`Age: ${animal?.age}`}</h3>
+                        <h3>{`Birth date: ${animal?.birth_date}`}</h3>
                         <div>
                             <button>Request adoption</button>
                         </div>
