@@ -117,6 +117,6 @@ module.exports={
     writeProducts,
     getProducts,
     initialRelations,
-    createProduct
+    createProduct,
     getDetail
 }

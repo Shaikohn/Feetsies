@@ -4,6 +4,13 @@ const {DataTypes} = require('sequelize')
 
 module.exports= (sequelize) => {
     sequelize.define('user', {
+        id: {
+            type: DataTypes.INTEGER,
+            autoIncrement:true,
+            allowNull: false,
+            primaryKey: true,
+            unique:true
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -24,11 +31,14 @@ module.exports= (sequelize) => {
             allowNull: true,
         },
         phone_number: {
-            type: DataTypes.TEXT,
+            type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isNumeric: true
-            }
+            defaultValue:'No phone number added'
+        },
+        location: {
+            type: DataTypes.STRING,
+            defaultValue: 'No location added',
+            allowNull: true,
         }
     })
 }
