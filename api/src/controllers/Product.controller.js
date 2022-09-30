@@ -78,10 +78,10 @@ function writeProducts(){
             name:'Hamster wheel',
         },
         {
-            name:'testing',
+            name:'Testing',
         },
         {
-            name:'exactString',
+            name:'ExactString',
         },
     ]
     console.log('+ Writing products into database...')
@@ -106,7 +106,7 @@ async function initialRelations(){
     animalType = await Animal_type.findOne({where:{name:'Rodent'}});
     product.addAnimal_types(animalType);
     product.addProduct_types(productType);
-    product = await Product.findOne({where:{name:'testing'}});
+    product = await Product.findOne({where:{name:'Testing'}});
     productType = await Product_type.findAll();
     animalType = await Animal_type.findAll();
     product.addAnimal_types(animalType);

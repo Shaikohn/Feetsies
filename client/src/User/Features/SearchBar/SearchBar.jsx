@@ -22,7 +22,7 @@ export default function SearchBar() {
         e.preventDefault(e);
         if (name !== "") {
             dispatch(getProductName(name));
-            dispatch(getAnimalName(name));
+            // dispatch(getAnimalName(name));
             dispatch(resetPagination({current: 1}));
             setName("");
         } else {

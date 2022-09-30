@@ -8,8 +8,7 @@ import NavBar from "../../Features/NavBarProducts/navBarP.jsx";
 export default function ProductHome() {
 
     const dispatch = useDispatch()
-    const {allProducts} = useSelector(state => state.products)
-    console.log(allProducts)
+    const {allProductsCopy} = useSelector(state => state.products)
 
     useEffect(() => {
         dispatch(getAllProducts())
@@ -25,7 +24,7 @@ export default function ProductHome() {
             </div>
             <div className="body-container">
             {
-                allProducts.length !== 0 ? allProducts?.map((p) => {
+                allProductsCopy.length !== 0 ? allProductsCopy?.map((p) => {
                     return (
                         <div key={p.id}>
                             <ProductCard 

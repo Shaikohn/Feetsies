@@ -79,7 +79,7 @@ const productsReducer = (state = initialstate, {type, payload} )=>{
 
         case GET_PRODUCT_NAME:
             return {
-                allProducts: payload
+                allProductsCopy: payload
             }
 
         default:
