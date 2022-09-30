@@ -6,12 +6,14 @@ import HomeProducts from "./User/Views/ProductHome/ProductHome.jsx";
 import HomeAnimals from "./User/Views/AnimalHome/AnimalHome.jsx";
 import ProductDetailsContainer from "./User/Views/ProductDetails/ProductDetailsContainer";
 import AnimalDetailsContainer from "./User/Views/AnimalDetails/AnimalDetailsContainer";
+import LandingPage from "./User/Views/Landing/Landing.jsx";
 
 
 function App() {
   return (
     <div className="App">
       <Routes>
+        <Route exact path="/" element={<LandingPage />}/>
         <Route exact path="/home/products" element={<HomeProducts />}/>
         <Route exact path="/home/animals" element={<HomeAnimals />}/>
         <Route exact path="/home/products/:id" element={<ProductDetailsContainer />}/>

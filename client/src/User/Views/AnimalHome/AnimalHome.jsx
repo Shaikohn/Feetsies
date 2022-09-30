@@ -2,12 +2,14 @@ import AnimalCard from "../../Features/AnimalCard/AnimalCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllAnimals } from "../../../redux/actions/getAnimalsA";
+import Header from "../../Features/Header/Header.jsx";
+
+
 
 export default function AnimalHome() {
 
     const dispatch = useDispatch()
     const {allAnimals} = useSelector(state => state.animals)
-    console.log(allAnimals)
 
     useEffect(() => {
         dispatch(getAllAnimals())
@@ -15,6 +17,13 @@ export default function AnimalHome() {
 
     return (
         <div>
+            <div className="divanim-header">
+                <Header />
+            </div>
+            <div className="divanim-navbar">
+                
+            </div>
+            <div className="bodyanim-container">
             {
                 allAnimals.length !== 0 ? allAnimals?.map((a) => {
                     return <AnimalCard 
@@ -26,6 +35,7 @@ export default function AnimalHome() {
                     />
                 }) : "There is no animals at the moment"
             }
+            </div>
         </div>
     )
 }

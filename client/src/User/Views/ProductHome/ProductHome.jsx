@@ -16,13 +16,13 @@ export default function ProductHome() {
 
     return (
         <div>
-            <div className="div-header">
+            <div className="divprod-header">
                 <Header />
             </div>
-            <div className="div-navbar">
+            <div className="divprod-navbar">
                 <NavBar />
             </div>
-            <div className="body-container">
+            <div className="bodyprod-container">
             {
                 allProductsCopy.length !== 0 ? allProductsCopy?.map((p) => {
                     return (
