@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import { useDispatch } from "react-redux";
 import { getProductName } from "../../../redux/actions/getProductsA.js";
-import { getAnimalName } from "../../../redux/actions/getAnimalsA.js";
+// import { getAnimalName } from "../../../redux/actions/getAnimalsA.js";
 import { resetPagination } from "../../../redux/actions/paginadoA.js";
 import lupa from "./Img/Lupa.png";
 // import "./SearchBar.module.css";

@@ -1,12 +1,12 @@
 
-import { GET_ALL_PRODUCTS, GET_PRODUCT_NAME  } from "../actions/getProductsA"
+import { GET_ALL_PRODUCTS, GET_PRODUCT_NAME } from "../actions/getProductsA"
 import {ORDER_PRODUCT_PRICE} from "../actions/orderPrice";
 import {ORDER_PRODUCT_NAME} from "../actions/orderName";
 
 
 const initialstate = {
     allProducts:[],
-    allProductsCopy:[]
+    allProductsCopy:[],
 }
 
 
@@ -78,9 +78,10 @@ const productsReducer = (state = initialstate, {type, payload} )=>{
             }
 
         case GET_PRODUCT_NAME:
-            return {
-                allProductsCopy: payload
-            }
+          return {
+            ...state,
+            allProductsCopy: payload
+          }
 
         default:
             return state

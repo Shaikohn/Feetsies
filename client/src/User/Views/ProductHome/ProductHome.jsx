@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getAllProducts } from "../../../redux/actions/getProductsA";
 import Header from "../../Features/Header/Header.jsx";
 import NavBar from "../../Features/NavBarProducts/navBarP.jsx";
+import loading from "./Img/Loading.gif";
 
 export default function ProductHome() {
 
@@ -13,6 +14,7 @@ export default function ProductHome() {
     useEffect(() => {
         dispatch(getAllProducts())
     }, [dispatch])
+
 
     return (
         <div>
@@ -32,7 +34,7 @@ export default function ProductHome() {
                                 name={p.name}
                                 image={p.image}
                                 price={p.price}
-                                product_tags={p.product_tags}
+                                productTypes={p.productTypes}
                             />
                         </div>
                     )
