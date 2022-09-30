@@ -22,9 +22,6 @@ module.exports= (sequelize) => {
             type: DataTypes.TEXT,
             allowNull: true,
             defaultValue:defaultImgUrl,
-            validate:{
-                isUrl: true
-            }
         },
         description: {
             type: DataTypes.TEXT,
@@ -35,18 +32,11 @@ module.exports= (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue:0,
-            validate:{
-                min: 0,
-            }
         },
         price: {
             type: DataTypes.FLOAT,
             allowNull: false,
             defaultValue:0.00,
-            validate:{
-                min: 0.10,
-                isFloat: true,
-            },
         }
     },{
         timeStamps:false,

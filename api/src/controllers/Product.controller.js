@@ -2,6 +2,20 @@ const {Product,Product_type,Animal_type} = require('../db');
 const {Op} = require('sequelize');
 const sequelize = require('sequelize');
 
+async function createProduct(obj){
+    console.log('log from create: ',obj);
+    const newProd = await Product.create(obj);
+    for (let i = 0; i < obj.animalTypes.length; i++) {
+        const aType = await Animal_type.findOne({where:{name:obj.animalTypes[i]}});
+        const aux = await newProd.addAnimal_types(aType);
+    }
+    for (let i = 0; i < obj.productTypes.length; i++) {
+        const pType = await Product_type.findOne({where:{name:obj.productTypes[i]}});
+        const aux = await newProd.addProduct_types(pType);
+    }
+    const reg = await getProducts(obj.name);
+    return reg;
+}
 
 async function createElementWithTypes(element){
     let productTypes = await element.getProduct_types();
@@ -96,5 +110,6 @@ async function initialRelations(){
 module.exports={
     writeProducts,
     getProducts,
-    initialRelations
+    initialRelations,
+    createProduct
 }
