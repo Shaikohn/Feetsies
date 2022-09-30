@@ -17,7 +17,7 @@ const paginadoReducer = (state=initialSate,{type,payload})=>{
         case RESET_PAGINATION:
             return {
                 ...state, 
-                pagination: action.payload
+                pagination: payload
             }
 
         default:

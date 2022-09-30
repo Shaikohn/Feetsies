@@ -19,7 +19,7 @@ const animalsReducer = (state= initialState,{type,payload})=>{
 
         case GET_ANIMAL_NAME:
             return {
-                allAnimals: action.payload
+                allAnimals: payload
             }
         
         default:

@@ -1,6 +1,7 @@
-import SearchBar from "../../Features/SearchBar/SearchBar.jsx";
+import SearchBar from "../SearchBar/SearchBar.jsx";
 import './NavBarProducts.css';
-//holala
+
+
 function NavBarProducts() {
   return (
     <nav className="container-navBar">

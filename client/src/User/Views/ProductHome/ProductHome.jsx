@@ -1,7 +1,7 @@
 import ProductCard from "../../Features/ProductCard/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import getAllProducts from "../../../redux/actions/getProductsA";
+import { getAllProducts } from "../../../redux/actions/getProductsA";
 
 export default function ProductHome() {
 
