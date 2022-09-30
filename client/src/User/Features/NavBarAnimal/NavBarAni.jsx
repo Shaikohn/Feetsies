@@ -1,4 +1,4 @@
-import SearchBar from "../../Features/SearchBar/SearchBar";
+import SearchBar from "../SearchBar/SearchBar";
 
 //holala
 

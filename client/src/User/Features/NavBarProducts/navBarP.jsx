@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import orderProductPrice from "../../../redux/actions/Products/orderPrice.js";
 import orderProductName from "../../../redux/actions/Products/orderName.js";
 
-import SearchBar from "../../Features/SearchBar/SearchBar.jsx";
+import SearchBar from "../SearchBar/SearchBar";
 import "./navBarProducts.css";
 
 function NavBarProducts() {
