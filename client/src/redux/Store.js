@@ -1,6 +1,8 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
-import rootReducer from "../Reducer/index.js";
+import animalDetailsReducer from "./reducers/animalDetailsReducer.js";
+import productDetailsReducer from "./reducers/productDetailsReducer.js";
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+export const store = createStore(combineReducers({getProductDetails: productDetailsReducer, 
+    getAnimalDetails: animalDetailsReducer}), composeWithDevTools(applyMiddleware(thunk)));
