@@ -15,6 +15,12 @@ async function createElementWithTypes(element){
     }
 }
 
+async function getDetail(numId){
+    let reg = await Product.findOne({where:{id:numId}});
+    if(!reg) return 'Not found'
+    let aux = await createElementWithTypes(reg);
+    return aux;
+}
 
 async function getProducts(str){
     if(!str){
@@ -96,5 +102,6 @@ async function initialRelations(){
 module.exports={
     writeProducts,
     getProducts,
-    initialRelations
+    initialRelations,
+    getDetail
 }

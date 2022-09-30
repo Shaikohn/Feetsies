@@ -6,8 +6,13 @@ export const CLEAR_ANIMAL_DETAILS = "CLEAR_ANIMAL_DETAILS"
 export const getAnimalDetails = (id) => {
     return async function(dispatch) {
         try {
-            let details = (await axios(`/animals/${id}`)).data
-            return dispatch({type: GET_ANIMAL_DETAILS, payload: details})
+            await axios(`http://localhost:3001/animals/${id}`)
+            .then(res=>{
+                dispatch({
+                    type: GET_ANIMAL_DETAILS,
+                    payload: res.data
+                })
+            })
         }
         catch (error) {
             console.log(error)
@@ -15,7 +20,7 @@ export const getAnimalDetails = (id) => {
     }
 }
 
-export const clearAnimalDetailes = () => {
+export const clearAnimalDetails = () => {
     return {
         type: CLEAR_ANIMAL_DETAILS,
     }

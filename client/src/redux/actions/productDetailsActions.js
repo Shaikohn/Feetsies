@@ -6,8 +6,13 @@ export const CLEAR_PRODUCT_DETAILS = "CLEAR_PRODUCT_DETAILS"
 export const getProductDetails = (id) => {
     return async function(dispatch) {
         try {
-            let details = (await axios(`/products/${id}`)).data
-            return dispatch({type: GET_PRODUCT_DETAILS, payload: details})
+            await axios(`http://localhost:3001/products/${id}`)
+            .then(res=>{
+                dispatch({
+                    type: GET_PRODUCT_DETAILS,
+                    payload: res.data
+                })
+            })
         }
         catch (error) {
             console.log(error)

@@ -91,5 +91,4 @@ module.exports = {
     getAnimalDetail,
     createAnimal,
     delateAnimal
-  
 }
