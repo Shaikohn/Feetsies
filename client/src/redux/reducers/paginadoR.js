@@ -6,10 +6,9 @@ const initialSate ={
     pagination: {}
 }
 
-const paginadoReducer = (state=initialSate,{action,payload})=>{
+const paginadoReducer = (state=initialSate,{type,payload})=>{
 
-    switch (action){
-
+    switch (type){
         case SET_CURRENT_PAGE:
             return{
                 page:payload
