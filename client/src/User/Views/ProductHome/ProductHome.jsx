@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllProducts } from "../../../redux/actions/getProductsA";
 import Header from "../../Features/Header/Header.jsx";
-import NavBar from "../../Features/NavBarProducts/navBarP.jsx";
+import NavBarProd from "../../Features/NavBarProducts/navBarP.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
 
@@ -23,7 +23,7 @@ export default function ProductHome() {
                 <Header />
             </div>
             <div className="divprod-navbar">
-                <NavBar />
+                <NavBarProd />
             </div>
             <div className="div-pagination">
                 <Pagination />
@@ -46,6 +46,5 @@ export default function ProductHome() {
             } 
             </div>
         </div>
-        
     )
 }
