@@ -5,19 +5,18 @@ const errorVar = {
     message: 'Something went wrong...',
 }
 
-const notFoundVar = {
-    err: 'Animal type was not found, try again later.'
+const emptyDB = {
+    err: 'Database is empty'
 }
 
-async function getTypes(req, res) {
-    
+async function getAllTypes(req, res) {
     try {
         let data = await Animal_type.findAll()
-        if(data.length === 0) {
-            return res.status(404).send(notFoundVar)
+        if(!data) {
+            return res.status(404).send(emptyDB)
         } else {
             data = data.map(e=>e['dataValues'].name)
-            return res.status(200).send(data)
+            return res.send(data)
         }
     } catch (error) {
         return res.status(500).send(errorVar)
@@ -47,5 +46,5 @@ function writeAnimalTypes(){
 
 module.exports={
     writeAnimalTypes,
-    getTypes
+    getAllTypes
 }
