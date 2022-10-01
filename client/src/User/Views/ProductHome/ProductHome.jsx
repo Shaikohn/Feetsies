@@ -30,7 +30,7 @@ export default function ProductHome() {
             </div>
             <div className="bodyprod-container">
             {
-                allProductsCopy.length !== 0 ? allProductsCopy?.map((p) => {
+                allProductsCopy?.length !== 0 ? allProductsCopy?.map((p) => {
                     return (
                         <div key={p.id}>
                             <ProductCard 
@@ -42,7 +42,7 @@ export default function ProductHome() {
                             />
                         </div>
                     )
-                }) : ""
+                }) : "There is no products at the moment"
             } 
             </div>
         </div>

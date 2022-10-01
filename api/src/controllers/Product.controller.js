@@ -47,21 +47,23 @@ async function getProducts(str){
     }else{
         str = str.toLowerCase();
         const searchValue = '%'+str+'%';
-        const lecture = await Product.findAll({
-            where:{
-                name:sequelize.where(sequelize.fn('LOWER', sequelize.col('name')),{ //aplico funcion a columna para pasar a minusculas
-                    [Op.like]:searchValue
-                })
+        try {
+            const lecture = await Product.findAll({
+                where:{
+                    name:sequelize.where(sequelize.fn('LOWER', sequelize.col('name')),{ //aplico funcion a columna para pasar a minusculas
+                        [Op.like]:searchValue
+                    })
+                }
+            })
+            if(lecture.length > 0){
+                let result =[];
+                for (let i = 0; i < lecture.length; i++) {
+                    result.push(await createElementWithTypes(lecture[i]))
+                }
+                return result;
             }
-        })
-        if(lecture.length > 0){
-            let result =[];
-            for (let i = 0; i < lecture.length; i++) {
-                result.push(await createElementWithTypes(lecture[i]))
-            }
-            return result;
-        }else{
-            return 'Not found';
+        } catch (error) {
+            return error;
         }
     }
 }
