@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { getAllProducts } from "../../../redux/actions/getProductsA";
 import Header from "../../Features/Header/Header.jsx";
 import NavBar from "../../Features/NavBarProducts/navBarP.jsx";
+import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
 
 export default function ProductHome() {
@@ -23,6 +24,9 @@ export default function ProductHome() {
             </div>
             <div className="divprod-navbar">
                 <NavBar />
+            </div>
+            <div className="div-pagination">
+                <Pagination />
             </div>
             <div className="bodyprod-container">
             {
