@@ -1,4 +1,5 @@
 const {Animal} = require('../db.js')
+const {Op} = require('sequelize')
 
 const errorVar = {
     err: 500,
@@ -6,7 +7,7 @@ const errorVar = {
 }
 
 const notFoundVar = {
-    err: 'Any Animal got found, try again later'
+    err: 'No animal was found, try again later'
 }
 async function getAllAnimals(req, res) {
     try {
@@ -81,6 +82,40 @@ async function delateAnimal(req,res) {
     }
 }
 
+async function searchAnimal(req, res) {
+    let {search} = req.query
+    try {
+        let queryAnimal = await Animal.findAll({
+            where: {
+                [Op.and]: {
+                    name: {
+                        [Op.iLike]: `%${search}%`
+                    },
+                    size: {
+                        [Op.iLike]: `%${search}%`
+                    },
+                    sex: {
+                        [Op.iLike]: `%${search}`
+                    }, 
+                    breed: {
+                        [Op.iLike]: `%${search}`
+                    },
+                    age: {
+                        [Op.iLike]: `%${search}`
+                    }
+                }
+            }
+        })
+        if(queryAnimal.length === 0 || !queryAnimal) {
+            return res.status(404).send(notFoundVar)
+        } else {
+            return res.status(200).send(queryAnimal)
+        }
+    } catch (error) {
+         return res.status(500).send(errorVar)
+    }
+}
+
 
 
 
@@ -90,5 +125,7 @@ module.exports = {
     getAllAnimals,
     getAnimalDetail,
     createAnimal,
-    delateAnimal
+    delateAnimal,
+    searchAnimal
+
 }

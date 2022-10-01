@@ -13,7 +13,6 @@ module.exports= (sequelize) => {
         topic: {
             type: DataTypes.STRING,
             allowNull: false,
-            unique:true,
         },
         description: {
             type: DataTypes.STRING,

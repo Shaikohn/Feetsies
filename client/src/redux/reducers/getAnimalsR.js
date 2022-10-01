@@ -33,7 +33,7 @@ const animalsReducer = (state = initialState, { type, payload }) => {
         const filteredSize = 
         payload === "All"
         ?state.allAnimals
-        :state.allAnimalsCopy.filter( anim => anim.size === payload)
+        :state.allAnimals.filter( anim => anim.size === payload)
         return {
             ...state,
             allAnimalsCopy: filteredSize
