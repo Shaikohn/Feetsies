@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import filterSexAnimals from "../../../redux/actions/filterSexAnimals.js";
 import filterSizeAnimals from "../../../redux/actions/filterSizeAnimals.js";
-import SearchBar from "../SearchBar/SearchBar.jsx";
+import SearchBarAnim from "../SearchBarAnim/SearchBarAnim.jsx";
 
 function NavBarAnimals() {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function NavBarAnimals() {
   return (
     <div className="container-navBar">
       <div>
-        <SearchBar />
+        <SearchBarAnim />
       </div>
       {
         arraySize.map((ele,id)=>{

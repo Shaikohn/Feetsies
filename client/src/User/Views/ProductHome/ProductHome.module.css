@@ -1,0 +1,31 @@
+.bodyProd {
+    position: relative;
+    /* width: 100%; */
+    /* height: 100%; */
+    background-image: url(./Img/Bg-img.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+
+    background-color: rgb(135 168 39);
+    
+    display: grid;
+    align-items: center;
+    justify-items: stretch;
+    
+    position: sticky;
+    padding: 25px;
+    
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 25px;
+    grid-row-gap: 40px;
+}
+
+.loading {
+    background-repeat: repeat;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+}
