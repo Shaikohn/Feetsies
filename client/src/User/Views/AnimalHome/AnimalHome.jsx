@@ -11,7 +11,7 @@ import Pagination from "../../Features/Paginado/Paginado.jsx";
 export default function AnimalHome() {
 
     const dispatch = useDispatch()
-    const {allAnimals} = useSelector(state => state.animals)
+    const {allAnimalsCopy} = useSelector(state => state.animals)
 
     useEffect(() => {
         dispatch(getAllAnimals())
@@ -30,7 +30,7 @@ export default function AnimalHome() {
             </div>
             <div className="bodyanim-container">
             {
-                allAnimals.length !== 0 ? allAnimals?.map((a) => {
+                allAnimalsCopy.length !== 0 ? allAnimalsCopy?.map((a) => {
                     return (
                         <div key={a.id}>
                             <AnimalCard 
