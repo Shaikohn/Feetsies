@@ -14,15 +14,16 @@ module.exports= (sequelize) => {
         },
         breed: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue:'Unknown'
         },
         size: {
-            type: DataTypes.ENUM('Large', 'Meduim', 'Small'),
+            type: DataTypes.ENUM('Large', 'Medium', 'Small'),
             allowNull: false,
         },
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER,
+            autoIncrement:true,
             allowNull: false,
             primaryKey: true
         },
