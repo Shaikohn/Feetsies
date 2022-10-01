@@ -14,36 +14,42 @@ function NavBarAnimals() {
     dispatch(filterSexAnimals(e.target.value));
   };
 
+  const arraySize = ["Small", "Medium","Large"]
+  const arraySex = ["Male", "Female"]
+
   return (
     <div className="container-navBar">
       <div>
         <SearchBar />
       </div>
-      <div>
-        <button value="Small" onClick={(e) => eventHandlerSize(e)}>
-          Small
-        </button>
-      </div>
-      <div>
-        <button value="Medium" onClick={(e) => eventHandlerSize(e)}>
-          Medium
-        </button>
-      </div>
-      <div>
-        <button value="Large" onClick={(e) => eventHandlerSize(e)}>
-          Large
-        </button>
-      </div>
-      <div>
-        <button value="Male" onClick={(e) => eventHandlerSex(e)}>
-          Male
-        </button>
-      </div>
-      <div>
-        <button value="Female" onClick={(e) => eventHandlerSex(e)}>
-          Female
-        </button>
-      </div>
+      {
+        arraySize.map((ele,id)=>{
+          return(
+            <div key = {id}>
+              <button
+              value={ele}
+              onClick={e=>eventHandlerSize(e)}
+              >
+              {ele}
+              </button>
+            </div>
+          )
+        })
+      }
+      {
+        arraySex.map((elem,id)=>{
+          return(
+            <div key={id}>
+              <button
+              value={elem}
+              onClick={e=>eventHandlerSex(e)}
+              >
+                {elem}
+              </button>
+            </div>
+          )
+        })
+      }
     </div>
   );
 }
