@@ -10,7 +10,7 @@ export const getAllAnimals = ()=>(dispatch)=>{
             type:GET_ALL_ANIMALS,
             payload: res.data
         })
-    })
+    }).catch(error => console.log(error))
 }
 
 export function getAnimalName(name) {

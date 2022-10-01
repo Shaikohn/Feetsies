@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import { useDispatch } from "react-redux";
 import { getProductName } from "../../../redux/actions/getProductsA.js";
-import { getAnimalName } from "../../../redux/actions/getAnimalsA.js";
+// import { getAnimalName } from "../../../redux/actions/getAnimalsA.js";
 import { resetPagination } from "../../../redux/actions/paginadoA.js";
 import lupa from "./Img/Lupa.png";
 // import "./SearchBar.module.css";
@@ -22,7 +22,7 @@ export default function SearchBar() {
         e.preventDefault(e);
         if (name !== "") {
             dispatch(getProductName(name));
-            dispatch(getAnimalName(name));
+            // dispatch(getAnimalName(name));
             dispatch(resetPagination({current: 1}));
             setName("");
         } else {
@@ -42,8 +42,8 @@ export default function SearchBar() {
             onChange={(e) => handlerInputChange(e)}
             onKeyDown={(e) => e.key === "Enter" && handlerSubmit(e)}
             />
-            <button className="btn-search" type="submit" onClick={(e) => handleSubmit(e)}>
-                <img className="lupa-icon" src={lupa} alt=""/>
+            <button className="btn-search" type="submit" onClick={(e) => handlerSubmit(e)}>
+                <img className="lupa-icon" src={lupa} alt="" weight="16px" height="16px" />
             </button>
         </div>
     );
