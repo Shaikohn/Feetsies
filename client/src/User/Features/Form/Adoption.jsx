@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 
 const Adoption = () => {
@@ -10,30 +10,6 @@ const Adoption = () => {
   const onSubmit = (data) => console.log("Onsubmit", data);
 
   console.log(errors);
-
-  // **** cloudinary ****
-  const [image, setImage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const uploadImage = async (e) => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "proyecto-final-animals");
-    setLoading(true);
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/tawaynaskp/image/upload",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const file = await res.json();
-
-    console.log("data", file);
-
-    setImage(file.secure_url);
-    setLoading(false);
-  };
 
   return (
     <>
@@ -68,24 +44,7 @@ const Adoption = () => {
           <p role="alert">{errors.description?.message}</p>
         )}
 
-        <label>Image</label>
-        <input
-          type="file"
-          {...register("image", {
-            required: "Please , select an image",
-          })}
-          aria-invalid={errors.image ? "true" : "false"}
-          onChange={uploadImage}
-        />
-        {errors.image && <p role="alert">{errors.image?.message}</p>}
-
-        {loading ? (
-          <h3>Loading...</h3>
-        ) : (
-          <img alt="not fount" width={"250px"} src={image} />
-        )}
-
-        <input type="submit" />
+        <button>Adopt</button>
       </form>
     </>
   );

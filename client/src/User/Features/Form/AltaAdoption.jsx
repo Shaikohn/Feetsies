@@ -68,7 +68,24 @@ const AltaAdoption = () => {
           <p role="alert">{errors.description?.message}</p>
         )}
 
-        <input type="submit" />
+        <label>Image</label>
+        <input
+          type="file"
+          {...register("image", {
+            required: "Please , select an image",
+          })}
+          aria-invalid={errors.image ? "true" : "false"}
+          onChange={uploadImage}
+        />
+        {errors.image && <p role="alert">{errors.image?.message}</p>}
+
+        {loading ? (
+          <h3>Loading...</h3>
+        ) : (
+          <img alt="not fount" width={"250px"} src={image} />
+        )}
+
+        <button>Register</button>
       </form>
     </>
   );
