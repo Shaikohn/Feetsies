@@ -40,6 +40,9 @@ Product_type.belongsToMany(Product,{through:'product_product_types'});
 User.hasMany(Adoption_petition);
 Adoption_petition.belongsTo(User);
 ////////////////////////////////////////
+Animal.hasMany(Adoption_petition);
+Adoption_petition.belongsTo(Animal);
+
 
 module.exports = {
   ...sequelize.models, 

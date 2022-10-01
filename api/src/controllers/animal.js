@@ -6,7 +6,7 @@ const errorVar = {
 }
 
 const notFoundVar = {
-    err: 'Any Animal got found, try again later'
+    err: 'No animal was found, try again later'
 }
 async function getAllAnimals(req, res) {
     try {
