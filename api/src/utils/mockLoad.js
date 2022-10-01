@@ -208,67 +208,128 @@ const mockAnimals =[
         size:'Medium',
         age:'6'
     },
-];
-
-const mockProducts =[
     {
-        name:'Dog Food',
-        description:'Food aimed to be consumed by dogs. Tastes like X',
-        price:400,
-        productTypes:['Food'],
-        animalTypes:['Dog'],
+        name:'Yesenia',
+        description:'sadasdasdasdasdas',
+        sex:'Female',
+        breed:'None',
+        size:'Medium',
+        age:'6'
     },
     {
-        name:'Leathery Dog Bone',
-        description:'Part food, part toy, your dog can play with this item, which is also edible.',
-        price:200,
-        productTypes:['Food','Toy'],
-        animalTypes:['Dog'],
-    },
-    {
-        name:'Birthday hat',
-        description:`Celebrate your pet's birthday with this hat!`,
-        price:150,
-        productTypes:['Clothing','Toy'],
-        animalTypes:['Dog','Cat','Other'],
-    },
-    {
-        name:'Nepeta Cataria',
-        description:'Herbal mix that produces a recreative pseudonarcotic effect on your cat',
-        price:300,
-        productTypes:['Other'],
-        animalTypes:['Cat'],
-    },
-    {
-        name:'Cat bed',
-        description:'A place where ypur cat can sleep comfy',
-        price:1200,
-        productTypes:['Other'],
-        animalTypes:['Cat'],
-    },
-    {
-        name:'General test item',
-        description:'testing an iten that has every tag',
-        price:12345,
-        productTypes:['Clothing','Toy','Food','Other'],
-        animalTypes:['Cat','Dog','Rodent','Other'],
-    },
-    {
-        name:'Wooden flakes',
-        description:'Material used for rodent cage flooring. They sleep on it but also use it as bathroom.',
-        price:600,
-        productTypes:['Other'],
-        animalTypes:['Rodent'],
-    },
-    {
-        name:'Another test item',
-        description:'Another test item',
-        price:600,
+        name:'Zalmoxisus',
+        description:'something about react redux i guess',
+        sex:'Male',
+        breed:'None',
+        size:'Medium',
+        age:'42'
     },
 ];
 
-const mockPetitions =[];
 
-const mockInquiries =[];
+
+const mockPetitions =[
+    {
+        topic:'some topic',
+        description:'some description',
+    },
+    {
+        topic:'another topic',
+        description:'another description',
+    },
+    {
+        topic:'A topic',
+        description:'mockup description',
+    },
+];
+
+const mockInquiries =[
+];
 
 const mockSolicitudes =[];
+
+async function loadUsers(){
+    return User.bulkCreate(mockUsers);
+}
+
+async function loadAnimals(){
+    return Animal.bulkCreate(mockAnimals);
+}
+
+async function loadProducts(){
+    const mockProducts =[
+        {
+            name:'Dog Food',
+            description:'Food aimed to be consumed by dogs. Tastes like X',
+            price:400,
+            productTypes:['Food'],
+            animalTypes:['Dog'],
+        },
+        {
+            name:'Leathery Dog Bone',
+            description:'Part food, part toy, your dog can play with this item, which is also edible.',
+            price:200,
+            productTypes:['Food','Toy'],
+            animalTypes:['Dog'],
+        },
+        {
+            name:'Birthday hat',
+            description:`Celebrate your pet's birthday with this hat!`,
+            price:150,
+            productTypes:['Clothing','Toy'],
+            animalTypes:['Dog','Cat','Other'],
+        },
+        {
+            name:'Nepeta Cataria',
+            description:'Herbal mix that produces a recreative pseudonarcotic effect on your cat',
+            price:300,
+            productTypes:['Other'],
+            animalTypes:['Cat'],
+        },
+        {
+            name:'Cat bed',
+            description:'A place where ypur cat can sleep comfy',
+            price:1200,
+            productTypes:['Other'],
+            animalTypes:['Cat'],
+        },
+        {
+            name:'General test item',
+            description:'testing an iten that has every tag',
+            price:12345,
+            productTypes:['Clothing','Toy','Food','Other'],
+            animalTypes:['Cat','Dog','Rodent','Other'],
+        },
+        {
+            name:'Wooden flakes',
+            description:'Material used for rodent cage flooring. They sleep on it but also use it as bathroom.',
+            price:600,
+            productTypes:['Other'],
+            animalTypes:['Rodent'],
+        },
+        {
+            name:'Another test item',
+            description:'Another test item',
+            price:600,
+            productTypes:['Other'],
+            animalTypes:['Other'],
+        },
+    ];
+    for (let i = 0; i < mockProducts.length; i++) {
+        const newProd = await Product.create(mockProducts[i]);
+        for (let j = 0; j < mockProducts[i].animalTypes.length; j++) {
+            const aType = await Animal_type.findOne({where:{name:mockProducts[i].animalTypes[j]}});
+            const aux = await newProd.addAnimal_types(aType);
+        }
+        for (let j = 0; j < mockProducts[i].productTypes.length; j++) {
+            const pType = await Product_type.findOne({where:{name:mockProducts[i].productTypes[j]}});
+            const aux = await newProd.addProduct_types(pType);
+        }
+    }
+}
+
+module.exports={
+    loadAnimals,
+    loadProducts,
+    loadUsers,
+}
