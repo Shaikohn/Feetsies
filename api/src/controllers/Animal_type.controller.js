@@ -4,7 +4,7 @@ const errorVar = {
     err: 500,
     message: 'Something went wrong...',
 }
-
+//
 const emptyDB = {
     err: 'Database is empty'
 }

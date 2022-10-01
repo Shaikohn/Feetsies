@@ -203,7 +203,7 @@ const mockAnimals =[
     {
         name:'Xenia',
         description:'Dont ask where I got her from',
-        sex:'Male',
+        sex:'Female',
         breed:'None',
         size:'Medium',
         age:'6'
