@@ -24,7 +24,7 @@ export default function ProductCard({id, name, image, price, productTypes}) {
                         <h4>{productTypes}</h4>
                         {/* {productTypes?.map(tag => {
                             return (
-                                <div className="div-tag" value={tag.name} key={tag.id}>
+                                <div className="div-tag" value={tag.name} key={tag.index}>
                                     <h5>{tag.name}</h5>
                                 </div>
                             )

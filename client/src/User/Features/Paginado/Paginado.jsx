@@ -1,6 +1,6 @@
 import React from "react";
 import {useSelector, useDispatch} from 'react-redux';
-import setPage from "../../../redux/actions/paginadoA";
+import { setPage } from "../../../redux/actions/paginadoA";
 
 
 function Paginado({ videogames, videoPerpage }) {
