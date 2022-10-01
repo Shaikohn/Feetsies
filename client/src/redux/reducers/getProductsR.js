@@ -80,6 +80,7 @@ const productsReducer = (state = initialstate, {type, payload} )=>{
 
         case GET_PRODUCT_NAME:
             return {
+                ...state,
                 allProductsCopy: payload
             }
             
