@@ -1,5 +1,5 @@
 
-import { GET_ALL_PRODUCTS, GET_PRODUCT_NAME  } from "../actions/getProductsA"
+import { GET_ALL_PRODUCTS, GET_PRODUCT_NAME } from "../actions/getProductsA"
 import {ORDER_PRODUCT_PRICE} from "../actions/orderPrice";
 import {ORDER_PRODUCT_NAME} from "../actions/orderName";
 import { FILTER_TYPE_PRODUCTS } from "../actions/filterTypeProducts";
@@ -7,7 +7,7 @@ import { FILTER_TYPE_PRODUCTS } from "../actions/filterTypeProducts";
 
 const initialstate = {
     allProducts:[],
-    allProductsCopy:[]
+    allProductsCopy:[],
 }
 
 
@@ -82,6 +82,7 @@ const productsReducer = (state = initialstate, {type, payload} )=>{
             return {
                 allProductsCopy: payload
             }
+            
         case FILTER_TYPE_PRODUCTS:
            const filtered  = payload === "All"
            ?state.allProducts
@@ -97,6 +98,7 @@ const productsReducer = (state = initialstate, {type, payload} )=>{
             ...state,
             allProductsCopy: filtered
            }
+
         default:
             return state
     }

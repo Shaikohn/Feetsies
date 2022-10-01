@@ -2,7 +2,6 @@ import axios from 'axios';
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_PRODUCT_NAME = "GET_PRODUCT_NAME";
 
-
 export const getAllProducts = ()=>(dispatch)=>{
     axios ("http://localhost:3001/products/getAll")
     .then(res =>{
@@ -22,7 +21,6 @@ export function getProductName(name) {
                 payload: json.data
             });
         } catch(error) {
-            console.log(error);
             alert (`Product cant be found! Error: ${error}`);
         }
     }
