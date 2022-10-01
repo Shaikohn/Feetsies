@@ -14,7 +14,8 @@ module.exports= (sequelize) => {
         },
         breed: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue:'Unknown'
         },
         size: {
             type: DataTypes.ENUM('Large', 'Medium', 'Small'),
