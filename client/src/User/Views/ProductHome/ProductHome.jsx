@@ -6,6 +6,9 @@ import Header from "../../Features/Header/Header.jsx";
 import NavBarProd from "../../Features/NavBarProducts/navBarP.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
+import styles from "./ProductHome.module.css";
+
+
 
 export default function ProductHome() {
 
@@ -28,23 +31,26 @@ export default function ProductHome() {
             <div className="div-pagination">
                 <Pagination />
             </div>
-            <div className="bodyprod-container">
-            {
-                allProductsCopy?.length !== 0 ? allProductsCopy?.map((p) => {
-                    return (
-                        <div key={p.id}>
-                            <ProductCard 
+            {allProductsCopy.length ? (
+                <div className={styles.bodyProd}>
+                    {allProductsCopy.map(p => {
+                        return (
+                            <ProductCard
                                 id={p.id}
                                 name={p.name}
                                 image={p.image}
                                 price={p.price}
                                 productTypes={p.productTypes}
                             />
-                        </div>
-                    )
-                }) : "There is no products at the moment"
+                        )
+                    })}
+                </div>
+            ) : (
+                <div>
+                    <img className={styles.loading} src={loading} alt="Loading..." />
+                </div>
+            )
             } 
-            </div>
         </div>
     )
 }

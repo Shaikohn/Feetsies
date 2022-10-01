@@ -5,6 +5,8 @@ import { getAllAnimals } from "../../../redux/actions/getAnimalsA";
 import Header from "../../Features/Header/Header.jsx";
 import NavBarAnimals from "../../Features/NavBarAnimal/NavBarAni.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
+import loading from "./Img/Loading.gif";
+import styles from "./AnimalHome.module.css";
 
 
 
@@ -28,11 +30,10 @@ export default function AnimalHome() {
             <div className="div-pagination">
                 <Pagination />
             </div>
-            <div className="bodyanim-container">
-            {
-                allAnimalsCopy.length !== 0 ? allAnimalsCopy?.map((a) => {
-                    return (
-                        <div key={a.id}>
+            {allAnimalsCopy.length ? (
+                <div className={styles.bodyAnim}>
+                    {allAnimalsCopy.map(a => {
+                        return (
                             <AnimalCard 
                                 id={a.id}
                                 name={a.name}
@@ -40,12 +41,15 @@ export default function AnimalHome() {
                                 sex={a.sex}
                                 size={a.size}
                             />
-                        </div>
-                    )
-                    
-                }) : "There is no animals at the moment"
+                        )
+                    })}
+                </div>
+            ) : (
+                <div>
+                    <img className={styles.loading} src={loading} alt="Loading..." />
+                </div>
+            )
             }
-            </div>
         </div>
     )
 }

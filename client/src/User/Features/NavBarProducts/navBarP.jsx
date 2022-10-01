@@ -3,7 +3,7 @@ import orderProductPrice from "../../../redux/actions/orderPrice.js";
 import orderProductName from "../../../redux/actions/orderName.js";
 import filterTypeProducts from "../../../redux/actions/filterTypeProducts.js";
 
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBarProd from "../SearchBarProd/SearchBarProd.jsx";
 import "./navBarProducts.css";
 
 function NavBarProducts() {
@@ -26,7 +26,7 @@ function NavBarProducts() {
   return (
     <nav className="container-navBar">
       <div>
-        <SearchBar />
+        <SearchBarProd />
       </div>
 
       <ul className="navBar_options">
