@@ -6,7 +6,7 @@ import styles from "./ProductCard.module.css";
 // import cart from "./Img/shopping-cart1.png";
 
 export default function ProductCard({id, name, image, price, productTypes}) {
-
+    
     // function handleChange(e) {
     //     //falta codigo
     // }
@@ -21,14 +21,13 @@ export default function ProductCard({id, name, image, price, productTypes}) {
                     </div>
                     <h2 className="product-price">{`$ ${price}`}</h2>
                     <div className="product-container">
-                        <h4>{productTypes}</h4>
-                        {/* {productTypes?.map(tag => {
+                        {productTypes.map((tag, index)  => {
                             return (
-                                <div className="div-tag" value={tag.name} key={tag.index}>
-                                    <h5>{tag.name}</h5>
+                                <div className="div-tag" key={index}>
+                                    <h4>{tag}</h4>
                                 </div>
                             )
-                        })} */}
+                        })}
                     </div>
                     {/* <div className="div-btn">
                         <button className="cart-btn" onClick={(e) => handleChange(e)}>
