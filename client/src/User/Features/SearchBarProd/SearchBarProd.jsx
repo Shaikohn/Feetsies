@@ -1,13 +1,12 @@
 import {useState} from 'react';
 import { useDispatch } from "react-redux";
 import { getProductName } from "../../../redux/actions/getProductsA.js";
-// import { getAnimalName } from "../../../redux/actions/getAnimalsA.js";
 import { resetPagination } from "../../../redux/actions/paginadoA.js";
 import lupa from "./Img/Lupa.png";
-// import "./SearchBar.module.css";
+// import "./SearchBarProd.module.css";
 
 
-export default function SearchBar() {
+export default function SearchBarProd() {
 
     const dispatch = useDispatch();
 
@@ -22,17 +21,17 @@ export default function SearchBar() {
         e.preventDefault(e);
         if (name !== "") {
             dispatch(getProductName(name));
-            // dispatch(getAnimalName(name));
             dispatch(resetPagination({current: 1}));
             setName("");
         } else {
-            alert ("Enter a name of product or animal");
+            alert ("Enter a name of product");
         }
     }
+
     
 
     return (
-        <div className='container-searchBar'>
+        <div className='container-searchBarProd'>
             <input
             className='input-search'
             type="text"
