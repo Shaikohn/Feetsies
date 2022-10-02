@@ -143,7 +143,27 @@ async function searchAnimal(req, res) {
 }
 
 
-
+async function updateAnimal(req, res) {
+    let {id} = req.params
+    let {name, description} = req.body
+    try {
+        let queryAnimal = await Animal.findOne({
+            where: {
+                id: id
+            }
+        })
+        if(queryAnimal.length === 0 || !queryAnimal) {
+            return res.status(404).send(notFoundVar)
+        } else {
+            queryAnimal.name = name
+            queryAnimal.description = description
+            queryAnimal.save()
+            return res.status(200).send(queryAnimal)
+        }
+    } catch (error) {
+        return res.status(500).send(errorVar)
+    }
+}
 
 
 
@@ -152,6 +172,7 @@ module.exports = {
     getAnimalDetail,
     createAnimal,
     delateAnimal,
-    searchAnimal
+    searchAnimal,
+    updateAnimal
 
 }

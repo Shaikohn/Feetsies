@@ -111,9 +111,56 @@ async function createElementWithTypes(element) {
   };
 }
 
+
+
+
+async function updateProduct(req, res) {
+  if (!req.params.id) return res.status(400).send(badReq);
+  const { name, description, price } = req.body;
+  if (!name || !description || !price) return res.status(400).send(badReq);
+  let obj = { name, description, price };
+  const { stock, image, productTypes, animalTypes } = req.body;
+  if (stock) obj.stock = stock;
+  if (image) obj.image = image;
+  if (!productTypes || productTypes.length > 0) {
+    obj.productTypes = ["Other"];
+  } else {
+    obj.productTypes = productTypes;
+  }
+  if (!animalTypes || animalTypes.length > 0) {
+    obj.animalTypes = ["Other"];
+  } else {
+    obj.animalTypes = animalTypes;
+  }
+  try {
+    const reg = await Product.findOne({ where: { id: req.params.id } });
+    if (!reg) return res.status(400).send(notFound);
+    const aux = await reg.update(obj);
+    const prod = await Product.findOne({ where: { id: req.params.id } });
+    await prod.setAnimal_types([]);
+    await prod.setProduct_types([]);
+    for (let i = 0; i < obj.animalTypes.length; i++) {
+      const aType = await Animal_type.findOne({
+        where: { name: obj.animalTypes[i] },
+      });
+      const aux = await prod.addAnimal_types(aType);
+    }
+    for (let i = 0; i < obj.productTypes.length; i++) {
+      const pType = await Product_type.findOne({
+        where: { name: obj.productTypes[i] },
+      });
+      const aux = await prod.addProduct_types(pType);
+    }
+    return res.send(prod);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
   getDetail,
   searchProducts,
+  updateProduct,
 };

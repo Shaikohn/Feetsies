@@ -12,19 +12,19 @@ export default function ProductCard({id, name, image, price, productTypes}) {
     // }
 
     return (
-            <div key={id}>
-                <Link to={`/home/products/${id}`} className={styles.link}>
-                <div className={styles.productCard}>
-                    <h2 className="product-name">{name}</h2>
+        <Link to={`/home/products/${id}`} className={styles.link}>
+            <div className={styles.prodCard} key={id}>
+                <div className={styles.prodContainer}>
+                    <h2 className={styles.prodName}>{name}</h2>
                     <div>
-                        <img className="img" src={image} alt="" width="200px" height="250px" />
+                        <img className={styles.prodImg} src={image} alt="" width="200px" height="250px" />
                     </div>
-                    <h2 className="product-price">{`$ ${price}`}</h2>
-                    <div className="product-container">
+                    <h2 className={styles.prodPrice}>{`$ ${price}`}</h2>
+                    <div className={styles.prodTagsCointainer}>
                         {productTypes.map((tag, index)  => {
                             return (
-                                <div className="div-tag" key={index}>
-                                    <h4>{tag}</h4>
+                                <div className={styles.prodTag} key={index}>
+                                    <h4 className={styles.tagName}>{tag}</h4>
                                 </div>
                             )
                         })}
@@ -35,7 +35,7 @@ export default function ProductCard({id, name, image, price, productTypes}) {
                         </button>
                     </div> */}
                 </div>
-                </Link>
             </div>
+        </Link>
     )
 };

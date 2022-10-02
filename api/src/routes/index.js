@@ -7,6 +7,8 @@ const adoptionsRouter = require('./adoptionsRouter')
 
 
 const router = Router();
+
+
 router.use('/animals', animalRouter);
 router.use('/products', productRouter);
 router.use('/adoptions', adoptionsRouter);
