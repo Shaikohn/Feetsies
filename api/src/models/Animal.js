@@ -1,6 +1,6 @@
 const {DataTypes} = require('sequelize')
 const defaultpic = `https://photoshop-kopona.com/uploads/posts/2018-07/1531754924_2.jpg`;
-
+//
 module.exports= (sequelize) => {
     sequelize.define('animal', {
         name: {
