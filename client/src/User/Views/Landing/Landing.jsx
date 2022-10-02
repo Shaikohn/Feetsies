@@ -1,11 +1,12 @@
 import React from "react";
 import Header from "../../Features/Header/Header.jsx";
+import styles from "./Landing.module.css";
 
 export default function Landing() {
     
     return (
         <div className="landing">
-            <div className="landing-header">
+            <div className={styles.landingProd}>
                 <Header />
             </div>
             <div className="landing-container">

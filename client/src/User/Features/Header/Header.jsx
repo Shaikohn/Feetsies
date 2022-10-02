@@ -8,7 +8,9 @@ export default function Header() {
     return (
         <div className={styles.divHeader}>
             <div>
-                <img className={styles.logo} src={logo} alt="" width="200px" height="200px"/>
+                <Link to="/">
+                    <img className={styles.logo} src={logo} alt="" width="200px" height="200px"/>
+                </Link>
             </div>
             <div className={styles.headerCont}>
                 <div className={styles.headerDiv}>
@@ -17,9 +19,9 @@ export default function Header() {
                 <div className={styles.headerDiv}>
                     <Link to="/home/animals" className={styles.headerLink}>Animals</Link>
                 </div>
-                <div className={styles.headerDiv}>
+                {/* <div className={styles.headerDiv}>
                     <Link to="/home/altaAdoption" className={styles.headerLink}>Register Adoption</Link>
-                </div>
+                </div> */}
                 <div className={styles.headerDiv}>
                     <Link to="/home/createProduct" className={styles.headerLink}>Create Product</Link>
                 </div>

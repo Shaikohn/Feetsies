@@ -29,7 +29,7 @@ export default function AnimalHome() {
 
   return (
     <div>
-      <div className="divanim-header">
+      <div className={styles.headerAnim}>
         <Header />
       </div>
       <div className="divanim-navbar">
