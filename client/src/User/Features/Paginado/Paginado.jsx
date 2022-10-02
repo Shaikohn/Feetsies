@@ -2,22 +2,25 @@ import React from "react";
 import {useSelector, useDispatch} from 'react-redux';
 import { setPage } from "../../../redux/actions/paginadoA";
 
+import './Paginado.css'
 
-function Paginado({ videogames, videoPerpage }) {
+function Paginado({ items, itemsPerPage }) {
   const dispatch = useDispatch();
-  const page = useSelector(state=> state.page)
+  const {page} = useSelector(state=> state.currentPage)
   
   const arrayNumber = [];
   
-  for (let i = 0; i < Math.ceil(videogames / videoPerpage); i++) {
+  for (let i = 0; i < Math.ceil(items / itemsPerPage); i++) {
     arrayNumber.push(i+1);
   }
+  
   const previousPage = (e)=>{
     e.preventDefault();
     if(page!==1){
       dispatch(setPage(page - 1))
     }
   }
+  
   const nextPage = (e)=>{
     e.preventDefault();
     if(page < arrayNumber.length){
@@ -33,7 +36,8 @@ function Paginado({ videogames, videoPerpage }) {
         </button>
         {arrayNumber.map((n) => {
           return (
-            <button key={n} 
+            <button key={n}
+            className={n===page?"actualPage":"none"} 
             onClick={() => 
              { 
             dispatch(setPage(n))}}>

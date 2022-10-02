@@ -1,6 +1,6 @@
 import ProductCard from "../../Features/ProductCard/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllProducts } from "../../../redux/actions/getProductsA";
 import Header from "../../Features/Header/Header.jsx";
 import NavBarProd from "../../Features/NavBarProducts/navBarP.jsx";
@@ -14,10 +14,22 @@ export default function ProductHome() {
 
     const dispatch = useDispatch()
     const {allProductsCopy} = useSelector(state => state.products)
+    const {page} = useSelector((state) => state.currentPage);
+
+    const [productsPerPage] = useState(4);
+    const [currentPage, setCurrentPage] = useState(page);
+    const lastPositionPerPage = productsPerPage * currentPage;
+    const firstPositionPerPage = lastPositionPerPage - productsPerPage;
+    const currentProducts = allProductsCopy.slice(
+      firstPositionPerPage,
+      lastPositionPerPage
+    );
+  
 
     useEffect(() => {
         dispatch(getAllProducts())
-    }, [dispatch])
+        setCurrentPage(page)
+    }, [dispatch,page])
 
 
     return (
@@ -29,11 +41,14 @@ export default function ProductHome() {
                 <NavBarProd />
             </div>
             <div className="div-pagination">
-                <Pagination />
+                <Pagination
+                items={allProductsCopy.length}
+                itemsPerPage={productsPerPage}
+                 />
             </div>
-            {allProductsCopy.length ? (
+            {currentProducts.length ? (
                 <div className={styles.bodyProd}>
-                    {allProductsCopy.map(p => {
+                    {currentProducts.map(p => {
                         return (
                             <ProductCard
                                 id={p.id}
