@@ -14,8 +14,8 @@ export default function ProductDetails({product}) {
                     <div className={styles.infoContainer}>
                         <h1 className={styles.name}>{`${product?.name}`}</h1>
                         <h2 className={styles.price}>{`$${product?.price}`}</h2>
-                        <h3>{`Stock: ${product?.stock}`}</h3>
-                        <h3>{`${product?.description}`}</h3>
+                        <h2>{`Stock: ${product?.stock}`}</h2>
+                        <h2>{`${product?.description}`}</h2>
                     </div>
                     {/* <div>
                         <button>Buy now</button>

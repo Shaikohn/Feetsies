@@ -32,11 +32,10 @@ export default function AnimalDetails({animal}) {
                     </div> 
                     <div className={styles.infoContainer}>
                         <h1 className={styles.name}>{`${animal?.name}`}</h1>
-                        <h2>{`${animal?.sex}`}</h2>
-                        <h2>{`Size: ${animal?.size}`}</h2>
-                        <h3>{`${animal?.description}`}</h3>
-                        <h3>{`Age: ${animal?.age}`}</h3>
-                        <h3>{`Birth date: ${animal?.birth_date}`}</h3>
+                        <h2>{`${animal?.size} ${animal?.sex}`}</h2>
+                        <h2>{`${animal?.description}`}</h2>
+                        <h2>{`Age: ${animal?.age}`}</h2>
+                        <h2>{`Birth date: ${animal?.birth_date}`}</h2>
                         {/* <div>
                             <button>Request adoption</button>
                         </div> */}
