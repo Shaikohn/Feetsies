@@ -18,7 +18,8 @@ const animalsReducer = (state = initialState, { type, payload }) => {
 
     case GET_ANIMAL_NAME:
       return {
-        allAnimals: payload,
+        ...state,
+        allAnimalsCopy: payload,
       };
     case FILTER_SEX_ANIMALS:
       const filteredSex =
