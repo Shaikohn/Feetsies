@@ -1,7 +1,5 @@
 const {DataTypes} = require('sequelize')
 
-
-
 module.exports= (sequelize) => {
     sequelize.define('animal', {
         name: {
@@ -35,6 +33,12 @@ module.exports= (sequelize) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-
+        animal_typeId: {
+            type: DataTypes.INTEGER,
+            defaultValue:4,
+        },
+    },{
+        timeStamps:false,
+        createdAt:false,
     })
 }
