@@ -16,15 +16,15 @@ export default function ProductHome() {
     const {allProductsCopy} = useSelector(state => state.products)
     const {page} = useSelector((state) => state.currentPage);
 
-    const [productsPerPage] = useState(4);
+    const [productsPerPage] = useState(8);
     const [currentPage, setCurrentPage] = useState(page);
     const lastPositionPerPage = productsPerPage * currentPage;
     const firstPositionPerPage = lastPositionPerPage - productsPerPage;
     const currentProducts = allProductsCopy.slice(
-      firstPositionPerPage,
-      lastPositionPerPage
+        firstPositionPerPage,
+        lastPositionPerPage
     );
-  
+
 
     useEffect(() => {
         dispatch(getAllProducts())
@@ -44,28 +44,30 @@ export default function ProductHome() {
                 <Pagination
                 items={allProductsCopy.length}
                 itemsPerPage={productsPerPage}
-                 />
+                />
             </div>
-            {currentProducts.length ? (
-                <div className={styles.bodyProd}>
-                    {currentProducts.map(p => {
-                        return (
-                            <ProductCard
-                                id={p.id}
-                                name={p.name}
-                                image={p.image}
-                                price={p.price}
-                                productTypes={p.productTypes}
-                            />
-                        )
-                    })}
-                </div>
-            ) : (
-                <div>
-                    <img className={styles.loading} src={loading} alt="Loading..." />
-                </div>
-            )
-            } 
+            <div className={styles.bodyImg}>
+                {currentProducts.length ? (
+                    <div className={styles.bodyProd}>
+                        {currentProducts.map(p => {
+                            return (
+                                <ProductCard
+                                    id={p.id}
+                                    name={p.name}
+                                    image={p.image}
+                                    price={p.price}
+                                    productTypes={p.productTypes}
+                                />
+                            )
+                        })}
+                    </div>
+                ) : (
+                    <div>
+                        <img className={styles.loading} src={loading} alt="Loading..." />
+                    </div>
+                )
+                } 
+            </div>
         </div>
     )
 }

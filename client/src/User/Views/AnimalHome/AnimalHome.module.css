@@ -1,3 +1,7 @@
+.headerAnim {
+    background-color: rgb(0, 0, 0);
+}
+
 .bodyAnim {
     position: relative;
     /* width: 100%; */
