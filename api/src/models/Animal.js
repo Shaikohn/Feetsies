@@ -1,4 +1,5 @@
 const {DataTypes} = require('sequelize')
+const defaultpic = `https://photoshop-kopona.com/uploads/posts/2018-07/1531754924_2.jpg`;
 
 module.exports= (sequelize) => {
     sequelize.define('animal', {
@@ -37,6 +38,10 @@ module.exports= (sequelize) => {
             type: DataTypes.INTEGER,
             defaultValue:4,
         },
+        main_image:{
+            type: DataTypes.TEXT,
+            defaultValue:defaultpic,
+        }
     },{
         timeStamps:false,
         createdAt:false,
