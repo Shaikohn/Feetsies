@@ -37,9 +37,9 @@ export default function AnimalDetails({animal}) {
                         <h3>{`Description: ${animal?.description}`}</h3>
                         <h3>{`Age: ${animal?.age}`}</h3>
                         <h3>{`Birth date: ${animal?.birth_date}`}</h3>
-                        <div>
+                        {/* <div>
                             <button>Request adoption</button>
-                        </div>
+                        </div> */}
                     </div>
             </div>
     )
