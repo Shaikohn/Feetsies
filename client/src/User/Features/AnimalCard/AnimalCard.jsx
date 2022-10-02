@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./AnimalCard.module.css";
-
+ 
 export default function AnimalCard({id, name, main_image, sex, size}) {
 
     return (
