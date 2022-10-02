@@ -6,21 +6,21 @@ export default function ProductDetails({product}) {
     
 
     return (
-            <div key={product?.id}>
+            <div className={styles.detailsBackground} key={product?.id}>
                 <div>
                     <div>
                         <img className={styles.mainImg} src={product?.image} alt="" width="200px" height="250px" />
                     </div>
                     <div className={styles.infoContainer}>
-                        <h2>{`Name: ${product?.name}`}</h2>
-                        <h3>{`Price: $${product?.price}`}</h3>
-                        <h3>{`Stock: ${product?.stock}`}</h3>
-                        <h3>{`Description: ${product?.description}`}</h3>
+                        <h1 className={styles.name}>{`${product?.name}`}</h1>
+                        <h2 className={styles.price}>{`$${product?.price}`}</h2>
+                        <h2>{`Stock: ${product?.stock}`}</h2>
+                        <h2>{`${product?.description}`}</h2>
                     </div>
-                    <div>
+                    {/* <div>
                         <button>Buy now</button>
                         <button>Add to Cart</button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
     )

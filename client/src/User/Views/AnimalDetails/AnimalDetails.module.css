@@ -25,14 +25,27 @@
 }
 
 .mainImg {
+    border-radius: 10px;
     float: left;
     height: 300px;
     margin-left: 100px;
+    margin-top: 70px;
     width: 300px;
 }
 
-.infoContainer {
-    float: center;
-    margin-top: 150px;
+.detailsBackground {
+    background-image: url("../ProductDetails/backgroundDetails1.jpg");
+    font-family: "Segoe Print";
+    height: 443px;
+    object-fit: cover;
     text-align: center;
+}
+
+.infoContainer {
+    color: white;
+    padding-top: 80px; 
+}
+
+.name {
+    text-decoration: underline;
 }
