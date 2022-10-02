@@ -22,7 +22,7 @@ export default function ProductHome() {
 
     return (
         <div>
-            <div className="divprod-header">
+            <div className={styles.headerProd}>
                 <Header />
             </div>
             <div className="divprod-navbar">
