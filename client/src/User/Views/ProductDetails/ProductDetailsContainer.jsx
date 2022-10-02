@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { clearProductDetails, getProductDetails } from "../../../redux/actions/productDetailsActions";
 import ProductDetails from "./ProductDetails";
+import Header from "../../Features/Header/Header";
+import loading from "../ProductHome/Img/Loading.gif";
+import styles from "../ProductHome/ProductHome.module.css";
 
 export default function ProductDetailsContainer() {
 
@@ -20,8 +23,20 @@ export default function ProductDetailsContainer() {
 
     return (
         <div>
+            <div className={styles.headerProd}>
+                <Header />
+            </div>
             {
-                <ProductDetails product={product} />
+                <div>
+                {Object.keys(product).length > 0 ? (
+                    <ProductDetails product={product} />
+                    ) : (
+                        <div>
+                        <img className={styles.loading} src={loading} alt="Loading..." />
+                    </div>
+                    )
+                }
+                </div>
             }
         </div>
     )
