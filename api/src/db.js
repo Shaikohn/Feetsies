@@ -42,8 +42,9 @@ Adoption_petition.belongsTo(User);
 ////////////////////////////////////////
 Animal.hasMany(Adoption_petition);
 Adoption_petition.belongsTo(Animal);
+//////////////////////////////////////
 
-
+/////////////////////////////////////
 module.exports = {
   ...sequelize.models, 
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');

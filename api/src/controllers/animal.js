@@ -1,5 +1,7 @@
 const {Animal} = require('../db.js')
+const {Animal_type} = require('../db.js')
 const {Op} = require('sequelize')
+const sequelize = require('sequelize')
 
 const errorVar = {
     err: 500,
@@ -31,6 +33,9 @@ async function getAnimalDetail(req, res) {
                 id: id
             }
         })
+        let typeId = animalDetail.dataValues.animal_typeId;
+        let type = await Animal_type.findOne({where:{id:typeId}});
+        animalDetail.dataValues.animal_type=type.dataValues.name;
         if(!animalDetail || animalDetail.length === 0) {
             return res.status(404).send(notFoundVar)
         } else {
@@ -44,16 +49,19 @@ async function getAnimalDetail(req, res) {
 }
 
 async function createAnimal(req,res) {
-    let {name, description, sex, breed, size, age} = req.body
+    let {name, description, sex, breed, size, age,animalType} = req.body
     
     try {
+        let animtype = await Animal_type.findOne({where:{name:animalType}});
+
         let newAnimal = await Animal.create({
             name: name,
             description: description,
             size: size,
             sex: sex,
             breed: breed,
-            age: age
+            age: age,
+            animal_typeId:animtype.dataValues.id
         })
         return res.status(201).send(newAnimal)
     } catch (error) {
@@ -84,8 +92,10 @@ async function delateAnimal(req,res) {
 
 async function searchAnimal(req, res) {
     let {search} = req.query
+    let str = search.toLowerCase();
+    const searchValue = "%" + str + "%";
     try {
-        let queryAnimal = await Animal.findAll({
+        /*let queryAnimal = await Animal.findAll({
             where: {
                 [Op.and]: {
                     name: {
@@ -105,14 +115,30 @@ async function searchAnimal(req, res) {
                     }
                 }
             }
-        })
+        })*/
+        const queryAnimal = await Animal.findAll({
+            where: {
+                name: sequelize.where(sequelize.fn("LOWER", sequelize.col("name")), {
+                //aplico funcion a columna para pasar a minusculas
+                    [Op.like]: searchValue,
+                }),
+            },
+        });
         if(queryAnimal.length === 0 || !queryAnimal) {
             return res.status(404).send(notFoundVar)
         } else {
+            for (let i = 0; i < queryAnimal.length; i++) {
+                let typeId = queryAnimal[i].dataValues.animal_typeId;
+                let type = await Animal_type.findOne({where:{id:typeId}});
+                queryAnimal[i].dataValues.animal_type=type.dataValues.name;
+                console.log(type.dataValues.name);
+            }
+            console.log('log de respuesta',queryAnimal)
             return res.status(200).send(queryAnimal)
         }
     } catch (error) {
-         return res.status(500).send(errorVar)
+        console.log('log de error',error)
+        return res.status(500).send(errorVar)
     }
 }
 

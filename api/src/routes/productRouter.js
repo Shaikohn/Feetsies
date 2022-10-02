@@ -10,15 +10,6 @@ const {
 
 const {getAllTypes} = require('../controllers/Product_type.controller')
 
-router.get('/getAll',async (req,res)=>{
-    if(!req.query.str){
-        res.send(await getAllProducts());
-    }else{
-        res.send(await getAllProducts(req.query.str));
-    }
-    return;
-})
-
 router.get('/all',getAllProducts);
 
 router.get('/search',searchProducts);

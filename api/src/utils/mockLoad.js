@@ -22,7 +22,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Large',
-        age:'5'
+        age:'5',
+        animal_typeId:1
     },
     {
         name:'Brady',
@@ -30,7 +31,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Medium',
-        age:'6'
+        age:'6',
+        animal_typeId:2
     },
     {
         name:'Charlie',
@@ -38,7 +40,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Small',
-        age:'3'
+        age:'3',
+        animal_typeId:3
     },
     {
         name:'Django',
@@ -46,7 +49,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'Python',
         size:'Large',
-        age:'1'
+        age:'1',
+        animal_typeId:4
     },
     {
         name:'Entei',
@@ -54,7 +58,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'Pkmn',
         size:'Large',
-        age:'999999'
+        age:'999999',
+        animal_typeId:4
     },
     {
         name:'Florida',
@@ -62,7 +67,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'Bug',
         size:'Small',
-        age:'1'
+        age:'1',
+        animal_typeId:4
     },
     {
         name:'Garmfielf',
@@ -70,7 +76,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Large',
-        age:'8'
+        age:'8',
+        animal_typeId:2
     },
     {
         name:'Hillary',
@@ -78,7 +85,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Medium',
-        age:'4'
+        age:'4',
+        animal_typeId:2
     },
     {
         name:'Indigo',
@@ -86,7 +94,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Medium',
-        age:'5'
+        age:'5',
+        animal_typeId:1
     },
     {
         name:'Jake',
@@ -94,7 +103,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Medium',
-        age:'5'
+        age:'5',
+        animal_typeId:1
     },
     {
         name:'Kylian',
@@ -102,7 +112,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Small',
-        age:'23'
+        age:'23',
+        animal_typeId:4
     },
     {
         name:'Lilia',
@@ -110,7 +121,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Small',
-        age:'3'
+        age:'3',
+        animal_typeId:2
     },
     {
         name:'Mao',
@@ -118,7 +130,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Small',
-        age:'76'
+        age:'76',
+        animal_typeId:2
     },
     {
         name:'Nairobi',
@@ -126,7 +139,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Medium',
-        age:'7'
+        age:'7',
+        animal_typeId:1
     },
     {
         name:'Orwell',
@@ -134,7 +148,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Medium',
-        age:'3'
+        age:'3',
+        animal_typeId:1
     },
     {
         name:'Parrrrley',
@@ -142,7 +157,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'Pirate',
         size:'Large',
-        age:'5'
+        age:'5',
+        animal_typeId:4
     },
     {
         name:'Quinn',
@@ -150,7 +166,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'Birb',
         size:'Medium',
-        age:'5'
+        age:'5',
+        animal_typeId:4
     },
     {
         name:'Riley',
@@ -158,7 +175,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Medium',
-        age:'32'
+        age:'32',
+        animal_typeId:1
     },
     {
         name:'Susan',
@@ -166,7 +184,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Medium',
-        age:'6'
+        age:'6',
+        animal_typeId:2
     },
     {
         name:'Tracy',
@@ -174,7 +193,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Medium',
-        age:'6'
+        age:'6',
+        animal_typeId:1
     },
     {
         name:'Ursa',
@@ -182,7 +202,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Medium',
-        age:'6'
+        age:'6',
+        animal_typeId:1
     },
     {
         name:'Vladimir',
@@ -190,7 +211,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Medium',
-        age:'6'
+        age:'6',
+        animal_typeId:4
     },
     {
         name:'William',
@@ -198,7 +220,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Medium',
-        age:'6'
+        age:'6',
+        animal_typeId:1
     },
     {
         name:'Xenia',
@@ -206,7 +229,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Medium',
-        age:'6'
+        age:'6',
+        animal_typeId:2
     },
     {
         name:'Yesenia',
@@ -214,7 +238,8 @@ const mockAnimals =[
         sex:'Female',
         breed:'None',
         size:'Medium',
-        age:'6'
+        age:'6',
+        animal_typeId:1
     },
     {
         name:'Zalmoxisus',
@@ -222,7 +247,8 @@ const mockAnimals =[
         sex:'Male',
         breed:'None',
         size:'Medium',
-        age:'42'
+        age:'42',
+        animal_typeId:4
     },
 ];
 
