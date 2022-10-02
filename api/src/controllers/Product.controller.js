@@ -13,7 +13,7 @@ async function getAllProducts(req, res) {
     for (let i = 0; i < data.length; i++) {
       result.push(await createElementWithTypes(data[i]));
     }
-    if (result.length > 0) return res.status(404).send(emptyDB);
+    if (result.length < 0) return res.status(404).send(emptyDB);
     return res.send(result);
   } catch (error) {
     return res.status(500).send(error);

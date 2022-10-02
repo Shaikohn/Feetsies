@@ -16,18 +16,10 @@ function App() {
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/home/products" element={<HomeProducts />} />
         <Route exact path="/home/animals" element={<HomeAnimals />} />
-        <Route
-          exact
-          path="/home/products/:id"
-          element={<ProductDetailsContainer />}
-        />
-        <Route
-          exact
-          path="/home/animals/:id"
-          element={<AnimalDetailsContainer />}
-        />
+        <Route exact path="/home/products/:id" element={<ProductDetailsContainer />} />
+        <Route exact path="/home/animals/:id" element={<AnimalDetailsContainer />} />
         <Route exact path="/home/animals/:id/adoption" element={<Adoption />} />
-        <Route exact path="/home/altaadoption" element={<AltaAdoption />} />
+        <Route exact path="/home/altaAdoption" element={<AltaAdoption />} />
         <Route exact path="/home/createProduct" element={<CreateProduct />} />
         <Route
           path="*"

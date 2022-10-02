@@ -16,7 +16,7 @@ export const getAllAnimals = ()=>(dispatch)=>{
 export function getAnimalName(name) {
     return async function(dispatch) {
         try {
-            var json = await axios.get(`http://localhost:3001/animals?name=${name}`);
+            var json = await axios.get(`http://localhost:3001/animals/search?str=${name}`);
             return dispatch({
                 type: GET_ANIMAL_NAME,
                 payload: json.data

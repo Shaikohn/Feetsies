@@ -29,7 +29,7 @@ function Paginado({ videogames, videoPerpage }) {
     <div>
       <ul >
         <button onClick={(e)=> previousPage(e)} >
-          prev
+          Prev
         </button>
         {arrayNumber.map((n) => {
           return (
@@ -42,7 +42,7 @@ function Paginado({ videogames, videoPerpage }) {
           );
         })}
         <button onClick={(e)=> nextPage(e)}>
-          next
+          Next
         </button>
       </ul>
     </div>

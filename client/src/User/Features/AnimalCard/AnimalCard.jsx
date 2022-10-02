@@ -9,7 +9,7 @@ export default function AnimalCard({id, name, main_image, sex, size}) {
         <Link to={`/home/animals/${id}`} className={styles.link}>
             <div className={styles.animCard} key={id}>
                 <div className={styles.animContainer}>
-                    <h2 className={styles.animName}>{`Name: ${name}`}</h2>
+                    <h2 className={styles.animName}>{name}</h2>
                     <div>
                         <img className={styles.animImg} src={main_image} alt="" width="200px" height="250px" />
                     </div>
