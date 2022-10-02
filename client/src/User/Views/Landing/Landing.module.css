@@ -1,0 +1,22 @@
+.landing_container{
+    background-image: url('./Images/dogger.png');
+    background-color: aqua;
+}
+
+h1{
+    font-size: 8rem;
+    text-align: left;
+    margin-left: 7rem;
+}
+
+h3{
+    font-size: 4rem;
+    text-align: left;
+    margin-left: 7rem;
+}
+
+p{
+    font-size: 2rem;
+    text-align: left;
+    margin-left: 7rem;
+}
