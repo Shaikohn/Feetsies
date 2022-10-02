@@ -33,6 +33,9 @@ async function getAnimalDetail(req, res) {
                 id: id
             }
         })
+        let typeId = animalDetail.dataValues.animal_typeId;
+        let type = await Animal_type.findOne({where:{id:typeId}});
+        animalDetail.dataValues.animal_type=type.dataValues.name;
         if(!animalDetail || animalDetail.length === 0) {
             return res.status(404).send(notFoundVar)
         } else {
