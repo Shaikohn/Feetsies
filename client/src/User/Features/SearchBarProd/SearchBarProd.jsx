@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getProductName } from "../../../redux/actions/getProductsA.js";
 import { resetPagination } from "../../../redux/actions/paginadoA.js";
 import lupa from "./Img/Lupa.png";
-// import "./SearchBarProd.module.css";
+//import "./SearchBarProd.module.css";
 
 
 export default function SearchBarProd() {
@@ -31,9 +31,9 @@ export default function SearchBarProd() {
     
 
     return (
-        <div className='container-searchBarProd'>
+        <div className="container-searchBarProd">
             <input
-            className='input-search'
+            className='input-search1'
             type="text"
             placeholder='Search...'
             autoComplete='off'
