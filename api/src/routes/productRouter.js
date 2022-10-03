@@ -23,7 +23,7 @@ router.post('/create',createProduct)
 
 router.put('/update/:id',updateProduct)
 
-router.delete('/delete/:id',deleteProduct)
+router.delete('/:id',deleteProduct)
 
 
 module.exports = router;

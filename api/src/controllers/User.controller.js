@@ -1,5 +1,9 @@
 const {User} = require('../db');
 
+const emptyDB = { err: "Database empty" };
+const badReq = { err: "Bad request" };
+const notFound = { err: "Not Found" };
+
 async function userInitLoad(){
     const aux = [
         {
@@ -21,6 +25,19 @@ async function userInitLoad(){
     .catch((e)=>{console.log('An error occurred while mock Users: ',e)})
 }
 
+async function deleteUser(req, res) {
+    if (!req.params.id) return res.status(400).send(badReq);
+    try {
+        let user = await User.destroy({where:{id:req.params.id}})
+        if(!user) return res.status(404).send(notFound);
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log('aber',error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
-    userInitLoad
+    userInitLoad,
+    deleteUser
 }
