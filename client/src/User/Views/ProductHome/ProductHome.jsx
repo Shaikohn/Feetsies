@@ -27,7 +27,9 @@ export default function ProductHome() {
 
 
     useEffect(() => {
-        dispatch(getAllProducts())
+        if(allProductsCopy.length ===0){
+            dispatch(getAllProducts())
+        }
         setCurrentPage(page)
     }, [dispatch,page])
 
