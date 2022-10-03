@@ -2,7 +2,9 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header.jsx";
-import styles from "./CreateProduct.module.css"
+import styles from "./CreateProduct.module.css";
+import {useDispatch} from 'react-redux';
+import { getAllProducts } from "../../../redux/actions/getProductsA.js";
 
 import {
   Grid,
@@ -14,6 +16,7 @@ import {
 } from "@mui/material";
 
 const CreateProduct = () => {
+  const dispatch = useDispatch()
   // **** cloudinary ****
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -65,6 +68,7 @@ const CreateProduct = () => {
       });
       alert("Product Created");
       setImage("");
+      dispatch(getAllProducts());
     } catch (error) {
       console.log(error);
     }
