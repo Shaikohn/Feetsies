@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import orderProductPrice from "../../../redux/actions/orderPrice.js";
 import orderProductName from "../../../redux/actions/orderName.js";
 import filterTypeProducts from "../../../redux/actions/filterTypeProducts.js";
+import { setPage } from "../../../redux/actions/paginadoA.js";
 
 import SearchBarProd from "../SearchBarProd/SearchBarProd.jsx";
 import "./navBarProducts.css";
@@ -12,15 +13,18 @@ function NavBarProducts() {
   const eventHandlerPrice = (e) => {
     e.preventDefault();
     dispatch(orderProductPrice(e.target.value));
+    dispatch(setPage(1))
   };
   const eventHandlerName = (e) => {
     e.preventDefault();
     dispatch(orderProductName(e.target.value));
+    dispatch(setPage(1))
   };
 
   const eventHandlerProductType= (e)=>{
     e.preventDefault()
     dispatch(filterTypeProducts(e.target.value))
+    dispatch(setPage(1))
   }
 
   return (
@@ -74,12 +78,12 @@ function NavBarProducts() {
           <ul className="filterAndOrder_subOptions">
             <li className="subOptions_option">
               <button value="asc" onClick={(e) => eventHandlerPrice(e)}>
-                Low to high price
+                Low to high
               </button>
             </li>
             <li className="subOptions_option">
               <button value="desc" onClick={(e) => eventHandlerPrice(e)}>
-                High to low price
+                High to low
               </button>
             </li>
           </ul>

@@ -30,6 +30,8 @@ export default function AnimalHome() {
     
   }, [dispatch,page]);
 
+  
+
   return (
     <div>
       <div className={styles.headerAnim}>

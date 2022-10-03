@@ -92,8 +92,8 @@ const productsReducer = (state = initialstate, {type, payload} )=>{
               if(p.productTypes[i] === payload){
                 return true
               }
-              return false
             }
+            return false
            })
            return {
             ...state,
