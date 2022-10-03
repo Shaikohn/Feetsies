@@ -45,6 +45,8 @@ export default function AnimalHome() {
         items={allAnimalsCopy.length}
         itemsPerPage={animalsPerPage} />
       </div>
+      <div>
+      </div>
       {currentAnimals.length ? (
         <div className={styles.bodyAnim}>
           {currentAnimals.map((a) => {
