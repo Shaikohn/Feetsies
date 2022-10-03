@@ -4,19 +4,19 @@
     background-color: aqua;
 }
 
-h1{
+.landingTitle {
     font-size: 8rem;
     text-align: left;
     margin-left: 7rem;
 }
 
-h3{
+.landingH3 {
     font-size: 4rem;
     text-align: left;
     margin-left: 7rem;
 }
 
-p{
+.landingP {
     font-size: 2rem;
     text-align: left;
     margin-left: 7rem;

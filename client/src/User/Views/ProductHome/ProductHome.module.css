@@ -3,7 +3,7 @@
 }
 
 .bodyImg {
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 110%;
     background-image: url(./Img/Bg-img.jpg);
