@@ -23,8 +23,11 @@ export default function AnimalHome() {
   );
 
   useEffect(() => {
-    dispatch(getAllAnimals());
+    if(allAnimalsCopy.length ===0){
+      dispatch(getAllAnimals());
+    }
     setCurrentPage(page)
+    
   }, [dispatch,page]);
 
   return (
