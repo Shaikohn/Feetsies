@@ -1,6 +1,12 @@
 .landing_container{
     background-image: url('./Images/dogger.png');
-    background-color: aqua;
+    min-height: 800px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display:flex;
+    flex-direction: column;
 }
 
 h1{
