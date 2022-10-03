@@ -30,6 +30,8 @@ export default function AnimalHome() {
     
   }, [dispatch,page]);
 
+  
+
   return (
     <div>
       <div className={styles.headerAnim}>
@@ -42,6 +44,8 @@ export default function AnimalHome() {
         <Pagination
         items={allAnimalsCopy.length}
         itemsPerPage={animalsPerPage} />
+      </div>
+      <div>
       </div>
       {currentAnimals.length ? (
         <div className={styles.bodyAnim}>
