@@ -82,7 +82,7 @@ const CreateProduct = () => {
         <div className={styles.headerForm}>
           <Header />
         </div>
-        <div className="App">
+        <div className={styles.createForm}>
           <Grid>
           <Card style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
             <CardContent>
