@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import filterSexAnimals from "../../../redux/actions/filterSexAnimals.js";
 import filterSizeAnimals from "../../../redux/actions/filterSizeAnimals.js";
 import SearchBarAnim from "../SearchBarAnim/SearchBarAnim.jsx";
+import "./NavBarAnimal.css";
 
 function NavBarAnimals() {
   const dispatch = useDispatch();

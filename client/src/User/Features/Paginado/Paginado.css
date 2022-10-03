@@ -1,3 +1,46 @@
 .actualPage{
     background-color: green;
 }
+
+.pagcontainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.pagcontainer ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pagcontainer ul li {
+    margin: 0 5px;
+}
+
+.pagcontainer .actualPage{
+    background-color: green;
+}
+
+.pagcontainer .none {
+    background-color: gray;
+}
+
+.pagcontainer button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-left: 10px;
+}

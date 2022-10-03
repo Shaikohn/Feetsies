@@ -29,7 +29,7 @@ function Paginado({ items, itemsPerPage }) {
   }
 
   return (
-    <div>
+    <div className="pagcontainer">
       <ul >
         <button onClick={(e)=> previousPage(e)} >
           Prev
@@ -37,7 +37,7 @@ function Paginado({ items, itemsPerPage }) {
         {arrayNumber.map((n) => {
           return (
             <button key={n}
-            className={n===page?"actualPage":"none"} 
+            className={n===page?"actualPage pagcontainer":"none"} 
             onClick={() => 
              { 
             dispatch(setPage(n))}}>

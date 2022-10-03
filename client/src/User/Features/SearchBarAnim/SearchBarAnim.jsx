@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getAnimalName } from "../../../redux/actions/getAnimalsA.js";
 import { resetPagination } from "../../../redux/actions/paginadoA.js";
 import lupa from "./Img/Lupa.png";
-// import "./SearchBarAnim.module.css";
+import "./SearchBarAnim.module.css";
 
 
 export default function SearchBarProd() {
@@ -31,7 +31,7 @@ export default function SearchBarProd() {
     
 
     return (
-        <div className='container-searchBarAnim'>
+        <div className="searchBarAnim">
             <input
             className='input-search'
             type="text"
