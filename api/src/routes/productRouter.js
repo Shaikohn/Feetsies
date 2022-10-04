@@ -5,7 +5,8 @@ const {
     getDetail,
     createProduct,
     searchProducts,
-    updateProduct
+    updateProduct,
+    deleteProduct
 } = require('../controllers/Product.controller')
 
 const {getAllTypes} = require('../controllers/Product_type.controller')
@@ -21,6 +22,8 @@ router.get('/:id',getDetail)
 router.post('/create',createProduct)
 
 router.put('/update/:id',updateProduct)
+
+router.delete('/:id',deleteProduct)
 
 
 module.exports = router;

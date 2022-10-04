@@ -157,10 +157,22 @@ async function updateProduct(req, res) {
   }
 }
 
+async function deleteProduct(req, res) {
+  if (!req.params.id) return res.status(400).send(badReq);
+  try {
+    const prod = await Product.destroy({where:{id:req.params.id}})
+    if(!prod) return res.status(404).send(notFound);
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
+
 module.exports = {
   getAllProducts,
   createProduct,
   getDetail,
   searchProducts,
   updateProduct,
+  deleteProduct
 };
