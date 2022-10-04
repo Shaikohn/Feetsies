@@ -1,4 +1,12 @@
-const {Product,Product_type,Animal,Animal_type,User,Adoption_petition} = require('../db');
+const {
+    Product,
+    Product_type,
+    Animal,
+    Animal_type,
+    User,
+    Adoption_petition,
+    Adoption_alta
+} = require('../db');
 
 const mockUsers =[
     {
@@ -12,7 +20,23 @@ const mockUsers =[
     {
         email:'succaritas@evilcorp.com',
         password:'nosoyunlagarto',
-    }
+    },
+    {
+        email:'ravennaemilio@simular.com',
+        password:'tortugamaritima',
+    },
+    {
+        email:'santosmario@simular.com',
+        password:'fuegotiene',
+    },
+    {
+        email:'lamponnepablo@simular.com',
+        password:'lamponnetraeaquello',
+    },
+    {
+        email:'medinagabriel@simular.com',
+        password:'supercalifragilisticoespialidoso',
+    },
 ];
 
 const mockAnimals =[
@@ -256,23 +280,78 @@ const mockAnimals =[
 
 const mockPetitions =[
     {
+        userId:2,
+        animalId:1,
         topic:'some topic',
         description:'some description',
     },
     {
+        userId:3,
+        animalId:2,
         topic:'another topic',
         description:'another description',
     },
     {
+        userId:4,
+        animalId:3,
         topic:'A topic',
         description:'mockup description',
+    },
+    {
+        userId:5,
+        animalId:4,
+        topic:'lorem ipsum',
+        description:'dolor sit amet',
+    },
+    {
+        userId:6,
+        animalId:5,
+        topic:'Malleus',
+        description:'Maleficarum',
+    },
+    {
+        userId:7,
+        animalId:6,
+        topic:'Diablo 3 was a mistake',
+        description:'we will have to wait for diablo 4',
     },
 ];
 
 const mockInquiries =[
 ];
 
-const mockSolicitudes =[];
+const mockAltas =[
+    {
+        userId:2,
+        name:'Tomas',
+        description:'some description',
+    },
+    {
+        userId:3,
+        name:'Anderson',
+        description:'another description',
+    },
+    {
+        userId:4,
+        name:'Andres',
+        description:'mockup description',
+    },
+    {
+        userId:5,
+        name:'Shai',
+        description:'dolor sit amet',
+    },
+    {
+        userId:6,
+        name:'Felipe',
+        description:'Maleficarum',
+    },
+    {
+        userId:7,
+        name:'Pablo',
+        description:'we will have to wait for diablo 4',
+    },
+];
 
 async function loadUsers(){
     return User.bulkCreate(mockUsers);
@@ -353,9 +432,37 @@ async function loadProducts(){
         }
     }
 }
+
+async function loadPetitions(){
+    try {
+        for (let i = 0; i < mockPetitions.length; i++) {
+            let petition = await Adoption_petition.create({topic:mockPetitions[i].topic,description:mockPetitions[i].description});
+            let user = await User.findOne({where:{id:mockPetitions[i].userId}});
+            let animal = await Animal.findOne({where:{id:mockPetitions[i].animalId}});
+            let aux = await user.addAdoption_petitions(petition);
+            aux = await animal.addAdoption_petitions(petition);
+        }
+    } catch (error) {
+        console.log(error)
+    }    
+}
+
+async function loadAltas(){
+    try {
+        for (let i = 0; i < mockAltas.length; i++) {
+            let alta = await Adoption_alta.create({name:mockAltas[i].name,description:mockAltas[i].description});
+            let user = await User.findOne({where:{id:mockAltas[i].userId}});
+            let aux = await user.addAdoption_alta(alta);
+        }
+    } catch (error) {
+        console.log(error)
+    }    
+}
 //
 module.exports={
     loadAnimals,
     loadProducts,
     loadUsers,
+    loadPetitions,
+    loadAltas
 }
