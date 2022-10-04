@@ -1,7 +1,7 @@
 const {Router} = require('express')
 
 
-const { getAllAnimals, getAnimalDetail, createAnimal, delateAnimal, searchAnimal, updateAnimal } = require('../controllers/animal')
+const { getAllAnimals, getAnimalDetail, createAnimal, delateAnimal, searchAnimal, updateAnimal } = require('../controllers/Animal.controller')
 const { getAllTypes } = require('../controllers/Animal_type.controller')
 const router = Router()
 //
