@@ -37,7 +37,36 @@ async function addInquiry(req, res) {
     }
 }
 
+async function getInquiryDetail(req, res) {
+    if (!req.params.id) return res.status(400).send(badReq);
+    try {
+        let inq = await Inquiry.findOne({where:{id:req.params.id}})
+        if(!inq) return res.status(404).send(notFound);
+        let user = await User.findOne({where:{id:inq.dataValues.userId}})
+        if(!user) return res.status(404).send(notFound);
+        result = {
+            user:{
+                id:user.dataValues.id,
+                email:user.dataValues.email,
+                phoneNumber:user.dataValues.phone_number,
+            },
+            inquiry:{
+                id: inq.dataValues.id,
+                topic: inq.dataValues.topic,
+                description: inq.dataValues.description,
+                read: inq.dataValues.read,
+                isImportant: inq.dataValues.isImportant,
+                createdAt: inq.dataValues.createdAt,
+            }
+        }
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addInquiry,
-    deleteInquiry
+    deleteInquiry,
+    getInquiryDetail
 }

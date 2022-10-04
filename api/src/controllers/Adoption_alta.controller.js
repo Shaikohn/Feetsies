@@ -37,7 +37,36 @@ async function addAlta(req, res) {
     }
 }
 
+async function getAltaDetail(req, res) {
+    if (!req.params.id) return res.status(400).send(badReq);
+    try {
+        let alta = await Adoption_alta.findOne({where:{id:req.params.id}})
+        if(!alta) return res.status(404).send(notFound);
+        let user = await User.findOne({where:{id:alta.dataValues.userId}})
+        if(!user) return res.status(404).send(notFound);
+        result = {
+            user:{
+                id:user.dataValues.id,
+                email:user.dataValues.email,
+                phoneNumber:user.dataValues.phone_number,
+            },
+            alta:{
+                id: alta.dataValues.id,
+                name: alta.dataValues.name,
+                description: alta.dataValues.description,
+                read: alta.dataValues.read,
+                isImportant: alta.dataValues.isImportant,
+                createdAt: alta.dataValues.createdAt,
+            }
+        }
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addAlta,
-    deleteAlta
+    deleteAlta,
+    getAltaDetail
 }

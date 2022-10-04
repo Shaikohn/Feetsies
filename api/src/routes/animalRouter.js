@@ -1,7 +1,8 @@
 const {Router} = require('express')
 const {
     addAlta,
-    deleteAlta
+    deleteAlta,
+    getAltaDetail
 } = require('../controllers/Adoption_alta.controller')
 const {
     addPetition,
@@ -31,6 +32,7 @@ router.get('/take/:id',getPetitionDetail)
 router.delete('/take',deletePetition)
 router.post('/give',addAlta)
 router.delete('/give',deleteAlta)
+router.get('/give/:id',getAltaDetail)
 
 
 module.exports = router
