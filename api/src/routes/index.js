@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const productRouter = require('./productRouter')
 const animalRouter = require('./animalRouter')
-const adoptionsRouter = require('./adoptionsRouter')
+const adminRouter = require('./administrationRouter')
 const userRouter = require('./userRouter')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -12,7 +12,7 @@ const router = Router();
 
 router.use('/animals', animalRouter);
 router.use('/products', productRouter);
-router.use('/adoptions', adoptionsRouter);
+router.use('/admin', adminRouter);
 router.use('/users', userRouter);
 
 // Configurar los routers
