@@ -37,7 +37,8 @@ const {
   Product_animal_type,
   Adoption_petition,
   User,
-  Adoption_alta
+  Adoption_alta,
+  Inquiry
 } = sequelize.models;
 
 // Relations
@@ -55,7 +56,9 @@ Adoption_petition.belongsTo(Animal);
 //////////////////////////////////////
 User.hasMany(Adoption_alta);
 Adoption_alta.belongsTo(User);
-
+/////////////////////////////////////
+User.hasMany(Inquiry);
+Inquiry.belongsTo(User);
 /////////////////////////////////////
 module.exports = {
   ...sequelize.models, 

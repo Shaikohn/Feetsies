@@ -5,7 +5,8 @@ const {
     Animal_type,
     User,
     Adoption_petition,
-    Adoption_alta
+    Adoption_alta,
+    Inquiry
 } = require('../db');
 
 const mockUsers =[
@@ -318,6 +319,36 @@ const mockPetitions =[
 ];
 
 const mockInquiries =[
+    {
+        userId:2,
+        topic:'Analice la posibilidad de aprender Linux',
+        description:'Es de código abierto, y parecerá un profesional de programación al navegar con la terminal',
+    },
+    {
+        userId:3,
+        topic:'Te has unido a META ya?',
+        description:'Qué esperas para iniciar tu vida en META? El futuro es hoy! No hay necesidad de interactuar con personas en la vida real si usas las suficientes herramientas digitales',
+    },
+    {
+        userId:4,
+        topic:'Posibilidad de un acuerdo',
+        description:'Buenos días! He estado observando las actividades que lleva a cabo el refugio y quería consultar si de casualidad pudiera ceder una entrevista laboral a mi primo, Máximo Cozzeti. Es recibido de la universidad de Toronto en Veterinaria, y creía que podía ser una buena adición a su equipo de trabajo.',
+    },
+    {
+        userId:5,
+        topic:'Cuestiones de pago a convenir',
+        description:'Tenga usted muy buenos días. Ya conoce quién soy, y no puedo dejar de recordarle que a cambio del trabajo que llevamos a cabo para usted hemos acordado la colaboración en algunos operativos. En este mismo momento estoy precisando una jauría de perros amigables para cruzar una calle y montar una pequeña escena. Confiamos en que usted pueda cumplirnos, luego de un breve entrenamiento por el cuál luego me contactaré con usted. Desde ya muchas gracias.',
+    },
+    {
+        userId:6,
+        topic:'Buenas noticias',
+        description:'Desde que me traje a Betún no ha hecho más que darme alegrías. En su refugio saben bien como tratar a un animal, y hoy soy muy feliz con este nuevo compañero.',
+    },
+    {
+        userId:7,
+        topic:'Cajón de gatitos',
+        description:'Hola, escribo para contarle que he encontrado un cajón con gatitos abandonados. Me hubiese encantado que se quedaran en casa, pero lamentablemente trabajo largas horas y no me parecía humano dejarlos solos durante tanto tiempo. Pensé en regalarlos a los vecinos, pero la realidad es que este barrio está muy lleno de perros y temo por su seguridad. Podría usted recibirlos en su refugio?',
+    },
 ];
 
 const mockAltas =[
@@ -458,11 +489,24 @@ async function loadAltas(){
         console.log(error)
     }    
 }
+
+async function loadInquiries(){
+    try {
+        for (let i = 0; i < mockInquiries.length; i++) {
+            let inq = await Inquiry.create({topic:mockInquiries[i].topic,description:mockInquiries[i].description});
+            let user = await User.findOne({where:{id:mockInquiries[i].userId}});
+            let aux = await user.addInquiries(inq);
+        }
+    } catch (error) {
+        console.log(error)
+    }    
+}
 //
 module.exports={
     loadAnimals,
     loadProducts,
     loadUsers,
     loadPetitions,
-    loadAltas
+    loadAltas,
+    loadInquiries
 }
