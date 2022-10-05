@@ -65,8 +65,7 @@ Inquiry.belongsTo(User);
 User.hasMany(Cart_item);
 Cart_item.belongsTo(User);
 /////////////////////////////////////
-Cart_item.belongsToMany(Product,{through:'cart_item_products'});
-Product.belongsToMany(Cart_item,{through:'cart_item_products'});
+
 ////////////////////////////////////
 module.exports = {
   ...sequelize.models, 

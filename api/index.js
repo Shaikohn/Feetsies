@@ -8,7 +8,8 @@ const {
   loadPetitions,
   loadUsers,
   loadAltas,
-  loadInquiries
+  loadInquiries,
+  loadCarts
 } = require('./src/utils/mockLoad')
 
 // Syncing all the models at once.
@@ -21,7 +22,8 @@ conn.sync({ force: true })
 .then(async ()=>{console.log('- Wrote Animals in database.'),console.log('+ Writing Adoption petitions in database...'); await loadPetitions()})
 .then(async ()=>{console.log('- Wrote Adoption petitions in database.'),console.log('+ Writing Adoption altas in database...'); await loadAltas()})
 .then(async () => {console.log('- Wrote Adoption altas in database.'),console.log('+ Writing Inquiries in database...'); await loadInquiries()})
-.then(() => {console.log('- Wrote Inquiries in database.')})
+.then(async () => {console.log('- Wrote Inquiries in database.'),console.log('+ Writing Cart items in database...'); await loadCarts()})
+.then(() => {console.log('- Wrote Cart items in database.')})
 .then(() => {//Leave force true until we need to deploy. This way, testing datatypes and responses will be easier.
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
