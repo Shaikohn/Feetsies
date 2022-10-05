@@ -3,12 +3,12 @@ const {
     addAlta,
     deleteAlta,
     getAltaDetail
-} = require('../controllers/Adoption_alta.controller')
+} = require('../controllers/Animals/Adoption_alta.controller')
 const {
     addPetition,
     deletePetition,
     getPetitionDetail
-} = require('../controllers/Adoption_petition.controller')
+} = require('../controllers/Animals/Adoption_petition.controller')
 const {
     getAllAnimals,
     getAnimalDetail,
@@ -16,8 +16,8 @@ const {
     delateAnimal,
     searchAnimal,
     updateAnimal
-} = require('../controllers/Animal.controller')
-const { getAllTypes } = require('../controllers/Animal_type.controller')
+} = require('../controllers/Animals/Animal.controller')
+const { getAllTypes } = require('../controllers/Animals/Animal_type.controller')
 const router = Router()
 //
 router.get('/', getAllAnimals);

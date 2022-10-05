@@ -1,4 +1,4 @@
-const { Product, Product_type, Animal_type } = require("../db");
+const { Product, Product_type, Animal_type } = require("../../db");
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 

@@ -1,8 +1,7 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-const {writeAnimalTypes} = require('./src/controllers/Animal_type.controller')
-const {writeProductTypes} = require('./src/controllers/Product_type.controller')
-const {userInitLoad} = require('./src/controllers/User.controller')
+const {writeAnimalTypes} = require('./src/controllers/Animals/Animal_type.controller')
+const {writeProductTypes} = require('./src/controllers/Products/Product_type.controller')
 const {
   loadAnimals,
   loadProducts,

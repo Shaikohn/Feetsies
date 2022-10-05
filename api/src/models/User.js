@@ -39,6 +39,11 @@ module.exports= (sequelize) => {
             type: DataTypes.STRING,
             defaultValue: 'No location added',
             allowNull: true,
-        }
+        },
+        isBan: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+            allowNull: true,
+        },
     })
 }

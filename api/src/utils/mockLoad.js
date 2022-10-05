@@ -13,30 +13,44 @@ const mockUsers =[
     {
         email:'lioandres@afa.com',
         password:'lapelotaal10',
+        phone_number:'101010',
+        location:'Paris, France'
     },
     {
         email:'linustorvalds@mit.com',
         password:'vamoslinux',
+        phone_number:'424242',
+        location:'Stockholm, Sweden'
     },
     {
         email:'succaritas@evilcorp.com',
         password:'nosoyunlagarto',
+        phone_number:'666',
+        location:'San Francisco, USA'
     },
     {
         email:'ravennaemilio@simular.com',
         password:'tortugamaritima',
+        phone_number:'696969',
+        location:'San Isidro, Argentina'
     },
     {
         email:'santosmario@simular.com',
         password:'fuegotiene',
+        phone_number:'25051810',
+        location:'Ciudad Autonoma de Buenos Aires, Argentina'
     },
     {
         email:'lamponnepablo@simular.com',
         password:'lamponnetraeaquello',
+        phone_number:'7777',
+        location:'Rosario, Argentina'
     },
     {
         email:'medinagabriel@simular.com',
         password:'supercalifragilisticoespialidoso',
+        phone_number:'18022002',
+        location:'Las Toninas, Argentina'
     },
 ];
 
