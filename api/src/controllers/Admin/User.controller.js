@@ -110,12 +110,37 @@ async function getCart(req, res) {
     }
 }
 
+async function deleteOneFromCart(req, res) {
+    if (!req.params.id) return res.status(400).send(badReq);
+    try {
+        console.log(req.params.id)
+        let cartItem = await Cart_item.destroy({where:{id:req.params.id}})
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function deleteWholeCart(req, res) {
+    if (!req.params.id) return res.status(400).send(badReq);
+    try {
+        let cartItems = await Cart_item.destroy({where:{userId:req.params.id}})
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 
 
 module.exports={
     addUser,
+    deleteOneFromCart,
     deleteUser,
-    updateUser,
+    deleteWholeCart,
     getUserDetail,
-    getCart
+    getCart,
+    updateUser,
 }

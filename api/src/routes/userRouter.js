@@ -3,10 +3,12 @@ const router = Router();
 
 const {
     addUser,
+    deleteOneFromCart,
     deleteUser,
-    updateUser,
+    deleteWholeCart,
     getUserDetail,
-    getCart
+    getCart,
+    updateUser,
 } = require('../controllers/Admin/User.controller')
 
 
@@ -15,6 +17,8 @@ router.post('/create',addUser);
 router.put('/update', updateUser);
 router.get('/:id', getUserDetail);
 router.get('/cart/:id', getCart);
+router.delete('/cart/:id', deleteOneFromCart);
+router.delete('/cart/whole/:id', deleteWholeCart);
 
 
 module.exports = router;
