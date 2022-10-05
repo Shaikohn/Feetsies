@@ -8,6 +8,7 @@ import ProductDetailsContainer from "./User/Views/ProductDetails/ProductDetailsC
 import AnimalDetailsContainer from "./User/Views/AnimalDetails/AnimalDetailsContainer";
 import LandingPage from "./User/Views/Landing/Landing.jsx";
 import CreateProduct from "./User/Features/Form/CreateProduct";
+import SignUp from "./User/Features/Form/SignUp";
 
 function App() {
   return (
@@ -16,11 +17,21 @@ function App() {
         <Route exact path="/" element={<LandingPage />} />
         <Route exact path="/home/products" element={<HomeProducts />} />
         <Route exact path="/home/animals" element={<HomeAnimals />} />
-        <Route exact path="/home/products/:id" element={<ProductDetailsContainer />} />
-        <Route exact path="/home/animals/:id" element={<AnimalDetailsContainer />} />
+        <Route
+          exact
+          path="/home/products/:id"
+          element={<ProductDetailsContainer />}
+        />
+        <Route
+          exact
+          path="/home/animals/:id"
+          element={<AnimalDetailsContainer />}
+        />
         <Route exact path="/home/animals/:id/adoption" element={<Adoption />} />
         <Route exact path="/home/altaAdoption" element={<AltaAdoption />} />
         <Route exact path="/home/createProduct" element={<CreateProduct />} />
+        {/* Sign Up Form */}
+        <Route exact path="/home/signUp" element={<SignUp />} />
         <Route
           path="*"
           element={
