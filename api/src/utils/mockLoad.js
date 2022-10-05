@@ -414,6 +414,7 @@ async function loadProducts(){
             price:400,
             productTypes:['Food'],
             animalTypes:['Dog'],
+            stock:5
         },
         {
             name:'Leathery Dog Bone',
@@ -421,6 +422,7 @@ async function loadProducts(){
             price:200,
             productTypes:['Food','Toy'],
             animalTypes:['Dog'],
+            stock:6
         },
         {
             name:'Birthday hat',
@@ -428,6 +430,7 @@ async function loadProducts(){
             price:150,
             productTypes:['Clothing','Toy'],
             animalTypes:['Dog','Cat','Other'],
+            stock:7
         },
         {
             name:'Nepeta Cataria',
@@ -435,6 +438,7 @@ async function loadProducts(){
             price:300,
             productTypes:['Other'],
             animalTypes:['Cat'],
+            stock:8
         },
         {
             name:'Cat bed',
@@ -442,6 +446,7 @@ async function loadProducts(){
             price:1200,
             productTypes:['Other'],
             animalTypes:['Cat'],
+            stock:9
         },
         {
             name:'General test item',
@@ -449,6 +454,7 @@ async function loadProducts(){
             price:12345,
             productTypes:['Clothing','Toy','Food','Other'],
             animalTypes:['Cat','Dog','Rodent','Other'],
+            stock:10
         },
         {
             name:'Wooden flakes',
@@ -456,6 +462,7 @@ async function loadProducts(){
             price:600,
             productTypes:['Other'],
             animalTypes:['Rodent'],
+            stock:11
         },
         {
             name:'Another test item',
@@ -463,6 +470,7 @@ async function loadProducts(){
             price:600,
             productTypes:['Other'],
             animalTypes:['Other'],
+            stock:12
         },
     ];
     for (let i = 0; i < mockProducts.length; i++) {

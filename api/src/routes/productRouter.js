@@ -1,12 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 const {
+    addToCart,
     getAllProducts,
     getDetail,
     createProduct,
     searchProducts,
     updateProduct,
-    deleteProduct
+    deleteProduct,
 } = require('../controllers/Products/Product.controller')
 
 const {getAllTypes} = require('../controllers/Products/Product_type.controller')
@@ -24,6 +25,8 @@ router.post('/create',createProduct)
 router.put('/update/:id',updateProduct)
 
 router.delete('/:id',deleteProduct)
+
+router.post('/tocart',addToCart)
 
 
 module.exports = router;

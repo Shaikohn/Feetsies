@@ -1,11 +1,10 @@
-const {User} = require('../../db');
+const {User,Cart} = require('../../db');
 
 const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
 async function addUser(req, res) {
-
     if (
         !req.body.email ||
         !req.body.password
@@ -20,8 +19,10 @@ async function addUser(req, res) {
     try {
         let user = await User.create(newRow)
         if(!user) return res.status(500).send({err:'An error ocurred while creating user...'});
+        let log = user.createCart({});
         return res.sendStatus(200);
     } catch (error) {
+        console.log(error);
         return res.status(500).send(error);
     }
 }
