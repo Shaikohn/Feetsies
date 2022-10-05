@@ -6,37 +6,52 @@ const {
     User,
     Adoption_petition,
     Adoption_alta,
-    Inquiry
+    Inquiry,
+    Cart_item
 } = require('../db');
 
 const mockUsers =[
     {
         email:'lioandres@afa.com',
         password:'lapelotaal10',
+        phone_number:'101010',
+        location:'Paris, France'
     },
     {
         email:'linustorvalds@mit.com',
         password:'vamoslinux',
+        phone_number:'424242',
+        location:'Stockholm, Sweden'
     },
     {
         email:'succaritas@evilcorp.com',
         password:'nosoyunlagarto',
+        phone_number:'666',
+        location:'San Francisco, USA'
     },
     {
         email:'ravennaemilio@simular.com',
         password:'tortugamaritima',
+        phone_number:'696969',
+        location:'San Isidro, Argentina'
     },
     {
         email:'santosmario@simular.com',
         password:'fuegotiene',
+        phone_number:'25051810',
+        location:'Ciudad Autonoma de Buenos Aires, Argentina'
     },
     {
         email:'lamponnepablo@simular.com',
         password:'lamponnetraeaquello',
+        phone_number:'7777',
+        location:'Rosario, Argentina'
     },
     {
         email:'medinagabriel@simular.com',
         password:'supercalifragilisticoespialidoso',
+        phone_number:'18022002',
+        location:'Las Toninas, Argentina'
     },
 ];
 
@@ -400,6 +415,7 @@ async function loadProducts(){
             price:400,
             productTypes:['Food'],
             animalTypes:['Dog'],
+            stock:300
         },
         {
             name:'Leathery Dog Bone',
@@ -407,6 +423,7 @@ async function loadProducts(){
             price:200,
             productTypes:['Food','Toy'],
             animalTypes:['Dog'],
+            stock:300
         },
         {
             name:'Birthday hat',
@@ -414,6 +431,7 @@ async function loadProducts(){
             price:150,
             productTypes:['Clothing','Toy'],
             animalTypes:['Dog','Cat','Other'],
+            stock:300
         },
         {
             name:'Nepeta Cataria',
@@ -421,6 +439,7 @@ async function loadProducts(){
             price:300,
             productTypes:['Other'],
             animalTypes:['Cat'],
+            stock:300
         },
         {
             name:'Cat bed',
@@ -428,6 +447,7 @@ async function loadProducts(){
             price:1200,
             productTypes:['Other'],
             animalTypes:['Cat'],
+            stock:300
         },
         {
             name:'General test item',
@@ -435,6 +455,7 @@ async function loadProducts(){
             price:12345,
             productTypes:['Clothing','Toy','Food','Other'],
             animalTypes:['Cat','Dog','Rodent','Other'],
+            stock:300
         },
         {
             name:'Wooden flakes',
@@ -442,6 +463,7 @@ async function loadProducts(){
             price:600,
             productTypes:['Other'],
             animalTypes:['Rodent'],
+            stock:300
         },
         {
             name:'Another test item',
@@ -449,6 +471,7 @@ async function loadProducts(){
             price:600,
             productTypes:['Other'],
             animalTypes:['Other'],
+            stock:300
         },
     ];
     for (let i = 0; i < mockProducts.length; i++) {
@@ -461,6 +484,36 @@ async function loadProducts(){
             const pType = await Product_type.findOne({where:{name:mockProducts[i].productTypes[j]}});
             const aux = await newProd.addProduct_types(pType);
         }
+    }
+}
+
+async function loadCarts(){
+    let items=[
+        {
+            userId:1,
+            productId:1,
+            quantity:10
+        },
+        {
+            userId:2,
+            productId:2,
+            quantity:10
+        },
+        {
+            userId:2,
+            productId:3,
+            quantity:10
+        },
+        {
+            userId:2,
+            productId:4,
+            quantity:10
+        },
+    ]
+    for (let i = 0; i < items.length; i++) {
+        let user = await User.findByPk(items[i].userId);
+        let product = await Product.findByPk(items[i].productId);
+        let cItem = await user.createCart_item({productId:items[i].productId,quantity:items[i].quantity});
     }
 }
 
@@ -508,5 +561,6 @@ module.exports={
     loadUsers,
     loadPetitions,
     loadAltas,
-    loadInquiries
+    loadInquiries,
+    loadCarts
 }

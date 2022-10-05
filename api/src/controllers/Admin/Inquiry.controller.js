@@ -1,4 +1,4 @@
-const {Inquiry,User} = require('../db');
+const {Inquiry,User} = require('../../db');
 
 const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };

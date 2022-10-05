@@ -1,4 +1,10 @@
-const { Product, Product_type, Animal_type } = require("../db");
+const {
+  Product,
+  Product_type,
+  Animal_type,
+  User,
+  Cart_item
+} = require("../../db");
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 
@@ -111,9 +117,6 @@ async function createElementWithTypes(element) {
   };
 }
 
-
-
-
 async function updateProduct(req, res) {
   if (!req.params.id) return res.status(400).send(badReq);
   const { name, description, price } = req.body;
@@ -168,7 +171,29 @@ async function deleteProduct(req, res) {
   }
 }
 
+async function addToCart(req, res) {
+  let {userId,productId,quantity} = req.body;
+  try {
+      let user = await User.findByPk(userId);
+      let product = await Product.findByPk(productId);
+      if(quantity>product.dataValues.stock) return res.status(400).send({err:'Not enough units of that product in stock!'});
+      let cItem = await user.createCart_item({quantity});
+      let rel = product.setCart_item(cItem);
+      return res.sendStatus(200)
+  } catch (error) {
+      console.log('log',error)
+      return res.status(500).send(error);
+  }
+  
+
+}
+
+
+
+
+
 module.exports = {
+  addToCart,
   getAllProducts,
   createProduct,
   getDetail,

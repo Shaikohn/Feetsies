@@ -1,4 +1,4 @@
-const {Adoption_alta,User} = require('../db');
+const {Adoption_alta,User} = require('../../db');
 
 const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
