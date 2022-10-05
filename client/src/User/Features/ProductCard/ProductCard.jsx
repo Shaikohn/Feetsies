@@ -2,14 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { addToCart } from "../../../redux/actions/shoppingCartA";
 import styles from "./ProductCard.module.css";
-// import cart from "./Img/shopping-cart1.png";
+import cart from "./Img/shopping-cart1.png";
 
 export default function ProductCard({id, name, image, price, productTypes}) {
     
-    // function handleChange(e) {
-    //     //falta codigo
-    // }
+    const dispatch = useDispatch();
+    const {productsBuyCopy} = useSelector(state => state.shoppingCart);
+
+    function handleChange(e) {
+        e.preventDefault();
+        dispatch(addToCart(id));
+    }
 
     return (
         <Link to={`/home/products/${id}`} className={styles.link}>
@@ -29,11 +34,11 @@ export default function ProductCard({id, name, image, price, productTypes}) {
                             )
                         })}
                     </div>
-                    {/* <div className="div-btn">
+                    <div className="div-btn">
                         <button className="cart-btn" onClick={(e) => handleChange(e)}>
                             <img className="cart-icon" src={cart} alt="" weight="18px" height="18px" />
                         </button>
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </Link>

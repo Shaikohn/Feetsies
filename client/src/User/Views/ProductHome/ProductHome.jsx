@@ -2,7 +2,7 @@ import ProductCard from "../../Features/ProductCard/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllProducts } from "../../../redux/actions/getProductsA";
-import Header from "../../Features/Header/Header.jsx";
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import NavBarProd from "../../Features/NavBarProducts/navBarP.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
@@ -36,8 +36,8 @@ export default function ProductHome() {
 
     return (
         <div>
-            <div className={styles.headerProd}>
-                <Header />
+            <div>
+                <ResponsiveAppBar />
             </div>
             <div className="divprod-navbar">
                 <NavBarProd />
