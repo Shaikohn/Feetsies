@@ -1,4 +1,4 @@
-const {Product_type} = require('../db');
+const {Product_type} = require('../../db');
 const emptyDB="Database empty";
 
 async function getAllTypes(req,res){

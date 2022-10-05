@@ -2,7 +2,7 @@ const {DataTypes} = require('sequelize')
 
 
 module.exports= (sequelize) => {
-    sequelize.define('adoption_petition', {
+    sequelize.define('inquiry', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement:true,
@@ -13,9 +13,10 @@ module.exports= (sequelize) => {
         topic: {
             type: DataTypes.STRING,
             allowNull: false,
+            defaultValue:'Unnamed animal'
         },
         description: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
             defaultValue:'Default value'
         },
