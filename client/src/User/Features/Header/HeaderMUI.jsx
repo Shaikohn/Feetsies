@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
@@ -48,32 +49,32 @@ export default function ResponsiveAppBar() {
         <AppBar position="static" sx={{bgcolor: "black", color: "#87a827"}}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Avatar 
-                        alt="" 
-                        src={logo}
-                        sx={{ width: 125, height: 125, m: 1.25 }}
-                        component="a"
-                        href="/"
-                        />
-                    <Typography
-                        variant="h3"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            ml: 2,
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        FEETSIES
-                    </Typography>
-
+                    <Link to="/">
+                        <Avatar 
+                            alt="" 
+                            src={logo}
+                            sx={{ width: 125, height: 125, m: 1.25 }}
+                            />
+                    </Link>
+                    <Link to="/">
+                        <Typography
+                            variant="h3"
+                            noWrap
+                            textDecoration="none"
+                            sx={{
+                                ml: 2,
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            FEETSIES
+                        </Typography>
+                    </Link>
                     {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -130,6 +131,7 @@ export default function ResponsiveAppBar() {
                         LOGO
                     </Typography> */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        <Link to="/home/products">
                             <Button
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, display: 'block', fontSize: 20, 
@@ -137,34 +139,34 @@ export default function ResponsiveAppBar() {
                                     fontWeight: 600,
                                     mx: 2
                                 }}
-                                component="a"
-                                href="/home/products"
                                 size="large"
                                 variant="outlined"
                             >
                                 PRODUCTS
                             </Button>
+                        </Link>
+                        <Link to="/home/animals">
                             <Button
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, display: 'block', fontSize: 20, mx: 2 }}
-                                component="a"
-                                href="/home/animals"
                                 size="large"
                                 variant="outlined"
                             >
                                 ANIMALS
                             </Button>
+                        </Link>
+                        <Link to="/home/createProduct">
                             <Button
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, display: 'block', fontSize: 20, mx: 2 }}
-                                component="a"
-                                href="/home/createProduct"
                                 size="large"
                                 color="secondary"
                                 variant="outlined"
                             >
                                 CREATE PRODUCT
                             </Button>
+                        </Link>
+                        <Link to="/home/shoppingView">
                             <Button
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, display: 'block', fontSize: 20, 
@@ -172,16 +174,15 @@ export default function ResponsiveAppBar() {
                                     fontWeight: 600,
                                     mx: 2
                                 }}
-                                component="a"
-                                href="home/shoppingView"
                                 size="large"
                                 variant="outlined"
                             >
                                 CART
                             </Button>
+                        </Link>
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }} size="large" >
+                    <Box sx={{ flexGrow: 0 }} size="large">
                         <Tooltip 
                             title="Open settings"
                             TransitionComponent={Zoom}

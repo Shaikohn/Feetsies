@@ -34,8 +34,8 @@ export default function ProductHome() {
 
   return (
     <div>
-      <div className={styles.headerProd}>
-        <Header />
+      <div>
+        <ResponsiveAppBar />
       </div>
       <div>
         <NavBarProd />

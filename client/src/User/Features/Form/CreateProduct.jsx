@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import Header from "../Header/Header.jsx";
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import styles from "./CreateProduct.module.css";
 import { useDispatch } from "react-redux";
 import { getAllProducts } from "../../../redux/actions/getProductsA.js";
@@ -86,8 +86,8 @@ const CreateProduct = () => {
 
   return (
     <div>
-      <div className={styles.headerForm}>
-        <Header />
+      <div>
+        <ResponsiveAppBar />
       </div>
       <div className={styles.createForm}>
         <Grid>

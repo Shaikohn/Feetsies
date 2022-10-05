@@ -30,6 +30,9 @@ function App() {
         contrastText: '#000',
       },
     },
+    typography: {
+      textDecoration: "none"
+    }
     // typography: {
     //   fontFamily: "Arial",
     //   fontSize: 14, (14px es el valor por defecto)
@@ -50,7 +53,7 @@ function App() {
           <Route exact path="/home/animals/:id/adoption" element={<Adoption />} />
           <Route exact path="/home/altaAdoption" element={<AltaAdoption />} />
           <Route exact path="/home/createProduct" element={<CreateProduct />} />
-          <Route exact path="home/shoppingView" element={<ShoppingView />} />
+          <Route exact path="/home/shoppingView" element={<ShoppingView />} />
           {/* Sign Up Form */}
           <Route exact path="/home/signUp" element={<SignUp />} />
           <Route
