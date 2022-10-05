@@ -8,68 +8,77 @@ import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
 import styles from "./ProductHome.module.css";
 
-
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
 
 export default function ProductHome() {
+  const dispatch = useDispatch();
+  const { allProductsCopy } = useSelector((state) => state.products);
+  const { page } = useSelector((state) => state.currentPage);
 
-    const dispatch = useDispatch()
-    const {allProductsCopy} = useSelector(state => state.products)
-    const {page} = useSelector((state) => state.currentPage);
+  const [productsPerPage] = useState(8);
+  const [currentPage, setCurrentPage] = useState(page);
+  const lastPositionPerPage = productsPerPage * currentPage;
+  const firstPositionPerPage = lastPositionPerPage - productsPerPage;
+  const currentProducts = allProductsCopy.slice(
+    firstPositionPerPage,
+    lastPositionPerPage
+  );
 
-    const [productsPerPage] = useState(8);
-    const [currentPage, setCurrentPage] = useState(page);
-    const lastPositionPerPage = productsPerPage * currentPage;
-    const firstPositionPerPage = lastPositionPerPage - productsPerPage;
-    const currentProducts = allProductsCopy.slice(
-        firstPositionPerPage,
-        lastPositionPerPage
-    );
+  useEffect(() => {
+    if (allProductsCopy.length === 0) {
+      dispatch(getAllProducts());
+    }
+    setCurrentPage(page);
+  }, [dispatch, page, allProductsCopy.length]);
 
-
-    useEffect(() => {
-        if(allProductsCopy.length ===0){
-            dispatch(getAllProducts())
-        }
-        setCurrentPage(page)
-    }, [dispatch,page])
-
-
-    return (
+  return (
+    <div>
+      <div className={styles.headerProd}>
+        <Header />
+      </div>
+      <div>
+        <NavBarProd />
+      </div>
+      <div className="div-pagination">
+        <Pagination
+          items={allProductsCopy.length}
+          itemsPerPage={productsPerPage}
+        />
+      </div>
+      {/* <Container maxWidth="lg"> */}
+      {currentProducts.length ? (
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          justifyContent="space-evenly"
+          alignItems="center"
+          className={styles.bodyImg}
+        >
+          {currentProducts.map((p) => {
+            return (
+              <Grid item xs={3} key={p.id}>
+                <Container>
+                  <ProductCard
+                    id={p.id}
+                    key={p.id}
+                    name={p.name}
+                    image={p.image}
+                    price={p.price}
+                    productTypes={p.productTypes}
+                  />
+                </Container>
+              </Grid>
+            );
+          })}
+        </Grid>
+      ) : (
         <div>
-            <div>
-                <ResponsiveAppBar />
-            </div>
-            <div className="divprod-navbar">
-                <NavBarProd />
-            </div>
-            <div className="div-pagination">
-                <Pagination
-                items={allProductsCopy.length}
-                itemsPerPage={productsPerPage}
-                />
-            </div>
-            <div className={styles.bodyImg}>
-                {currentProducts.length ? (
-                    <div className={styles.bodyProd}>
-                        {currentProducts.map(p => {
-                            return (
-                                <ProductCard
-                                    id={p.id}
-                                    name={p.name}
-                                    image={p.image}
-                                    price={p.price}
-                                    productTypes={p.productTypes}
-                                />
-                            )
-                        })}
-                    </div>
-                ) : (
-                    <div>
-                        <img className={styles.loading} src={loading} alt="Loading..." />
-                    </div>
-                )
-                } 
-            </div>
+          <img className={styles.loading} src={loading} alt="Loading..." />
         </div>
-    )
+      )}
+      {/* </Container> */}
+    </div>
+  );
 }

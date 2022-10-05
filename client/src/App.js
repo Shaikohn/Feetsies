@@ -9,8 +9,8 @@ import AnimalDetailsContainer from "./User/Views/AnimalDetails/AnimalDetailsCont
 import LandingPage from "./User/Views/Landing/Landing.jsx";
 import ShoppingView from "./User/Views/ShoppingView/ShoppingView.jsx";
 import CreateProduct from "./User/Features/Form/CreateProduct";
+import SignUp from "./User/Features/Form/SignUp";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-
 
 
 function App() {
@@ -51,6 +51,8 @@ function App() {
           <Route exact path="/home/altaAdoption" element={<AltaAdoption />} />
           <Route exact path="/home/createProduct" element={<CreateProduct />} />
           <Route exact path="home/shoppingView" element={<ShoppingView />} />
+          {/* Sign Up Form */}
+          <Route exact path="/home/signUp" element={<SignUp />} />
           <Route
             path="*"
             element={
@@ -62,6 +64,7 @@ function App() {
         </Routes>
       </div>
     </ThemeProvider>
+
   );
 }
 

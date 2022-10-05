@@ -1,4 +1,4 @@
-const {Animal_type} = require('../db');
+const {Animal_type} = require('../../db');
 
 const errorVar = {
     err: 500,

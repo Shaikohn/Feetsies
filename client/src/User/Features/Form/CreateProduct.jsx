@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../Header/Header.jsx";
 import styles from "./CreateProduct.module.css";
-import {useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 import { getAllProducts } from "../../../redux/actions/getProductsA.js";
 
 import {
@@ -15,8 +15,11 @@ import {
   Typography,
 } from "@mui/material";
 
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+
 const CreateProduct = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // **** cloudinary ****
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -82,13 +85,15 @@ const CreateProduct = () => {
   }, [formState, reset, image]);
 
   return (
-      <div>
-        <div className={styles.headerForm}>
-          <Header />
-        </div>
-        <div className={styles.createForm}>
-          <Grid>
-          <Card style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
+    <div>
+      <div className={styles.headerForm}>
+        <Header />
+      </div>
+      <div className={styles.createForm}>
+        <Grid>
+          <Card
+            style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
+          >
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Product form
@@ -109,7 +114,9 @@ const CreateProduct = () => {
                       aria-invalid={errors.name ? "true" : "false"}
                     />
                     {errors?.name?.type === "required" && (
-                      <span style={{ color: "red" }}>This field is required</span>
+                      <span style={{ color: "red" }}>
+                        This field is required
+                      </span>
                     )}
                     {errors?.name?.type === "maxLength" && (
                       <span style={{ color: "red" }}>
@@ -186,7 +193,9 @@ const CreateProduct = () => {
                       aria-invalid={errors.description ? "true" : "false"}
                     />
                     {errors?.description?.type === "required" && (
-                      <span style={{ color: "red" }}>This field is required</span>
+                      <span style={{ color: "red" }}>
+                        This field is required
+                      </span>
                     )}
                     {errors?.description?.type === "maxLength" && (
                       <span style={{ color: "red" }}>
@@ -195,7 +204,7 @@ const CreateProduct = () => {
                     )}
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
+                    {/* <TextField
                       rows={4}
                       fullWidth
                       label="Image"
@@ -206,7 +215,25 @@ const CreateProduct = () => {
                       }}
                       {...register("image")}
                       onChange={uploadImage}
-                    />
+                    /> */}
+                    <Button variant="contained" component="label">
+                      Upload
+                      <input
+                        hidden
+                        accept="image/*"
+                        multiple
+                        type="file"
+                        onChange={uploadImage}
+                      />
+                    </Button>
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="label"
+                    >
+                      <input hidden accept="image/*" type="file" />
+                      <PhotoCamera />
+                    </IconButton>
                   </Grid>
                   <Grid item xs={12}>
                     <img

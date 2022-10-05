@@ -28,10 +28,23 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Product, Animal, Animal_type,Product_type,Product_product_type,Product_animal_type,Adoption_petition, User } = sequelize.models;
+const {
+  Adoption_alta,
+  Adoption_petition,
+  Animal,
+  Animal_type,
+  Cart_item, 
+  Inquiry,
+  Product,
+  Product_cart_item,
+  Product_type,
+  Product_product_type,
+  Product_animal_type,
+  User
+} = sequelize.models;
 
 // Relations
-// Product.hasMany(Reviews);
+
 Product.belongsToMany(Animal_type,{through:'product_animal_types'});
 Animal_type.belongsToMany(Product,{through:'product_animal_types'});
 Product.belongsToMany(Product_type,{through:'product_product_types'});
@@ -43,8 +56,17 @@ Adoption_petition.belongsTo(User);
 Animal.hasMany(Adoption_petition);
 Adoption_petition.belongsTo(Animal);
 //////////////////////////////////////
-
+User.hasMany(Adoption_alta);
+Adoption_alta.belongsTo(User);
 /////////////////////////////////////
+User.hasMany(Inquiry);
+Inquiry.belongsTo(User);
+/////////////////////////////////////
+User.hasMany(Cart_item);
+Cart_item.belongsTo(User);
+/////////////////////////////////////
+
+////////////////////////////////////
 module.exports = {
   ...sequelize.models, 
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');

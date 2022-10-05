@@ -1,5 +1,5 @@
-const {Animal} = require('../db.js')
-const {Animal_type} = require('../db.js')
+const {Animal} = require('../../db.js')
+const {Animal_type} = require('../../db.js')
 const {Op} = require('sequelize')
 const sequelize = require('sequelize')
 
