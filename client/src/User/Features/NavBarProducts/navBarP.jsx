@@ -4,107 +4,108 @@ import orderProductName from "../../../redux/actions/orderName.js";
 import filterTypeProducts from "../../../redux/actions/filterTypeProducts.js";
 import { setPage } from "../../../redux/actions/paginadoA.js";
 import SearchBarProd from "../SearchBarProd/SearchBarProd.jsx";
-import styles from "./navBarP.module.css";
+
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useState } from "react";
+import Stack from "@mui/material/Stack";
 
 function NavBarProducts() {
+  const [typeProduct, setTypeProduct] = useState("");
+  const [orderPrice, setOrderPrice] = useState("");
+  const [orderName, setOrderName] = useState("");
   const dispatch = useDispatch();
-  
+
   const eventHandlerPrice = (e) => {
     e.preventDefault();
+    setOrderPrice(e.target.value);
     dispatch(orderProductPrice(e.target.value));
-    dispatch(setPage(1))
+    dispatch(setPage(1));
   };
   const eventHandlerName = (e) => {
     e.preventDefault();
+    setOrderName(e.target.value);
     dispatch(orderProductName(e.target.value));
-    dispatch(setPage(1))
+    dispatch(setPage(1));
   };
 
-  const eventHandlerProductType= (e)=>{
-    e.preventDefault()
-    dispatch(filterTypeProducts(e.target.value))
-    dispatch(setPage(1))
-  }
+  const eventHandlerProductType = (e) => {
+    e.preventDefault();
+    setTypeProduct(e.target.value);
+    dispatch(filterTypeProducts(e.target.value));
+    dispatch(setPage(1));
+  };
 
   return (
-    <nav className={styles.navContainer}>
-      <div>
-        <SearchBarProd />
-      </div>
+    <Stack
+      direction="row"
+      spacing={2}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        p: 1,
+        borderRadius: 1,
+      }}
+      // bgcolor="success.main"
+    >
+      <Box sx={{ width: 240 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">
+            Filter type product
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={typeProduct}
+            label="Filter type product"
+            onChange={eventHandlerProductType}
+          >
+            <MenuItem value="All">All types</MenuItem>
+            <MenuItem value="Food">Food</MenuItem>
+            <MenuItem value="Toy">Toys</MenuItem>
+            <MenuItem value="Clothing">Clothing</MenuItem>
+            <MenuItem value="Other">Other</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
-      <ul className={styles.navUl}>
-        <li className={styles.navLiItem}>
-          Filter type product
-          <ul className={styles.navLiItemUl}>
+      <Box sx={{ width: 240 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Order by price</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={orderPrice}
+            label="Order by price"
+            onChange={eventHandlerPrice}
+          >
+            <MenuItem value="asc">Low to high</MenuItem>
+            <MenuItem value="desc">High to low</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
-          <li className={styles.navLiItemUlLi}>
-              <button
-              value="All"
-              onClick={e=> eventHandlerProductType(e)}
-              >All types</button>
-            </li>
-            <li className={styles.navLiItemUlLi}>
-              <button
-              value="Food"
-              onClick={e=> eventHandlerProductType(e)}
-              >Food</button>
-            </li>
+      <Box sx={{ width: 240 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Order By Name</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={orderName}
+            label="Order By Name"
+            onChange={eventHandlerName}
+          >
+            <MenuItem value="asc">A to Z</MenuItem>
+            <MenuItem value="desc">Z to A</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
-            <li className={styles.navLiItemUlLi}>
-              <button
-              value="Toy"
-              onClick={e=> eventHandlerProductType(e)}
-              >Toys</button>
-            </li>
-
-            <li className={styles.navLiItemUlLi}>
-              <button
-              value="Clothing"
-              onClick={e=> eventHandlerProductType(e)}
-              >Clothing</button>
-            </li>
-            <li className={styles.navLiItemUlLi}>
-              <button
-              value="Other"
-              onClick={e=> eventHandlerProductType(e)}
-              >Other</button>
-            </li>
-          </ul>
-        </li>
-
-        <li className={styles.navLiItem}>
-          Order by price
-          <ul className={styles.navLiItemUl}>
-            <li className={styles.navLiItemUlLi}>
-              <button value="asc" onClick={(e) => eventHandlerPrice(e)}>
-                Low to high
-              </button>
-            </li>
-            <li className={styles.navLiItemUlLi}>
-              <button value="desc" onClick={(e) => eventHandlerPrice(e)}>
-                High to low
-              </button>
-            </li>
-          </ul>
-        </li>
-
-        <li className={styles.navLiItem}>
-          Order by name
-          <ul className={styles.navLiItemUl}>
-            <li className={styles.navLiItemUlLi}>
-              <button value="asc" onClick={(e) => eventHandlerName(e)}>
-                A to Z
-              </button>
-            </li>
-            <li className={styles.navLiItemUlLi}>
-              <button value="desc" onClick={(e) => eventHandlerName(e)}>
-                Z to A
-              </button>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
+      <SearchBarProd />
+    </Stack>
   );
 }
 
