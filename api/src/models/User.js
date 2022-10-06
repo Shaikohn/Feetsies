@@ -28,7 +28,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [8, 22],
+        len: [8, 60],
       },
     },
     isAdmin: {
