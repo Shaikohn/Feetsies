@@ -1,22 +1,17 @@
 const { Router } = require('express');
 const router = Router();
 const {
+    addCart,
     deleteOneFromCart,
     deleteWholeCart,
     getCart
-} = require('../controllers/Shop/Cart.controller')
+} = require('../controllers/Shop/shopCart.controller')
 
 const {
     addPurchaseOrder,
     getPurchaseOrderById,
     getPOByUserId
 } = require('../controllers/Shop/Purchase_order.controller')
-
-/*const {
-    addToCart
-} = require ('../controllers/Shop/Cart.controller')*/
-
-//router.post('/tocart',addToCart)
 
 router.get('/get/:id',getCart)
 
@@ -29,5 +24,9 @@ router.post('/save',addPurchaseOrder)
 router.get('/getorder/:orderid',getPurchaseOrderById)
 
 router.get('/getuserorders/:userid',getPOByUserId)
+
+router.post('/additem',addCart)
+
+
 
 module.exports = router;

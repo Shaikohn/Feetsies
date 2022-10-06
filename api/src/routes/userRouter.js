@@ -13,8 +13,7 @@ const {
     deleteOneFromCart,
     deleteWholeCart,
     getCart,
-} = require('../controllers/Shop/Cart.controller')
-
+} = require('../controllers/Shop/shopCart.controller.js')
 
 router.delete('/:id',deleteUser);
 router.post('/create',addUser);
@@ -23,6 +22,8 @@ router.get('/:id', getUserDetail);
 router.get('/cart/:id', getCart);
 router.delete('/cart/:id', deleteOneFromCart);
 router.delete('/cart/whole/:id', deleteWholeCart);
+
+
 
 
 module.exports = router;

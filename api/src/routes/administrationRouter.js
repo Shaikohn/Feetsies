@@ -22,23 +22,29 @@ const {
 
 const {
     getAllPetitions,
+    getPetitionDetail,
+    deletePetition
 } = require('../controllers/Animals/Adoption_petition.controller')
 
 
 router.post('/inquiry',addInquiry)
-router.delete('/inquiry',deleteInquiry)
-router.get('/inquiry/:id',getInquiryDetail)
 router.get('/getinquiries',getAllInquiries)
+router.get('/inquiry/:id',getInquiryDetail)
+router.delete('/inquiry',deleteInquiry)
 
 router.get('/getaltas',getAllAltas)
-
 router.get('/getpetitions',getAllPetitions)
+router.get('/petition/:petitionid',getPetitionDetail)
+router.delete('/petition/:petitionid',deletePetition)
 
 router.post('/user',addUser)
-router.delete('/user/:id',deleteUser)
 router.get('/getallusers',getAllUsers)
 router.put('/toggleban/:userid',togglebanUser)
 router.put('/toggleadmin',toggleAdmin)
+router.delete('/user/:id',deleteUser)
+
+
+
 
 
 module.exports = router;

@@ -1,39 +1,12 @@
 const {
-    User,
     Cart_item,
     Product,
+    User
 } = require('../../db');
 
 const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
-
-
-
-
-async function deleteWholeCart(req, res) {
-    if (!req.params.id) return res.status(400).send(badReq);
-    try {
-        let cartItems = await Cart_item.destroy({where:{userId:req.params.id}})
-        return res.sendStatus(200);
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
-
-
-async function deleteOneFromCart(req, res) {
-    if (!req.params.id) return res.status(400).send(badReq);
-    try {
-        console.log(req.params.id)
-        let cartItem = await Cart_item.destroy({where:{id:req.params.id}})
-        return res.sendStatus(200);
-    } catch (error) {
-        console.log(error)
-        return res.status(500).send(error);
-    }
-}
 
 async function getCart(req, res) {
     if (!req.params.id) return res.status(400).send(badReq);
@@ -63,7 +36,30 @@ async function getCart(req, res) {
     }
 }
 
-async function addToCart(req, res) {
+async function deleteWholeCart(req, res) {
+    if (!req.params.id) return res.status(400).send(badReq);
+    try {
+        let cartItems = await Cart_item.destroy({where:{userId:req.params.id}})
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function deleteOneFromCart(req, res) {
+    if (!req.params.id) return res.status(400).send(badReq);
+    try {
+        console.log(req.params.id)
+        let cartItem = await Cart_item.destroy({where:{id:req.params.id}})
+        return res.sendStatus(200);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function addCart(req,res){
     let {userId,productId,quantity} = req.body;
     try {
         let user = await User.findByPk(userId);
@@ -78,31 +74,9 @@ async function addToCart(req, res) {
     }
 }
 
-module.exports={
-    addToCart,
+module.exports = {
+    addCart,
     deleteOneFromCart,
     deleteWholeCart,
     getCart
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports={
-    deleteOneFromCart,
-    deleteWholeCart,
-    getCart,
 }
