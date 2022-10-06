@@ -51,7 +51,20 @@ async function getPurchaseOrderById(req,res){
     }
 }
 
+async function getPOByUserId(req,res){
+    try {
+        let {userid} = req.params;
+        let pos = await Purchase_order.findAll({where:{userId:userid}});
+        if(pos.length<1)return res.status(404).send(notFound);
+        return res.status(200).send(pos);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports = {
     addPurchaseOrder,
-    getPurchaseOrderById
+    getPurchaseOrderById,
+    getPOByUserId
 }

@@ -8,7 +8,8 @@ const {
 
 const {
     addPurchaseOrder,
-    getPurchaseOrderById
+    getPurchaseOrderById,
+    getPOByUserId
 } = require('../controllers/Shop/Purchase_order.controller')
 
 /*const {
@@ -26,5 +27,7 @@ router.get('/remove/:id',deleteOneFromCart)
 router.post('/save',addPurchaseOrder)
 
 router.get('/getorder/:orderid',getPurchaseOrderById)
+
+router.get('/getuserorders/:userid',getPOByUserId)
 
 module.exports = router;

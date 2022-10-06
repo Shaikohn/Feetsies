@@ -4,6 +4,7 @@ const router = Router();
 const {
     addUser,
     deleteUser,
+    getAllUsers,
     getUserDetail,
     updateUser,
 } = require('../controllers/Admin/User.controller')

@@ -80,9 +80,35 @@ async function getUserDetail(req, res) {
     }
 }
 
+async function getAllUsers(req, res) {
+    try {
+        let users = await User.findAll({attributes: ['id', 'email','location','phone_number','isAdmin','isBan','updatedAt']})
+        if(!users || users.length<1) return res.status(500).send(emptyDB);
+        return res.status(200).send(users);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
+async function togglebanUser(req, res) {
+    const {userid} = req.params;
+    try {
+        let user = await User.findOne({where:{id:userid}})
+        if(!user) return res.status(404).send(notFound);
+        if(user.isAdmin)return res.status(400).send({err:'Can not ban Admins. Remove admin privileges first.'});
+        user.isBan = !user.isBan;
+        let result = await user.save
+        return res.status(200).send({success:'User Ban status changed'});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addUser,
     deleteUser,
+    getAllUsers,
     getUserDetail,
+    togglebanUser,
     updateUser,
 }
