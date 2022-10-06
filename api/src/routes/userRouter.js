@@ -3,13 +3,16 @@ const router = Router();
 
 const {
     addUser,
-    deleteOneFromCart,
     deleteUser,
-    deleteWholeCart,
     getUserDetail,
-    getCart,
     updateUser,
 } = require('../controllers/Admin/User.controller')
+
+const {
+    deleteOneFromCart,
+    deleteWholeCart,
+    getCart,
+} = require('../controllers/Shop/Cart.controller')
 
 
 router.delete('/:id',deleteUser);
