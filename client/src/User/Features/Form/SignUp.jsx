@@ -49,13 +49,13 @@ const SignUp = () => {
     password: "",
     showPassword: false,
   });
-
+  const [customError,setCustomError] = useState("");
   const [values2, setValues2] = useState({
     passwordConfirm: "",
     showPasswordConfirm: false,
   });
 
-  console.log("pass", values);
+  // console.log("pass", values);
   // console.log("pass confirmada", values2);
 
   const {
@@ -65,17 +65,27 @@ const SignUp = () => {
     handleSubmit,
   } = useForm();
 
-  const onSubmit = async (data) => {
-    console.log("Onsubmit", data);
-    // try {
-    //   await axios.post("http://localhost:3001/products/create", data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  const onSubmit = async (data,e) => {
+    try {
+      const register = await axios.post("http://localhost:3001/user/auth/register",data)
+      if(register.data.response ==="User create succesfull"){
+        console.log({token:register.data.token})
+        alert("User created")
+        e.target.reset()
+      }
+      setCustomError("")
+      
+    } catch (error) {
+      if(error.response.data.errors[0].msg){
+        setCustomError(error.response.data.errors[0].msg)
+        setTimeout(() => {
+          setCustomError("")
+        },4000);
+      }
+    }
   };
-  console.log(errors);
 
-  //   SHOW PASSWORD
+    //SHOW PASSWORD
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -98,7 +108,7 @@ const SignUp = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -114,16 +124,22 @@ const SignUp = () => {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
+
+
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+
+
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 3 }}
-          >
+            sx={{ mt: 3 }}>
+
             <Grid container spacing={2}>
+              
+              
               <Grid item xs={12} sm={6}>
                 <TextField
                   error={errors.firstName ? true : false}
@@ -153,6 +169,8 @@ const SignUp = () => {
                   </span>
                 )}
               </Grid>
+              
+              
               <Grid item xs={12} sm={6}>
                 <TextField
                   error={errors.lastName ? true : false}
@@ -183,7 +201,7 @@ const SignUp = () => {
                   </span>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   error={errors.phoneNumber ? true : false}
                   name="phoneNumber"
@@ -206,8 +224,8 @@ const SignUp = () => {
                     Phone number cannot be more than 9
                   </span>
                 )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
+              </Grid> */}
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   error={errors.location ? true : false}
                   fullWidth
@@ -224,7 +242,9 @@ const SignUp = () => {
                     {errors.location?.message}
                   </span>
                 )}
-              </Grid>
+              </Grid> */}
+              
+              
               <Grid item xs={12}>
                 <TextField
                   error={errors.email ? true : false}
@@ -244,7 +264,14 @@ const SignUp = () => {
                 {errors?.email?.type === "pattern" && (
                   <span style={{ color: "red" }}>Email invalid</span>
                 )}
+                {!errors.email?
+                  customError && (
+                    <span style={{ color: "red" }}>{customError}</span>
+                  )
+                :""}
               </Grid>
+              
+              
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel htmlFor="outlined-adornment-password1">
@@ -292,6 +319,8 @@ const SignUp = () => {
                   )}
                 </FormControl>
               </Grid>
+              
+              
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel>Confirm password</InputLabel>
@@ -344,23 +373,30 @@ const SignUp = () => {
                   )}
                 </FormControl>
               </Grid>
+            
+            
             </Grid>
+            
+            
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+              sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
+            
             <Grid container justifyContent="flex-end">
+              
               <Grid item>
                 <Link to="/signIn" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
+          
           </Box>
+        
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
