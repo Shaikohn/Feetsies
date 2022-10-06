@@ -7,7 +7,8 @@ const {
 } = require('../controllers/Shop/Cart.controller')
 
 const {
-    addPurchaseOrder
+    addPurchaseOrder,
+    getPurchaseOrderById
 } = require('../controllers/Shop/Purchase_order.controller')
 
 /*const {
@@ -23,5 +24,7 @@ router.delete('/clear/:id',deleteWholeCart)
 router.get('/remove/:id',deleteOneFromCart)
 
 router.post('/save',addPurchaseOrder)
+
+router.get('/getorder/:orderid',getPurchaseOrderById)
 
 module.exports = router;

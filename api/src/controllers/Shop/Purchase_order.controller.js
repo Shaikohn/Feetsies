@@ -38,6 +38,20 @@ async function addPurchaseOrder(req,res){
     }
 }
 
+async function getPurchaseOrderById(req,res){
+    try {
+        let {orderid} = req.params;
+        let po = await Purchase_order.findByPk(orderid);
+        let prods = await Order_item.findAll({where:{purchaseOrderId:orderid}})
+        let result = {order:po,elements:prods}
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports = {
-    addPurchaseOrder
+    addPurchaseOrder,
+    getPurchaseOrderById
 }
