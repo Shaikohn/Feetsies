@@ -70,9 +70,21 @@ async function getPetitionDetail(req, res) {
     }
 }
 
+async function getAllPetitions(req, res) {
+    try {
+        let petitions = await Adoption_petition.findAll()
+        if(!petitions || petitions.length<1) return res.status(404).send(emptyDB);
+        return res.send(petitions);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addPetition,
     deletePetition,
+    getAllPetitions,
     getPetitionDetail
 }
 
