@@ -3,6 +3,7 @@ const productRouter = require('./productRouter')
 const animalRouter = require('./animalRouter')
 const adminRouter = require('./administrationRouter')
 const userRouter = require('./userRouter')
+const userLoginRouter = require('./userLoginRouter.js');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -14,6 +15,7 @@ router.use('/animals', animalRouter);
 router.use('/products', productRouter);
 router.use('/admin', adminRouter);
 router.use('/users', userRouter);
+router.use('/user/auth/', userLoginRouter);
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
