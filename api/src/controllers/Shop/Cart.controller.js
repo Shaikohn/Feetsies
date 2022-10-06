@@ -47,6 +47,7 @@ async function getCart(req, res) {
             let product = await Product.findByPk(cartItems[i].dataValues.productId)
             //console.log(product.dataValues);
             let obj = {}
+            obj.productId = product.dataValues.id;
             obj.cartItemid = cartItems[i].dataValues.id;
             obj.name = product.dataValues.name;
             obj.price = product.dataValues.price * cartItems[i].dataValues.quantity;
