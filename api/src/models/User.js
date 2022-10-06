@@ -49,7 +49,7 @@ module.exports = (sequelize) => {
     status: {
       type: DataTypes.STRING,
       enum: ["Pending", "Active"],
-      default: "Pending",
+      defaultValue: "Pending",
     },
     confirmationCode: {
       type: DataTypes.STRING,
