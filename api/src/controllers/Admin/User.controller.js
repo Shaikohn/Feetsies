@@ -104,11 +104,26 @@ async function togglebanUser(req, res) {
     }
 }
 
+async function toggleAdmin(req, res) {
+    const {userid,selfid} = req.body;
+    if(userid===selfid)res.status(400).send({err:"cant change your own status"});
+    try {
+        let user = await User.findOne({where:{id:userid}})
+        if(!user) return res.status(404).send(notFound);
+        user.isAdmin = !user.isAdmin;
+        let result = await user.save
+        return res.status(200).send({success:'User Admin status changed'});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addUser,
     deleteUser,
     getAllUsers,
     getUserDetail,
+    toggleAdmin,
     togglebanUser,
     updateUser,
 }

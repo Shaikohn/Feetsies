@@ -11,7 +11,8 @@ const {
     addUser,
     deleteUser,
     getAllUsers,
-    togglebanUser
+    toggleAdmin,
+    togglebanUser,
 } = require('../controllers/Admin/User.controller')
 
 
@@ -22,6 +23,7 @@ router.post('/user',addUser)
 router.delete('/user/:id',deleteUser)
 router.get('/getallusers',getAllUsers)
 router.put('/toggleban/:userid',togglebanUser)
+router.put('/toggleadmin',toggleAdmin)
 
 
 module.exports = router;
