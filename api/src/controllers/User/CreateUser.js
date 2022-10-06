@@ -3,14 +3,15 @@ const bcrypt = require('bcryptjs');
 
 
 async function createUser(req,res) {
-    const {email, password,location} = req.body;
+    const {email, password,name,lastName} = req.body;
     try {
         if(email && password){
             const hashPassword = await bcrypt.hash(password,8)
             await User.create({
-                    email: email,
+                    email,
                     password:hashPassword,
-                    location
+                    name,
+                    lastName
                 })
          return res.status(200).send("User create succesfull")
         }

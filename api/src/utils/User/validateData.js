@@ -9,7 +9,7 @@ const validateCreateUser= [
         return User.findOne({where:{email:value}})
         .then(user => {
           if (user) {
-            return Promise.reject('E-mail already in use');
+            throw Error('E-mail already in use');
           }
         });
       }),
