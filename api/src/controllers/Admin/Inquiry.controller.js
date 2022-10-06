@@ -15,6 +15,18 @@ async function deleteInquiry(req, res) {
     }
 }
 
+async function getAllInquiries(req, res) {
+    try {
+        let inqs = await Inquiry.findAll({attributes: ['id', 'topic','description','read','isImportant']})
+        if(!inqs || inqs.length<1) return res.status(404).send(emptyDB);
+        return res.send(inqs);
+    } catch (error) {
+        console.log('huboerror')
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 async function addInquiry(req, res) {
     if(
         !req.body.userId ||
@@ -68,5 +80,6 @@ async function getInquiryDetail(req, res) {
 module.exports={
     addInquiry,
     deleteInquiry,
+    getAllInquiries,
     getInquiryDetail
 }
