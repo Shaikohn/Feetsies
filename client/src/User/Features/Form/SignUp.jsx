@@ -68,7 +68,8 @@ const SignUp = () => {
   const onSubmit = async (data,e) => {
     try {
       const register = await axios.post("http://localhost:3001/user/auth/register",data)
-      if(register.data ==="User create succesfull"){
+      if(register.data.response ==="User create succesfull"){
+        console.log({token:register.data.token})
         alert("User created")
         e.target.reset()
       }
