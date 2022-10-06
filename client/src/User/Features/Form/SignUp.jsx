@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -44,29 +45,33 @@ function Copyright(props) {
 const theme = createTheme();
 
 const SignUp = () => {
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     password: "",
     showPassword: false,
   });
 
-  const [values2, setValues2] = React.useState({
+  const [values2, setValues2] = useState({
     passwordConfirm: "",
     showPasswordConfirm: false,
   });
 
+  console.log("pass", values);
+  // console.log("pass confirmada", values2);
+
   const {
     register,
     formState: { errors },
+    getValues,
     handleSubmit,
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("Onsubmit", { ...data });
-    try {
-      await axios.post("http://localhost:3001/products/create", data);
-    } catch (error) {
-      console.log(error);
-    }
+    console.log("Onsubmit", data);
+    // try {
+    //   await axios.post("http://localhost:3001/products/create", data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
   console.log(errors);
 
@@ -248,8 +253,8 @@ const SignUp = () => {
                   <OutlinedInput
                     id="outlined-adornment-password1"
                     type={values.showPassword ? "text" : "password"}
-                    value={values.password}
-                    onChange={handleChange("password")}
+                    // value={values.password}
+                    // onChange={handleChange("password")}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -267,25 +272,33 @@ const SignUp = () => {
                       </InputAdornment>
                     }
                     label="Password"
+                    error={errors.password ? true : false}
+                    {...register("password", {
+                      required: "Password is required!",
+                      pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
+                    })}
                   />
+                  {errors.password && (
+                    <span style={{ color: "red" }}>
+                      {errors.password.message}
+                    </span>
+                  )}
+                  {errors?.password?.type === "pattern" && (
+                    <span style={{ color: "red" }}>
+                      Password must have, one digit, one lowercase character,
+                      one uppercase character and be at least 8 characters in
+                      length but no more than 32
+                    </span>
+                  )}
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <FormControl
-                  error={errors.confirmPassword ? true : false}
-                  variant="outlined"
-                  fullWidth
-                  {...register("confirmPassword", {
-                    required: true,
-                    pattern: /^[a-zA-Z ]*$/i,
-                    maxLength: 20,
-                  })}
-                >
+                <FormControl variant="outlined" fullWidth>
                   <InputLabel>Confirm password</InputLabel>
                   <OutlinedInput
                     type={values2.showPasswordConfirm ? "text" : "password"}
-                    value={values2.passwordConfirm}
-                    onChange={handleChange("passwordConfirm")}
+                    // value={values2.passwordConfirm}
+                    // onChange={handleChange("passwordConfirm")}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -303,10 +316,30 @@ const SignUp = () => {
                       </InputAdornment>
                     }
                     label="Confirm password"
+                    error={errors.passwordConfirmation ? true : false}
+                    {...register("passwordConfirmation", {
+                      required: "Please confirm password!",
+                      pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
+                      validate: {
+                        matchesPreviousPassword: (value) => {
+                          const { password } = getValues();
+                          return (
+                            password === value || "Passwords should match!"
+                          );
+                        },
+                      },
+                    })}
                   />
-                  {errors?.confirmPassword?.type === "pattern" && (
+                  {errors.passwordConfirmation && (
                     <span style={{ color: "red" }}>
-                      error passowd must have fix
+                      {errors.passwordConfirmation.message}
+                    </span>
+                  )}
+                  {errors?.passwordConfirmation?.type === "pattern" && (
+                    <span style={{ color: "red" }}>
+                      Password must have, one digit, one lowercase character,
+                      one uppercase character and be at least 8 characters in
+                      length but no more than 32
                     </span>
                   )}
                 </FormControl>
@@ -322,7 +355,7 @@ const SignUp = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to="/signIn" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
