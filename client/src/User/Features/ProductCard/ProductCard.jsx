@@ -12,8 +12,8 @@ export default function ProductCard({id, name, image, price, productTypes}) {
     // }
 
     return (
-        <Link to={`/home/products/${id}`} className={styles.link}>
             <div className={styles.prodCard} key={id}>
+                <Link to={`/home/products/${id}`} className={styles.link}>
                 <div className={styles.prodContainer}>
                     <h2 className={styles.prodName}>{name}</h2>
                     <div>
@@ -21,7 +21,7 @@ export default function ProductCard({id, name, image, price, productTypes}) {
                     </div>
                     <h2 className={styles.prodPrice}>{`$ ${price}`}</h2>
                     <div className={styles.prodTagsCointainer}>
-                        {productTypes.map((tag, index)  => {
+                        {productTypes?.map((tag, index)  => {
                             return (
                                 <div className={styles.prodTag} key={index}>
                                     <h4 className={styles.tagName}>{tag}</h4>
@@ -29,13 +29,14 @@ export default function ProductCard({id, name, image, price, productTypes}) {
                             )
                         })}
                     </div>
+                    
                     {/* <div className="div-btn">
                         <button className="cart-btn" onClick={(e) => handleChange(e)}>
                             <img className="cart-icon" src={cart} alt="" weight="18px" height="18px" />
                         </button>
                     </div> */}
-                </div>
+                    </div>
+                </Link>
             </div>
-        </Link>
     )
 };

@@ -8,8 +8,6 @@ import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
 import styles from "./ProductHome.module.css";
 
-
-
 export default function ProductHome() {
 
     const dispatch = useDispatch()
