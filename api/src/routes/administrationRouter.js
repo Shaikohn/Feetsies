@@ -29,7 +29,9 @@ const {
 const {
     getAllPetitions,
     getPetitionDetail,
-    deletePetition
+    deletePetition,
+    setPetitionAsRead,
+    toggleImportantPetition
 } = require('../controllers/Animals/Adoption_petition.controller')
 
 
@@ -48,6 +50,8 @@ router.delete('/alta/:altaid',deleteAlta)
 
 router.get('/getpetitions',getAllPetitions)
 router.get('/petition/:petitionid',getPetitionDetail)
+router.put('/petition/setread/:petitionid',setPetitionAsRead)
+router.put('/petition/toggleimportant/:petitionid',toggleImportantPetition)
 router.delete('/petition/:petitionid',deletePetition)
 
 router.post('/user',addUser)

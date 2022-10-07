@@ -81,11 +81,39 @@ async function getAllPetitions(req, res) {
     }
 }
 
+async function setPetitionAsRead(req,res){
+    if(!req.params.petitionid)return res.status(400).send(badReq);
+    try {
+        let petition = Petition.findByPk(req.params.petitionid);
+        petition.read = true;
+        let aux = await petition.save()
+        return res.status(200).send({success:"Petition set as read"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function toggleImportantPetition(req,res){
+    if(!req.params.petitionid)return res.status(400).send(badReq);
+    try {
+        let petition = Petition.findByPk(req.params.petitionid);
+        petition.isImportant = !petition.isImportant;
+        let aux = await petition.save()
+        return res.status(200).send({success:"Petition important status changed"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addPetition,
     deletePetition,
     getAllPetitions,
-    getPetitionDetail
+    getPetitionDetail,
+    setPetitionAsRead,
+    toggleImportantPetition
 }
 
 
