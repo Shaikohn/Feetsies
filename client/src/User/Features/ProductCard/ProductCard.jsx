@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
@@ -24,8 +24,8 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
 
   const arrayQuantity = Array.from(Array(10).keys())
 
-  const userId = 2 // to do remove
-
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
+  
   const dispatch = useDispatch(); 
 
   function handlerAddToCart(e) {
