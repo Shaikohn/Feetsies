@@ -73,7 +73,7 @@ const SignIn = () => {
   console.log(errors);
 
   return (
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
@@ -176,7 +176,7 @@ const SignIn = () => {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 };
 

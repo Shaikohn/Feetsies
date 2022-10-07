@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Avatar from '@mui/material/Avatar';
 import logo from "./Img/Logo.jpg";
 import Typography from '@mui/material/Typography';
+import LoginIcon from '@mui/icons-material/Login';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Tooltip, {TooltipProps, tooltipClasses} from '@mui/material/Tooltip';
@@ -184,18 +185,36 @@ export default function ResponsiveAppBar() {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }} size="large">
+                        <Link to="/signUp">
+                            <Tooltip
+                                title="Login / Register"
+                                TransitionComponent={Zoom}
+                                TransitionProps={{ timeout: 500 }}
+                                arrow
+                                // followCursor
+                            >
+                                <Avatar sx={{ bgcolor:"#567900", width: 55, height: 55 }}>
+                                        <LoginIcon  
+                                            fontSize="large" 
+                                            sx={{ color:"#fedf6a", width: 35, height: 35 }}
+                                        />
+                                    </Avatar>
+                            </Tooltip>
+                        </Link>
+                    </Box>
+                    <Box sx={{ flexGrow: 0 }} size="large">
                         <Tooltip 
                             title="Open settings"
                             TransitionComponent={Zoom}
                             TransitionProps={{ timeout: 500 }}
                             arrow
-                            followCursor
+                            // followCursor
                             // componentsProps={{bgcolor: "#87a827"}}
                             // PopperProps={}
                         >
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar sx={{ bgcolor:"#567900", width: 55, height: 55 }}>
-                                    <AccountCircleIcon  
+                                    <AccountCircleIcon
                                         fontSize="large" 
                                         sx={{ color:"#fedf6a", width: 35, height: 35 }}
                                     />
