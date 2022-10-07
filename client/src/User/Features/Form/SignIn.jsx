@@ -14,6 +14,9 @@ import { Link } from "react-router-dom";
 
 // React Hook Form
 import { useForm } from "react-hook-form";
+import { signIn } from "../../../redux/actions/auth";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -43,6 +46,10 @@ const SignIn = () => {
     handleSubmit,
   } = useForm();
 
+  const dispatch = useDispatch();
+
+  const navigateTo = useNavigate();
+
   const onSubmit = async (data) => {
     console.log("Onsubmit", data);
     try {
@@ -51,6 +58,8 @@ const SignIn = () => {
         data
       );
       console.log(login.data);
+      dispatch(signIn(data));
+      navigateTo("/");
       alert(login.data.msg);
       // if (
       //   login.data.response.data ===
