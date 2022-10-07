@@ -5,9 +5,9 @@ const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
 async function deleteAlta(req, res) {
-    if (!req.body.id) return res.status(400).send(badReq);
+    if (!req.params.altaid) return res.status(400).send(badReq);
     try {
-        let alta = await Adoption_alta.destroy({where:{id:req.body.id}})
+        let alta = await Adoption_alta.destroy({where:{id:req.params.altaid}})
         if(!alta) return res.status(404).send(notFound);
         return res.sendStatus(200);
     } catch (error) {
@@ -38,9 +38,9 @@ async function addAlta(req, res) {
 }
 
 async function getAltaDetail(req, res) {
-    if (!req.params.id) return res.status(400).send(badReq);
+    if (!req.params.altaid) return res.status(400).send(badReq);
     try {
-        let alta = await Adoption_alta.findOne({where:{id:req.params.id}})
+        let alta = await Adoption_alta.findOne({where:{id:req.params.altaid}})
         if(!alta) return res.status(404).send(notFound);
         let user = await User.findOne({where:{id:alta.dataValues.userId}})
         if(!user) return res.status(404).send(notFound);
@@ -65,8 +65,48 @@ async function getAltaDetail(req, res) {
     }
 }
 
+async function getAllAltas(req, res) {
+    try {
+        let altas = await Adoption_alta.findAll()
+        if(!altas || altas.length<1) return res.status(404).send(emptyDB);
+        return res.send(altas);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function setAltaAsRead(req, res) {
+    if (!req.params.altaid) return res.status(400).send(badReq);
+    try {
+        let alta = Adoption_alta.findByPk(req.params.altaid);
+        alta.read = true;
+        let aux = await alta.save()
+        return res.status(200).send({success:"Alta set as read"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function toggleImportantAlta(req,res){
+    if(!req.params.altaid)return res.status(400).send(badReq);
+    try {
+        let alta = Adoption_alta.findByPk(req.params.altaid);
+        alta.isImportant = !alta.isImportant;
+        let aux = await alta.save()
+        return res.status(200).send({success:"Alta important status changed"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addAlta,
     deleteAlta,
-    getAltaDetail
+    getAllAltas,
+    getAltaDetail,
+    setAltaAsRead,
+    toggleImportantAlta
 }

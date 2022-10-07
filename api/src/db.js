@@ -35,12 +35,14 @@ const {
   Animal_type,
   Cart_item, 
   Inquiry,
+  Order_item,
   Product,
-  Product_cart_item,
-  Product_type,
-  Product_product_type,
   Product_animal_type,
-  User
+  Product_cart_item,
+  Product_product_type,
+  Product_type,
+  Purchase_order,
+  User,
 } = sequelize.models;
 
 // Relations
@@ -65,7 +67,14 @@ Inquiry.belongsTo(User);
 User.hasMany(Cart_item);
 Cart_item.belongsTo(User);
 /////////////////////////////////////
-
+User.hasMany(Purchase_order);
+Purchase_order.belongsTo(User);
+////////////////////////////////////
+User.hasMany(Purchase_order);
+Purchase_order.belongsTo(User);
+////////////////////////////////////
+Purchase_order.hasMany(Order_item);
+Order_item.belongsTo(Purchase_order);
 ////////////////////////////////////
 module.exports = {
   ...sequelize.models, 

@@ -21,7 +21,8 @@ const mockUsers =[
         email:'linustorvalds@mit.com',
         password:'vamoslinux',
         phone_number:'424242',
-        location:'Stockholm, Sweden'
+        location:'Stockholm, Sweden',
+        isAdmin:true
     },
     {
         email:'succaritas@evilcorp.com',

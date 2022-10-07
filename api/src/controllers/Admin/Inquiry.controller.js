@@ -15,6 +15,18 @@ async function deleteInquiry(req, res) {
     }
 }
 
+async function getAllInquiries(req, res) {
+    try {
+        let inqs = await Inquiry.findAll({attributes: ['id', 'topic','description','read','isImportant']})
+        if(!inqs || inqs.length<1) return res.status(404).send(emptyDB);
+        return res.send(inqs);
+    } catch (error) {
+        console.log('huboerror')
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 async function addInquiry(req, res) {
     if(
         !req.body.userId ||
@@ -65,8 +77,37 @@ async function getInquiryDetail(req, res) {
     }
 }
 
+async function setInquiryAsRead(req,res){
+    if(!req.params.inquiryid)return res.status(400).send(badReq);
+    try {
+        let inq = Inquiry.findByPk(req.params.inquiryid);
+        inq.read = true;
+        let aux = await inq.save()
+        return res.status(200).send({success:"Inquiry set as read"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function toggleImportantInquiry(req,res){
+    if(!req.params.inquiryid)return res.status(400).send(badReq);
+    try {
+        let inq = Inquiry.findByPk(req.params.inquiryid);
+        inq.isImportant = !inq.isImportant;
+        let aux = await inq.save()
+        return res.status(200).send({success:"Inquiry important status changed"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addInquiry,
     deleteInquiry,
-    getInquiryDetail
+    getAllInquiries,
+    getInquiryDetail,
+    setInquiryAsRead,
+    toggleImportantInquiry
 }

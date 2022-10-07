@@ -7,7 +7,6 @@ import NavBarProd from "../../Features/NavBarProducts/navBarP.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
 import styles from "./ProductHome.module.css";
-
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 
