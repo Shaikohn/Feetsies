@@ -1,3 +1,4 @@
+const emailsRouter = require("./emailsRouter");
 const { Router } = require('express');
 const productRouter = require('./productRouter')
 const animalRouter = require('./animalRouter')
@@ -16,9 +17,9 @@ router.use('/admin', adminRouter);
 router.use('/users', userRouter);
 router.use('/cart', cartRouter);
 router.use('/user/auth/', userLoginRouter);
+router.use("/emails", emailsRouter);
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-
 
 module.exports = router;
