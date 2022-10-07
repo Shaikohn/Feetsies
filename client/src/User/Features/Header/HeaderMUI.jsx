@@ -45,6 +45,7 @@ export default function ResponsiveAppBar() {
         setAnchorElUser(null);
     };
 
+
     return (
         <AppBar position="static" sx={{bgcolor: "black", color: "#87a827"}}>
             <Container maxWidth="xl">

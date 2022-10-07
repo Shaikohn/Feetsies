@@ -61,12 +61,14 @@ async function deleteOneFromCart(req, res) {
 
 async function addCart(req,res){
     let {userId,productId,quantity} = req.body;
+    
     try {
         let user = await User.findByPk(userId);
+        
         let product = await Product.findByPk(productId);
         if(quantity>product.dataValues.stock) return res.status(400).send({err:'Not enough units of that product in stock!'});
-        let cItem = await user.createCart_item({quantity});
-        let rel = await product.setCart_item(cItem);
+        let cItem = await user.createCart_item({quantity, productId});
+        // let rel = await product.setCart_item(cItem);
         return res.sendStatus(200)
     } catch (error) {
         console.log('log',error)

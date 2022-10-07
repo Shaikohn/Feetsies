@@ -17,7 +17,7 @@ router.get('/get/:id',getCart)
 
 router.delete('/clear/:id',deleteWholeCart)
 
-router.get('/remove/:id',deleteOneFromCart)
+router.delete('/remove/:id',deleteOneFromCart)
 
 router.post('/save',addPurchaseOrder)
 

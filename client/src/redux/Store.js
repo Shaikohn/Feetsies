@@ -7,6 +7,8 @@ import paginadoReducer from "./reducers/paginadoR";
 import animalDetailsReducer from "./reducers/animalDetailsReducer.js";
 import productDetailsReducer from "./reducers/productDetailsReducer.js";
 import shoppingCartReducer from "./reducers/shoppingCartR";
+import getShoppingCartReducer from "./reducers/shoppingCartViewR";
+
     
     export const store = createStore(
         combineReducers({
@@ -15,6 +17,7 @@ import shoppingCartReducer from "./reducers/shoppingCartR";
             currentPage: paginadoReducer,
             ProductDetails: productDetailsReducer,
             AnimalDetails: animalDetailsReducer,
-            shoppingCart: shoppingCartReducer
+            shoppingCart: shoppingCartReducer,
+            getShoppingCart: getShoppingCartReducer
         }), 
         composeWithDevTools(applyMiddleware(thunk)));
