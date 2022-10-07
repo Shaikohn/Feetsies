@@ -9,7 +9,7 @@ export function addToCart(payload) {
     console.log(payload)    
     return async function(dispatch) {
         try {
-            var json = await axios.post("http://localhost:3001/products/tocart", payload);
+            var json = await axios.post("http://localhost:3001/cart/additem", payload);
             return dispatch({
                 type: ADD_TO_CART,
                 payload: json.data
@@ -23,7 +23,7 @@ export function addToCart(payload) {
 export function removeOneFromCart(id) {
     return async function(dispatch) {
         try {
-            var json = await axios.delete(`http://localhost:3001/users/cart/${id}`);
+            var json = await axios.delete(`http://localhost:3001/cart/remove/${id}`);
             return dispatch({
                 type: REMOVE_ONE_FROM_CART,
                 payload: json.data
@@ -37,7 +37,7 @@ export function removeOneFromCart(id) {
 export function removeWholeCart(id) {
     return async function(dispatch) {
         try {
-            var json = await axios.delete(`http://localhost:3001/users/cart/whole/${id}`);
+            var json = await axios.delete(`http://localhost:3001/cart/clear/${id}`);
             return dispatch({
                 type: REMOVE_WHOLE_CART,
                 payload: json.data
