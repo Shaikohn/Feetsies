@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 
+
 // React Hook Form
 import { useForm } from "react-hook-form";
 import { signIn } from "../../../redux/actions/auth";
@@ -58,8 +59,8 @@ const SignIn = () => {
         data
       );
       console.log(login.data);
-      dispatch(signIn(data));
-      navigateTo("/");
+      dispatch(signIn(data, navigateTo));
+      // navigateTo("/");
       alert(login.data.msg);
       // if (
       //   login.data.response.data ===
@@ -82,7 +83,7 @@ const SignIn = () => {
   console.log(errors);
 
   return (
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Grid
@@ -185,7 +186,7 @@ const SignIn = () => {
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 };
 

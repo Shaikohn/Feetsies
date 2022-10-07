@@ -1,5 +1,5 @@
 import { Box, Container } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getShoppingCart } from "../../../redux/actions/ShoppingCartView.js";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
@@ -12,24 +12,28 @@ import { removeOneFromCart, removeWholeCart } from "../../../redux/actions/shopp
 
 export default function ShoppingView () {
 
-    const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart )
+    const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart)
     console.log(shoppingCartCopy)
+
+    const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getShoppingCart(2));
+        dispatch(getShoppingCart(userId));
     }, [])
     
     
     function handleDeleteOne(e) {
         e.preventDefault();
-        dispatch(removeOneFromCart(e.target.value))
+        dispatch(removeOneFromCart(e.target.value));
+        dispatch(dispatch(getShoppingCart(userId)));
     }
     
     function handleClearCart(e) {
         e.preventDefault();
-        dispatch(removeWholeCart(e.target.value))
+        dispatch(removeWholeCart(userId));
+        dispatch(dispatch(getShoppingCart(userId)));
     }
 
     return (
@@ -107,6 +111,7 @@ export default function ShoppingView () {
                     size="small"
                     variant="outlined"
                     onClick={(e) => handleClearCart(e)}
+                    value={shoppingCartCopy}
                 >
                     Clear Cart
                 </Button>
