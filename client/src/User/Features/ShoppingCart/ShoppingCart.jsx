@@ -9,13 +9,26 @@ export default function ShoppingCart(id) {
     const {cart} = useSelector(state => state.shoppingCart);
 
 
+    const addToCart = (id) => {
+        console.log(addToCart);
+    }
+
+    const delFromCart = () => {
+
+    }
+
+    function handlerClearCart(e) {
+        e.preventDefault();
+    }
+
+
 
     return (
         <div>
             <h2>Carrito de compras</h2>
             <h3>Productos que quiero comprar</h3>
             <article className="box">
-                {productsBuy.map(p => {
+                {productsBuy?.map(p => {
                     <div key={id}>
                         <h1>{p.name}</h1>
                         <h2>{p.price}</h2>
@@ -26,7 +39,9 @@ export default function ShoppingCart(id) {
                 })}
             </article>
             <h3>Carrito</h3>
-            <article className="box"></article>
+            <article className="box">
+                <button onClick={(e) => handlerClearCart(e)}>Limpiar Carrito</button>
+            </article>
         </div>
     )
 }

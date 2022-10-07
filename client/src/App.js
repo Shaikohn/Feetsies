@@ -29,9 +29,6 @@ function App() {
         contrastText: "#000",
       },
     },
-    typography: {
-      textDecoration: "none",
-    },
     // typography: {
     //   fontFamily: "Arial",
     //   fontSize: 14, (14px es el valor por defecto)

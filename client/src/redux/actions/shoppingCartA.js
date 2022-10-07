@@ -2,14 +2,50 @@ import axios from "axios"
 
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
-export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART";
-export const CLEAR_CART = "CLEAR_CART";
+export const REMOVE_WHOLE_CART = "REMOVE_WHOLE_CART";
+
 
 export function addToCart(payload) {
-    return {
-        type: ADD_TO_CART,
-        payload
+    console.log(payload)    
+    return async function(dispatch) {
+        try {
+            var json = await axios.post("http://localhost:3001/products/tocart", payload);
+            return dispatch({
+                type: ADD_TO_CART,
+                payload: json.data
+            });
+        } catch(error) {
+            console.log(error);
+        }
     }
-}
+};
+
+export function removeOneFromCart(id) {
+    return async function(dispatch) {
+        try {
+            var json = await axios.delete(`http://localhost:3001/users/cart/${id}`);
+            return dispatch({
+                type: REMOVE_ONE_FROM_CART,
+                payload: json.data
+            });
+        } catch(error) {
+            console.log(error);
+        }
+    }
+};
+
+export function removeWholeCart(id) {
+    return async function(dispatch) {
+        try {
+            var json = await axios.delete(`http://localhost:3001/users/cart/whole/${id}`);
+            return dispatch({
+                type: REMOVE_WHOLE_CART,
+                payload: json.data
+            });
+        } catch(error) {
+            console.log(error);
+        }
+    }
+};
 
 

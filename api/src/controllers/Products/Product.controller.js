@@ -184,8 +184,6 @@ async function addToCart(req, res) {
       console.log('log',error)
       return res.status(500).send(error);
   }
-  
-
 }
 
 
