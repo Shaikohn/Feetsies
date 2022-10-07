@@ -34,6 +34,10 @@ const {
     toggleImportantPetition
 } = require('../controllers/Animals/Adoption_petition.controller')
 
+const {
+    getAllPOs
+} = require('../controllers/Shop/Purchase_order.controller')
+
 
 router.post('/inquiry',addInquiry)
 router.get('/getinquiries',getAllInquiries)
@@ -59,6 +63,8 @@ router.get('/getallusers',getAllUsers)
 router.put('/toggleban/:userid',togglebanUser)
 router.put('/toggleadmin',toggleAdmin)
 router.delete('/user/:id',deleteUser)
+
+router.get('/getallorders',getAllPOs)
 
 
 
