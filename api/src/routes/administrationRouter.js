@@ -6,7 +6,8 @@ const {
     deleteInquiry,
     getAllInquiries,
     getInquiryDetail,
-    setInquiryAsRead
+    setInquiryAsRead,
+    toggleImportantInquiry
 } = require('../controllers/Admin/Inquiry.controller')
 
 const {
@@ -34,6 +35,7 @@ router.post('/inquiry',addInquiry)
 router.get('/getinquiries',getAllInquiries)
 router.get('/inquiry/:id',getInquiryDetail)
 router.put('/inquiry/setread/:inquiryid',setInquiryAsRead)
+router.put('/inquiry/toggleimportant/:inquiryid',toggleImportantInquiry)
 router.delete('/inquiry',deleteInquiry)
 
 router.get('/getaltas',getAllAltas)

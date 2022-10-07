@@ -78,12 +78,25 @@ async function getInquiryDetail(req, res) {
 }
 
 async function setInquiryAsRead(req,res){
-    if(!req.params.id)return res.status(400).send(badReq);
+    if(!req.params.inquiryid)return res.status(400).send(badReq);
     try {
-        let inq = Inquiry.findByPk(req.params.id);
+        let inq = Inquiry.findByPk(req.params.inquiryid);
         inq.read = true;
         let aux = await inq.save()
         return res.status(200).send({success:"Inquiry set as read"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function toggleImportantInquiry(req,res){
+    if(!req.params.inquiryid)return res.status(400).send(badReq);
+    try {
+        let inq = Inquiry.findByPk(req.params.inquiryid);
+        inq.isImportant = !inq.isImportant;
+        let aux = await inq.save()
+        return res.status(200).send({success:"Inquiry important status changed"});
     } catch (error) {
         console.log(error)
         return res.status(500).send(error);
@@ -95,5 +108,6 @@ module.exports={
     deleteInquiry,
     getAllInquiries,
     getInquiryDetail,
-    setInquiryAsRead
+    setInquiryAsRead,
+    toggleImportantInquiry
 }
