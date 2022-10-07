@@ -1,7 +1,6 @@
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
-import ProductCard from '../ProductCard/ProductCard';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import axios from 'axios'
+import styles from "./CheckoutForm.module.css"
 import { useState } from 'react';
 
 export default function CheckoutForm({product}) {
@@ -19,7 +18,7 @@ export default function CheckoutForm({product}) {
         })
         setLoading(true)
 
-        if(!error /* && product.stock > 0 */) {
+        if(!error && product.stock > 0) {
             const { id } = paymentMethod
             try {
                 const {data} = await axios.post('http://localhost:3001/api/checkout', {
@@ -28,10 +27,16 @@ export default function CheckoutForm({product}) {
                 description: product.description
             })
             console.log(data)
+            product.stock--
             elements.getElement(CardElement).clear()
             }
             catch(error) {
                 console.log(error)
+                return (
+                    <div>
+                        "Sorry there is no more stock"
+                    </div>
+                )
             }
             setLoading(false)
         }
@@ -40,9 +45,9 @@ export default function CheckoutForm({product}) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <CardElement />
-            <button>
-                Buy
+                <CardElement className={styles.buyInputs} />
+            <button type='submit' className={styles.buyButton}>
+                CONFIRM
             </button>
         </form>
     )
