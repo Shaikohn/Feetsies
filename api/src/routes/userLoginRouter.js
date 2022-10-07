@@ -8,7 +8,7 @@ const { verifyUser } = require("../controllers/User/verifyUser.js");
 const { validateCreateUser } = require("../utils/User/validateData.js");
 
 userLoginRouter.post("/register", validateCreateUser, createUser);
-userLoginRouter.get("/login", loginUser);
+userLoginRouter.post("/login", loginUser);
 userLoginRouter.get("/confirm/:confirmationCode", verifyUser);
 
 module.exports = userLoginRouter;

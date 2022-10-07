@@ -12,6 +12,8 @@ import CreateProduct from "./User/Features/Form/CreateProduct";
 import SignUp from "./User/Features/Form/SignUp";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SignIn from "./User/Features/Form/SignIn";
+import CheckEmails from "./User/Views/CheckEmail";
+import AccountConfirmed from "./User/Views/AccountConfirmed";
 
 function App() {
   const theme = createTheme({
@@ -66,6 +68,12 @@ function App() {
           <Route exact path="/signUp" element={<SignUp />} />
           {/* Sign in Form */}
           <Route exact path="/signIn" element={<SignIn />} />
+          <Route exact path="/checkEmail" element={<CheckEmails />} />
+          <Route
+            exact
+            path="/confirm/:confirmationCode"
+            element={<AccountConfirmed />}
+          />
           <Route
             path="*"
             element={
