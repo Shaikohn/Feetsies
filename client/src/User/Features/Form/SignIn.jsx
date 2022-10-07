@@ -1,11 +1,9 @@
 import React from "react";
-
+import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -47,11 +45,30 @@ const SignIn = () => {
 
   const onSubmit = async (data) => {
     console.log("Onsubmit", data);
-    // try {
-    //   await axios.post("http://localhost:3001/products/create", data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const login = await axios.post(
+        "http://localhost:3001/user/auth/login",
+        data
+      );
+      console.log(login.data);
+      alert(login.data.msg);
+      // if (
+      //   login.data.response.data ===
+      //   "Pending Account. Please Verify Your Email!"
+      // ) {
+      //   alert("Pending Account. Please Verify Your Email!");
+      // }
+    } catch (error) {
+      console.log(error);
+      // if (
+      //   error.response.data === "Pending Account. Please Verify Your Email!"
+      // ) {
+      //   alert("Pending Account. Please Verify Your Email!");
+      // } else if (error.response.data == `email ${email} invalid or not found`) {
+      //   alert(`email ${email} invalid or not found`);
+      // }
+      alert(error.response.data);
+    }
   };
   console.log(errors);
 
