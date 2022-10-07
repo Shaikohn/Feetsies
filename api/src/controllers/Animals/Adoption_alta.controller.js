@@ -5,9 +5,9 @@ const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
 async function deleteAlta(req, res) {
-    if (!req.body.id) return res.status(400).send(badReq);
+    if (!req.params.altaid) return res.status(400).send(badReq);
     try {
-        let alta = await Adoption_alta.destroy({where:{id:req.body.id}})
+        let alta = await Adoption_alta.destroy({where:{id:req.params.altaid}})
         if(!alta) return res.status(404).send(notFound);
         return res.sendStatus(200);
     } catch (error) {
@@ -38,9 +38,9 @@ async function addAlta(req, res) {
 }
 
 async function getAltaDetail(req, res) {
-    if (!req.params.id) return res.status(400).send(badReq);
+    if (!req.params.altaid) return res.status(400).send(badReq);
     try {
-        let alta = await Adoption_alta.findOne({where:{id:req.params.id}})
+        let alta = await Adoption_alta.findOne({where:{id:req.params.altaid}})
         if(!alta) return res.status(404).send(notFound);
         let user = await User.findOne({where:{id:alta.dataValues.userId}})
         if(!user) return res.status(404).send(notFound);
