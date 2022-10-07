@@ -69,6 +69,8 @@ const SignUp = () => {
     handleSubmit,
   } = useForm();
 
+  // const dispatch = useDispatch();
+
   const onSubmit = async (data, e) => {
     console.log(data);
     try {
@@ -84,6 +86,7 @@ const SignUp = () => {
         console.log({ token: register.data.token });
         // alert("User created");
         // e.target.reset();
+        // dispatch(signUp(data));
         navigateTo("/checkEmail");
       }
       setCustomError("");
@@ -95,6 +98,12 @@ const SignUp = () => {
         }, 4000);
       }
     }
+    // try {
+    //   dispatch(signUp(data));
+    //   navigateTo("/checkEmail");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   //SHOW PASSWORD
