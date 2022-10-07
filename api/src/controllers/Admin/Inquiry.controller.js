@@ -1,4 +1,4 @@
-const {Inquiry,User} = require('../db');
+const {Inquiry,User} = require('../../db');
 
 const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
@@ -11,6 +11,18 @@ async function deleteInquiry(req, res) {
         if(!inq) return res.status(404).send(notFound);
         return res.sendStatus(200);
     } catch (error) {
+        return res.status(500).send(error);
+    }
+}
+
+async function getAllInquiries(req, res) {
+    try {
+        let inqs = await Inquiry.findAll({attributes: ['id', 'topic','description','read','isImportant']})
+        if(!inqs || inqs.length<1) return res.status(404).send(emptyDB);
+        return res.send(inqs);
+    } catch (error) {
+        console.log('huboerror')
+        console.log(error)
         return res.status(500).send(error);
     }
 }
@@ -68,5 +80,6 @@ async function getInquiryDetail(req, res) {
 module.exports={
     addInquiry,
     deleteInquiry,
+    getAllInquiries,
     getInquiryDetail
 }

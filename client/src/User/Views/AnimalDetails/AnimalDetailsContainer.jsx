@@ -5,7 +5,7 @@ import { clearAnimalDetails, getAnimalDetails } from "../../../redux/actions/ani
 import AnimalDetails from "./AnimalDetails";
 import loading from "../ProductHome/Img/Loading.gif";
 import styles from "../ProductHome/ProductHome.module.css";
-import Header from "../../Features/Header/Header";
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 
 export default function AnimalDetailsContainer() {
 
@@ -23,8 +23,8 @@ export default function AnimalDetailsContainer() {
 
     return (
         <div>
-            <div className={styles.headerProd}>
-                <Header />
+            <div>
+                <ResponsiveAppBar />
             </div>
             {
                 <div>

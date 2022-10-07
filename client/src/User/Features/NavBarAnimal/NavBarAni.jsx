@@ -7,6 +7,10 @@ import { setPage } from "../../../redux/actions/paginadoA.js";
 import SearchBarAnim from "../SearchBarAnim/SearchBarAnim.jsx";
 import "./NavBarAnimal.css";
 
+import Button from "@mui/material/Button";
+
+import Stack from "@mui/material/Stack";
+
 function NavBarAnimals() {
   const dispatch = useDispatch();
 
@@ -53,47 +57,69 @@ function NavBarAnimals() {
   };
 
   return (
-    <div className="container-navBar">
-      <div>
+    <>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          p: 1,
+          borderRadius: 1,
+        }}
+      >
         <SearchBarAnim />
-      </div>
-      {arraySize.map((ele, id) => {
-        return (
-          <div key={id}>
-            <button
-              className="size-btn"
-              value={ele}
-              onClick={(e) => eventHandlerSize(e)}
-            >
-              {ele}
-            </button>
-          </div>
-        );
-      })}
-      {arraySex.map((elem, id) => {
-        return (
-          <div key={id}>
-            <button
-              className="sex-btn"
-              value={elem}
-              onClick={(e) => eventHandlerSex(e)}
-            >
+        {arraySize.map((ele, id) => {
+          return (
+            <div key={id}>
+              <Button
+                variant="contained"
+                value={ele}
+                onClick={(e) => eventHandlerSize(e)}
+              >
+                {ele}
+              </Button>
+            </div>
+          );
+        })}
+        {arraySex.map((elem, id) => {
+          return (
+            <div key={id}>
+              {/* <button value={elem} onClick={(e) => eventHandlerSex(e)}>
               {elem}
-            </button>
-          </div>
-        );
-      })}
-      <div>
-        <button className="clear-btn" onClick={(e) => clearFilters(e)}>
+            </button> */}
+              <Button
+                variant="text"
+                value={elem}
+                onClick={(e) => eventHandlerSex(e)}
+              >
+                {elem}
+              </Button>
+            </div>
+          );
+        })}
+        <Button
+          variant="contained"
+          onClick={(e) => clearFilters(e)}
+          color="success"
+        >
           Clear filters
-        </button>
-      </div>
-  
-      <div className="container-filter">{filters.size.length > 0 && <div>{filters.size}</div>}</div>
-      <div className="container-filter">{filters.sex.length >0 && <div>{filters.sex}</div>}</div>
-      
-     
-    </div>
+        </Button>
+      </Stack>
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          p: 1,
+          borderRadius: 1,
+        }}
+      >
+        {filters.size.length > 0 && <div>{filters.size}</div>}
+        {filters.sex.length > 0 && <div>{filters.sex}</div>}
+      </Stack>
+    </>
   );
 }
 

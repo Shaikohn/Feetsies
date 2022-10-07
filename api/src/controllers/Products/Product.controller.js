@@ -1,4 +1,8 @@
-const { Product, Product_type, Animal_type } = require("../db");
+const {
+  Product,
+  Product_type,
+  Animal_type,
+} = require("../../db");
 const { Op } = require("sequelize");
 const sequelize = require("sequelize");
 
@@ -110,9 +114,6 @@ async function createElementWithTypes(element) {
     animalTypes,
   };
 }
-
-
-
 
 async function updateProduct(req, res) {
   if (!req.params.id) return res.status(400).send(badReq);

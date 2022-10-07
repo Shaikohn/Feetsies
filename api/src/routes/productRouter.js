@@ -6,17 +6,23 @@ const {
     createProduct,
     searchProducts,
     updateProduct,
-    deleteProduct
-} = require('../controllers/Product.controller')
+    deleteProduct,
+} = require('../controllers/Products/Product.controller')
 
-const {getAllTypes} = require('../controllers/Product_type.controller')
+/*const {
+    addToCart
+} = require ('../controllers/Shop/Cart.controller')*/
+
+const {getAllTypes} = require('../controllers/Products/Product_type.controller')
+
+//router.post('/tocart',addToCart)
 
 router.get('/all',getAllProducts);
 
 router.get('/search',searchProducts);
 
 router.get('/types',getAllTypes);
-//
+
 router.get('/:id',getDetail)
 
 router.post('/create',createProduct)
@@ -24,6 +30,9 @@ router.post('/create',createProduct)
 router.put('/update/:id',updateProduct)
 
 router.delete('/:id',deleteProduct)
+
+
+
 
 
 module.exports = router;

@@ -1,42 +1,81 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { Box, CardActionArea } from "@mui/material";
+import Container from "@mui/material/Container";
+
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+
 import styles from "./ProductCard.module.css";
-// import cart from "./Img/shopping-cart1.png";
 
-export default function ProductCard({id, name, image, price, productTypes}) {
-    
-    // function handleChange(e) {
-    //     //falta codigo
-    // }
-
-    return (
-            <div className={styles.prodCard} key={id}>
-                <Link to={`/home/products/${id}`} className={styles.link}>
-                <div className={styles.prodContainer}>
-                    <h2 className={styles.prodName}>{name}</h2>
-                    <div>
-                        <img className={styles.prodImg} src={image} alt="" width="200px" height="250px" />
-                    </div>
-                    <h2 className={styles.prodPrice}>{`$ ${price}`}</h2>
-                    <div className={styles.prodTagsCointainer}>
-                        {productTypes?.map((tag, index)  => {
-                            return (
-                                <div className={styles.prodTag} key={index}>
-                                    <h4 className={styles.tagName}>{tag}</h4>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    
-                    {/* <div className="div-btn">
-                        <button className="cart-btn" onClick={(e) => handleChange(e)}>
-                            <img className="cart-icon" src={cart} alt="" weight="18px" height="18px" />
-                        </button>
-                    </div> */}
-                    </div>
-                </Link>
-            </div>
-    )
-};
+export default function ProductCard({ id, name, image, price, productTypes }) {
+  return (
+    <Container>
+      <Card sx={{ maxWidth: 345 }} key={id}>
+        <Link to={`/home/products/${id}`}>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              height="200"
+              image={image}
+              alt="product card image"
+            />
+            <Box bgcolor="text.disabled">
+              <CardContent>
+                <Typography
+                  gutterBottom
+                  component="h5"
+                  // className={styles.prodName}
+                  sx={{
+                    fontSize: 14,
+                    listStyle: "none",
+                    textDecoration: "none",
+                  }}
+                >
+                  {name}
+                </Typography>
+                <Typography
+                  component={"span"}
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  {`$ ${price}`}
+                </Typography>
+              </CardContent>
+              <Typography
+                component={"span"}
+                variant="body2"
+                color="text.secondary"
+              >
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    p: 1,
+                    borderRadius: 1,
+                  }}
+                >
+                  {productTypes.map((tag, index) => {
+                    return (
+                      <span className={styles.prodTag} key={index}>
+                        {tag}
+                      </span>
+                    );
+                  })}
+                </Stack>
+              </Typography>
+            </Box>
+          </CardActionArea>
+        </Link>
+      </Card>
+    </Container>
+  );
+}

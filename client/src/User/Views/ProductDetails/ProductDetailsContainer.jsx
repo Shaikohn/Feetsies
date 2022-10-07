@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { clearProductDetails, getProductDetails } from "../../../redux/actions/productDetailsActions";
 import ProductDetails from "./ProductDetails";
-import Header from "../../Features/Header/Header";
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import loading from "../ProductHome/Img/Loading.gif";
 import styles from "../ProductHome/ProductHome.module.css";
 
@@ -23,8 +23,8 @@ export default function ProductDetailsContainer() {
 
     return (
         <div>
-            <div className={styles.headerProd}>
-                <Header />
+            <div>
+                <ResponsiveAppBar />
             </div>
             {
                 <div>

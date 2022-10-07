@@ -28,17 +28,21 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { 
-  Product,
+const {
+  Adoption_alta,
+  Adoption_petition,
   Animal,
   Animal_type,
-  Product_type,
-  Product_product_type,
+  Cart_item, 
+  Inquiry,
+  Order_item,
+  Product,
   Product_animal_type,
-  Adoption_petition,
+  Product_cart_item,
+  Product_product_type,
+  Product_type,
+  Purchase_order,
   User,
-  Adoption_alta,
-  Inquiry
 } = sequelize.models;
 
 // Relations
@@ -60,6 +64,18 @@ Adoption_alta.belongsTo(User);
 User.hasMany(Inquiry);
 Inquiry.belongsTo(User);
 /////////////////////////////////////
+User.hasMany(Cart_item);
+Cart_item.belongsTo(User);
+/////////////////////////////////////
+User.hasMany(Purchase_order);
+Purchase_order.belongsTo(User);
+////////////////////////////////////
+User.hasMany(Purchase_order);
+Purchase_order.belongsTo(User);
+////////////////////////////////////
+Purchase_order.hasMany(Order_item);
+Order_item.belongsTo(Purchase_order);
+////////////////////////////////////
 module.exports = {
   ...sequelize.models, 
   conn: sequelize,     // para importart la conexión { conn } = require('./db.js');

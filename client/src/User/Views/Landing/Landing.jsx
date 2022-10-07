@@ -1,14 +1,16 @@
 import React from "react";
-import Header from "../../Features/Header/Header.jsx";
+// import Header from "../../Features/Header/Header.jsx";
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import styles from './Landing.module.css';
-import headerStyle from "../ProductHome/ProductHome.module.css"
+
+
 
 export default function Landing() {
     
     return (
-        <div className="landing">
-            <div className={headerStyle.headerProd}>
-                <Header />
+        <div>
+            <div>
+                <ResponsiveAppBar />
             </div>
             <div className={styles.landing_container}>
                 <div className="landing-title">
