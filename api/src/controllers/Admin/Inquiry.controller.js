@@ -77,9 +77,23 @@ async function getInquiryDetail(req, res) {
     }
 }
 
+async function setInquiryAsRead(req,res){
+    if(!req.params.id)return res.status(400).send(badReq);
+    try {
+        let inq = Inquiry.findByPk(req.params.id);
+        inq.read = true;
+        let aux = await inq.save()
+        return res.status(200).send({success:"Inquiry set as read"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addInquiry,
     deleteInquiry,
     getAllInquiries,
-    getInquiryDetail
+    getInquiryDetail,
+    setInquiryAsRead
 }

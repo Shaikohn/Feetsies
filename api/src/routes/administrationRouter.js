@@ -5,7 +5,8 @@ const {
     addInquiry,
     deleteInquiry,
     getAllInquiries,
-    getInquiryDetail
+    getInquiryDetail,
+    setInquiryAsRead
 } = require('../controllers/Admin/Inquiry.controller')
 
 const {
@@ -17,7 +18,9 @@ const {
 } = require('../controllers/Admin/User.controller')
 
 const {
+    deleteAlta,
     getAllAltas,
+    getAltaDetail
 } = require('../controllers/Animals/Adoption_alta.controller')
 
 const {
@@ -30,9 +33,13 @@ const {
 router.post('/inquiry',addInquiry)
 router.get('/getinquiries',getAllInquiries)
 router.get('/inquiry/:id',getInquiryDetail)
+router.put('/inquiry/setread/:inquiryid',setInquiryAsRead)
 router.delete('/inquiry',deleteInquiry)
 
 router.get('/getaltas',getAllAltas)
+router.get('/altadetail/:altaid',getAltaDetail)
+router.delete('/alta/:altaid',deleteAlta)
+
 router.get('/getpetitions',getAllPetitions)
 router.get('/petition/:petitionid',getPetitionDetail)
 router.delete('/petition/:petitionid',deletePetition)
