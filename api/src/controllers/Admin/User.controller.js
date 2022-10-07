@@ -1,8 +1,6 @@
 const { where } = require('sequelize');
 const {
     User,
-    Cart_item,
-    Product
 } = require('../../db');
 
 const emptyDB = { err: "Database empty" };
@@ -24,7 +22,6 @@ async function addUser(req, res) {
     try {
         let user = await User.create(newRow)
         if(!user) return res.status(500).send({err:'An error ocurred while creating user...'});
-        let log = user.createCart({});
         return res.sendStatus(200);
     } catch (error) {
         console.log(error);
@@ -83,64 +80,50 @@ async function getUserDetail(req, res) {
     }
 }
 
-async function getCart(req, res) {
-    if (!req.params.id) return res.status(400).send(badReq);
+async function getAllUsers(req, res) {
     try {
-        let cartItems = await Cart_item.findAll({where:{userId:req.params.id}})
-        //console.log('cart items', cartItems);
-        if(!cartItems) return res.status(404).send({err:'There are no items in your cart!'});
-        let items = [];
-        let total = 0;
-        for (let i = 0; i < cartItems.length; i++) {
-            let product = await Product.findByPk(cartItems[i].dataValues.productId)
-            //console.log(product.dataValues);
-            let obj = {}
-            obj.cartItemid = cartItems[i].dataValues.id;
-            obj.name = product.dataValues.name;
-            obj.price = product.dataValues.price * cartItems[i].dataValues.quantity;
-            obj.quantity = cartItems[i].dataValues.quantity;
-            total +=product.dataValues.price * cartItems[i].dataValues.quantity;
-            items.push(obj)
-        }
-        let answer = {items,total};
-        return res.status(200).send(answer);
+        let users = await User.findAll({attributes: ['id', 'email','location','phone_number','isAdmin','isBan','updatedAt']})
+        if(!users || users.length<1) return res.status(500).send(emptyDB);
+        return res.status(200).send(users);
     } catch (error) {
-        console.log(error)
         return res.status(500).send(error);
     }
 }
 
-async function deleteOneFromCart(req, res) {
-    if (!req.params.id) return res.status(400).send(badReq);
+async function togglebanUser(req, res) {
+    const {userid} = req.params;
     try {
-        console.log(req.params.id)
-        let cartItem = await Cart_item.destroy({where:{id:req.params.id}})
-        return res.sendStatus(200);
+        let user = await User.findOne({where:{id:userid}})
+        if(!user) return res.status(404).send(notFound);
+        if(user.isAdmin)return res.status(400).send({err:'Can not ban Admins. Remove admin privileges first.'});
+        user.isBan = !user.isBan;
+        let result = await user.save
+        return res.status(200).send({success:'User Ban status changed'});
     } catch (error) {
-        console.log(error)
         return res.status(500).send(error);
     }
 }
 
-async function deleteWholeCart(req, res) {
-    if (!req.params.id) return res.status(400).send(badReq);
+async function toggleAdmin(req, res) {
+    const {userid,selfid} = req.body;
+    if(userid===selfid)res.status(400).send({err:"cant change your own status"});
     try {
-        let cartItems = await Cart_item.destroy({where:{userId:req.params.id}})
-        return res.sendStatus(200);
+        let user = await User.findOne({where:{id:userid}})
+        if(!user) return res.status(404).send(notFound);
+        user.isAdmin = !user.isAdmin;
+        let result = await user.save
+        return res.status(200).send({success:'User Admin status changed'});
     } catch (error) {
-        console.log(error)
         return res.status(500).send(error);
     }
-}//
-
-
+}
 
 module.exports={
     addUser,
-    deleteOneFromCart,
     deleteUser,
-    deleteWholeCart,
+    getAllUsers,
     getUserDetail,
-    getCart,
+    toggleAdmin,
+    togglebanUser,
     updateUser,
 }

@@ -65,8 +65,20 @@ async function getAltaDetail(req, res) {
     }
 }
 
+async function getAllAltas(req, res) {
+    try {
+        let altas = await Adoption_alta.findAll()
+        if(!altas || altas.length<1) return res.status(404).send(emptyDB);
+        return res.send(altas);
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addAlta,
     deleteAlta,
+    getAllAltas,
     getAltaDetail
 }
