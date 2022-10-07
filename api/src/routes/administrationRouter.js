@@ -21,7 +21,9 @@ const {
 const {
     deleteAlta,
     getAllAltas,
-    getAltaDetail
+    getAltaDetail,
+    setAltaAsRead,
+    toggleImportantAlta
 } = require('../controllers/Animals/Adoption_alta.controller')
 
 const {
@@ -40,6 +42,8 @@ router.delete('/inquiry',deleteInquiry)
 
 router.get('/getaltas',getAllAltas)
 router.get('/altadetail/:altaid',getAltaDetail)
+router.put('/alta/setread/:altaid',setAltaAsRead)
+router.put('/alta/toggleimportant/:altaid',toggleImportantAlta)
 router.delete('/alta/:altaid',deleteAlta)
 
 router.get('/getpetitions',getAllPetitions)

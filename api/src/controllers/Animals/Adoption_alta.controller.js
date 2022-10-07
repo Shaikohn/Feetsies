@@ -76,9 +76,37 @@ async function getAllAltas(req, res) {
     }
 }
 
+async function setAltaAsRead(req, res) {
+    if (!req.params.altaid) return res.status(400).send(badReq);
+    try {
+        let alta = Adoption_alta.findByPk(req.params.altaid);
+        alta.read = true;
+        let aux = await alta.save()
+        return res.status(200).send({success:"Alta set as read"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function toggleImportantAlta(req,res){
+    if(!req.params.altaid)return res.status(400).send(badReq);
+    try {
+        let alta = Adoption_alta.findByPk(req.params.altaid);
+        alta.isImportant = !alta.isImportant;
+        let aux = await alta.save()
+        return res.status(200).send({success:"Alta important status changed"});
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
 module.exports={
     addAlta,
     deleteAlta,
     getAllAltas,
-    getAltaDetail
+    getAltaDetail,
+    setAltaAsRead,
+    toggleImportantAlta
 }
