@@ -9,10 +9,10 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box, CardActionArea } from "@mui/material";
 import Container from "@mui/material/Container";
-import Button from '@mui/material/Button';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -21,20 +21,21 @@ import { styled } from "@mui/material/styles";
 import styles from "./ProductCard.module.css";
 
 export default function ProductCard({ id, name, image, price, productTypes }) {
+  const arrayQuantity = Array.from(Array(10).keys());
 
-  const arrayQuantity = Array.from(Array(10).keys())
+  const [userId, setUserId] = useState(
+    JSON.parse(localStorage?.getItem("profile"))?.data.id
+  );
 
-  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
-  
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   function handlerAddToCart(e) {
     e.preventDefault();
-    dispatch(addToCart({userId, productId: id, quantity}));
+    dispatch(addToCart({ userId, productId: id, quantity }));
   }
 
-  const [quantity, setQuantity] = React.useState('');
-  
+  const [quantity, setQuantity] = React.useState("");
+
   const handleChange = (event) => {
     setQuantity(event.target.value);
   };
@@ -97,17 +98,19 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                 </Stack>
               </Typography>
               <Container>
-                <Button 
-                  sx={{ display: 'block', fontSize: 12, 
-                  bgcolor: "secondary.main", 
-                  fontWeight: 400,
-                  mx: 2
+                <Button
+                  sx={{
+                    display: "block",
+                    fontSize: 12,
+                    bgcolor: "secondary.main",
+                    fontWeight: 400,
+                    mx: 2,
                   }}
                   size="small"
                   variant="outlined"
                   onClick={(e) => handlerAddToCart(e)}
-                  >
-                    Add Cart
+                >
+                  Add Cart
                 </Button>
                 <InputLabel id="quantity-label">Quantity</InputLabel>
                 <Select
@@ -118,10 +121,15 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                   onChange={handleChange}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {arrayQuantity.map(m => (
-                    <MenuItem onClick={(e) => e.stopPropagation()} value={m} key={m}>{m}</MenuItem>
-                  ))
-                  }
+                  {arrayQuantity.map((m) => (
+                    <MenuItem
+                      onClick={(e) => e.stopPropagation()}
+                      value={m}
+                      key={m}
+                    >
+                      {m}
+                    </MenuItem>
+                  ))}
                 </Select>
               </Container>
             </Box>
