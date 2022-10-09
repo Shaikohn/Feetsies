@@ -14,6 +14,8 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SignIn from "./User/Features/Form/SignIn";
 import CheckEmails from "./User/Views/CheckEmail";
 import AccountConfirmed from "./User/Views/AccountConfirmed";
+import ResetPassword from "./User/Views/ResetPassword";
+import ForgotPassword from "./User/Views/ForgotPassword";
 
 function App() {
   const theme = createTheme({
@@ -74,6 +76,14 @@ function App() {
             path="/confirm/:confirmationCode"
             element={<AccountConfirmed />}
           />
+          {/* Reset Password */}
+          <Route
+            exact
+            path="/reset-password/:id/:token"
+            element={<ResetPassword />}
+          />
+          {/* Forgot Password */}
+          <Route exact path="/forgot-password" element={<ForgotPassword />} />
           <Route
             path="*"
             element={
