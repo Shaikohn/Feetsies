@@ -50,7 +50,7 @@ async function getPetitionDetail(req, res) {
 
 async function getAllPetitions(req, res) {
     try {
-        let petitions = await Adoption_petition.findAll()
+        let petitions = await Adoption_petition.findAll({include:[Animal, User]})
         if(!petitions || petitions.length<1) return res.status(404).send(emptyDB);
         return res.send(petitions);
     } catch (error) {
