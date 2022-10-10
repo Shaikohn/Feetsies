@@ -27,8 +27,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { logout } from "../../../redux/actions/auth";
-import { useDispatch } from "react-redux";
+
 
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
