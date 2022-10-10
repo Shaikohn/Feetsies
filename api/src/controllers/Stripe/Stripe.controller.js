@@ -14,12 +14,15 @@ async function receivePayment(req, res) {
         payment_method: id,
         confirm: true
     })
+    /* if(error) {
+        throw new Error(error.raw.message)
+    } */
     console.log(payment)
     res.send({message: 'Succesfull payment'})
     }
     catch(error) {
         console.log(error)
-        res.json({message: error.raw.message})
+        return res.status(400).send(error.raw.message);
     }
 }
 

@@ -6,6 +6,7 @@ import { Elements } from '@stripe/react-stripe-js'
 import { useModal } from "../../Features/Modals/useModal";
 import Modals from "../../Features/Modals/Modals";
 import "../../Features/Modals/Modals.css"
+import Button from '@mui/material/Button';
 
 const stripePromise = loadStripe("pk_test_51LpgGdIsUHqf6y0peEPMdjCDcsjuA2sdBcEGka27crrsnZrTLBpIdJZiAICPkWXYWeJzwabRyk2WtbH0yfdxmGFy0046Eu9UuK")
 
@@ -26,9 +27,11 @@ export default function ProductDetails({product}) {
                         <h2>{`Stock: ${product?.stock}`}</h2>
                         <h2>{`${product?.description}`}</h2>
                     </div>
-                    <button onClick={openedModal}>
-                    Buy
-                    </button>
+                    <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={openedModal}
+                >Buy</Button>
                     <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
                         <h2 className="modalTitle">MAKE YOUR PURCHASE WITH YOUR CREDIT CARD!</h2>
                             <div>
