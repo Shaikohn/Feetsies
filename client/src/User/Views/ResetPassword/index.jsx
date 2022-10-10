@@ -20,11 +20,22 @@ import axios from "axios";
 
 const ResetPassword = () => {
   const { id, token } = useParams();
+  console.log(id);
+  console.log(token);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/user/auth/reset-password/${id}/${token}`);
+    // if (id.length && token.length < 8) {
+    //   alert("Something was wrong");
+    //   navigate("/");
+    // }
+    axios
+      .get(`http://localhost:3001/user/auth/reset-password/${id}/${token}`)
+      .catch((error) => {
+        alert(error);
+        navigate("/");
+      });
   }, []);
 
   const [values, setValues] = useState({
@@ -74,6 +85,7 @@ const ResetPassword = () => {
       navigate("/signIn");
     } catch (error) {
       console.log(error);
+      alert("Something was wrong");
     }
   };
 
