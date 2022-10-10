@@ -91,7 +91,7 @@ const SignIn = () => {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: "url(https://source.unsplash.com/random)",
+          backgroundImage: "url(https://www.comfortzone.com/-/media/Images/ComfortZone-NA/US/Blog/cats-playing-or-fighting.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"
