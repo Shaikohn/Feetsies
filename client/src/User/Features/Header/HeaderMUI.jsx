@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate  } from 'react-router-dom';
+import { logout } from '../../../redux/actions/auth';
+import { useDispatch } from 'react-redux';
+
 import AppBar from '@mui/material/AppBar';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,8 +25,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { logout } from '../../../redux/actions/auth';
-import { useDispatch } from 'react-redux';
+
 // import MenuIcon from '@mui/icons-material/Menu';
 
 

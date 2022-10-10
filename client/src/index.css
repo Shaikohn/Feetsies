@@ -18,3 +18,7 @@ a{
   list-style: none;
   color: #87a827
 }
+
+html {
+  scroll-behavior: smooth;
+}

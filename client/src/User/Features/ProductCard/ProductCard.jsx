@@ -24,7 +24,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
 
   const arrayQuantity = Array.from(Array(10).keys())
 
-  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile'))?.data.id);
   
   const dispatch = useDispatch(); 
 
