@@ -1,3 +1,5 @@
+import { Pagination, Stack } from "@mui/material";
+import { Container } from "@mui/system";
 import React from "react";
 import {useSelector, useDispatch} from 'react-redux';
 import { setPage } from "../../../redux/actions/paginadoA";
@@ -30,26 +32,29 @@ function Paginado({ items, itemsPerPage }) {
 
   return (
     <div className="pagcontainer">
-      <ul >
-        <button onClick={(e)=> previousPage(e)} >
-          Prev
-        </button>
-        {arrayNumber.map((n) => {
-          return (
-            <button key={n}
-            className={n===page?"actualPage pagcontainer":"none"} 
-            onClick={() => 
-             { 
-            dispatch(setPage(n))}}>
-              {n}
-            </button>
-          );
-        })}
-        <button onClick={(e)=> nextPage(e)}>
-          Next
-        </button>
-      </ul>
-    </div>
+    <ul >
+      <button onClick={(e)=> previousPage(e)} >
+        Prev
+      </button>
+      {arrayNumber.map((n) => {
+        return (
+          <button key={n}
+          className={n===page?"actualPage pagcontainer":"none"} 
+          onClick={() => 
+            { 
+          dispatch(setPage(n))}}>
+            {n}
+          </button>
+        );
+      })}
+      <button onClick={(e)=> nextPage(e)}>
+        Next
+      </button>
+    </ul>
+    <Stack spacing={2}>
+      <Pagination count={10} />
+    </Stack>
+  </div>
   );
 }
 
