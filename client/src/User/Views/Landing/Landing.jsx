@@ -112,6 +112,7 @@ export default function Landing() {
                         </Grid>
                     </Grid>
                 </Box>
+
             </div>
         </div>
     )

@@ -65,7 +65,6 @@ const shoppingCartReducer = (state = initialState, {type, payload}) => {
             //     ...state,
             //     cart: state.cart.filter(i => i.id !== payload)
             // }
-
         default: 
             return state
     }

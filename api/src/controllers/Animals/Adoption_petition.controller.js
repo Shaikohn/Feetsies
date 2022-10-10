@@ -38,41 +38,19 @@ async function deletePetition(req, res) {
 async function getPetitionDetail(req, res) {
     if (!req.params.petitionid) return res.status(400).send(badReq);
     try {
-        let petition = await Adoption_petition.findOne({where:{id:req.params.petitionid}})
+        let petition = await Adoption_petition.findOne({where:{id:req.params.petitionid},include:[Animal, User]})
         if(!petition) return res.status(404).send(notFound);
-        let animal = await Animal.findOne({where:{id:petition.dataValues.animalId}})
-        if(!animal) return res.status(404).send(notFound);
-        let user = await User.findOne({where:{id:petition.dataValues.userId}})
-        if(!user) return res.status(404).send(notFound);
-        result = {
-            user:{
-                id:user.dataValues.id,
-                email:user.dataValues.email,
-                phoneNumber:user.dataValues.phone_number,
-            },
-            animal:{
-                id:animal.dataValues.id,
-                name:animal.dataValues.name,
-                main_image:animal.dataValues.main_image
-            },
-            petition:{
-                id: petition.dataValues.id,
-                topic: petition.dataValues.topic,
-                description: petition.dataValues.description,
-                read: petition.dataValues.read,
-                isImportant: petition.dataValues.isImportant,
-                createdAt: petition.dataValues.createdAt,
-            }
-        }
-        return res.status(200).send(result);
+        petition.user.password = '********';
+        return res.status(200).send(petition);
     } catch (error) {
+        console.log(error)
         return res.status(500).send(error);
     }
 }
 
 async function getAllPetitions(req, res) {
     try {
-        let petitions = await Adoption_petition.findAll()
+        let petitions = await Adoption_petition.findAll({include:[Animal, User]})
         if(!petitions || petitions.length<1) return res.status(404).send(emptyDB);
         return res.send(petitions);
     } catch (error) {
