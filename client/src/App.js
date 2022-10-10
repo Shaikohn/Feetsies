@@ -12,6 +12,8 @@ import CreateProduct from "./User/Features/Form/CreateProduct";
 import SignUp from "./User/Features/Form/SignUp";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SignIn from "./User/Features/Form/SignIn";
+
+import Dashboard from "./Admin/components/Dashboard";
 import CheckEmails from "./User/Views/CheckEmail";
 import AccountConfirmed from "./User/Views/AccountConfirmed";
 import ResetPassword from "./User/Views/ResetPassword";
@@ -33,11 +35,13 @@ function App() {
         contrastText: "#000",
       },
     },
+
     // typography: {
     //   fontFamily: "Arial",
     //   fontSize: 14, (14px es el valor por defecto)
     //   fontWeight: 500,
     //   fontStyle: "italic",
+    //   textDecoration: "none",
     // },
   });
 
@@ -84,6 +88,7 @@ function App() {
           />
           {/* Forgot Password */}
           <Route exact path="/forgot-password" element={<ForgotPassword />} />
+          <Route exact path='/dashboard' element={<Dashboard />}/>
           <Route
             path="*"
             element={
