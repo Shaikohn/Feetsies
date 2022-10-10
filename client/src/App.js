@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Adoption from "./User/Features/Form/Adoption.jsx";
 import AltaAdoption from "./User/Features/Form/AltaAdoption.jsx";
 import HomeProducts from "./User/Views/ProductHome/ProductHome.jsx";
@@ -18,6 +18,7 @@ import CheckEmails from "./User/Views/CheckEmail";
 import AccountConfirmed from "./User/Views/AccountConfirmed";
 import ResetPassword from "./User/Views/ResetPassword";
 import ForgotPassword from "./User/Views/ForgotPassword";
+import { useState } from "react";
 
 function App() {
   const theme = createTheme({
@@ -44,6 +45,8 @@ function App() {
     //   textDecoration: "none",
     // },
   });
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  console.log(user);
 
   return (
     <ThemeProvider theme={theme}>
@@ -71,32 +74,39 @@ function App() {
           <Route exact path="/home/createProduct" element={<CreateProduct />} />
           <Route exact path="/home/shoppingView" element={<ShoppingView />} />
           {/* Sign Up Form */}
-          <Route exact path="/signUp" element={<SignUp />} />
+          <Route
+            path="/signUp"
+            element={user ? <Navigate to="/" replace /> : <SignUp />}
+          />
           {/* Sign in Form */}
-          <Route exact path="/signIn" element={<SignIn />} />
-          <Route exact path="/checkEmail" element={<CheckEmails />} />
+          <Route
+            path="/signIn"
+            element={user ? <Navigate to="/" replace /> : <SignIn />}
+          />
+          <Route
+            exact
+            path="/checkEmail"
+            element={user ? <Navigate to="/" replace /> : <CheckEmails />}
+          />
           <Route
             exact
             path="/confirm/:confirmationCode"
-            element={<AccountConfirmed />}
+            element={user ? <Navigate to="/" replace /> : <AccountConfirmed />}
           />
           {/* Reset Password */}
           <Route
             exact
             path="/reset-password/:id/:token"
-            element={<ResetPassword />}
+            element={user ? <Navigate to="/" replace /> : <ResetPassword />}
           />
           {/* Forgot Password */}
-          <Route exact path="/forgot-password" element={<ForgotPassword />} />
-          <Route exact path='/dashboard' element={<Dashboard />}/>
           <Route
-            path="*"
-            element={
-              <main>
-                <p>The searched route was not found</p>
-              </main>
-            }
+            exact
+            path="/forgot-password"
+            element={user ? <Navigate to="/" replace /> : <ForgotPassword />}
           />
+          <Route exact path='/dashboard' element={<Dashboard />}/>
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </ThemeProvider>

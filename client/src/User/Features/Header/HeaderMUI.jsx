@@ -32,10 +32,13 @@ import { useDispatch } from "react-redux";
 
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
+import { useReducer } from "react";
 
 export default function ResponsiveAppBar() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   console.log(user);
+
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -68,6 +71,7 @@ export default function ResponsiveAppBar() {
     navigate("/");
 
     setUser(null);
+    forceUpdate();
   };
 
   //   var token = user?.token;
@@ -82,7 +86,7 @@ export default function ResponsiveAppBar() {
       if (decodedToken.exp * 1000 < new Date().getTime()) handleLogout();
     }
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
+  }, [location, ignored]);
 
   return (
     <AppBar position="static" sx={{ bgcolor: "black", color: "#87a827" }}>

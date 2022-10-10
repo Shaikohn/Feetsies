@@ -41,28 +41,32 @@ const forgotPassword = async (req, res = response) => {
 const resetPassword = async (req, res) => {
   const { id, token } = req.params;
 
-  const searchUser = await User.findOne({
-    where: {
-      id: id,
-    },
-  });
-
-  if (!searchUser) {
-    return res.status(400).json({ status: "User Not Exists" });
-  }
-
-  const secret = process.env.JWT_SECRET_KEY + searchUser.password;
-
   try {
-    const verify = jwt.verify(token, secret);
-    console.log("Verified");
-    res.status(201).json({
-      status: "Verified",
-      user: searchUser.name,
+    const searchUser = await User.findOne({
+      where: {
+        id: id,
+      },
     });
+
+    if (!searchUser) {
+      return res.status(400).json({ status: "User Not Exists" });
+    }
+
+    const secret = process.env.JWT_SECRET_KEY + searchUser.password;
+
+    try {
+      const verify = jwt.verify(token, secret);
+      console.log("Verified");
+      res.status(201).json({
+        status: "Verified",
+        user: searchUser.name,
+      });
+    } catch (error) {
+      console.log("not verify", error);
+      res.status(500).json(error);
+    }
   } catch (error) {
-    console.log("not verify", error);
-    res.status(500).json(error);
+    res.status(500).json("something was wrong");
   }
 
   //   console.log(req.params);
@@ -100,6 +104,7 @@ const postResetPassword = async (req, res) => {
     // res.send("NOt verify");
     // console.log("not verify");
     console.log(error);
+    res.status(500).json("Something was wrong");
   }
 };
 
