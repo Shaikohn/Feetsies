@@ -5,7 +5,7 @@ import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import styles from "./CreateProduct.module.css";
 import { useDispatch } from "react-redux";
 import { getAllProducts } from "../../../redux/actions/getProductsA.js";
-
+import Swal from 'sweetalert2'
 import {
   Grid,
   TextField,
@@ -69,7 +69,12 @@ const CreateProduct = () => {
         ...data,
         image,
       });
-      alert("Product Created");
+      Swal.fire({
+        title: 'Success', 
+        text: "Product Created", 
+        icon: 'success',
+        timer: 5000
+    });
       setImage("");
       dispatch(getAllProducts());
     } catch (error) {

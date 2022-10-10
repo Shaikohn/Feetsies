@@ -6,7 +6,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormControl from "@mui/material/FormControl";
-
+import Swal from 'sweetalert2'
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -70,7 +70,12 @@ const ResetPassword = () => {
         `http://localhost:3001/user/auth/reset-password/${id}/${token}`,
         data
       );
-      alert("Password updated successfully");
+      Swal.fire({
+        title: 'Success', 
+        text: "Password updated successfully", 
+        icon: 'success',
+        timer: 5000
+      });
       navigate("/signIn");
     } catch (error) {
       console.log(error);

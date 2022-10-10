@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -18,10 +19,20 @@ const onSubmit = async (data) => {
       "http://localhost:3001/user/auth/forgot-password",
       data
     );
-    alert("email send it");
+    Swal.fire({
+      title: 'Email sent', 
+      text: "Check your inbox", 
+      icon: 'success',
+      timer: 5000
+    });
   } catch (error) {
     console.log(error);
-    alert(error?.response?.data?.status);
+    Swal.fire({
+      title: 'Cant send email', 
+      text: error?.response?.data?.status, 
+      icon: 'error',
+      timer: 5000
+    });
   }
 };
 
