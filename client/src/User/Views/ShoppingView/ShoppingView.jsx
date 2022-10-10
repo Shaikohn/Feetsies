@@ -13,7 +13,9 @@ import Button from '@mui/material/Button';
 import { removeOneFromCart, removeWholeCart } from "../../../redux/actions/shoppingCartA.js";
 import { useModal } from "../../Features/Modals/useModal.js";
 import ShoppingCheckout from "./ShoppingCheckout.jsx";
-import styles from "./ShoppingCheckout.module.css"
+import styles from "./ShoppingCheckout.module.css";
+import emptyCart from "./Img/emptyCart.png";
+import Dog from "./Img/Dog.jpg"
 
 const stripePromise = loadStripe("pk_test_51LpgGdIsUHqf6y0peEPMdjCDcsjuA2sdBcEGka27crrsnZrTLBpIdJZiAICPkWXYWeJzwabRyk2WtbH0yfdxmGFy0046Eu9UuK")
 
@@ -43,6 +45,16 @@ export default function ShoppingView () {
         e.preventDefault();
         dispatch(removeWholeCart(userId));
         forceUpdate()
+    }
+
+    if(shoppingCartCopy.total < 1) {
+        return (
+            <div>
+                <ResponsiveAppBar />
+                <h1>Your cart is currently empty</h1>
+                <img alt="cart" height="400px" width="500px" src={emptyCart} />
+            </div>
+        )
     }
 
     return (
@@ -130,10 +142,10 @@ export default function ShoppingView () {
                     onClick={openedModal}
                 >Buy</Button>
                     <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
-                        <h2 className="modalTitle">MAKE YOUR PURCHASE WITH YOUR CREDIT CARD!</h2>
-                            {/* <div>
-                                <img src={product?.image} alt="" width="200px" height="200px" />
-                            </div> */}
+                        <h2 className="modalTitle">MAKE YOUR PET HAPPY!</h2>
+                            <div>
+                                <img src={Dog} alt="" width="200px" height="200px" />
+                            </div> 
                             <div className={styles.buyInputs}>
                                 <ShoppingCheckout />
                             </div>  

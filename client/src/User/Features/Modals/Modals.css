@@ -11,6 +11,7 @@
     transition: opacity .6s .9s;
     --transform: translateY(-100vh);
     --transition: transform .8s;
+    z-index: 1 !important;
 }
 
 .modal.is-open {
@@ -37,6 +38,20 @@
     transform: var(--transform);
     transition: var(--transition);
 }
+
+.modalConfirm {
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    background-color: rgb(31, 202, 31);
+    padding: 1em 3em;
+    border: 1px solid;
+    border-radius: 6px;
+    display: inline-block;
+    font-weight: 300;
+    transition: background-color .3s;
+    width: 150px;
+} 
 
 .modalClose {
     text-decoration: none;

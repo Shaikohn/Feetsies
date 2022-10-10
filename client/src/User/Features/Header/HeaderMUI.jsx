@@ -202,7 +202,9 @@ export default function ResponsiveAppBar() {
                 CREATE PRODUCT
               </Button>
             </Link>
-            <Link to="/home/shoppingView">
+            {
+              !user ? "" :
+              <Link to="/home/shoppingView">
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{
@@ -219,6 +221,7 @@ export default function ResponsiveAppBar() {
                 CART
               </Button>
             </Link>
+            }
           </Box>
           {!user ? (
             <Box sx={{ flexGrow: 0 }} size="large">
