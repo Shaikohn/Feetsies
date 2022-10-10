@@ -51,9 +51,6 @@ function Paginado({ items, itemsPerPage }) {
         Next
       </button>
     </ul>
-    <Stack spacing={2}>
-      <Pagination count={10} />
-    </Stack>
   </div>
   );
 }
