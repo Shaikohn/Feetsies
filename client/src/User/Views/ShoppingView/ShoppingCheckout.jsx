@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeWholeCart } from "../../../redux/actions/shoppingCartA.js";
 import { getShoppingCart } from '../../../redux/actions/ShoppingCartView';
+import Swal from 'sweetalert2'
 
 export default function ShoppingCheckout() {
 
@@ -38,16 +39,24 @@ export default function ShoppingCheckout() {
                 amount: shoppingCartCopy.total * 100,
                 /* description: product.description */
             })
-            console.log(data)
-            alert(data.message)
+            Swal.fire({
+                title: 'Payment done', 
+                text: data.message, 
+                icon: 'success',
+                timer: 5000
+            });
             /* product.stock-- */
             elements.getElement(CardElement).clear()
             handleClearCart(e)
             }
             catch(error) {
-                console.log(error.response.data)
                 elements.getElement(CardElement).clear()
-                alert(error.response.data)
+                Swal.fire({
+                    title: 'Payment failed', 
+                    text: error.response.data, 
+                    icon: 'error',
+                    timer: 5000
+                });
             }
             setLoading(false)
         }

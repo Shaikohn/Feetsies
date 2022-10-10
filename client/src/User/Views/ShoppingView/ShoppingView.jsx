@@ -16,6 +16,7 @@ import ShoppingCheckout from "./ShoppingCheckout.jsx";
 import styles from "./ShoppingCheckout.module.css";
 import emptyCart from "./Img/emptyCart.png";
 import Dog from "./Img/Dog.jpg"
+import Swal from 'sweetalert2'
 
 const stripePromise = loadStripe("pk_test_51LpgGdIsUHqf6y0peEPMdjCDcsjuA2sdBcEGka27crrsnZrTLBpIdJZiAICPkWXYWeJzwabRyk2WtbH0yfdxmGFy0046Eu9UuK")
 
@@ -109,7 +110,7 @@ export default function ShoppingView () {
                             <Button
                                 size="small"
                                 variant="outlined"
-                                onClick={(e) => handleDeleteOne(e)}
+                                onClick={(e) => {handleDeleteOne(e)}}
                                 value={c.cartItemid}
                             >
                                 Delete One
@@ -131,7 +132,19 @@ export default function ShoppingView () {
                 <Button
                     size="small"
                     variant="outlined"
-                    onClick={(e) => handleClearCart(e)}
+                    onClick={(e) => {Swal.fire({
+                        title: 'Warning', 
+                        text: 'Are you sure you want to remove all products from the cart?', 
+                        icon: 'warning',
+                        showDenyButton: true,
+                        denyButtonText: 'Cancel',
+                        confirmButtonText: 'Confirm',
+                        confirmButtonColor: 'green'
+                    }).then(res => {
+                        if(res.isConfirmed) {
+                            handleClearCart(e); 
+                        }
+                    })}}
                     value={shoppingCartCopy}
                 >
                     Clear Cart

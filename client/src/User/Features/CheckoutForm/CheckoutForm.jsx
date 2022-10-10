@@ -2,6 +2,7 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import axios from 'axios'
 import styles from "./CheckoutForm.module.css"
 import { useState } from 'react';
+import Swal from 'sweetalert2'
 
 export default function CheckoutForm({product}) {
 
@@ -26,17 +27,22 @@ export default function CheckoutForm({product}) {
                 amount: product.price * 100,
                 description: product.description
             })
-            console.log(data)
-            product.stock--
+            Swal.fire({
+                title: 'Payment done', 
+                text: data.message, 
+                icon: 'success',
+                timer: 5000
+            });
+            /* product.stock-- */
             elements.getElement(CardElement).clear()
             }
             catch(error) {
-                console.log(error)
-                return (
-                    <div>
-                        "Sorry there is no more stock"
-                    </div>
-                )
+                Swal.fire({
+                    title: 'Payment failed', 
+                    text: error.response.data, 
+                    icon: 'error',
+                    timer: 5000
+                });
             }
             setLoading(false)
         }
