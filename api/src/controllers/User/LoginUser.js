@@ -13,7 +13,7 @@ async function loginUser(req, res) {
     const token = await tokenSign(user);
 
     if (!checkPassword) {
-      throw new Error("contraseña invalida");
+      throw new Error("Wrong password");
     }
 
     if (user.status === "Pending") {

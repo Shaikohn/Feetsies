@@ -7,19 +7,22 @@ import paginadoReducer from "./reducers/paginadoR";
 import animalDetailsReducer from "./reducers/animalDetailsReducer.js";
 import productDetailsReducer from "./reducers/productDetailsReducer.js";
 import shoppingCartReducer from "./reducers/shoppingCartR";
+import inqueriesReducer from "./reducers/inqueriesReducer";
+import petitionReducer from "./reducers/petitionsR";
 import getShoppingCartReducer from "./reducers/shoppingCartViewR";
 import authReducer from "./reducers/authR";
-
-export const store = createStore(
-  combineReducers({
-    products: productsReducer,
-    animals: animalsReducer,
-    currentPage: paginadoReducer,
-    ProductDetails: productDetailsReducer,
-    AnimalDetails: animalDetailsReducer,
-    shoppingCart: shoppingCartReducer,
-    getShoppingCart: getShoppingCartReducer,
-    auth: authReducer,
-  }),
-  composeWithDevTools(applyMiddleware(thunk))
-);
+    
+    export const store = createStore(
+        combineReducers({
+            products: productsReducer,
+            animals: animalsReducer,
+            currentPage: paginadoReducer,
+            ProductDetails: productDetailsReducer,
+            AnimalDetails: animalDetailsReducer,
+            shoppingCart: shoppingCartReducer,
+            inqueries: inqueriesReducer,
+            petitions: petitionReducer,
+            getShoppingCart: getShoppingCartReducer,
+            auth: authReducer,
+        }), 
+        composeWithDevTools(applyMiddleware(thunk)));

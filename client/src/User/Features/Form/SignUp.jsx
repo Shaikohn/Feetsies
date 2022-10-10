@@ -22,7 +22,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormControl from "@mui/material/FormControl";
 
 import { useNavigate } from "react-router-dom";
-
 // React Hook Form
 import { useForm } from "react-hook-form";
 
@@ -51,6 +50,7 @@ const SignUp = () => {
     password: "",
     showPassword: false,
   });
+
   const [customError, setCustomError] = useState("");
   const [values2, setValues2] = useState({
     passwordConfirm: "",
@@ -61,13 +61,13 @@ const SignUp = () => {
   // console.log("pass confirmada", values2);
 
   const navigateTo = useNavigate();
-
   const {
     register,
     formState: { errors },
     getValues,
     handleSubmit,
   } = useForm();
+
 
   // const dispatch = useDispatch();
 
@@ -149,7 +149,6 @@ const SignUp = () => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-
           <Box
             component="form"
             noValidate
@@ -186,7 +185,6 @@ const SignUp = () => {
                   </span>
                 )}
               </Grid>
-
               <Grid item xs={12} sm={6}>
                 <TextField
                   error={errors.lastName ? true : false}
@@ -259,7 +257,6 @@ const SignUp = () => {
                   </span>
                 )}
               </Grid> */}
-
               <Grid item xs={12}>
                 <TextField
                   error={errors.email ? true : false}
@@ -285,7 +282,6 @@ const SignUp = () => {
                     )
                   : ""}
               </Grid>
-
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel htmlFor="outlined-adornment-password1">
@@ -333,7 +329,6 @@ const SignUp = () => {
                   )}
                 </FormControl>
               </Grid>
-
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel>Confirm password</InputLabel>

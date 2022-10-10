@@ -4,6 +4,8 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -11,6 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 // React Hook Form
 import { useForm } from "react-hook-form";
@@ -46,6 +49,13 @@ const SignIn = () => {
     handleSubmit,
   } = useForm();
 
+  //const onSubmit = async (data) => {
+    //console.log("Onsubmit", data);
+    // try {
+    //   await axios.post("http://localhost:3001/products/create", data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   const dispatch = useDispatch();
 
   const navigateTo = useNavigate();
@@ -60,7 +70,12 @@ const SignIn = () => {
       console.log(login.data);
       dispatch(signIn(data, navigateTo));
       // navigateTo("/");
-      alert(login.data.msg);
+      Swal.fire({
+        title: 'Logged in', 
+        text: login.data.msg, 
+        icon: 'success',
+        timer: 5000
+      });
       // if (
       //   login.data.response.data ===
       //   "Pending Account. Please Verify Your Email!"
@@ -76,7 +91,12 @@ const SignIn = () => {
       // } else if (error.response.data == `email ${email} invalid or not found`) {
       //   alert(`email ${email} invalid or not found`);
       // }
-      alert(error.response.data);
+      Swal.fire({
+        title: 'Login Failed', 
+        text: error.response.data, 
+        icon: 'error',
+        timer: 5000
+      });
     }
   };
   console.log(errors);
@@ -91,7 +111,7 @@ const SignIn = () => {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: "url(https://source.unsplash.com/random)",
+          backgroundImage: "url(https://www.comfortzone.com/-/media/Images/ComfortZone-NA/US/Blog/cats-playing-or-fighting.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"

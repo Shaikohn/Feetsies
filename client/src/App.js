@@ -12,6 +12,8 @@ import CreateProduct from "./User/Features/Form/CreateProduct";
 import SignUp from "./User/Features/Form/SignUp";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SignIn from "./User/Features/Form/SignIn";
+
+import Dashboard from "./Admin/components/Dashboard";
 import CheckEmails from "./User/Views/CheckEmail";
 import AccountConfirmed from "./User/Views/AccountConfirmed";
 import ResetPassword from "./User/Views/ResetPassword";
@@ -34,11 +36,13 @@ function App() {
         contrastText: "#000",
       },
     },
+
     // typography: {
     //   fontFamily: "Arial",
     //   fontSize: 14, (14px es el valor por defecto)
     //   fontWeight: 500,
     //   fontStyle: "italic",
+    //   textDecoration: "none",
     // },
   });
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -101,6 +105,7 @@ function App() {
             path="/forgot-password"
             element={user ? <Navigate to="/" replace /> : <ForgotPassword />}
           />
+          <Route exact path='/dashboard' element={<Dashboard />}/>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
