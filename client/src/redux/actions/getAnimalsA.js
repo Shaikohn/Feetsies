@@ -4,7 +4,7 @@ export const GET_ANIMAL_NAME = "GET_ANIMAL_NAME";
 
 
 export const getAllAnimals = ()=>(dispatch)=>{
-    axios.get("http://localhost:3001/animals")
+    axios("http://localhost:3001/animals")
     .then(res=>{
         dispatch({
             type:GET_ALL_ANIMALS,

@@ -30,7 +30,7 @@ export default function Landing() {
                         We aim to be the biggest and most important domestic animal shelter in our community, because helping our furry/feathery/scaly friends is what drives our motivation to grow.
                     </p>
                     <h3 className={styles.landingH3}>Values</h3>
-                    <p className={styles.landingH3}>
+                    <p className={styles.landingP}>
                         Love, comprehension and service for our pets are the three main pillars on which we build our confidence and passion for what we do.
                     </p>
                     <h3 className={styles.landingH3}>Adoptions</h3>

@@ -12,7 +12,12 @@ import CreateProduct from "./User/Features/Form/CreateProduct";
 import SignUp from "./User/Features/Form/SignUp";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SignIn from "./User/Features/Form/SignIn";
+
 import Dashboard from "./Admin/components/Dashboard";
+import CheckEmails from "./User/Views/CheckEmail";
+import AccountConfirmed from "./User/Views/AccountConfirmed";
+import ResetPassword from "./User/Views/ResetPassword";
+import ForgotPassword from "./User/Views/ForgotPassword";
 
 function App() {
   const theme = createTheme({
@@ -30,14 +35,13 @@ function App() {
         contrastText: "#000",
       },
     },
-    typography: {
-      textDecoration: "none",
-    },
+
     // typography: {
     //   fontFamily: "Arial",
     //   fontSize: 14, (14px es el valor por defecto)
     //   fontWeight: 500,
     //   fontStyle: "italic",
+    //   textDecoration: "none",
     // },
   });
 
@@ -70,6 +74,21 @@ function App() {
           <Route exact path="/signUp" element={<SignUp />} />
           {/* Sign in Form */}
           <Route exact path="/signIn" element={<SignIn />} />
+          <Route exact path="/checkEmail" element={<CheckEmails />} />
+          <Route
+            exact
+            path="/confirm/:confirmationCode"
+            element={<AccountConfirmed />}
+          />
+          {/* Reset Password */}
+          <Route
+            exact
+            path="/reset-password/:id/:token"
+            element={<ResetPassword />}
+          />
+          {/* Forgot Password */}
+          <Route exact path="/forgot-password" element={<ForgotPassword />} />
+          <Route exact path='/dashboard' element={<Dashboard />}/>
           <Route
             path="*"
             element={
@@ -78,7 +97,6 @@ function App() {
               </main>
             }
           />
-          <Route exact path='/dashboard' element={<Dashboard />}/>
         </Routes>
       </div>
     </ThemeProvider>

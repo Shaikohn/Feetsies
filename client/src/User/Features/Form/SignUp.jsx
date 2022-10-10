@@ -21,6 +21,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormControl from "@mui/material/FormControl";
 
+import { useNavigate } from "react-router-dom";
 // React Hook Form
 import { useForm } from "react-hook-form";
 
@@ -49,7 +50,8 @@ const SignUp = () => {
     password: "",
     showPassword: false,
   });
-  const [customError,setCustomError] = useState("");
+
+  const [customError, setCustomError] = useState("");
   const [values2, setValues2] = useState({
     passwordConfirm: "",
     showPasswordConfirm: false,
@@ -58,6 +60,7 @@ const SignUp = () => {
   // console.log("pass", values);
   // console.log("pass confirmada", values2);
 
+  const navigateTo = useNavigate();
   const {
     register,
     formState: { errors },
@@ -65,27 +68,45 @@ const SignUp = () => {
     handleSubmit,
   } = useForm();
 
-  const onSubmit = async (data,e) => {
+
+  // const dispatch = useDispatch();
+
+  const onSubmit = async (data, e) => {
+    console.log(data);
     try {
-      const register = await axios.post("http://localhost:3001/user/auth/register",data)
-      if(register.data.response ==="User create succesfull"){
-        console.log({token:register.data.token})
-        alert("User created")
-        e.target.reset()
+      const register = await axios.post(
+        "http://localhost:3001/user/auth/register",
+        data
+      );
+      console.log(register);
+      if (
+        register.data.message ===
+        "User was registered successfully! Please check your email"
+      ) {
+        console.log({ token: register.data.token });
+        // alert("User created");
+        // e.target.reset();
+        // dispatch(signUp(data));
+        navigateTo("/checkEmail");
       }
-      setCustomError("")
-      
+      setCustomError("");
     } catch (error) {
-      if(error.response.data.errors[0].msg){
-        setCustomError(error.response.data.errors[0].msg)
+      if (error.response.data.errors[0].msg) {
+        setCustomError(error.response.data.errors[0].msg);
         setTimeout(() => {
-          setCustomError("")
-        },4000);
+          setCustomError("");
+        }, 4000);
       }
     }
+    // try {
+    //   dispatch(signUp(data));
+    //   navigateTo("/checkEmail");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
-    //SHOW PASSWORD
+  //SHOW PASSWORD
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -108,9 +129,9 @@ const SignUp = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  
+
   return (
-    <ThemeProvider theme={theme}>
+    // <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -125,52 +146,45 @@ const SignUp = () => {
             <LockOutlinedIcon />
           </Avatar>
 
-
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-
-
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 3 }}>
-
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
-              
-              
               <Grid item xs={12} sm={6}>
                 <TextField
-                  error={errors.firstName ? true : false}
-                  name="firstName"
+                  error={errors.name ? true : false}
+                  name="name"
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="name"
+                  label="Name"
                   autoFocus
-                  {...register("firstName", {
+                  {...register("name", {
                     required: true,
                     pattern: /^[a-zA-Z ]*$/i,
                     maxLength: 10,
                   })}
-                  aria-invalid={errors.firstName ? "true" : "false"}
+                  aria-invalid={errors.name ? "true" : "false"}
                 />
-                {errors?.firstName?.type === "required" && (
+                {errors?.name?.type === "required" && (
                   <span style={{ color: "red" }}>This field is required</span>
                 )}
-                {errors?.firstName?.type === "maxLength" && (
+                {errors?.name?.type === "maxLength" && (
                   <span style={{ color: "red" }}>
                     The name cannot exceed 20 characters
                   </span>
                 )}
-                {errors?.firstName?.type === "pattern" && (
+                {errors?.name?.type === "pattern" && (
                   <span style={{ color: "red" }}>
                     Alphabetical characters only
                   </span>
                 )}
               </Grid>
-              
-              
               <Grid item xs={12} sm={6}>
                 <TextField
                   error={errors.lastName ? true : false}
@@ -243,8 +257,6 @@ const SignUp = () => {
                   </span>
                 )}
               </Grid> */}
-              
-              
               <Grid item xs={12}>
                 <TextField
                   error={errors.email ? true : false}
@@ -264,14 +276,12 @@ const SignUp = () => {
                 {errors?.email?.type === "pattern" && (
                   <span style={{ color: "red" }}>Email invalid</span>
                 )}
-                {!errors.email?
-                  customError && (
-                    <span style={{ color: "red" }}>{customError}</span>
-                  )
-                :""}
+                {!errors.email
+                  ? customError && (
+                      <span style={{ color: "red" }}>{customError}</span>
+                    )
+                  : ""}
               </Grid>
-              
-              
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel htmlFor="outlined-adornment-password1">
@@ -319,8 +329,6 @@ const SignUp = () => {
                   )}
                 </FormControl>
               </Grid>
-              
-              
               <Grid item xs={12}>
                 <FormControl variant="outlined" fullWidth>
                   <InputLabel>Confirm password</InputLabel>
@@ -373,34 +381,29 @@ const SignUp = () => {
                   )}
                 </FormControl>
               </Grid>
-            
-            
             </Grid>
-            
-            
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}>
+              sx={{ mt: 3, mb: 2 }}
+            >
               Sign Up
             </Button>
-            
+
             <Grid container justifyContent="flex-end">
-              
               <Grid item>
                 <Link to="/signIn" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
-          
           </Box>
-        
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 };
 

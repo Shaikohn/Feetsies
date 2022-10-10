@@ -1,7 +1,6 @@
 const {DataTypes} = require('sequelize')
-
-
-
+const defaultpic = `https://photoshop-kopona.com/uploads/posts/2018-07/1531754924_2.jpg`;
+//
 module.exports= (sequelize) => {
     sequelize.define('animal', {
         name: {
@@ -14,15 +13,16 @@ module.exports= (sequelize) => {
         },
         breed: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            defaultValue:'Unknown'
         },
         size: {
-            type: DataTypes.ENUM('Large', 'Meduim', 'Small'),
+            type: DataTypes.ENUM('Large', 'Medium', 'Small'),
             allowNull: false,
         },
         id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER,
+            autoIncrement:true,
             allowNull: false,
             primaryKey: true
         },
@@ -34,10 +34,16 @@ module.exports= (sequelize) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        birth_date: {
-            type: DataTypes.DATE,
-            allowNull: true
+        animal_typeId: {
+            type: DataTypes.INTEGER,
+            defaultValue:4,
+        },
+        main_image:{
+            type: DataTypes.TEXT,
+            defaultValue:defaultpic,
         }
-
+    },{
+        timeStamps:false,
+        createdAt:false,
     })
 }
