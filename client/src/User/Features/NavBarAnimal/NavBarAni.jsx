@@ -5,32 +5,50 @@ import filterSexAnimals from "../../../redux/actions/filterSexAnimals.js";
 import filterSizeAnimals from "../../../redux/actions/filterSizeAnimals.js";
 import { setPage } from "../../../redux/actions/paginadoA.js";
 import SearchBarAnim from "../SearchBarAnim/SearchBarAnim.jsx";
-import "./NavBarAnimal.css";
-
-import Button from "@mui/material/Button";
 
 import Stack from "@mui/material/Stack";
+import Divider from '@mui/material/Divider';
+import Button from "@mui/material/Button";
+
+import { styled } from "@mui/material/styles";
+
+const Filter = styled("div")(({ theme }) => ({
+  width: "50px",
+  position: "relative",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "25px",
+  border: "2px solid #567900",
+  backgroundColor: "#fedf6a",
+  borderRadius: "5px",
+}));
+
 
 function NavBarAnimals() {
+
   const dispatch = useDispatch();
 
   const [filters, setFilters] = useState({
     size: [],
     sex: [],
   });
-  console.log(filters);
+
+  const arraySize = ["Small", "Medium", "Large"];
+  const arraySex = ["Male", "Female"];
 
   const eventHandlerSize = (e) => {
     e.preventDefault();
     if (filters.size.length === 0) {
       setFilters({
         ...filters,
-        size: [...e.target.value],
+        size: [e.target.value],
       });
       dispatch(filterSizeAnimals(e.target.value));
       dispatch(setPage(1));
     }
   };
+
   const eventHandlerSex = (e) => {
     e.preventDefault();
     if (filters.sex.length === 0) {
@@ -42,9 +60,6 @@ function NavBarAnimals() {
       dispatch(setPage(1));
     }
   };
-
-  const arraySize = ["Small", "Medium", "Large"];
-  const arraySex = ["Male", "Female"];
 
   const clearFilters = (e) => {
     e.preventDefault();
@@ -60,15 +75,19 @@ function NavBarAnimals() {
     <>
       <Stack
         direction="row"
-        spacing={2}
+        spacing={3}
         sx={{
           display: "flex",
           justifyContent: "center",
+          alignItems: "center",
+          m: 1,
           p: 1,
-          borderRadius: 1,
+          borderRadius: 10,
         }}
+        bgcolor="#ffff9b"
       >
         <SearchBarAnim />
+        <Divider orientation="vertical" flexItem />
         {arraySize.map((ele, id) => {
           return (
             <div key={id}>
@@ -82,22 +101,22 @@ function NavBarAnimals() {
             </div>
           );
         })}
+        <Divider orientation="vertical" flexItem />
         {arraySex.map((elem, id) => {
           return (
             <div key={id}>
-              {/* <button value={elem} onClick={(e) => eventHandlerSex(e)}>
-              {elem}
-            </button> */}
               <Button
-                variant="text"
+                variant="contained"
                 value={elem}
                 onClick={(e) => eventHandlerSex(e)}
+                sx={{bgcolor: "primary.dark"}}
               >
                 {elem}
               </Button>
             </div>
           );
         })}
+        <Divider orientation="vertical" flexItem />
         <Button
           variant="contained"
           onClick={(e) => clearFilters(e)}
@@ -112,12 +131,12 @@ function NavBarAnimals() {
         sx={{
           display: "flex",
           justifyContent: "center",
-          p: 1,
-          borderRadius: 1,
+          alignItems: "center",
+          borderRadius: 10,
         }}
       >
-        {filters.size.length > 0 && <div>{filters.size}</div>}
-        {filters.sex.length > 0 && <div>{filters.sex}</div>}
+        {filters.size.length > 0 && <Filter>{filters.size}</Filter>}
+        {filters.sex.length > 0 && <Filter>{filters.sex}</Filter>}
       </Stack>
     </>
   );

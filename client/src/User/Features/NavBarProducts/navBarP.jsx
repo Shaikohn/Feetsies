@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import orderProductPrice from "../../../redux/actions/orderPrice.js";
 import orderProductName from "../../../redux/actions/orderName.js";
@@ -5,19 +6,22 @@ import filterTypeProducts from "../../../redux/actions/filterTypeProducts.js";
 import { setPage } from "../../../redux/actions/paginadoA.js";
 import SearchBarProd from "../SearchBarProd/SearchBarProd.jsx";
 
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { useState } from "react";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+
+
 
 function NavBarProducts() {
+
+  const dispatch = useDispatch();
+
   const [typeProduct, setTypeProduct] = useState("");
   const [orderPrice, setOrderPrice] = useState("");
   const [orderName, setOrderName] = useState("");
-  const dispatch = useDispatch();
 
   const eventHandlerPrice = (e) => {
     e.preventDefault();
@@ -25,6 +29,7 @@ function NavBarProducts() {
     dispatch(orderProductPrice(e.target.value));
     dispatch(setPage(1));
   };
+
   const eventHandlerName = (e) => {
     e.preventDefault();
     setOrderName(e.target.value);
@@ -42,16 +47,19 @@ function NavBarProducts() {
   return (
     <Stack
       direction="row"
-      spacing={2}
+      spacing={4}
       sx={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
+        m: 1,
         p: 1,
-        borderRadius: 1,
+        borderRadius: 10,
       }}
-      // bgcolor="success.main"
+      bgcolor="#567900"
     >
-      <Box sx={{ width: 240 }}>
+      <SearchBarProd />
+      <Box sx={{ width: 190, height: 57 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">
             Filter type product
@@ -72,7 +80,7 @@ function NavBarProducts() {
         </FormControl>
       </Box>
 
-      <Box sx={{ width: 240 }}>
+      <Box sx={{ width: 190, height: 57 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Order by price</InputLabel>
           <Select
@@ -88,7 +96,7 @@ function NavBarProducts() {
         </FormControl>
       </Box>
 
-      <Box sx={{ width: 240 }}>
+      <Box sx={{ width: 190, height: 57 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Order By Name</InputLabel>
           <Select
@@ -103,8 +111,6 @@ function NavBarProducts() {
           </Select>
         </FormControl>
       </Box>
-
-      <SearchBarProd />
     </Stack>
   );
 }
