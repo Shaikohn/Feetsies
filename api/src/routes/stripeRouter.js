@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const { receivePayment } = require('../controllers/Stripe.controller.js')
+const { receivePayment } = require('../controllers/Stripe/Stripe.controller.js')
 
 router.post('/', receivePayment);
 
