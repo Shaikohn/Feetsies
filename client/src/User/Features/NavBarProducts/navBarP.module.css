@@ -1,0 +1,43 @@
+.navContainer{
+    background-color: #c0c0c0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.navUl {
+    display: flex;
+    flex-direction: row;
+    
+}
+.navLiItem {
+    display: flex;
+    flex-direction: column;
+    margin-right: 7rem;
+    position: relative;
+
+}
+.navLiItemUl {
+    display: none;
+    position: absolute;
+    top: 100%;
+    
+}
+
+.navLiItem:hover ul{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(219, 219, 219);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+}
+.navLiItemUlLi {
+    display: block;
+    flex: 1 0 100%;
+    padding: 0;
+}
+.container-navBar ul li ul li:hover {
+    background-color: blueviolet;
+}

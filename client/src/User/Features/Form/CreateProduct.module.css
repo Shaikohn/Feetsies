@@ -1,0 +1,10 @@
+.headerForm {
+  background-color: rgb(0, 0, 0);
+}
+
+.createForm {
+  padding-top: 65px;
+  background-image: url("./Img/backgroundDetails1.jpg");
+  height: 100vh;
+  margin: auto;
+}
