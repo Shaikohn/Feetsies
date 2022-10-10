@@ -31,8 +31,15 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
 
+  const arrayQuantity = Array.from(Array(10).keys())
+
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile'))?.data.id);
+  
+  const dispatch = useDispatch(); 
+
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  
+
 
   function handlerAddToCart(e) {
     e.preventDefault();
