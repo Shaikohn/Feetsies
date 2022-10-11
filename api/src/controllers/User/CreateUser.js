@@ -2,7 +2,7 @@ const { User } = require("../../db.js");
 const bcrypt = require("bcryptjs");
 const { sendConfirmationEmail } = require("../emails/index.js");
 const { tokenSign } = require("../../utils/User/generateToken.js");
-
+//detalle
 async function createUser(req, res) {
   const { email, password, location, name, lastName } = req.body;
   try {
@@ -14,6 +14,7 @@ async function createUser(req, res) {
         email: email,
         password: hashPassword,
         location,
+        isAdmin:true //BORRAR ESTA LINEA LUEGO DE DEMO2
       });
       const token = await tokenSign(user);
       User.update(
