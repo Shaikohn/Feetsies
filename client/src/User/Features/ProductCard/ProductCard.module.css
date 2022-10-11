@@ -1,0 +1,86 @@
+.link {
+  text-decoration: none;
+}
+
+.prodCard {
+  margin: 15px;
+  height: auto;
+
+  border-radius: 20px;
+  border: 1px solid black;
+  /* overflow: hidden; */
+
+  background-color: rgba(75, 73, 73, 0.096);
+  backdrop-filter: blur(4px);
+
+  transition: 0.3s;
+  animation: ease-in-out;
+  box-shadow: 0px 0px 10px 5px rgb(135 168 39);
+}
+
+.prodCard:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 10px 8px rgb(92, 116, 20);
+}
+
+.prodContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 5px;
+}
+
+.prodName {
+  margin: 8px 5px;
+  font-family: "Segoe Print";
+  font-size: 25px;
+  text-align: center;
+  color: rgb(252, 226, 192);
+  text-shadow: 1px 1px 5px rgb(0, 0, 0);
+  text-decoration: none;
+}
+
+.prodImg {
+  width: 100%;
+  /* height: 100%; */
+  border-radius: 20px;
+}
+
+.prodPrice {
+  margin: 8px 5px;
+  font-family: "Segoe Print";
+  font-size: 35px;
+  text-decoration-line: none;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  /* text-transform: uppercase; */
+  text-shadow: 0ex 0ex 1ex cornsilk;
+}
+
+.prodTagsCointainer {
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.prodTag {
+  /* margin: 5px; */
+  font-family: "Segoe Print";
+  font-size: 16px;
+  list-style: none;
+  text-decoration-line: none;
+  text-align: center;
+  text-decoration: none;
+}
+
+.tagName {
+  border-width: 3px;
+  border-color: rgb(78 82 15);
+  border-style: groove;
+  background-color: rgb(135 168 39 / 63%);
+  border-radius: 10px;
+  color: rgb(46 34 147);
+}

@@ -1,0 +1,60 @@
+.imagesContainer {
+    max-width: 540px;
+    width: 100%;
+}
+
+.selected {
+    border: 4px solid purple;
+    height: 300px;
+    width: 300px;
+}
+
+.notSelected {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px 0 0;
+    width: 100%;
+}
+
+.notSelected img {
+    cursor: pointer;
+    height: 100px;
+    margin: 5px 0;
+    width: 100px;
+}
+
+.mainImg {
+    border-radius: 10px;
+    float: left;
+    height: 300px;
+    margin-left: 9rem;
+    margin-top: 9rem;
+    width: 300px;
+    margin-right: 16rem;
+}
+
+.detailsBackground {
+    background-image: url("../ProductDetails/backgroundDetails1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Segoe Print";
+    object-fit: cover;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+}
+
+.infoContainer {
+    color: white;
+    margin-top: 2rem;
+    padding: 2rem;
+    text-align: center;
+    align-content: center;
+    display: block;
+}
+
+.name {
+    text-decoration: underline;
+}
