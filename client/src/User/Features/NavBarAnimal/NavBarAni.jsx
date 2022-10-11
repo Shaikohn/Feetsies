@@ -7,13 +7,13 @@ import { setPage } from "../../../redux/actions/paginadoA.js";
 import SearchBarAnim from "../SearchBarAnim/SearchBarAnim.jsx";
 
 import Stack from "@mui/material/Stack";
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 
 import { styled } from "@mui/material/styles";
 
 const Filter = styled("div")(({ theme }) => ({
-  width: "50px",
+  width: "60px",
   position: "relative",
   display: "flex",
   justifyContent: "center",
@@ -24,9 +24,7 @@ const Filter = styled("div")(({ theme }) => ({
   borderRadius: "5px",
 }));
 
-
 function NavBarAnimals() {
-
   const dispatch = useDispatch();
 
   const [filters, setFilters] = useState({
@@ -109,7 +107,7 @@ function NavBarAnimals() {
                 variant="contained"
                 value={elem}
                 onClick={(e) => eventHandlerSex(e)}
-                sx={{bgcolor: "primary.dark"}}
+                sx={{ bgcolor: "primary.dark" }}
               >
                 {elem}
               </Button>

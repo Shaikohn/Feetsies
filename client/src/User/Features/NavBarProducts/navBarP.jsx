@@ -13,10 +13,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-
-
 function NavBarProducts() {
-
   const dispatch = useDispatch();
 
   const [typeProduct, setTypeProduct] = useState("");
@@ -56,7 +53,7 @@ function NavBarProducts() {
         p: 1,
         borderRadius: 10,
       }}
-      bgcolor="#567900"
+      bgcolor="#ffff9b"
     >
       <SearchBarProd />
       <Box sx={{ width: 190, height: 57 }}>
