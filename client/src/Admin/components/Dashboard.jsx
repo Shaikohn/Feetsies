@@ -22,6 +22,7 @@ import Chart from "./Chart";
 import Inqueries from "./Inqueries";
 import AdoptionPetitions from "./AdoptionPetitions";
 import { useSelector } from "react-redux";
+import {Outlet} from 'react-router-dom'
 
 function Copyright(props) {
   return (
@@ -171,7 +172,21 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* <Grid item xs={12} md={12} lg={8}>
+              <Outlet />
+            </Grid>
+            <Copyright sx={{ pt: 4 }} />
+          </Container>
+        </Box>
+      </Box>
+    </ThemeProvider>
+  );
+}
+
+
+export function DashboardLanding() {
+  return (
+    <React.Fragment>
+      <Grid item xs={12} md={12} lg={8}>
                 <Paper
                   sx={{
                     p: 2,
@@ -182,8 +197,7 @@ function DashboardContent() {
                 >
                   <Chart />
                 </Paper>
-              </Grid>  */}
-
+              </Grid>  
               <Grid item xs={24} md={12} lg={4}>
                 <Paper
                   sx={{
@@ -202,13 +216,8 @@ function DashboardContent() {
                   <AdoptionPetitions />
                 </Paper>
               </Grid>
-            </Grid>
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
-        </Box>
-      </Box>
-    </ThemeProvider>
-  );
+    </React.Fragment>
+  )
 }
 
 export default function Dashboard() {
