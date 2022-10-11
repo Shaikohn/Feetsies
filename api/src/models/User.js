@@ -58,6 +58,10 @@ module.exports = (sequelize) => {
     user_products: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
-    }
+    },
+    isBan: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 };

@@ -1,11 +1,25 @@
-import * as React from 'react';
-import  {People ,ShoppingCart, BarChart, Layers, Assignment, Home, Pets} from '@mui/icons-material/';
-import {Link} from 'react-router-dom'
-import { ListItemIcon, ListItemButton, ListItemText, ListSubheader } from '@mui/material';
+import * as React from "react";
+import {
+  People,
+  ShoppingCart,
+  BarChart,
+  Layers,
+  Assignment,
+  Home,
+  Pets,
+} from "@mui/icons-material/";
+import { Link } from "react-router-dom";
+import {
+  ListItemIcon,
+  ListItemButton,
+  ListItemText,
+  ListSubheader,
+} from "@mui/material";
+import CategoryIcon from "@mui/icons-material/Category";
 
 export const mainListItems = (
   <React.Fragment>
-    <Link to='/'>
+    <Link to="/">
       <ListItemButton>
         <ListItemIcon>
           <Home />
@@ -13,7 +27,7 @@ export const mainListItems = (
         <ListItemText primary="Home" />
       </ListItemButton>
     </Link>
-    <Link to='/home/animals'>
+    <Link to="/home/animals">
       <ListItemButton>
         <ListItemIcon>
           <Pets />
@@ -21,13 +35,23 @@ export const mainListItems = (
         <ListItemText primary="Animals" />
       </ListItemButton>
     </Link>
-    <ListItemButton>
-      <ListItemIcon>
-        <People />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
+    <Link to="/dashboard/users">
+      <ListItemButton>
+        <ListItemIcon>
+          <People />
+        </ListItemIcon>
+        <ListItemText primary="Users" />
+      </ListItemButton>
+    </Link>
+    <Link to="/dashboard/products">
+      <ListItemButton>
+        <ListItemIcon>
+          <CategoryIcon />
+        </ListItemIcon>
+        <ListItemText primary="Products" />
+      </ListItemButton>
+    </Link>
+    {/* <ListItemButton>
       <ListItemIcon>
         <BarChart />
       </ListItemIcon>
@@ -38,7 +62,7 @@ export const mainListItems = (
         <Layers />
       </ListItemIcon>
       <ListItemText primary="Integrations" />
-    </ListItemButton>
+    </ListItemButton> */}
   </React.Fragment>
 );
 

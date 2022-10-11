@@ -19,6 +19,8 @@ import AccountConfirmed from "./User/Views/AccountConfirmed";
 import ResetPassword from "./User/Views/ResetPassword";
 import ForgotPassword from "./User/Views/ForgotPassword";
 import { useState } from "react";
+import UsersList from "./Admin/components/UsersList";
+import ProductsList from "./Admin/components/ProductsList";
 
 function App() {
   const theme = createTheme({
@@ -105,7 +107,9 @@ function App() {
             path="/forgot-password"
             element={user ? <Navigate to="/" replace /> : <ForgotPassword />}
           />
-          <Route exact path='/dashboard' element={<Dashboard />}/>
+          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/dashboard/users" element={<UsersList />} />
+          <Route exact path="/dashboard/products" element={<ProductsList />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

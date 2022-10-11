@@ -22,6 +22,8 @@ import Chart from "./Chart";
 import Inqueries from "./Inqueries";
 import AdoptionPetitions from "./AdoptionPetitions";
 import { useSelector } from "react-redux";
+import UserTable from "./UserTable";
+import ProductTable from "./ProductTable";
 
 function Copyright(props) {
   return (
@@ -89,7 +91,7 @@ const Drawer = styled(MuiDrawer, {
 
 const mdTheme = createTheme();
 
-function DashboardContent() {
+export default function ProductsList() {
   let notifications = useSelector((state) => state.petitions.notifications);
 
   const [open, setOpen] = React.useState(true);
@@ -171,35 +173,9 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* <Grid item xs={12} md={12} lg={8}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>  */}
-
-              <Grid item xs={24} md={12} lg={4}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                    overflowY: "auto",
-                  }}
-                >
-                  <Inqueries />
-                </Paper>
-              </Grid>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <AdoptionPetitions />
+                  <ProductTable />
                 </Paper>
               </Grid>
             </Grid>
@@ -209,8 +185,4 @@ function DashboardContent() {
       </Box>
     </ThemeProvider>
   );
-}
-
-export default function Dashboard() {
-  return <DashboardContent />;
 }
