@@ -19,7 +19,7 @@ import CategoryIcon from "@mui/icons-material/Category";
 
 export const mainListItems = (
   <React.Fragment>
-    <Link to="/">
+    <Link to="/dashboard">
       <ListItemButton>
         <ListItemIcon>
           <Home />
@@ -27,7 +27,7 @@ export const mainListItems = (
         <ListItemText primary="Home" />
       </ListItemButton>
     </Link>
-    <Link to="/home/animals">
+    <Link to="/dashboard/animaltable">
       <ListItemButton>
         <ListItemIcon>
           <Pets />

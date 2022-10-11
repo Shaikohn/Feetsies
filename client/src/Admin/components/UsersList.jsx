@@ -103,7 +103,7 @@ export default function UsersList() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        {/* <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
               pr: "24px", // keep right padding when drawer closed
@@ -136,8 +136,8 @@ export default function UsersList() {
               </Badge>
             </IconButton>
           </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
+        </AppBar> */}
+        {/* <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
               display: "flex",
@@ -154,10 +154,10 @@ export default function UsersList() {
           <List component="nav">
             {mainListItems}
             <Divider sx={{ my: 1 }} />
-            {/* {secondaryListItems} */}
-          </List>
-        </Drawer>
-        <Box
+           
+          {/* </List>
+        </Drawer>  */}
+        {/* <Box
           component="main"
           sx={{
             backgroundColor: (theme) =>
@@ -169,7 +169,7 @@ export default function UsersList() {
             overflow: "auto",
           }}
         >
-          <Toolbar />
+          <Toolbar /> */}
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -181,7 +181,7 @@ export default function UsersList() {
             <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
-      </Box>
+      {/* </Box> */}
     </ThemeProvider>
   );
 }
