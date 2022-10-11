@@ -1,5 +1,5 @@
 import { AUTH, LOGOUT } from "../actions/auth";
-
+//detalle
 const initialState = {
   authData: null,
 };

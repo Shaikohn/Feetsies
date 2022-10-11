@@ -1,19 +1,60 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
+import styles from "./CreateProduct.module.css";
+import { useDispatch } from "react-redux";
+import { getAllProducts } from "../../../redux/actions/getProductsA.js";
+import Swal from 'sweetalert2'
+import {
+  Grid,
+  TextField,
+  Button,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
+
+import IconButton from "@mui/material/IconButton";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 const Adoption = () => {
+  const dispatch = useDispatch();
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      topic: "",
+      description: "",
+      name: "",
+    },
+  });
+
   const onSubmit = (data) => console.log("Onsubmit", data);
 
   console.log(errors);
 
   return (
-    <>
-      <h1>Formulario de adopcion</h1>
+    <div>
+      <div>
+        <ResponsiveAppBar />
+      </div>
+      <div className={styles.createForm}>
+      <Grid>
+          <Card
+            style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
+          >
+            <CardContent>
+              <Typography gutterBottom variant="h5">
+                Adoption Form
+              </Typography>
+            </CardContent>
+          </Card>
+      </Grid>
+      </div>
+      <h1></h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>Motive</label>
         <input
@@ -46,7 +87,7 @@ const Adoption = () => {
 
         <button>Adopt</button>
       </form>
-    </>
+    </div>
   );
 };
 

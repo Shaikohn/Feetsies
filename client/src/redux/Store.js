@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+//detalle
 import thunk from "redux-thunk";
 import productsReducer from "./reducers/getProductsR";
 import animalsReducer from "./reducers/getAnimalsR";

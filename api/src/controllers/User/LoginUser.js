@@ -15,7 +15,7 @@ async function loginUser(req, res) {
     if (!checkPassword) {
       throw new Error("Wrong password");
     }
-
+//detalle
     if (user.status === "Pending") {
       throw new Error("Pending Account. Please Verify Your Email!");
     }
