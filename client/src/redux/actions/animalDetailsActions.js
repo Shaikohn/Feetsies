@@ -6,7 +6,7 @@ export const CLEAR_ANIMAL_DETAILS = "CLEAR_ANIMAL_DETAILS"
 export const getAnimalDetails = (id) => {
     return async function(dispatch) {
         try {
-            await axios.get(`http://localhost:3001/animals/${id}`)
+            await axios.get(`/animals/${id}`)
             .then(res=>{
                 dispatch({
                     type: GET_ANIMAL_DETAILS,

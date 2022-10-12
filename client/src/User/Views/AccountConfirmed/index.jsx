@@ -11,7 +11,7 @@ const AccountConfirmed = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/auth/confirm/${confirmationCode}`)
+      .get(`/user/auth/confirm/${confirmationCode}`)
       .catch((error) => {
         alert(error);
         navigate("/");

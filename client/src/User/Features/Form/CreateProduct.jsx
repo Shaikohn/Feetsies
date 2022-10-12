@@ -65,7 +65,7 @@ const CreateProduct = () => {
   const onSubmit = async (data) => {
     console.log("Onsubmit", { ...data, image });
     try {
-      await axios.post("http://localhost:3001/products/create", {
+      await axios.post("/products/create", {
         ...data,
         image,
       });

@@ -76,7 +76,7 @@ const SignUp = () => {
     console.log(data);
     try {
       const register = await axios.post(
-        "http://localhost:3001/user/auth/register",
+        "/user/auth/register",
         data
       );
       console.log(register);

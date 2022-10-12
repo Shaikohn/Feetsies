@@ -53,7 +53,7 @@ const SignIn = () => {
   //const onSubmit = async (data) => {
     //console.log("Onsubmit", data);
     // try {
-    //   await axios.post("http://localhost:3001/products/create", data);
+    //   await axios.post("/products/create", data);
     // } catch (error) {
     //   console.log(error);
     // }
@@ -65,7 +65,7 @@ const SignIn = () => {
     console.log("Onsubmit", data);
     try {
       const login = await axios.post(
-        "http://localhost:3001/user/auth/login",
+        "/user/auth/login",
         data
       );
       console.log(login.data);
