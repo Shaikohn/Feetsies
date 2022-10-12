@@ -4,7 +4,7 @@ export const UPDATE_USER_BAN = "UPDATE_USER_BAN";
 export const UPDATE_USER_ADMIN = "UPDATE_USER_ADMIN";
 
 export const getAllUsers = () => (dispatch) => {
-  axios.get("http://localhost:3001/admin/getallusers").then((res) => {
+  axios.get("/admin/getallusers").then((res) => {
     dispatch({
       type: GET_ALL_USERS,
       payload: res.data,
@@ -13,7 +13,7 @@ export const getAllUsers = () => (dispatch) => {
 };
 
 export const updateUserBan = (id) => (dispatch) => {
-  axios.put(`http://localhost:3001/admin/toggleban/${id}`).then(() => {
+  axios.put(`/admin/toggleban/${id}`).then(() => {
     dispatch({
       type: UPDATE_USER_BAN,
     });
@@ -21,7 +21,7 @@ export const updateUserBan = (id) => (dispatch) => {
 };
 
 export const updateUserAdmin = (id) => (dispatch) => {
-  axios.put(`http://localhost:3001/admin/toggleadmin/${id}`).then(() => {
+  axios.put(`/admin/toggleadmin/${id}`).then(() => {
     dispatch({
       type: UPDATE_USER_ADMIN,
     });

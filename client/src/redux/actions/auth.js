@@ -5,7 +5,7 @@ export const LOGOUT = "LOGOUT"
 export const signIn = (formData, navigateTo) => async (dispatch) => {
   try {
     const { data } = await axios.post(
-      "http://localhost:3001/user/auth/login",
+      "/user/auth/login",
       formData
     );
     dispatch({ type: AUTH, data });

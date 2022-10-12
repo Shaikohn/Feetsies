@@ -22,7 +22,7 @@ export default function CheckoutForm({product}) {
         if(!error && product.stock > 0) {
             const { id } = paymentMethod
             try {
-                const {data} = await axios.post('http://localhost:3001/api/checkout', {
+                const {data} = await axios.post('/api/checkout', {
                 id,
                 amount: product.price * 100,
                 description: product.description

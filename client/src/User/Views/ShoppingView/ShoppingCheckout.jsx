@@ -34,7 +34,7 @@ export default function ShoppingCheckout() {
         if(!error) {
             const { id } = paymentMethod
             try {
-                const {data} = await axios.post('http://localhost:3001/api/checkout', {
+                const {data} = await axios.post('/api/checkout', {
                 id,
                 amount: shoppingCartCopy.total * 100,
                 /* description: product.description */
