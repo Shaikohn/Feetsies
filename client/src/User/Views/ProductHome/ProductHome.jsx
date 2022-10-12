@@ -11,12 +11,15 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 
 export default function ProductHome() {
+
   const dispatch = useDispatch();
+
   const { allProductsCopy } = useSelector((state) => state.products);
   const { page } = useSelector((state) => state.currentPage);
 
-  const [productsPerPage] = useState(8);
+  const [productsPerPage, setProductsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(page);
+  
   const lastPositionPerPage = productsPerPage * currentPage;
   const firstPositionPerPage = lastPositionPerPage - productsPerPage;
   const currentProducts = allProductsCopy.slice(

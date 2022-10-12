@@ -2,12 +2,21 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
-import profileIcon from "./Img/profileIcon.jpg";
+
+
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
+import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Box, CardActionArea } from "@mui/material";
+
+
+import profileIcon from "./Img/profileIcon.jpg";
+
+
+
+
+import { Box } from "@mui/material";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,8 +33,11 @@ import { styled } from "@mui/material/styles";
 import styles from "./ProductCard.module.css";
 
 export default function ProductCard({ id, name, image, price, productTypes }) {
+
   const arrayQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   const [isOpenModal, openedModal, closeModal] = useModal(false);
+
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data.id
@@ -64,44 +76,44 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
   }
   
   return (
-    <Container>
-      <Card sx={{ maxWidth: 345 }} key={id}>
+
+      <Card 
+        elevation={5}
+        key={id}
+        sx={{ 
+          maxWidth: 345,
+          border: "1px solid #bada59",
+          borderRadius: 3,
+          bgcolor: "#ffff9bb0",
+          boxShadow: "0px 0px 10px 5px rgb(135 168 39);",
+          transition: "0.3s",
+          animation: "ease-in-out",
+          "&:hover": {
+            transform: "scale(1.02)",
+            boxShadow: "0px 0px 10px 8px rgb(92, 116, 20)"
+          }
+        }} 
+      >
         <CardActionArea>
           <Link to={`/home/products/${id}`}>
             <CardMedia
               component="img"
-              height="200"
+              height="220px"
               image={image}
-              alt="product card image"
+              alt="Product Image"
             />
-          </Link>
-          <Box bgcolor="text.disabled">
             <CardContent>
-              <Typography
-                gutterBottom
-                component="h5"
-                // className={styles.prodName}
-                sx={{
-                  fontSize: 14,
-                  listStyle: "none",
-                  textDecoration: "none",
-                }}
+              <Typography gutterBottom variant="h4" component="div" fontFamily="Segoe Print"
+                sx={{color: "#567900", fontSize: 25, textShadow: "1px 1px 5px rgb(0, 0, 0)"}}
               >
                 {name}
               </Typography>
-              <Typography
-                component={"span"}
-                variant="body2"
-                color="text.secondary"
+              <Typography variant="h5" fontFamily="Segoe Print"
+                sx={{ color: "black", textShadow: "1px 1px 5px white"}}
               >
                 {`$ ${price}`}
               </Typography>
-            </CardContent>
-            <Typography
-              component={"span"}
-              variant="body2"
-              color="text.secondary"
-            >
+              <Typography component={"span"} variant="body2" color="text.secondary">
               <Stack
                 direction="row"
                 spacing={2}
@@ -109,7 +121,9 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                   display: "flex",
                   justifyContent: "center",
                   p: 1,
-                  borderRadius: 1,
+                  // borderRadius: 1,
+                  // border: "1px solid black",
+                  // bgcorlor: "black"
                 }}
               >
                 {productTypes.map((tag, index) => {
@@ -121,6 +135,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                 })}
               </Stack>
             </Typography>
+            </CardContent>
             <Container>
               {!user ? (
                 <div>
@@ -220,9 +235,8 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                 ))}
               </Select>
             </Container>
-          </Box>
+          </Link>
         </CardActionArea>
       </Card>
-    </Container>
   );
 }

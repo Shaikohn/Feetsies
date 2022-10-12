@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../../redux/actions/auth";
 import { useDispatch } from "react-redux";
@@ -24,13 +24,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge';
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
-import { useReducer } from "react";
+
 
 export default function ResponsiveAppBar() {
+
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  console.log(user);
 
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -38,7 +40,6 @@ export default function ResponsiveAppBar() {
   const dispatch = useDispatch();
 
   const location = useLocation();
-  console.log(location);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -94,7 +95,7 @@ export default function ResponsiveAppBar() {
             <Avatar
               alt=""
               src={logo}
-              sx={{ width: 125, height: 125, m: 1.25 }}
+              sx={{ width: 110, height: 110, m: 1 }}
             />
           </Link>
           <Link to="/">
@@ -171,16 +172,19 @@ export default function ResponsiveAppBar() {
                     >
                         LOGO
                     </Typography> */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <Box 
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} 
+            justifyContent="center" 
+            alignItems="center"
+          >
             <Link to="/home/products">
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
-                  display: "block",
-                  fontSize: 20,
+                  fontSize: 17,
                   bgcolor: "secondary.main",
-                  fontWeight: 600,
+                  fontWeight: 500,
                   mx: 2,
                 }}
                 size="large"
@@ -192,7 +196,13 @@ export default function ResponsiveAppBar() {
             <Link to="/home/animals">
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, display: "block", fontSize: 20, mx: 2 }}
+                sx={{ 
+                  my: 2, 
+                  display: "block", 
+                  fontSize: 17, 
+                  bgcolor: "secondary.main",
+                  fontWeight: 500,
+                  mx: 2 }}
                 size="large"
                 variant="outlined"
               >
@@ -202,36 +212,43 @@ export default function ResponsiveAppBar() {
             <Link to="/home/createProduct">
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, display: "block", fontSize: 20, mx: 2 }}
+                sx={{ 
+                  my: 2, 
+                  display: "block", 
+                  fontSize: 17,
+                  bgcolor: "secondary.main",
+                  fontWeight: 500, 
+                  mx: 2 }}
                 size="large"
-                color="secondary"
                 variant="outlined"
               >
                 CREATE PRODUCT
               </Button>
             </Link>
-            {!user ? (
+          </Box>
+          {!user ? (
               ""
             ) : (
-              <Link to="/home/shoppingView">
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    display: "block",
-                    fontSize: 20,
-                    bgcolor: "secondary.main",
-                    fontWeight: 600,
-                    mx: 2,
-                  }}
-                  size="large"
-                  variant="outlined"
-                >
-                  CART
-                </Button>
-              </Link>
+              <Box sx={{ flexGrow: 0, mr: 11 }} size="large">
+                <Link to="/home/shoppingView">
+                  <Tooltip
+                    title="Cart"
+                    TransitionComponent={Zoom}
+                    TransitionProps={{ timeout: 500 }}
+                    arrow
+                  >
+                    <IconButton sx={{ width: 50, height: 50 }}>
+                      <Badge badgeContent={4} color="primary">
+                        <ShoppingCartIcon
+                          fontSize="large"
+                          sx={{ color: "white", width: 40, height: 40 }}
+                        />
+                      </Badge>
+                    </IconButton>
+                  </Tooltip>
+                </Link>
+              </Box>
             )}
-          </Box>
           {!user ? (
             <Box sx={{ flexGrow: 0 }} size="large">
               <Link to="/signUp">
@@ -240,12 +257,11 @@ export default function ResponsiveAppBar() {
                   TransitionComponent={Zoom}
                   TransitionProps={{ timeout: 500 }}
                   arrow
-                  // followCursor
                 >
-                  <Avatar sx={{ bgcolor: "#567900", width: 55, height: 55 }}>
+                  <Avatar sx={{ bgcolor: "#567900", width: 50, height: 50 }}>
                     <LoginIcon
                       fontSize="large"
-                      sx={{ color: "#fedf6a", width: 35, height: 35 }}
+                      sx={{ color: "#fedf6a", width: 30, height: 30 }}
                     />
                   </Avatar>
                 </Tooltip>
