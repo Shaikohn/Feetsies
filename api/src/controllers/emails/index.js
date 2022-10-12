@@ -1,7 +1,6 @@
 const nodemailer = require("nodemailer");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
-
 
 const transport = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -24,7 +23,7 @@ module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
       html: `<h1>Email Confirmation</h1>
         <h2>Hello ${name}</h2>
         <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-        <a href=https://pfgrupo3-n9dn35x47-pcardozo.vercel.app/confirm/${confirmationCode}> Click here</a>
+        <a href=http://localhost:3000/confirm/${confirmationCode}> Click here</a>
         </div>`,
     })
     .catch((err) => console.log(err));
