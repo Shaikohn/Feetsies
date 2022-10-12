@@ -31,7 +31,7 @@ module.exports.sendLinkResetPassword = (name, email, link) => {
   console.log("Check link Reset Password");
   transport
     .sendMail({
-      from: "pranimales22@gmail.com",
+      from: process.env.MAILER_USER,
       to: email,
       subject: "Reset Your Password",
       html: `<h1>A request for a new password has been requested</h1>
