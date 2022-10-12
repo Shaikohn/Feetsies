@@ -104,9 +104,11 @@ export default function AdoptionPetitions() {
                   </Link>
                   ): (
                     <Link to={`/adoptionPetition/${p.id}`}>
-                      <IconButton onClick={() => readAdoptionfn(p.id)} sx={{display:'flex', alignItems:'center', justifyContent:'center', width:'100%'}}><Badge variant='dot' color="error">
-                    <Mail color="action" />
-                  </Badge></IconButton>
+                      <IconButton onClick={() => readAdoptionfn(p.id)} sx={{display:'flex', alignItems:'center', justifyContent:'center', width:'100%'}}>
+                        <Badge variant='dot' color="error">
+                          <Mail color="action" />
+                        </Badge>
+                      </IconButton>
                     </Link>
                   )
                 }
