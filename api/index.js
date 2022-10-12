@@ -13,7 +13,7 @@ const {
 } = require('./src/utils/mockLoad')
 ////
 // Syncing all the models at once.
-conn.sync({ force: true })
+conn.sync({ force: false })
 .then(()=>{return writeAnimalTypes()})
 .then(()=>{return writeProductTypes()})
 .then(()=>{console.log('+ Writing users in database...'); return loadUsers()})
