@@ -112,6 +112,7 @@ function App() {
             <Route path='' element={<DashboardLanding />} />
             <Route path='animaltable' element={<AnimalsTable />} />
             <Route path='users' element={<UsersList />} />
+            <Route path='products' element={<ProductsList />}/>
           </Route>
           
           <Route path="*" element={<Navigate to="/" replace />} />
