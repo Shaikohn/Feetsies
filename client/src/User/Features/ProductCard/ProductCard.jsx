@@ -16,7 +16,7 @@ import Select from "@mui/material/Select";
 import Modals from "../Modals/Modals";
 import { useModal } from "../Modals/useModal.js";
 import "../Modals/Modals.css";
-
+import Swal from 'sweetalert2'
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -35,17 +35,34 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
 
   const navigate = useNavigate();
 
-  function handlerAddToCart(e) {
-    e.preventDefault();
-    dispatch(addToCart({ userId, productId: id, quantity }));
-  }
-
   const [quantity, setQuantity] = React.useState("");
+  console.log("quantity", quantity)
 
   const handleChange = (event) => {
     setQuantity(event.target.value);
   };
 
+  function handlerAddToCart(e) {
+    e.preventDefault();
+    dispatch(addToCart({ userId, productId: id, quantity }));
+    if(quantity === "") {
+      Swal.fire({
+        title: 'Product not added', 
+        text: 'You have to select a quantity!', 
+        icon: 'error',
+        timer: 3000
+      });
+    }
+    if(quantity >= 1) {
+      Swal.fire({
+        title: 'Product added', 
+        text: 'Now you can see it in your cart', 
+        icon: 'success',
+        timer: 3000
+      });
+    }
+  }
+  
   return (
     <Container>
       <Card sx={{ maxWidth: 345 }} key={id}>

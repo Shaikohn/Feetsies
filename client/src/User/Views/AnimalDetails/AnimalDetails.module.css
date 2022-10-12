@@ -47,7 +47,6 @@
 }
 
 .infoContainer {
-    color: white;
     margin-top: 2rem;
     padding: 2rem;
     text-align: center;
@@ -57,4 +56,8 @@
 
 .name {
     text-decoration: underline;
+}
+
+.info {
+    color: white;
 }

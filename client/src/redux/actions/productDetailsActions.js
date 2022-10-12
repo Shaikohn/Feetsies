@@ -6,7 +6,7 @@ export const CLEAR_PRODUCT_DETAILS = "CLEAR_PRODUCT_DETAILS"
 export const getProductDetails = (id) => {
     return async function(dispatch) {
         try {
-            await axios(`http://localhost:3001/products/${id}`)
+            await axios(`/products/${id}`)
             .then(res=>{
                 dispatch({
                     type: GET_PRODUCT_DETAILS,

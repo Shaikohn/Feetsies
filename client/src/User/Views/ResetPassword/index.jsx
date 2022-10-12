@@ -31,7 +31,7 @@ const ResetPassword = () => {
     //   navigate("/");
     // }
     axios
-      .get(`http://localhost:3001/user/auth/reset-password/${id}/${token}`)
+      .get(`/user/auth/reset-password/${id}/${token}`)
       .catch((error) => {
         alert(error);
         navigate("/");
@@ -78,7 +78,7 @@ const ResetPassword = () => {
     console.log(data);
     try {
       await axios.post(
-        `http://localhost:3001/user/auth/reset-password/${id}/${token}`,
+        `/user/auth/reset-password/${id}/${token}`,
         data
       );
       Swal.fire({
