@@ -5,8 +5,8 @@ const transport = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: process.env.MAILER_USER,
-    pass: process.env.MAILER_PW,
+    user: "pranimales22@gmail.com",
+    pass: "sfmjiayihzjhgatx",
   },
   //tls: { rejectUnauthorized: false },
 });
@@ -31,7 +31,7 @@ module.exports.sendLinkResetPassword = (name, email, link) => {
   console.log("Check link Reset Password");
   transport
     .sendMail({
-      from: process.env.MAILER_USER,
+      from: "pranimales22@gmail.com",
       to: email,
       subject: "Reset Your Password",
       html: `<h1>A request for a new password has been requested</h1>
