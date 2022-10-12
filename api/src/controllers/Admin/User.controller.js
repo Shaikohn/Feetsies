@@ -122,10 +122,10 @@ async function toggleAdmin(req, res) {
   try {
     let user = await User.findOne({ where: { id: userid } });
     if (!user) return res.status(404).send(notFound);
-    if (user.isAdmin)
+    /* if (user.isAdmin)
       return res
         .status(400)
-        .send({ err: "Can not ban Admins. Remove admin privileges first." });
+        .send({ err: "Can not ban Admins. Remove admin privileges first." }); */
     let valor;
     if (user.isAdmin) {
       valor = false;

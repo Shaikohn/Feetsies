@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -17,6 +17,7 @@ import {
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import IconButton from "@mui/material/IconButton";
+import Swal from 'sweetalert2'
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -33,6 +34,9 @@ const rows = [
 const UserTable = () => {
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const { allUsers } = useSelector((state) => state.users);
+  const [userId, setUserId] = useState(
+    JSON.parse(localStorage?.getItem("profile")).data.id
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllUsers());
@@ -43,12 +47,42 @@ const UserTable = () => {
     e.preventDefault();
     dispatch(updateUserAdmin(id));
     forceUpdate();
+    if(userId === id) {
+      Swal.fire({
+        title: 'User not updated', 
+        text: 'You cant change your role!', 
+        icon: 'error',
+        timer: 3000
+      });
+    } else {
+      Swal.fire({
+        title: 'User updated', 
+        text: 'User role has been updated', 
+        icon: 'success',
+        timer: 3000
+      });
+    }
   };
 
   const handleBan = (e, id) => {
     e.preventDefault();
     dispatch(updateUserBan(id));
     forceUpdate();
+    if(userId === id) {
+      Swal.fire({
+        title: 'User not updated', 
+        text: 'You cant ban yourself!', 
+        icon: 'error',
+        timer: 3000
+      });
+    } else {
+      Swal.fire({
+        title: 'User updated', 
+        text: 'User status has been updated', 
+        icon: 'success',
+        timer: 3000
+      });
+    }
   };
 
   return (
