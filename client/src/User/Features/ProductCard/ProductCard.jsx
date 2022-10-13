@@ -68,7 +68,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
   }
   
   return (
-
+    <div>
     <Card 
       elevation={5}
       key={id}
@@ -143,7 +143,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
           </CardContent>
         </Link>
       </CardActionArea>
-      <CardActions sx={{dispaly: "flex", justifyContent: "space-evenly"}}>
+      <CardActions sx={{display: "flex", justifyContent: "space-evenly"}}>
         {!user ? (
           <Box>
             <Button
@@ -161,37 +161,6 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
             >
               ADD TO CART
             </Button>
-            <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
-              <h2 className="modalTitle">
-                YOU HAVE TO BE LOGGED TO USE THE CART!
-              </h2>
-              <div>
-                <img
-                  src={profileIcon}
-                  alt=""
-                  width="200px"
-                  height="200px"
-                />
-              </div>
-              <div>
-                <button
-                  className="modalConfirm"
-                  onClick={() => {
-                    navigate("/signUp");
-                  }}
-                >
-                  SIGN UP!
-                </button>
-                <button
-                  className="modalClose"
-                  onClick={() => {
-                    closeModal();
-                  }}
-                >
-                  CLOSE
-                </button>
-              </div>
-            </Modals>
           </Box>
         ) : (
           <Button
@@ -230,5 +199,37 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
               </Select>
       </CardActions>
     </Card>
+    <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
+              <h2 className="modalTitle">
+                YOU HAVE TO BE LOGGED TO USE THE CART!
+              </h2>
+              <div>
+                <img
+                  src={profileIcon}
+                  alt=""
+                  width="200px"
+                  height="200px"
+                />
+              </div>
+              <div>
+                <button
+                  className="modalConfirm"
+                  onClick={() => {
+                    navigate("/signUp");
+                  }}
+                >
+                  SIGN UP!
+                </button>
+                <button
+                  className="modalClose"
+                  onClick={() => {
+                    closeModal();
+                  }}
+                >
+                  CLOSE
+                </button>
+              </div>
+            </Modals>
+    </div>
   );
 }

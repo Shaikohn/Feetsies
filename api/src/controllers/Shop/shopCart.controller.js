@@ -8,6 +8,11 @@ const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
+async function updateItem(req, res) {
+    const {cartItemId,newQuant} = req.body;
+    return res.status(200).send('SOY LA RUTA DE ACTUALIZACION DE ELEMENTO DE CARRITO Y NO TENGO TECLA DE ALL CAPS EN MI TECLADO.');
+}
+
 async function getCart(req, res) {
     if (!req.params.id) return res.status(400).send(badReq);
     try {
@@ -80,5 +85,6 @@ module.exports = {
     addCart,
     deleteOneFromCart,
     deleteWholeCart,
-    getCart
+    getCart,
+    updateItem
 }
