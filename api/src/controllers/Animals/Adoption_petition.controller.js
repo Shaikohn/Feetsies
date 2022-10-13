@@ -60,14 +60,37 @@ async function getAllPetitions(req, res) {
 }
 
 async function setPetitionAsRead(req,res){
-    if(!req.params.petitionid)return res.status(400).send(badReq);
+    let {petitionid} = req.params
+    console.log(req.params)
+    if(!petitionid)return res.status(400).send(badReq);
     try {
-        let petition = Petition.findByPk(req.params.petitionid);
+        let petition = await Adoption_petition.findOne({
+            where: {
+                id: petitionid
+            }
+        });
         petition.read = true;
-        let aux = await petition.save()
+        await petition.save()
         return res.status(200).send({success:"Petition set as read"});
     } catch (error) {
-        console.log(error)
+        
+        return res.status(500).send(error);
+    }
+}
+async function setPetitionAsUnRead(req,res){
+    let {petitionid} = req.params
+    if(!petitionid)return res.status(400).send(badReq);
+    try {
+        let petition = await Adoption_petition.findOne({
+            where: {
+                id: petitionid
+            }
+        });
+        petition.read = false;
+        await petition.save()
+        return res.status(200).send({success:"Petition set as read"});
+    } catch (error) {
+        
         return res.status(500).send(error);
     }
 }
@@ -75,7 +98,12 @@ async function setPetitionAsRead(req,res){
 async function toggleImportantPetition(req,res){
     if(!req.params.petitionid)return res.status(400).send(badReq);
     try {
-        let petition = Petition.findByPk(req.params.petitionid);
+        let petition = await Adoption_petition.findOne({
+            where: {
+                id: petitionid
+            }
+        });
+        console.log(petition)
         petition.isImportant = !petition.isImportant;
         let aux = await petition.save()
         return res.status(200).send({success:"Petition important status changed"});
@@ -91,7 +119,8 @@ module.exports={
     getAllPetitions,
     getPetitionDetail,
     setPetitionAsRead,
-    toggleImportantPetition
+    toggleImportantPetition,
+    setPetitionAsUnRead
 }
 
 
