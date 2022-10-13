@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
-import Modals from "../Modals/Modals";
-import { useModal } from "../Modals/useModal.js";
 import Swal from 'sweetalert2';
-import profileIcon from "./Img/profileIcon.jpg";
-import "../Modals/Modals.css";
-
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
@@ -27,8 +22,6 @@ import MenuItem from "@mui/material/MenuItem";
 export default function ProductCard({ id, name, image, price, productTypes }) {
 
   const arrayQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  const [isOpenModal, openedModal, closeModal] = useModal(false);
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [userId, setUserId] = useState(
@@ -53,7 +46,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
         title: 'Product not added', 
         text: 'You have to select a quantity!', 
         icon: 'error',
-        timer: 3000
+        timer: 2000
       });
     }
     if(quantity >= 1) {
@@ -61,7 +54,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
         title: 'Product added', 
         text: 'Now you can see it in your cart', 
         icon: 'success',
-        timer: 3000
+        timer: 1000
       });
     }
   }
@@ -154,7 +147,20 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
               }}
               size="small"
               variant="outlined"
-              onClick={openedModal}
+              onClick={(e) => {
+                Swal.fire({
+                  title: "YOU HAVE TO BE LOGGED TO USE THE CART!",
+                  icon: "warning",
+                  showDenyButton: true,
+                  denyButtonText: "Cancel",
+                  confirmButtonText: "Sign in",
+                  confirmButtonColor: "green",
+                }).then((res) => {
+                  if (res.isConfirmed) {
+                    navigate("/signUp");
+                  }
+                });
+              }}
             >
               ADD TO CART
             </Button>
@@ -196,37 +202,6 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
               </Select>
       </CardActions>
     </Card>
-    <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
-              <h2 className="modalTitle">
-                YOU HAVE TO BE LOGGED TO USE THE CART!
-              </h2>
-              <div>
-                <img
-                  src={profileIcon}
-                  alt=""
-                  width="200px"
-                  height="200px"
-                />
-              </div>
-              <div>
-                <button
-                  className="modalConfirm"
-                  onClick={() => {
-                    navigate("/signUp");
-                  }}
-                >
-                  SIGN UP!
-                </button>
-                <button
-                  className="modalClose"
-                  onClick={() => {
-                    closeModal();
-                  }}
-                >
-                  CLOSE
-                </button>
-              </div>
-            </Modals>
     </div>
   );
 }

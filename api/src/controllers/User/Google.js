@@ -29,7 +29,7 @@ const googleSignIn = async (req, res = response) => {
     // If user status is false or isBan
     if (usuario.isBan) {
       return res.status(401).json({
-        msg: "Hable con el administrador, usuario bloqueado",
+        msg: "This user is banned, contact an administrator if you want to request to be unbanned",
       });
     }
 
