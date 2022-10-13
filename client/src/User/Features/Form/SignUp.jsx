@@ -1,5 +1,5 @@
 //resubir
-import React, { useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -22,9 +22,15 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormControl from "@mui/material/FormControl";
 
+// Google
+import { gapi } from "gapi-script";
+import { GoogleLogin } from "react-google-login";
+
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 // React Hook Form
 import { useForm } from "react-hook-form";
+import { google } from "../../../redux/actions/auth";
 
 function Copyright(props) {
   return (
@@ -62,6 +68,7 @@ const SignUp = () => {
   // console.log("pass confirmada", values2);
 
   const navigateTo = useNavigate();
+
   const {
     register,
     formState: { errors },
@@ -69,25 +76,18 @@ const SignUp = () => {
     handleSubmit,
   } = useForm();
 
-
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data, e) => {
     console.log(data);
     try {
-      const register = await axios.post(
-        "/user/auth/register",
-        data
-      );
+      const register = await axios.post("/user/auth/register", data);
       console.log(register);
       if (
         register.data.message ===
         "User was registered successfully! Please check your email"
       ) {
         console.log({ token: register.data.token });
-        // alert("User created");
-        // e.target.reset();
-        // dispatch(signUp(data));
         navigateTo("/checkEmail");
       }
       setCustomError("");
@@ -99,12 +99,6 @@ const SignUp = () => {
         }, 4000);
       }
     }
-    // try {
-    //   dispatch(signUp(data));
-    //   navigateTo("/checkEmail");
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   //SHOW PASSWORD
@@ -131,92 +125,114 @@ const SignUp = () => {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId:
+          "284615821327-2o4kocgfiqid8dtbmosb4ookl2du0c7k.apps.googleusercontent.com",
+        scope: "email",
+      });
+    }
+
+    gapi.load("client:auth2", start);
+  }, [dispatch]);
+
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    try {
+      console.log(res);
+      dispatch(google(token, navigateTo));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     // <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
 
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  error={errors.name ? true : false}
-                  name="name"
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                  {...register("name", {
-                    required: true,
-                    pattern: /^[a-zA-Z ]*$/i,
-                    maxLength: 10,
-                  })}
-                  aria-invalid={errors.name ? "true" : "false"}
-                />
-                {errors?.name?.type === "required" && (
-                  <span style={{ color: "red" }}>This field is required</span>
-                )}
-                {errors?.name?.type === "maxLength" && (
-                  <span style={{ color: "red" }}>
-                    The name cannot exceed 20 characters
-                  </span>
-                )}
-                {errors?.name?.type === "pattern" && (
-                  <span style={{ color: "red" }}>
-                    Alphabetical characters only
-                  </span>
-                )}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  error={errors.lastName ? true : false}
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  {...register("lastName", {
-                    required: "This field is required",
-                    pattern: /^[a-zA-Z ]*$/i,
-                    maxLength: 10,
-                  })}
-                  aria-invalid={errors.lastName ? "true" : "false"}
-                />
-                {errors?.lastName?.type === "required" && (
-                  <span style={{ color: "red" }}>
-                    {errors.lastName?.message}
-                  </span>
-                )}
-                {errors?.lastName?.type === "maxLength" && (
-                  <span style={{ color: "red" }}>
-                    last name cannot exceed 20 characters
-                  </span>
-                )}
-                {errors?.lastName?.type === "pattern" && (
-                  <span style={{ color: "red" }}>
-                    Alphabetical characters only
-                  </span>
-                )}
-              </Grid>
-              {/* <Grid item xs={12} sm={6}>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{ mt: 3 }}
+        >
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                error={errors.name ? true : false}
+                name="name"
+                fullWidth
+                id="name"
+                label="Name"
+                autoFocus
+                {...register("name", {
+                  required: true,
+                  pattern: /^[a-zA-Z ]*$/i,
+                  maxLength: 10,
+                })}
+                aria-invalid={errors.name ? "true" : "false"}
+              />
+              {errors?.name?.type === "required" && (
+                <span style={{ color: "red" }}>This field is required</span>
+              )}
+              {errors?.name?.type === "maxLength" && (
+                <span style={{ color: "red" }}>
+                  The name cannot exceed 20 characters
+                </span>
+              )}
+              {errors?.name?.type === "pattern" && (
+                <span style={{ color: "red" }}>
+                  Alphabetical characters only
+                </span>
+              )}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                error={errors.lastName ? true : false}
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                {...register("lastName", {
+                  required: "This field is required",
+                  pattern: /^[a-zA-Z ]*$/i,
+                  maxLength: 10,
+                })}
+                aria-invalid={errors.lastName ? "true" : "false"}
+              />
+              {errors?.lastName?.type === "required" && (
+                <span style={{ color: "red" }}>{errors.lastName?.message}</span>
+              )}
+              {errors?.lastName?.type === "maxLength" && (
+                <span style={{ color: "red" }}>
+                  last name cannot exceed 20 characters
+                </span>
+              )}
+              {errors?.lastName?.type === "pattern" && (
+                <span style={{ color: "red" }}>
+                  Alphabetical characters only
+                </span>
+              )}
+            </Grid>
+            {/* <Grid item xs={12} sm={6}>
                 <TextField
                   error={errors.phoneNumber ? true : false}
                   name="phoneNumber"
@@ -240,7 +256,7 @@ const SignUp = () => {
                   </span>
                 )}
               </Grid> */}
-              {/* <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
                 <TextField
                   error={errors.location ? true : false}
                   fullWidth
@@ -258,152 +274,172 @@ const SignUp = () => {
                   </span>
                 )}
               </Grid> */}
-              <Grid item xs={12}>
-                <TextField
-                  error={errors.email ? true : false}
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  {...register("email", {
-                    required: true,
-                    pattern: /^\S+@\S+$/i,
+            <Grid item xs={12}>
+              <TextField
+                error={errors.email ? true : false}
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                {...register("email", {
+                  required: true,
+                  pattern: /^\S+@\S+$/i,
+                })}
+                aria-invalid={errors.email ? "true" : "false"}
+              />
+              {errors?.email?.type === "required" && (
+                <span style={{ color: "red" }}>This field is required</span>
+              )}
+              {errors?.email?.type === "pattern" && (
+                <span style={{ color: "red" }}>Email invalid</span>
+              )}
+              {!errors.email
+                ? customError && (
+                    <span style={{ color: "red" }}>{customError}</span>
+                  )
+                : ""}
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel htmlFor="outlined-adornment-password1">
+                  Password
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password1"
+                  type={values.showPassword ? "text" : "password"}
+                  // value={values.password}
+                  // onChange={handleChange("password")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                  error={errors.password ? true : false}
+                  {...register("password", {
+                    required: "Password is required!",
+                    pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
                   })}
-                  aria-invalid={errors.email ? "true" : "false"}
                 />
-                {errors?.email?.type === "required" && (
-                  <span style={{ color: "red" }}>This field is required</span>
+                {errors.password && (
+                  <span style={{ color: "red" }}>
+                    {errors.password.message}
+                  </span>
                 )}
-                {errors?.email?.type === "pattern" && (
-                  <span style={{ color: "red" }}>Email invalid</span>
+                {errors?.password?.type === "pattern" && (
+                  <span style={{ color: "red" }}>
+                    Password must have, one digit, one lowercase character, one
+                    uppercase character and be at least 8 characters in length
+                    but no more than 32
+                  </span>
                 )}
-                {!errors.email
-                  ? customError && (
-                      <span style={{ color: "red" }}>{customError}</span>
-                    )
-                  : ""}
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel htmlFor="outlined-adornment-password1">
-                    Password
-                  </InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-password1"
-                    type={values.showPassword ? "text" : "password"}
-                    // value={values.password}
-                    // onChange={handleChange("password")}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {values.showPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="Password"
-                    error={errors.password ? true : false}
-                    {...register("password", {
-                      required: "Password is required!",
-                      pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
-                    })}
-                  />
-                  {errors.password && (
-                    <span style={{ color: "red" }}>
-                      {errors.password.message}
-                    </span>
-                  )}
-                  {errors?.password?.type === "pattern" && (
-                    <span style={{ color: "red" }}>
-                      Password must have, one digit, one lowercase character,
-                      one uppercase character and be at least 8 characters in
-                      length but no more than 32
-                    </span>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl variant="outlined" fullWidth>
-                  <InputLabel>Confirm password</InputLabel>
-                  <OutlinedInput
-                    type={values2.showPasswordConfirm ? "text" : "password"}
-                    // value={values2.passwordConfirm}
-                    // onChange={handleChange("passwordConfirm")}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword2}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {values2.showPasswordConfirm ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                    label="Confirm password"
-                    error={errors.passwordConfirmation ? true : false}
-                    {...register("passwordConfirmation", {
-                      required: "Please confirm password!",
-                      pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
-                      validate: {
-                        matchesPreviousPassword: (value) => {
-                          const { password } = getValues();
-                          return (
-                            password === value || "Passwords should match!"
-                          );
-                        },
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel>Confirm password</InputLabel>
+                <OutlinedInput
+                  type={values2.showPasswordConfirm ? "text" : "password"}
+                  // value={values2.passwordConfirm}
+                  // onChange={handleChange("passwordConfirm")}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword2}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {values2.showPasswordConfirm ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Confirm password"
+                  error={errors.passwordConfirmation ? true : false}
+                  {...register("passwordConfirmation", {
+                    required: "Please confirm password!",
+                    pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
+                    validate: {
+                      matchesPreviousPassword: (value) => {
+                        const { password } = getValues();
+                        return password === value || "Passwords should match!";
                       },
-                    })}
-                  />
-                  {errors.passwordConfirmation && (
-                    <span style={{ color: "red" }}>
-                      {errors.passwordConfirmation.message}
-                    </span>
-                  )}
-                  {errors?.passwordConfirmation?.type === "pattern" && (
-                    <span style={{ color: "red" }}>
-                      Password must have, one digit, one lowercase character,
-                      one uppercase character and be at least 8 characters in
-                      length but no more than 32
-                    </span>
-                  )}
-                </FormControl>
-              </Grid>
+                    },
+                  })}
+                />
+                {errors.passwordConfirmation && (
+                  <span style={{ color: "red" }}>
+                    {errors.passwordConfirmation.message}
+                  </span>
+                )}
+                {errors?.passwordConfirmation?.type === "pattern" && (
+                  <span style={{ color: "red" }}>
+                    Password must have, one digit, one lowercase character, one
+                    uppercase character and be at least 8 characters in length
+                    but no more than 32
+                  </span>
+                )}
+              </FormControl>
             </Grid>
+          </Grid>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign Up
+          </Button>
+
+          <hr />
+          <h3>Or sign in with</h3>
+          <hr />
+          {/* Google Auth */}
+          <Grid container fullWidth justifyContent="center">
+            <Grid
+              item
+              sx={{
+                mt: 3,
+                mb: 2,
+              }}
             >
-              Sign Up
-            </Button>
-
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link to="/signIn" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
+              <GoogleLogin
+                clientId="284615821327-2o4kocgfiqid8dtbmosb4ookl2du0c7k.apps.googleusercontent.com"
+                buttonText="Sign In"
+                onSuccess={googleSuccess}
+                onFailure={googleSuccess}
+                cookiePolicy={"single_host_origin"}
+              />
             </Grid>
-          </Box>
+          </Grid>
+
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link to="/signIn" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
-      </Container>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
     // </ThemeProvider>
   );
 };

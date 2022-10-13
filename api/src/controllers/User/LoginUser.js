@@ -15,9 +15,12 @@ async function loginUser(req, res) {
     if (!checkPassword) {
       throw new Error("Wrong password");
     }
-//detalle
+    //detalle
     if (user.status === "Pending") {
       throw new Error("Pending Account. Please Verify Your Email!");
+    }
+    if (user.isBan) {
+      throw new Error("Hable con el administrador, usuario bloqueado");
     }
 
     return res.status(200).send({
