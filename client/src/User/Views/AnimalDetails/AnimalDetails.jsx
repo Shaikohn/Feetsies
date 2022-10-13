@@ -2,10 +2,7 @@ import {Link, useNavigate} from "react-router-dom";
 import React, { useState }/* , { useState } */ from "react";
 import styles from "./AnimalDetails.module.css"
 import Button from "@mui/material/Button";
-import { useModal } from "../../Features/Modals/useModal";
-import Modals from "../../Features/Modals/Modals";
-import "../../Features/Modals/Modals.css"
-import profileIcon from "./profileIcon.jpg"
+import Swal from 'sweetalert2';
 
 /* import images from "./images"; */
 
@@ -15,7 +12,6 @@ MAS IMAGENES A LOS DETALLES DE LOS PERROS */
 export default function AnimalDetails({animal}) {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-    const [isNotLogged, openedLoggedModal, closeLoggedModal] = useModal(false);
     const navigate = useNavigate();
 
     /* const [selectedImg, setSelectedImg] = useState(images[0]) */
@@ -61,25 +57,24 @@ export default function AnimalDetails({animal}) {
                                     fontWeight: 600,
                                     mx: 2,
                                 }}
-                                onClick={openedLoggedModal}
+                                onClick={(e) => {
+                                    Swal.fire({
+                                        title: "YOU HAVE TO BE LOGGED TO REQUEST ADOPTIONS!",
+                                        icon: "warning",
+                                        showDenyButton: true,
+                                        denyButtonText: "Cancel",
+                                        confirmButtonText: "Sign in",
+                                        confirmButtonColor: "green",
+                                    }).then((res) => {
+                                        if (res.isConfirmed) {
+                                        navigate("/signUp");
+                                        }
+                                        });
+                                    }}
                                 size="large"
                                 variant="outlined">
                                     ADOPT ME! 💓
                             </Button>
-                            <Modals isOpenModal={isNotLogged} closeModal={closeLoggedModal}>
-                        <h2 className="modalTitle" color="black">YOU HAVE TO BE LOGGED TO REQUEST ADOPTIONS!</h2>
-                            <div>
-                                <img src={profileIcon} alt="" width="200px" height="200px" />
-                            </div>
-                            <div>
-                                <button className="modalConfirm" onClick={() => {navigate("/signUp")}}>
-                                    SIGN UP!
-                                </button>
-                                <button className="modalClose" onClick={() => {closeLoggedModal()}}>
-                                    CLOSE
-                                </button>
-                            </div>
-                    </Modals>
                             </div> :
                             <Link to={`/home/animals/${animal?.id}/adoption`}>
                             <Button
@@ -98,9 +93,6 @@ export default function AnimalDetails({animal}) {
                             </Button>
                         </Link>
                         } 
-                        {/* <div>
-                            <button>Request adoption</button>
-                        </div> */}
                     </div>
             </div>
     )

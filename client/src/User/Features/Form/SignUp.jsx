@@ -13,7 +13,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme } from "@mui/material/styles";
-
+import Swal from "sweetalert2";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -144,8 +144,20 @@ const SignUp = () => {
     try {
       console.log(res);
       dispatch(google(token, navigateTo));
+      Swal.fire({
+        title: "Logged in",
+        text: "Your google account is now connected with the page!",
+        icon: "success",
+        timer: 5000,
+      });
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: "Login Failed",
+        text: "Sorry, the page couldnt connect to your Goggle account",
+        icon: "error",
+        timer: 5000,
+      });
     }
   };
 
