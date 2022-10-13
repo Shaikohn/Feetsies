@@ -1,5 +1,8 @@
 const { DataTypes } = require("sequelize");
 
+const defaultImg =
+  "https://media.istockphoto.com/vectors/missing-image-of-a-person-placeholder-vector-id1288129985?k=20&m=1288129985&s=612x612&w=0&h=OHfZHfKj0oqIDMl5f_oRqH13MHiB63nUmySYILbWbjE=";
+
 module.exports = (sequelize) => {
   sequelize.define("user", {
     id: {
@@ -27,9 +30,6 @@ module.exports = (sequelize) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [8, 60],
-      },
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
@@ -61,6 +61,16 @@ module.exports = (sequelize) => {
     },
     isBan: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    image: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue: defaultImg,
+    },
+    google: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
       defaultValue: false,
     },
   });

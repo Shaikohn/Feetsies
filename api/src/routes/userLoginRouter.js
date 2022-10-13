@@ -12,8 +12,11 @@ const { verifyUser } = require("../controllers/User/verifyUser.js");
 
 const { validateCreateUser } = require("../utils/User/validateData.js");
 
+const { googleSignIn } = require("../controllers/User/Google");
+
 userLoginRouter.post("/register", validateCreateUser, createUser);
 userLoginRouter.post("/login", loginUser);
+userLoginRouter.post("/google", googleSignIn);
 userLoginRouter.post("/forgot-password", forgotPassword);
 userLoginRouter.post("/reset-password/:id/:token", postResetPassword);
 userLoginRouter.get("/reset-password/:id/:token", resetPassword);

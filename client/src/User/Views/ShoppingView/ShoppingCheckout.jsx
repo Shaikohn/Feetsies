@@ -1,11 +1,13 @@
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import axios from 'axios'
 import styles from "./ShoppingCheckout.module.css"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeWholeCart } from "../../../redux/actions/shoppingCartA.js";
-import { getShoppingCart } from '../../../redux/actions/ShoppingCartView';
+import { getShoppingCart } from "../../../redux/actions/ShoppingCartView.js";
 import Swal from 'sweetalert2'
+import Spinner from '../../Features/CheckoutForm/Spinner';
+import { postPurchaseOrder } from '../../../redux/actions/purchaseOrderAction';
 
 export default function ShoppingCheckout() {
 
@@ -15,6 +17,10 @@ export default function ShoppingCheckout() {
     const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart)
     const dispatch = useDispatch();
     const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
+
+    useEffect(() => {
+        dispatch(getShoppingCart(userId));
+      }, []);
 
     function handleClearCart(e) {
         e.preventDefault();
@@ -39,6 +45,7 @@ export default function ShoppingCheckout() {
                 amount: shoppingCartCopy.total * 100,
                 /* description: product.description */
             })
+            setLoading(false)
             Swal.fire({
                 title: 'Payment done', 
                 text: data.message, 
@@ -47,6 +54,10 @@ export default function ShoppingCheckout() {
             });
             /* product.stock-- */
             elements.getElement(CardElement).clear()
+            await axios.post('/cart/save', {
+                prods: shoppingCartCopy,
+                userId,
+            })
             handleClearCart(e)
             }
             catch(error) {
@@ -57,8 +68,8 @@ export default function ShoppingCheckout() {
                     icon: 'error',
                     timer: 5000
                 });
+                setLoading(false)
             }
-            setLoading(false)
         }
 
     }
@@ -66,9 +77,15 @@ export default function ShoppingCheckout() {
     return (
         <form onSubmit={handleSubmit}>
                 <CardElement className={styles.buyInputs} />
+                {loading ? 
+                <Spinner />
+            : 
+            <div>
             <button type='submit' className={styles.buyButton}>
                 CONFIRM
             </button>
+            </div>
+            }
         </form>
     )
 }
