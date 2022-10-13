@@ -8,7 +8,7 @@ const transport = nodemailer.createTransport({
   secure: true,
   auth: {
     user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PW,
+    pass: process.env.MAIL_PASS,
   },
   tls: { rejectUnauthorized: false },
 });
