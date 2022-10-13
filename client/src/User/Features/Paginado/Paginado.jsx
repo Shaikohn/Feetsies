@@ -1,13 +1,13 @@
-import { Pagination, Stack } from "@mui/material";
-import { Container } from "@mui/system";
 import React from "react";
 import {useSelector, useDispatch} from 'react-redux';
 import { setPage } from "../../../redux/actions/paginadoA";
+import { Pagination } from "@mui/material";
 
-import './Paginado.css'
 
-function Paginado({ items, itemsPerPage }) {
+export default function Paginado({ items, itemsPerPage }) {
+
   const dispatch = useDispatch();
+
   const {page} = useSelector(state=> state.currentPage)
   
   const arrayNumber = [];
@@ -31,28 +31,25 @@ function Paginado({ items, itemsPerPage }) {
   }
 
   return (
-    <div className="pagcontainer">
-    <ul >
-      <button onClick={(e)=> previousPage(e)} >
-        Prev
-      </button>
-      {arrayNumber.map((n) => {
-        return (
-          <button key={n}
-          className={n===page?"actualPage pagcontainer":"none"} 
-          onClick={() => 
-            { 
-          dispatch(setPage(n))}}>
-            {n}
-          </button>
-        );
-      })}
-      <button onClick={(e)=> nextPage(e)}>
-        Next
-      </button>
-    </ul>
-  </div>
+    <Pagination 
+      count={arrayNumber.length} 
+      variant="outlined" 
+      color="primary" 
+      onChange={(e, newPage) => dispatch(setPage(newPage))}
+      page={page}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        m: 0.25,
+        p: 0.25,
+        "& .MuiPagination-ul": {
+          gap: 3
+        },
+        "& .MuiPaginationItem-root": {
+          bgcolor: "#fedf6a",
+          border: "2px solid #87a827"
+        }
+      }}
+    />
   );
-}
-
-export default Paginado;
+};

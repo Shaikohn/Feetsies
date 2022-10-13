@@ -6,6 +6,7 @@ import {
 
 const initialState = {
     cart: [],
+    iconCart: 0
 }
 
 const shoppingCartReducer = (state = initialState, {type, payload}) => {
@@ -16,7 +17,8 @@ const shoppingCartReducer = (state = initialState, {type, payload}) => {
 
             return {
                 ...state,
-                cart: [...state.cart, payload]
+                cart: [...state.cart, payload],
+                iconCart: state.iconCart + 1 
             }
             // const newItem = state.cart.find((item) => item.productId === payload.productId);
             // const itemInCart = state.cart.find((item) => item.productId === newItem.productId);
@@ -38,7 +40,8 @@ const shoppingCartReducer = (state = initialState, {type, payload}) => {
         case REMOVE_ONE_FROM_CART:
             return {
                 ...state,
-                cart: [...state.cart, payload]
+                cart: [...state.cart, payload],
+                iconCart: state.iconCart - 1
             }
             // const itemToDelete = state.cart.find(i => i.id === payload.id);
 
@@ -59,12 +62,14 @@ const shoppingCartReducer = (state = initialState, {type, payload}) => {
         case REMOVE_WHOLE_CART:
             return {
                 ...state,
-                cart: [...state.cart, payload]
+                cart: [...state.cart, payload],
+                iconCart: 0
             }
             // return {
             //     ...state,
             //     cart: state.cart.filter(i => i.id !== payload)
             // }
+
         default: 
             return state
     }

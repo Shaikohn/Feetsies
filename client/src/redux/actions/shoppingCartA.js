@@ -5,8 +5,8 @@ export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART";
 export const REMOVE_WHOLE_CART = "REMOVE_WHOLE_CART";
 
 
+
 export function addToCart(payload) {
-    console.log(payload)    
     return async function(dispatch) {
         try {
             var json = await axios.post("/cart/additem", payload);
@@ -47,5 +47,3 @@ export function removeWholeCart(id) {
         }
     }
 };
-
-

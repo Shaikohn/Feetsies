@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { clearProductDetails, getProductDetails } from "../../../redux/actions/productDetailsActions";
 import ProductDetails from "./ProductDetails";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
-import loading from "../ProductHome/Img/Loading.gif";
-import styles from "../ProductHome/ProductHome.module.css";
+import loading from "./Img/Loading.gif";
+import CardMedia from "@mui/material/CardMedia";
+
 
 export default function ProductDetailsContainer() {
 
@@ -31,9 +32,14 @@ export default function ProductDetailsContainer() {
                 {Object.keys(product).length > 0 ? (
                     <ProductDetails product={product} />
                     ) : (
-                        <div>
-                        <img className={styles.loading} src={loading} alt="Loading..." />
-                    </div>
+                        <CardMedia component="img" image={loading}  alt="Loading..." 
+                            sx={{
+                                backgroundRepeat: "repeat",
+                                margin: "auto",
+                                width: "100%",
+                                height: "100%"
+                            }}
+                        />
                     )
                 }
                 </div>
