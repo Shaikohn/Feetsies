@@ -2,7 +2,7 @@ import * as React from "react";
 import { useState, useEffect, useReducer } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../../redux/actions/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
@@ -32,6 +32,9 @@ import decode from "jwt-decode";
 
 export default function ResponsiveAppBar() {
 
+  const { iconCart } = useSelector((state) => state.shoppingCart);
+  console.log(iconCart)
+
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -44,6 +47,7 @@ export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -238,7 +242,7 @@ export default function ResponsiveAppBar() {
                     arrow
                   >
                     <IconButton sx={{ width: 50, height: 50 }}>
-                      <Badge badgeContent={4} color="primary">
+                      <Badge badgeContent={iconCart} color="primary">
                         <ShoppingCartIcon
                           fontSize="large"
                           sx={{ color: "white", width: 40, height: 40 }}

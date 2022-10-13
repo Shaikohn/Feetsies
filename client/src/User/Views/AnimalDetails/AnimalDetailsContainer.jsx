@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { clearAnimalDetails, getAnimalDetails } from "../../../redux/actions/animalDetailsActions";
 import AnimalDetails from "./AnimalDetails";
-import loading from "../ProductHome/Img/Loading.gif";
-import styles from "../ProductHome/ProductHome.module.css";
+import loading from "./Img/Loading.gif";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
+import CardMedia from "@mui/material/CardMedia";
 
 export default function AnimalDetailsContainer() {
 
@@ -31,9 +31,14 @@ export default function AnimalDetailsContainer() {
                 {Object.keys(animal).length > 0 ? (
                     <AnimalDetails animal={animal} />
                     ) : (
-                        <div>
-                        <img className={styles.loading} src={loading} alt="Loading..." />
-                    </div>
+                        <CardMedia component="img" image={loading}  alt="Loading..." 
+                            sx={{
+                                backgroundRepeat: "repeat",
+                                margin: "auto",
+                                width: "100%",
+                                height: "100%"
+                            }}
+                        />
                     )
                 }
                 </div>

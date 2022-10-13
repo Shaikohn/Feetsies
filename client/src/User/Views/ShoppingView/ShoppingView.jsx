@@ -26,9 +26,14 @@ const stripePromise = loadStripe(
 );
 
 export default function ShoppingView() {
+
+  const { iconCart } = useSelector((state) => state.shoppingCart);
+  console.log(iconCart)
+
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
+
   const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
-  console.log(shoppingCartCopy);
+
   const [isOpenModal, openedModal, closeModal] = useModal(false);
 
   const [userId, setUserId] = useState(

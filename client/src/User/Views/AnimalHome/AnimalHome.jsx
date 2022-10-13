@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { CardMedia } from "@mui/material";
 
+
 export default function AnimalHome() {
 
   const dispatch = useDispatch();
@@ -61,12 +62,7 @@ export default function AnimalHome() {
         >
           {currentAnimals.map((a) => {
             return (
-              <Grid 
-                display="flex"
-                key={a.id}
-                item 
-                xs={3} 
-              >
+              <Grid display="flex" key={a.id} item xs={3}>
                 <Container sx={{p: 0}}>
                   <AnimalCard
                     id={a.id}
@@ -91,10 +87,10 @@ export default function AnimalHome() {
           }}
         />
       )}
-        <Pagination
-          items={allAnimalsCopy.length}
-          itemsPerPage={animalsPerPage}
-        />
+      <Pagination
+        items={allAnimalsCopy.length}
+        itemsPerPage={animalsPerPage}
+      />
     </div>
   );
 }
