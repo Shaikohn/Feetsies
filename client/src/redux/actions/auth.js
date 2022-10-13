@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import axios from "axios";
 export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";
@@ -20,7 +21,13 @@ export const google = (token, navigateTo) => async (dispatch) => {
     navigateTo("/");
   } catch (error) {
     console.log(error);
-    alert(error.response.data.msg);
+    Swal.fire({
+      title: "Login Failed",
+      text: error.response.data.msg + "!",
+      icon: "error",
+      timer: 5000,
+    });
+    // alert(error.response.data.msg);
   }
 };
 
