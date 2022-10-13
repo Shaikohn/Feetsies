@@ -27,8 +27,7 @@ const stripePromise = loadStripe(
 
 export default function ShoppingView() {
 
-  const { iconCart } = useSelector((state) => state.shoppingCart);
-  console.log(iconCart)
+  const [icon, setIcon] = useState()
 
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
