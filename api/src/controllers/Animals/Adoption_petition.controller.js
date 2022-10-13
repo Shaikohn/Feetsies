@@ -1,22 +1,30 @@
-const {Adoption_petition,User,Animal} = require('../../db');
+const {Adoption_petition, User, Animal} = require('../../db');
 
 const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
 async function addPetition(req, res) {
-    const userId = req.body.userId;
-    const animId = req.body.animId;
-    const obj = {
-        topic:req.body.topic,
-        description:req.body.description
-    }
+    let {userId, animId} = req.body
     try {
-        const newRow = await Adoption_petition.create(obj);
-        const user = await User.findOne({where:{id:userId}});
-        let aux = await user.addAdoption_petition(newRow);
-        let anim = await Animal.findOne({where:{id:animId}});
-        let aux2 = await anim.addAdoption_petition(newRow);
+        const newRow = await Adoption_petition.create({
+            topic: topic,
+            description: description,
+            include: [User, Animal]
+        });
+
+        const user = await User.findOne({
+            where: {
+                id: userId 
+            }
+        });
+        await user.addAdoption_petition(newRow);
+        let anim = await Animal.findOne({ 
+            where: {
+                id: animId
+            }
+        });
+        await anim.addAdoption_petition(newRow);
         return res.status(201).send('Information uploaded succesfully');
     } catch (error) {
         console.log(error)
@@ -25,10 +33,16 @@ async function addPetition(req, res) {
 }
 
 async function deletePetition(req, res) {
-    if (!req.body.id) return res.status(400).send(badReq);
+    let {petitionid} = req.body
+    if (!petitionid) return res.status(400).send(badReq);
     try {
-        let petition = await Adoption_petition.destroy({where:{id:req.body.id}})
+        let petition = await Adoption_petition.findOne({
+                where: {
+                    id: petitionid
+                }
+            })
         if(!petition) return res.status(404).send(notFound);
+        await petition.destroy()
         return res.sendStatus(200);
     } catch (error) {
         return res.status(500).send(error);
@@ -36,9 +50,14 @@ async function deletePetition(req, res) {
 }
 
 async function getPetitionDetail(req, res) {
-    if (!req.params.petitionid) return res.status(400).send(badReq);
+    let {petitionid} = req.params
+    if (!petitionid) return res.status(400).send(badReq);
     try {
-        let petition = await Adoption_petition.findOne({where:{id:req.params.petitionid},include:[Animal, User]})
+        let petition = await Adoption_petition.findOne({
+                where: {
+                    id: petitionid
+                },
+                include:[Animal, User]})
         if(!petition) return res.status(404).send(notFound);
         petition.user.password = '********';
         return res.status(200).send(petition);
@@ -96,7 +115,8 @@ async function setPetitionAsUnRead(req,res){
 }
 
 async function toggleImportantPetition(req,res){
-    if(!req.params.petitionid)return res.status(400).send(badReq);
+    let {petitionid} = req.params
+    if(!petitionid)return res.status(400).send(badReq);
     try {
         let petition = await Adoption_petition.findOne({
             where: {
@@ -105,7 +125,7 @@ async function toggleImportantPetition(req,res){
         });
         console.log(petition)
         petition.isImportant = !petition.isImportant;
-        let aux = await petition.save()
+        await petition.save()
         return res.status(200).send({success:"Petition important status changed"});
     } catch (error) {
         console.log(error)

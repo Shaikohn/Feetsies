@@ -22,7 +22,7 @@ export function readAdoption(id) {
    
     return async function(dispatch) {
         try {
-            await axios.put(`/admin//petition/setread/${id}`)
+            await axios.put(`/admin/petition/setread/${id}`)
         } catch (error) {
             console.log(error)
         }
