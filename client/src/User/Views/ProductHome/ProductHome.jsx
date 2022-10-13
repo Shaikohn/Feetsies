@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllProducts } from "../../../redux/actions/getProductsA";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
-import NavBarProd from "../../Features/NavBarProducts/NavBarP.jsx";
+import NavBarProd from "../../Features/NavBarProducts/navBarP.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
 
