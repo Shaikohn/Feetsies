@@ -1,14 +1,20 @@
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import axios from 'axios'
 import styles from "./CheckoutForm.module.css"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
+import Spinner from './Spinner';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 export default function CheckoutForm({product}) {
 
     const stripe = useStripe()
     const elements = useElements()
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
+    const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
+    console.log(userId)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -46,15 +52,20 @@ export default function CheckoutForm({product}) {
             }
             setLoading(false)
         }
-
     }
 
     return (
         <form onSubmit={handleSubmit}>
                 <CardElement className={styles.buyInputs} />
+                {loading ? 
+                <Spinner />
+            : 
+            <div>
             <button type='submit' className={styles.buyButton}>
                 CONFIRM
             </button>
+            </div>
+            }
         </form>
     )
 }

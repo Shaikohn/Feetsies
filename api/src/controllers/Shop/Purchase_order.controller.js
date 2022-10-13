@@ -12,7 +12,8 @@ const notFound = { err: "Not Found" };
 
 async function addPurchaseOrder(req,res){
     let {prods,userId} = req.body; //esto deberia ser un arreglo, de un elemento minimo.
-    if(prods.length<1 || !userId)return res.status(500).send(badReq);
+    console.log(prods, userId)
+    /* if(prods.length<1 || !userId)return res.status(500).send(badReq);
     try {
         let po = await Purchase_order.create({userId});
         let orderItems = [];
@@ -35,7 +36,7 @@ async function addPurchaseOrder(req,res){
     } catch (error) {
         console.log(error)
         return res.status(500).send(error);
-    }
+    } */
 }
 
 async function getPurchaseOrderById(req,res){
