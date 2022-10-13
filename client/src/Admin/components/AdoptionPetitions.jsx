@@ -212,17 +212,17 @@ export default function AdoptionPetitions() {
               <TableCell  size='small' align="center">
                 {
                   p.read === true ? (
-                    <Link to={`petitionDetails/${p.id}/`}>
+                    // <Link to={`petitionDetails/${p.id}/`}>
                     <IconButton size='small' onClick={() => readAdoptionfn(p.id)} sx={{display:'flex', alignItems:'center', justifyContent:'center', width: '1em'}}><Drafts /></IconButton>
-                  </Link>
+                  // </Link>
                   ): (
-                    <Link to={`petitionDetails/${p.id}/`}>
+                    // <Link to={`petitionDetails/${p.id}/`}>
                       <IconButton size='small' onClick={() => readAdoptionfn(p.id)} sx={{display:'flex', alignItems:'center', justifyContent:'center', width:'1em'}}>
                         <Badge variant='dot' color="error">
                           <Mail color="action" />
                         </Badge>
                       </IconButton>
-                    </Link>
+                    // </Link>
                   )
                 }
               </TableCell>
