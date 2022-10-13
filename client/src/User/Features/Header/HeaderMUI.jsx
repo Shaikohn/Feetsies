@@ -33,7 +33,6 @@ import decode from "jwt-decode";
 export default function ResponsiveAppBar() {
 
   const { iconCart } = useSelector((state) => state.shoppingCart);
-  console.log(iconCart)
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
