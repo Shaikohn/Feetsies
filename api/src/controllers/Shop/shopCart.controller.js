@@ -85,5 +85,6 @@ module.exports = {
     addCart,
     deleteOneFromCart,
     deleteWholeCart,
-    getCart
+    getCart,
+    updateItem
 }
