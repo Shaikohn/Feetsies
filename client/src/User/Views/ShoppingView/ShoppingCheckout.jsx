@@ -45,6 +45,7 @@ export default function ShoppingCheckout() {
                 amount: shoppingCartCopy.total * 100,
                 /* description: product.description */
             })
+            setLoading(false)
             Swal.fire({
                 title: 'Payment done', 
                 text: data.message, 
@@ -67,8 +68,8 @@ export default function ShoppingCheckout() {
                     icon: 'error',
                     timer: 5000
                 });
+                setLoading(false)
             }
-            setLoading(false)
         }
 
     }

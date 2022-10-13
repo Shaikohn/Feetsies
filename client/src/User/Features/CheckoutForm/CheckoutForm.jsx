@@ -6,15 +6,21 @@ import Swal from 'sweetalert2'
 import Spinner from './Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { getProductDetails } from '../../../redux/actions/productDetailsActions';
 
 export default function CheckoutForm({product}) {
-
+    const {id} = useParams()
     const stripe = useStripe()
     const elements = useElements()
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
+    const {productDetails} = useSelector((state) => state.ProductDetails)
     const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
     console.log(userId)
+    console.log(productDetails)
+    useEffect(() => {
+        dispatch(getProductDetails(id))
+    }, [dispatch, id])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -33,6 +39,7 @@ export default function CheckoutForm({product}) {
                 amount: product.price * 100,
                 description: product.description
             })
+            setLoading(false)
             Swal.fire({
                 title: 'Payment done', 
                 text: data.message, 
@@ -40,6 +47,10 @@ export default function CheckoutForm({product}) {
                 timer: 5000
             });
             /* product.stock-- */
+            await axios.post('/cart/save', {
+                prods: [productDetails],
+                userId,
+            })
             elements.getElement(CardElement).clear()
             }
             catch(error) {
@@ -49,8 +60,8 @@ export default function CheckoutForm({product}) {
                     icon: 'error',
                     timer: 5000
                 });
+                setLoading(false)
             }
-            setLoading(false)
         }
     }
 
