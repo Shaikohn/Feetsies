@@ -4,7 +4,8 @@ const {
     addCart,
     deleteOneFromCart,
     deleteWholeCart,
-    getCart
+    getCart,
+    updateItem
 } = require('../controllers/Shop/shopCart.controller')
 
 const {
@@ -25,7 +26,11 @@ router.get('/getorder/:orderid',getPurchaseOrderById)
 
 router.get('/getuserorders/:userid',getPOByUserId)
 
+router.put('/updateitem',updateItem)
+
 router.post('/additem',addCart)
+
+
 
 
 
