@@ -185,7 +185,7 @@ const SignIn = () => {
             <TextField
               error={errors.email ? true : false}
               margin="normal"
-              fullWidth
+              style = {{width: "100%"}}
               id="email"
               label="Email Address"
               name="email"
@@ -206,7 +206,7 @@ const SignIn = () => {
             <TextField
               margin="normal"
               required
-              fullWidth
+              style = {{width: "100%"}}
               name="password"
               label="Password"
               type="password"
@@ -222,7 +222,7 @@ const SignIn = () => {
 
             <Button
               type="submit"
-              fullWidth
+              style = {{width: "100%"}}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
@@ -233,7 +233,7 @@ const SignIn = () => {
             <h3>Or sign in with</h3>
             <hr />
             {/* Google Auth */}
-            <Grid container fullWidth justifyContent="center">
+            <Grid container style = {{width: "100%"}} justifyContent="center">
               <Grid
                 item
                 sx={{
