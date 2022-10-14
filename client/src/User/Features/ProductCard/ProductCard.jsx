@@ -112,7 +112,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
               >
                 {productTypes.map((tag, index) => {
                   return (
-                    <Typography key={index} 
+                    <Typography component={'span'}  key={index} 
                       sx={{
                         color: "black",
                         fontSize: 14, 
@@ -125,7 +125,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                       }}
                     >
                       <LocalOfferIcon sx={{mx: 0.7, width: 15, height: 15, color: "#567900"}}/>
-                      <Typography sx={{fontSize: 14, mx: 0.5}}>
+                      <Typography component={'span'}  sx={{fontSize: 14, mx: 0.5}}>
                         {tag}
                       </Typography>
                     </Typography>

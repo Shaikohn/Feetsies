@@ -53,18 +53,22 @@ export default function ResponsiveAppBar() {
   
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+    forceUpdate();
   };
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+    forceUpdate();
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    forceUpdate();
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    forceUpdate();
   };
 
   const handleLogout = () => {

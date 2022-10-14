@@ -76,7 +76,7 @@ const SignIn = () => {
         title: "Logged in",
         text: login.data.msg,
         icon: "success",
-        timer: 5000,
+        timer: 3000,
       });
       // if (
       //   login.data.response.data ===
@@ -97,7 +97,7 @@ const SignIn = () => {
         title: "Login Failed",
         text: error.response.data,
         icon: "error",
-        timer: 5000,
+        timer: 4000,
       });
     }
   };
@@ -126,7 +126,7 @@ const SignIn = () => {
         title: "Logged in",
         text: "Your Google account is now connected with the page!",
         icon: "success",
-        timer: 5000,
+        timer: 3000,
       });
     } catch (error) {
       console.log(error);
@@ -134,7 +134,7 @@ const SignIn = () => {
         title: "Login Failed",
         text: "Sorry, the page couldnt connect to your Goggle account",
         icon: "error",
-        timer: 5000,
+        timer: 4000,
       });
     }
   };
