@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
@@ -16,6 +16,7 @@ import Add from '@mui/icons-material/Add';
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
 
 
 
@@ -24,16 +25,12 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
 
   const arrayQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const [userId, setUserId] = useState(
-    JSON.parse(localStorage?.getItem("profile"))?.data.id
-  );
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const [quantity, setQuantity] = React.useState("");
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
 
   const handleChange = (event) => {
     setQuantity(event.target.value);
@@ -58,6 +55,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
         timer: 1000
       });
     }
+    dispatch(getShoppingCart(userId));
   }
   
   return (
