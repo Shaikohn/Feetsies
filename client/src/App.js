@@ -77,6 +77,7 @@ function App() {
           <Route exact path="/home/shoppingView" element={<ShoppingView />} />
           {/* Sign Up Form */}
           <Route
+            exact
             path="/signUp"
             element={user ? <Navigate to="/" replace /> : <SignUp />}
           />
