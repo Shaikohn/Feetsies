@@ -27,7 +27,6 @@ const stripePromise = loadStripe(
 
 export default function ShoppingView() {
 
-  const [icon, setIcon] = useState()
 
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -35,9 +34,7 @@ export default function ShoppingView() {
 
   const [isOpenModal, openedModal, closeModal] = useModal(false);
 
-  const [userId, setUserId] = useState(
-    JSON.parse(localStorage?.getItem("profile")).data.id
-  );
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile")).data.id);
 
   const dispatch = useDispatch();
 
