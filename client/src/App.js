@@ -79,7 +79,7 @@ function App() {
           <Route
             exact
             path="/signUp"
-            element={user ? <Navigate to="/" replace /> : <SignUp />}
+            element={<SignUp />}
           />
           {/* Sign in Form */}
           <Route

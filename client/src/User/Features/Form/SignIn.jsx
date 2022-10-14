@@ -126,7 +126,7 @@ const SignIn = () => {
         title: "Logged in",
         text: "Your Google account is now connected with the page!",
         icon: "success",
-        timer: 3000,
+        timer: 2000,
       });
     } catch (error) {
       console.log(error);
@@ -134,7 +134,7 @@ const SignIn = () => {
         title: "Login Failed",
         text: "Sorry, the page couldnt connect to your Goggle account",
         icon: "error",
-        timer: 4000,
+        timer: 3000,
       });
     }
   };
