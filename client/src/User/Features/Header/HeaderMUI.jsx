@@ -29,6 +29,8 @@ import Badge from '@mui/material/Badge';
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
 import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
+import { keys } from "@mui/system";
+import Swal from "sweetalert2";
 
 
 export default function ResponsiveAppBar() {
@@ -38,7 +40,8 @@ export default function ResponsiveAppBar() {
   const location = useLocation();
 
   const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
-  const count = shoppingCartCopy.items?.length;
+
+  const { iconCart } = useSelector((state) => state.shoppingCart);
 
   const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -75,6 +78,12 @@ export default function ResponsiveAppBar() {
     navigate("/");
 
     setUser(null);
+    Swal.fire({
+      title: "Logged out",
+      text: "You have logged out!",
+      icon: "warning",
+      timer: 2000,
+    })
     forceUpdate();
   };
 
@@ -88,8 +97,10 @@ export default function ResponsiveAppBar() {
   //   console.log("information token", decoded);
 
   useEffect(() => {
-    dispatch(getShoppingCart(userId));
-  }, [])
+    if(userId) {
+      dispatch(getShoppingCart(userId));
+    }
+  }, [dispatch, userId])
 
   useEffect(() => {
     const token = user?.token;
@@ -251,7 +262,7 @@ export default function ResponsiveAppBar() {
                     arrow
                   >
                     <IconButton sx={{ width: 50, height: 50 }}>
-                      <Badge badgeContent={count} color="primary">
+                      <Badge badgeContent={iconCart} color="primary">
                         <ShoppingCartIcon
                           fontSize="large"
                           sx={{ color: "white", width: 40, height: 40 }}
