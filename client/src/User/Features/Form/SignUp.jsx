@@ -191,7 +191,7 @@ const SignUp = () => {
               <TextField
                 error={errors.name ? true : false}
                 name="name"
-                fullWidth
+                style = {{width: "100%"}}
                 id="name"
                 label="Name"
                 autoFocus
@@ -219,7 +219,7 @@ const SignUp = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 error={errors.lastName ? true : false}
-                fullWidth
+                style = {{width: "100%"}}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
@@ -289,7 +289,7 @@ const SignUp = () => {
             <Grid item xs={12}>
               <TextField
                 error={errors.email ? true : false}
-                fullWidth
+                style = {{width: "100%"}}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -312,7 +312,7 @@ const SignUp = () => {
                 : ""}
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth>
+              <FormControl variant="outlined" style = {{width: "100%"}}>
                 <InputLabel htmlFor="outlined-adornment-password1">
                   Password
                 </InputLabel>
@@ -359,7 +359,7 @@ const SignUp = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth>
+              <FormControl variant="outlined" style = {{width: "100%"}}>
                 <InputLabel>Confirm password</InputLabel>
                 <OutlinedInput
                   type={values2.showPasswordConfirm ? "text" : "password"}
@@ -412,7 +412,7 @@ const SignUp = () => {
 
           <Button
             type="submit"
-            fullWidth
+            style = {{width: "100%"}}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
@@ -423,7 +423,7 @@ const SignUp = () => {
           <h3>Or sign in with</h3>
           <hr />
           {/* Google Auth */}
-          <Grid container fullWidth justifyContent="center">
+          <Grid container style = {{width: "100%"}} justifyContent="center">
             <Grid
               item
               sx={{
