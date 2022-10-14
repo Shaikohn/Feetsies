@@ -49,6 +49,12 @@ export default function ShoppingView() {
     e.preventDefault();
     dispatch(removeOneFromCart(e.target.value));
     forceUpdate();
+    Swal.fire({
+      title: 'Product removed', 
+      text: 'The product has been removed from the cart', 
+      icon: 'success',
+      timer: 1000
+    });
   }
 
   function handleClearCart(e) {
@@ -73,6 +79,7 @@ export default function ShoppingView() {
         <ResponsiveAppBar />
       </div>
       <div>
+        <h1>SHOPPING CART</h1>
         {shoppingCartCopy.items?.map((c) => (
           <Container key={c.cartItemid}>
             <Typography
@@ -84,7 +91,6 @@ export default function ShoppingView() {
                 textDecoration: "none",
               }}
             >
-              SHOPPING CART
             </Typography>
             <Card sx={{ maxWidth: 345 }}>
               <Box bgcolor="text.disabled">
@@ -136,10 +142,10 @@ export default function ShoppingView() {
                 textDecoration: "none",
               }}
             >
-              {`Total $ ${shoppingCartCopy.total}`}
             </Typography>
           </Container>
         ))}
+        <h1>{`Total $ ${shoppingCartCopy.total}`}</h1>
         <Button
           size="small"
           variant="outlined"

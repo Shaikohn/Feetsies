@@ -122,8 +122,20 @@ const SignIn = () => {
     try {
       console.log(res);
       dispatch(google(token, navigateTo));
+      Swal.fire({
+        title: "Logged in",
+        text: "Your Google account is now connected with the page!",
+        icon: "success",
+        timer: 5000,
+      });
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: "Login Failed",
+        text: "Sorry, the page couldnt connect to your Goggle account",
+        icon: "error",
+        timer: 5000,
+      });
     }
   };
 
