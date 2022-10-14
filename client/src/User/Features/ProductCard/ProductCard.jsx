@@ -19,6 +19,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 
 
+
 export default function ProductCard({ id, name, image, price, productTypes }) {
 
   const arrayQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -86,7 +87,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
             image={image}
             alt="Product Image"
           />
-          <CardContent>
+          <CardContent sx={{display: "flex", flexDirection: "column"}}>
             <Typography gutterBottom variant="h4" component="div" fontFamily="Segoe Print"
               sx={{color: "#567900", fontSize: 25, textShadow: "1px 1px 5px rgb(0, 0, 0)"}}
             >
@@ -104,8 +105,10 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                 direction="row"
                 spacing={2}
                 sx={{
+                  display: "flex",
                   mt: 2.5,
                 }}
+                // overflow="auto"
               >
                 {productTypes.map((tag, index) => {
                   return (

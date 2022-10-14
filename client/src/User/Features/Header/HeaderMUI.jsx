@@ -28,21 +28,24 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
+import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
+import { keys } from "@mui/system";
 
 
 export default function ResponsiveAppBar() {
 
-  const { iconCart } = useSelector((state) => state.shoppingCart);
-  console.log(iconCart)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
+  const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
+
+  const { iconCart } = useSelector((state) => state.shoppingCart);
+
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const location = useLocation();
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -85,6 +88,10 @@ export default function ResponsiveAppBar() {
   //   var decoded = decode(token);
 
   //   console.log("information token", decoded);
+
+  useEffect(() => {
+    dispatch(getShoppingCart(userId));
+  }, [])
 
   useEffect(() => {
     const token = user?.token;
