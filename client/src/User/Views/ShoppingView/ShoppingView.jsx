@@ -42,8 +42,10 @@ export default function ShoppingView() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getShoppingCart(userId));
-  }, [reducerValue]);
+    if(userId) {
+      dispatch(getShoppingCart(userId));
+    }
+  }, [reducerValue, userId]);
 
   function handleDeleteOne(e) {
     e.preventDefault();
