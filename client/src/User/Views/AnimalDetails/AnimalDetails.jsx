@@ -43,7 +43,6 @@ export default function AnimalDetails({animal}) {
                         <h2 className={styles.info}>Size: {`${animal?.size}`} Sex: {`${animal?.sex}`}</h2>
                         <h2 className={styles.info}>{`${animal?.description}`}</h2>
                         <h2 className={styles.info}>{`Age: ${animal?.age}`}</h2>
-                        <h2 className={styles.info}>{`Birth date: ${animal?.birth_date}`}</h2>
                         {
                             !user ? 
                             <div>

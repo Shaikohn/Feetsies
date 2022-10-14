@@ -27,7 +27,7 @@ export default function Landing() {
                     <Collapse
                         in={checked}
                         {...(checked ? { timeout: 1000} : {})}
-                        collapseHeight={50}
+                        /* collapseHeight={50} */
                         sx={{ml: -11}}
                     >
                         <Box className={classes.titleBox}>

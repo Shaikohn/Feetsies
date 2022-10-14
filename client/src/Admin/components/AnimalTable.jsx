@@ -39,7 +39,7 @@ export function AnimalsTable() {
               <TableCell align="center" sx={{ width:'100%', display: 'flex', justifyContent:"center"}}>
                 <Avatar  src={p.main_image}/>
               </TableCell>            
-                <TableCell align="center"><Link to={`/home/animals/${p.id}`}><TableCell align="center">{p.name}</TableCell></Link></TableCell>
+                <TableCell align="center"><Link to={`/home/animals/${p.id}`}>{p.name}</Link></TableCell>
               <TableCell align="center">{p.sex}</TableCell>
               <TableCell align="center">{p.breed}</TableCell>
               <TableCell align="center">{p.size}</TableCell>
