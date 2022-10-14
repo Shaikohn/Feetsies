@@ -29,7 +29,6 @@ import Badge from '@mui/material/Badge';
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
 import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
-import { keys } from "@mui/system";
 
 
 export default function ResponsiveAppBar() {
@@ -39,8 +38,7 @@ export default function ResponsiveAppBar() {
   const location = useLocation();
 
   const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
-
-  const { iconCart } = useSelector((state) => state.shoppingCart);
+  const count = shoppingCartCopy.items?.length;
 
   const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -253,7 +251,7 @@ export default function ResponsiveAppBar() {
                     arrow
                   >
                     <IconButton sx={{ width: 50, height: 50 }}>
-                      <Badge badgeContent={iconCart} color="primary">
+                      <Badge badgeContent={count} color="primary">
                         <ShoppingCartIcon
                           fontSize="large"
                           sx={{ color: "white", width: 40, height: 40 }}
