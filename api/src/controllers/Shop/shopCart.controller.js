@@ -9,8 +9,19 @@ const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
 async function updateItem(req, res) {
-    const {cartItemId,newQuant} = req.body;
-    return res.status(200).send('SOY LA RUTA DE ACTUALIZACION DE ELEMENTO DE CARRITO Y NO TENGO TECLA DE ALL CAPS EN MI TECLADO.');
+    try {
+        const {cartItemId,newQuant} = req.body;
+        if(!cartItemId || !newQuant) return res.status(400).send(badReq);
+        let tuple = await Cart_item.findOne({where:{id:cartItemId}})
+        tuple.quantity = newQuant;
+        await tuple.save();
+        return res.status(200).send({success:'Cart item updated.'});
+    } catch (error) {
+        console.log(error)
+        return res.status(200).send({err:'Server error....'});
+    }
+    
+
 }
 
 async function getCart(req, res) {

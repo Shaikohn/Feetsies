@@ -12,31 +12,34 @@ const notFound = { err: "Not Found" };
 
 async function addPurchaseOrder(req,res){
     let {prods,userId} = req.body; //esto deberia ser un arreglo, de un elemento minimo.
-    console.log(prods, userId)
-    /* if(prods.length<1 || !userId)return res.status(500).send(badReq);
+    console.log("these are the values",prods.items, userId)
+    if(prods.items.length<1 || !userId)return res.status(500).send(badReq);
     try {
-        let po = await Purchase_order.create({userId});
-        let orderItems = [];
-        let total = 0;
-        for (let i = 0; i < prods.length; i++) {
-            let product = await Product.findByPk(prods[i].productId)
-            if (product.dataValues.stock<prods[i].quantity) return res.status(500).send({err:`There are not enough ${prods[i].name} in stock. Remove item from cart or try again later`});
-            let obj = {};
-            obj.productName = prods[i].name;
-            obj.quantity = prods[i].quantity
-            obj.subtotal = prods[i].price
-            obj.purchaseOrderId = po.dataValues.id;
-            orderItems.push(obj);
-            total += prods[i].price;
+        // crear la orden de compra con id de usuario y total de gasto
+        let totalCost = 0;
+        for (let i = 0; i < prods.items.length; i++) {
+            totalCost += prods.items[i].price
         }
-        Order_item.bulkCreate(orderItems);
-        po.total = total;
-        po.save();
-        return res.status(201).send(po);
+        let po = await Purchase_order.create({total:totalCost,userId:userId})
+        //console.log('total', totalCost);
+        //console.log('total', po.dataValues);
+        //CREAR ITEMS DE LA ORDEN DE COMPRA Y GUARDARLOS
+        for (let i = 0; i < prods.items.length; i++) {
+            let newTuple = {
+                productName:prods.items[i].name,
+                quantity:prods.items[i].quantity,
+                subtotal:prods.items[i].price,
+                purchaseOrderId: po.id,
+                userId:userId
+            }
+            //console.log("new tuple was: ",newTuple)
+            let saveTuple = await Order_item.create(newTuple);
+        }
+        res.send({success:'Data created successfully'})
     } catch (error) {
         console.log(error)
         return res.status(500).send(error);
-    } */
+    }
 }
 
 async function getPurchaseOrderById(req,res){

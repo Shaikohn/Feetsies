@@ -51,7 +51,6 @@ function App() {
     // },
   });
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  console.log(user);
 
   return (
     <ThemeProvider theme={theme}>
@@ -80,8 +79,9 @@ function App() {
           <Route exact path="/home/shoppingView" element={<ShoppingView />} />
           {/* Sign Up Form */}
           <Route
+            exact
             path="/signUp"
-            element={user ? <Navigate to="/" replace /> : <SignUp />}
+            element={<SignUp />}
           />
           {/* Sign in Form */}
           <Route

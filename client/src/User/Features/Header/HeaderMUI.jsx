@@ -28,21 +28,22 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
-
+import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
+import Swal from 'sweetalert2'
 
 export default function ResponsiveAppBar() {
 
-  const { iconCart } = useSelector((state) => state.shoppingCart);
-  console.log(iconCart)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
 
+  const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
+  const count = shoppingCartCopy.items?.length;
+
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const location = useLocation();
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -50,18 +51,22 @@ export default function ResponsiveAppBar() {
   
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+    forceUpdate();
   };
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+    forceUpdate();
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+    forceUpdate();
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+    forceUpdate();
   };
 
   const handleLogout = () => {
@@ -70,6 +75,12 @@ export default function ResponsiveAppBar() {
     navigate("/");
 
     setUser(null);
+    Swal.fire({
+      title: "Logged out",
+      text: "you have logged out",
+      icon: "success",
+      timer: 3000,
+    })
     forceUpdate();
   };
 
@@ -81,6 +92,12 @@ export default function ResponsiveAppBar() {
   //   var decoded = decode(token);
 
   //   console.log("information token", decoded);
+
+  useEffect(() => {
+    if(userId) {
+      dispatch(getShoppingCart(userId));
+    }
+  }, [userId, dispatch])
 
   useEffect(() => {
     const token = user?.token;
@@ -242,7 +259,7 @@ export default function ResponsiveAppBar() {
                     arrow
                   >
                     <IconButton sx={{ width: 50, height: 50 }}>
-                      <Badge badgeContent={iconCart} color="primary">
+                      <Badge badgeContent={count} color="primary">
                         <ShoppingCartIcon
                           fontSize="large"
                           sx={{ color: "white", width: 40, height: 40 }}

@@ -27,8 +27,6 @@ const stripePromise = loadStripe(
 
 export default function ShoppingView() {
 
-  const { iconCart } = useSelector((state) => state.shoppingCart);
-  console.log(iconCart)
 
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -36,15 +34,15 @@ export default function ShoppingView() {
 
   const [isOpenModal, openedModal, closeModal] = useModal(false);
 
-  const [userId, setUserId] = useState(
-    JSON.parse(localStorage?.getItem("profile")).data.id
-  );
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile")).data.id);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getShoppingCart(userId));
-  }, [reducerValue]);
+    if(userId) {
+        dispatch(getShoppingCart(userId));
+    }
+  }, [reducerValue, userId]);
 
   function handleDeleteOne(e) {
     e.preventDefault();

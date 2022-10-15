@@ -21,6 +21,10 @@ module.exports= (sequelize) => {
             type: DataTypes.FLOAT,
             allowNull: false,
         },
+        userId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     },{
         timeStamps:true,
         createdAt:true,

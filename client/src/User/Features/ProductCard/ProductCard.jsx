@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
@@ -16,6 +16,8 @@ import Add from '@mui/icons-material/Add';
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
+
 
 
 
@@ -23,16 +25,12 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
 
   const arrayQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const [userId, setUserId] = useState(
-    JSON.parse(localStorage?.getItem("profile"))?.data.id
-  );
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const [quantity, setQuantity] = React.useState("");
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
 
   const handleChange = (event) => {
     setQuantity(event.target.value);
@@ -57,6 +55,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
         timer: 1000
       });
     }
+    dispatch(getShoppingCart(userId));
   }
   
   return (
@@ -86,7 +85,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
             image={image}
             alt="Product Image"
           />
-          <CardContent>
+          <CardContent sx={{display: "flex", flexDirection: "column"}}>
             <Typography gutterBottom variant="h4" component="div" fontFamily="Segoe Print"
               sx={{color: "#567900", fontSize: 25, textShadow: "1px 1px 5px rgb(0, 0, 0)"}}
             >
@@ -104,12 +103,14 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                 direction="row"
                 spacing={2}
                 sx={{
+                  display: "flex",
                   mt: 2.5,
                 }}
+                // overflow="auto"
               >
                 {productTypes.map((tag, index) => {
                   return (
-                    <Typography key={index} 
+                    <Typography component={'span'}  key={index} 
                       sx={{
                         color: "black",
                         fontSize: 14, 
@@ -122,7 +123,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                       }}
                     >
                       <LocalOfferIcon sx={{mx: 0.7, width: 15, height: 15, color: "#567900"}}/>
-                      <Typography sx={{fontSize: 14, mx: 0.5}}>
+                      <Typography component={'span'}  sx={{fontSize: 14, mx: 0.5}}>
                         {tag}
                       </Typography>
                     </Typography>

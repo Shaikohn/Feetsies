@@ -3,8 +3,10 @@
 }
 
 .createForm {
-  padding-top: 65px;
   background-image: url("./Img/backgroundDetails1.jpg");
   height: 100vh;
   margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

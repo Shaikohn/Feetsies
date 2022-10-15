@@ -3,7 +3,7 @@ import { GET_CART } from "../actions/ShoppingCartView";
 
 const initialState = {
     shoppingCart: [],
-    shoppingCartCopy: [] 
+    shoppingCartCopy: []
 }
 
 const getShoppingCartReducer = (state = initialState, {type, payload}) => {
@@ -14,7 +14,7 @@ const getShoppingCartReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 shoppingCart: payload,
-                shoppingCartCopy: payload
+                shoppingCartCopy: payload,
             }
         default: 
             return state

@@ -20,7 +20,7 @@ export default function ShoppingCheckout() {
 
     useEffect(() => {
         dispatch(getShoppingCart(userId));
-      }, []);
+    }, []);
 
     function handleClearCart(e) {
         e.preventDefault();
