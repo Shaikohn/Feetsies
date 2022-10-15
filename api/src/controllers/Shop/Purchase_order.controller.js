@@ -29,7 +29,8 @@ async function addPurchaseOrder(req,res){
                 productName:prods.items[i].name,
                 quantity:prods.items[i].quantity,
                 subtotal:prods.items[i].price,
-                purchaseOrderId: po.id
+                purchaseOrderId: po.id,
+                userId:userId
             }
             //console.log("new tuple was: ",newTuple)
             let saveTuple = await Order_item.create(newTuple);
