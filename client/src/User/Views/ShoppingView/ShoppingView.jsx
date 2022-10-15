@@ -45,7 +45,7 @@ export default function ShoppingView() {
 
   useEffect(() => {
     if(userId) {
-      dispatch(getShoppingCart(userId));
+        dispatch(getShoppingCart(userId));
     }
   }, [reducerValue, userId]);
 

@@ -29,7 +29,7 @@ import Badge from '@mui/material/Badge';
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
 import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
-
+import Swal from 'sweetalert2'
 
 export default function ResponsiveAppBar() {
 
@@ -75,6 +75,12 @@ export default function ResponsiveAppBar() {
     navigate("/");
 
     setUser(null);
+    Swal.fire({
+      title: "Logged out",
+      text: "you have logged out",
+      icon: "success",
+      timer: 3000,
+    })
     forceUpdate();
   };
 
@@ -88,8 +94,10 @@ export default function ResponsiveAppBar() {
   //   console.log("information token", decoded);
 
   useEffect(() => {
-    dispatch(getShoppingCart(userId));
-  }, [])
+    if(userId) {
+      dispatch(getShoppingCart(userId));
+    }
+  }, [userId, dispatch])
 
   useEffect(() => {
     const token = user?.token;
