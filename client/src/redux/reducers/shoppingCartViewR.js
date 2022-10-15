@@ -1,4 +1,4 @@
-import { GET_CART } from "../actions/ShoppingCartView";
+import { GET_CART, UPDATE_ITEM_QUANTITY } from "../actions/ShoppingCartView";
 
 
 const initialState = {
@@ -16,6 +16,14 @@ const getShoppingCartReducer = (state = initialState, {type, payload}) => {
                 shoppingCart: payload,
                 shoppingCartCopy: payload,
             }
+        
+        case UPDATE_ITEM_QUANTITY:
+            // newQuantity = state.shoppingCartCopy.items[1];
+            return {
+                ...state, 
+                shoppingCartCopy: [...state.shoppingCartCopy, ]
+            }
+        
         default: 
             return state
     }

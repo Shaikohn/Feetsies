@@ -1,14 +1,16 @@
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getShoppingCart } from "../../../redux/actions/ShoppingCartView.js";
+import { getShoppingCart, updateItemQuantity } from "../../../redux/actions/ShoppingCartView.js";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import Card from "@mui/material/Card";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Modals from "../../Features/Modals/Modals";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import "../../Features/Modals/Modals.css";
-import { CardContent, Typography } from "@mui/material";
+import { CardContent, IconButton, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import {
   removeOneFromCart,
@@ -31,6 +33,9 @@ export default function ShoppingView() {
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
+
+  const result = shoppingCartCopy;
+  console.log(shoppingCartCopy.items)
 
   const [isOpenModal, openedModal, closeModal] = useModal(false);
 
@@ -59,6 +64,18 @@ export default function ShoppingView() {
   function handleClearCart(e) {
     e.preventDefault();
     dispatch(removeWholeCart(userId));
+    forceUpdate();
+  }
+
+  function handleDeleteItem(e) {
+    e.preventDefault();
+    dispatch(updateItemQuantity(e.target.value, 1));
+    forceUpdate();
+  }
+
+  function handleAddItem(e) {
+    e.preventDefault();
+    dispatch(updateItemQuantity(e.target.value, 1));
     forceUpdate();
   }
 
@@ -119,6 +136,22 @@ export default function ShoppingView() {
                   >
                     {`Unit x ${c.quantity}`}
                   </Typography>
+                  <Box 
+                    component="form"
+                    sx={{
+                      '& > :not(style)': { m: 1, width: '10ch' },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                  >
+                  <IconButton  onClick={(e) => {handleAddItem(e)}} value={c.cartItemid}>
+                    <AddIcon/>
+                  </IconButton>
+                  <TextField value={c.quantity}/>
+                  <IconButton onClick={(e) => {handleDeleteItem(e)}} value={c.cartItemid}>
+                    <RemoveIcon/>
+                  </IconButton>
+                  </Box>
                 </CardContent>
               </Box>
               <Button
@@ -129,7 +162,19 @@ export default function ShoppingView() {
                 }}
                 value={c.cartItemid}
               >
+                Delete Product
+              </Button>
+              <Button size="small" variant="outlined" 
+                onClick={(e) => {handleDeleteItem(e)}}
+                value={c.cartItemid}
+              >
                 Delete One
+              </Button>
+              <Button size="small" variant="outlined" 
+                onClick={(e) => {handleAddItem(e)}}
+                value={c.cartItemid}
+              >
+                Add One
               </Button>
             </Card>
             <Typography
@@ -144,7 +189,7 @@ export default function ShoppingView() {
             </Typography>
           </Container>
         ))}
-        <h1>{`Total $ ${shoppingCartCopy.total}`}</h1>
+        <h1>{`Total $ ${shoppingCartCopy.total }`}</h1>
         <Button
           size="small"
           variant="outlined"
