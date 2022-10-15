@@ -13,7 +13,7 @@ import SignUp from "./User/Features/Form/SignUp";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SignIn from "./User/Features/Form/SignIn";
 
-import Dashboard, {DashboardLanding} from "./Admin/components/Dashboard";
+import Dashboard, { DashboardLanding } from "./Admin/components/Dashboard";
 import CheckEmails from "./User/Views/CheckEmail";
 import AccountConfirmed from "./User/Views/AccountConfirmed";
 import ResetPassword from "./User/Views/ResetPassword";
@@ -22,6 +22,8 @@ import { useState } from "react";
 import UsersList from "./Admin/components/UsersList";
 import ProductsList from "./Admin/components/ProductsList";
 import { AnimalsTable } from "./Admin/components/AnimalTable";
+import UserData from "./User/Features/Profile/UserData";
+import UserProfile from "./User/Features/Profile/UserProfile";
 
 function App() {
   const theme = createTheme({
@@ -112,9 +114,10 @@ function App() {
             <Route path='' element={<DashboardLanding />} />
             <Route path='animaltable' element={<AnimalsTable />} />
             <Route path='users' element={<UsersList />} />
-            <Route path='products' element={<ProductsList />}/>
+            <Route path='products' element={<ProductsList />} />
           </Route>
-          
+          <Route  exact path="/profile" element={<UserProfile />}/>
+          <Route  exact path="/user/data" element={<UserData />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>

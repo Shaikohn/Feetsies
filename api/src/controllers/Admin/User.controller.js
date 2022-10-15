@@ -39,7 +39,7 @@ async function deleteUser(req, res) {
 }
 
 async function updateUser(req, res) {
-  let { id, email, password, phone_number, location } = req.body;
+  let { id, email, password, phone_number, location,name,lastName } = req.body;
   try {
     let user = await User.findOne({
       where: {
@@ -49,6 +49,8 @@ async function updateUser(req, res) {
     if (user.length === 0 || !user) {
       return res.status(404).send(notFoundVar);
     } else {
+      if (name) user.name = name;
+      if (lastName) user.lastName = lastName;
       if (email) user.email = email;
       if (password) user.password = password;
       if (phone_number) user.phone_number = phone_number;
@@ -68,6 +70,10 @@ async function getUserDetail(req, res) {
     if (!user) return res.status(404).send(notFound);
     result = {
       id: user.dataValues.id,
+      name: user.dataValues.name,
+      lastName:  user.dataValues.lastName,
+      isAdmin:  user.dataValues.isAdmin,
+      image:  user.dataValues.image,
       email: user.dataValues.email,
       phoneNumber: user.dataValues.phone_number,
       location: user.dataValues.location,

@@ -13,6 +13,7 @@ import petitionReducer from "./reducers/petitionsR";
 import getShoppingCartReducer from "./reducers/shoppingCartViewR";
 import authReducer from "./reducers/authR";
 import usersReducer from "./reducers/getAllUsersR";
+import userDetailReducer from "./reducers/userDetailR";
 
 export const store = createStore(
   combineReducers({
@@ -27,6 +28,7 @@ export const store = createStore(
     getShoppingCart: getShoppingCartReducer,
     auth: authReducer,
     users: usersReducer,
+    userDetail: userDetailReducer,
   }),
   composeWithDevTools(applyMiddleware(thunk))
 );
