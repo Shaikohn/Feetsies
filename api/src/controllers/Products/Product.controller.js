@@ -114,7 +114,11 @@ async function createElementWithTypes(element) {
     divideBy++;
     value += avg[i].dataValues.score;
   }
-  if(value!==0)avg = value / divideBy;
+  if(value!==0){
+    avg = value / divideBy;
+  }else{
+    avg=0;
+  }
   productTypes = productTypes.map((e) => e.dataValues.name);
   animalTypes = animalTypes.map((e) => e.dataValues.name);
   return {
