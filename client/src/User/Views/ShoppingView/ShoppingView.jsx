@@ -1,7 +1,7 @@
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getShoppingCart, updateItemQuantity } from "../../../redux/actions/ShoppingCartView.js";
+import { getShoppingCart, updateItemQuantity, updateItemQuantityState } from "../../../redux/actions/ShoppingCartView.js";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import Card from "@mui/material/Card";
 import { loadStripe } from "@stripe/stripe-js";
@@ -22,6 +22,7 @@ import styles from "./ShoppingCheckout.module.css";
 import emptyCart from "./Img/emptyCart.png";
 import Dog from "./Img/Dog.jpg";
 import Swal from "sweetalert2";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const stripePromise = loadStripe(
   "pk_test_51LpgGdIsUHqf6y0peEPMdjCDcsjuA2sdBcEGka27crrsnZrTLBpIdJZiAICPkWXYWeJzwabRyk2WtbH0yfdxmGFy0046Eu9UuK"
@@ -34,8 +35,10 @@ export default function ShoppingView() {
 
   const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
 
-  const result = shoppingCartCopy;
-  console.log(shoppingCartCopy.items)
+  console.log(shoppingCartCopy)
+
+  const [load, setLoad] = useState(false);
+
 
   const [isOpenModal, openedModal, closeModal] = useModal(false);
 
@@ -47,6 +50,7 @@ export default function ShoppingView() {
     if(userId) {
         dispatch(getShoppingCart(userId));
     }
+    setLoad(false);
   }, [reducerValue, userId]);
 
   function handleDeleteOne(e) {
@@ -67,17 +71,13 @@ export default function ShoppingView() {
     forceUpdate();
   }
 
-  function handleDeleteItem(e) {
+  function handleChangeQuantity(e, newQuant, cartItemId) {
     e.preventDefault();
-    dispatch(updateItemQuantity(e.target.value, 1));
+    setLoad(true);
+    dispatch(updateItemQuantity({cartItemId, newQuant}));
     forceUpdate();
   }
 
-  function handleAddItem(e) {
-    e.preventDefault();
-    dispatch(updateItemQuantity(e.target.value, 1));
-    forceUpdate();
-  }
 
   if (shoppingCartCopy.total < 1) {
     return (
@@ -96,7 +96,8 @@ export default function ShoppingView() {
       </div>
       <div>
         <h1>SHOPPING CART</h1>
-        {shoppingCartCopy.items?.map((c) => (
+        
+        {shoppingCartCopy.items?.sort((a, b) => a.cartItemId - b.cartItemId).map((c) => (
           <Container key={c.cartItemid}>
             <Typography
               gutterBottom
@@ -127,7 +128,7 @@ export default function ShoppingView() {
                     variant="body2"
                     color="text.secondary"
                   >
-                    {`$ ${c.price}`}
+                    {`$ ${c.price/c.quantity}`}
                   </Typography>
                   <Typography
                     component={"span"}
@@ -144,11 +145,13 @@ export default function ShoppingView() {
                     noValidate
                     autoComplete="off"
                   >
-                  <IconButton  onClick={(e) => {handleAddItem(e)}} value={c.cartItemid}>
+                  <IconButton  onClick={(e) => {handleChangeQuantity(e, c.quantity + 1, c.cartItemid)}} disabled={load}>
                     <AddIcon/>
                   </IconButton>
-                  <TextField value={c.quantity}/>
-                  <IconButton onClick={(e) => {handleDeleteItem(e)}} value={c.cartItemid}>
+                  <Typography>
+                    {c.quantity} - {load && <CircularProgress color="success" />} 
+                  </Typography>
+                  <IconButton onClick={(e) => {handleChangeQuantity(e, c.quantity - 1, c.cartItemid)}} disabled={load}>
                     <RemoveIcon/>
                   </IconButton>
                   </Box>
@@ -163,18 +166,6 @@ export default function ShoppingView() {
                 value={c.cartItemid}
               >
                 Delete Product
-              </Button>
-              <Button size="small" variant="outlined" 
-                onClick={(e) => {handleDeleteItem(e)}}
-                value={c.cartItemid}
-              >
-                Delete One
-              </Button>
-              <Button size="small" variant="outlined" 
-                onClick={(e) => {handleAddItem(e)}}
-                value={c.cartItemid}
-              >
-                Add One
               </Button>
             </Card>
             <Typography

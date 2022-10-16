@@ -1,10 +1,9 @@
 import {Link, useNavigate} from "react-router-dom";
-import React, { useState }/* , { useState } */ from "react";
-import styles from "./AnimalDetails.module.css"
-import Button from "@mui/material/Button";
+import React, { useState } from "react";
+
+import { ButtonBase, CardMedia, Grid, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import Swal from 'sweetalert2';
-import { Box, Container } from "@mui/system";
-import { ButtonBase, CardMedia, Typography } from "@mui/material";
 
 /* import images from "./images"; */
 
@@ -19,171 +18,185 @@ export default function AnimalDetails({animal}) {
     /* const [selectedImg, setSelectedImg] = useState(images[0]) */
 
     return (
-        <Container 
-            sx={{
-                display: "flex",
-                textAlign: "center"
-            }}
-            key={animal?.id}
-        >
-            <CardMedia
-                component="img"
-                height="300px"
-                width="300px"
-                image={animal?.main_image}
-                alt={animal?.name}
+        <div>
+            <Grid 
+                height="auto"
+                width="auto"
+                container
                 sx={{
-                    borderRadius: "10px"
+                    display: "flex", 
+                    my: 0,
+                    mx: 1.5
                 }}
-                margin={10}
-            />
-            <Container>
-                <Box>
-                    <Typography variant="h1" fontWeight={700}>
-                        {`${animal?.name}`}
-                    </Typography>
-                    <Typography variant="h2" fontWeight={500}>
-                        Size: {`${animal?.size}`}
-                    </Typography>
-                    <Typography variant="h2" fontWeight={500}>
-                        Age: {`${animal?.age}`}
-                    </Typography>
-                    <Typography variant="h2" fontWeight={500}>
-                        Description: {`${animal?.description}`}
-                    </Typography>
-                    { !user ? (
-                        <Box>
-                            <ButtonBase
-                                sx={{
-                                    my: 2,
-                                    display: "flex",
-                                    ml:4,
-                                    fontSize: 20,
-                                    bgcolor: "black",
-                                    fontWeight: 600,
-                                    mx: 2,
-                                }}
-                                onClick={(e) => {
-                                    Swal.fire({
-                                        title: "YOU HAVE TO BE LOGGED TO REQUEST ADOPTIONS!",
-                                        icon: "warning",
-                                        showDenyButton: true,
-                                        denyButtonText: "Cancel",
-                                        confirmButtonText: "Sign in",
-                                        confirmButtonColor: "green",
-                                    }).then((res) => {
-                                        if (res.isConfirmed) {
-                                        navigate("/signUp");
-                                        }
-                                        });
-                                    }}
-                                size="large"
-                                variant="outlined"
-                            >
-                                ADOPT ME! 💓
-                            </ButtonBase>
+                key={animal?.id}
+            >   
+                <Grid item xs={1} 
+                    sx={{
+                        border: "5px groove #567900", 
+                        borderRadius: "10px",
+                        bgcolor: "#ffff9b6e",
+                        backdropFilter: "blur(4px)", 
+                        my: 4, 
+                        mx: 2
+                    }}
+                >
+                    <Box>
+                        {/* <div className={styles.imagesContainer}>
+                            <img className={styles.selected} src={selectedImg} alt="" />
+                            <div className={styles.notSelected}>
+                                {
+                                    images.map((img, i) => (
+                                        <img 
+                                        style={{border: selectedImg === img ? "4px solid purple": ""}}
+                                        key={i} 
+                                        src={img} 
+                                        alt="dog"
+                                        onClick={() => setSelectedImg(img)}
+                                        />
+                                    ))
+                                }
+                            </div>
+                        </div> */}
+                    </Box>
+                </Grid>
+                <Grid item xs={5} 
+                    sx={{ 
+                        // border: "5px groove #567900", 
+                        borderRadius: "10px",
+                        bgcolor: "#ffff9b6e",
+                        backdropFilter: "blur(4px)", 
+                        my: 4, 
+                        mx: 2, 
+                        p: 4
+                    }}
+                >
+                    <CardMedia
+                        component="img"
+                        height="500px"
+                        width="500px"
+                        image={animal?.main_image}
+                        alt={animal?.name}
+                        sx={{
+                            borderRadius: "20px",
+                            border: "5px groove #567900", 
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={5} 
+                    sx={{
+                        border: "5px groove #567900", 
+                        borderRadius: "10px",
+                        my: 4, 
+                        mx: 2, 
+                        backdropFilter: "blur(4px)", 
+                        // bgcolor: "#bada596e"
+                        bgcolor: "#ffff9b6e"
+                    }}
+                >
+                    <Box 
+                        display="flex" 
+                        sx={{
+                            flexDirection: "column", 
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <Typography variant="h3" component="div" fontFamily="Segoe Print" fontWeight={700}
+                            sx={{color: "#567900", textShadow: "1px 1px 5px rgb(0, 0, 0)", m: 2.5}}
+                        >
+                            {`${animal?.name}`}
+                        </Typography>
+                        <Typography variant="h4" component="div" fontFamily="Segoe Print" fontWeight={500}
+                            sx={{color: "black", m: 1.5}}
+                        >
+                            Size: {`${animal?.size}`}
+                        </Typography>
+                        <Typography variant="h4" component="div" fontFamily="Segoe Print" fontWeight={500}
+                            sx={{color: "black", m: 1.5}}
+                        >
+                            Age: {`${animal?.age}`}
+                        </Typography>
+                        <Typography variant="h4" component="div" fontFamily="Segoe Print" fontWeight={500}
+                            sx={{color: "black", m: 1.5}}
+                        >
+                            Description 
+                        </Typography>
+                        <Box width={400} height={120} 
+                            sx={{
+                                border: "3px groove #c8ad39",
+                                borderRadius: "10px",
+                                m: 1,
+                                px: 1.5,
+                                py: 1,
+                                display: "flex",
+                                justifyContent: "flex-start"
+                            }}
+                        >
+                            <Typography variant="h6" component="div" >
+                                {`${animal?.description}`}
+                            </Typography>
                         </Box>
-                    ) : ( 
-                            <Link to={`/home/animals/${animal?.id}/adoption`}>
+                        { !user ? (
+                            <Box>
                                 <ButtonBase
                                     sx={{
                                         my: 2,
+                                        width: "200px",
+                                        height: "50px",
+                                        border: "3px groove #c8ad39",
+                                        borderRadius: "15px",
+                                        color: "white",
                                         display: "flex",
-                                        ml:4,
                                         fontSize: 20,
                                         bgcolor: "black",
                                         fontWeight: 600,
-                                        mx: 2,
                                     }}
+                                    onClick={(e) => {
+                                        Swal.fire({
+                                            title: "YOU HAVE TO BE LOGGED TO REQUEST ADOPTIONS!",
+                                            icon: "warning",
+                                            showDenyButton: true,
+                                            denyButtonText: "Cancel",
+                                            confirmButtonText: "Sign in",
+                                            confirmButtonColor: "green",
+                                        }).then((res) => {
+                                            if (res.isConfirmed) {
+                                            navigate("/signUp");
+                                            }
+                                            });
+                                        }}
                                     size="large"
                                     variant="outlined"
                                 >
                                     ADOPT ME! 💓
                                 </ButtonBase>
-                            </Link>
-                        )
-                    }
-                </Box>
-            </Container>
-        </Container>
+                            </Box>
+                        ) : ( 
+                                <Link to={`/home/animals/${animal?.id}/adoption`}>
+                                    <ButtonBase
+                                        sx={{
+                                            my: 2,
+                                            width: "200px",
+                                            height: "50px",
+                                            border: "3px groove #c8ad39",
+                                            borderRadius: "15px",
+                                            color: "white",
+                                            display: "flex",
+                                            fontSize: 20,
+                                            bgcolor: "black",
+                                            fontWeight: 600,
+                                        }}
+                                        size="large"
+                                        variant="outlined"
+                                    >
+                                        ADOPT ME! 💓
+                                    </ButtonBase>
+                                </Link>
+                            )
+                        }
+                    </Box>
+                </Grid>
+            </Grid>
+        </div>
     )
 };
-
-    /* <div className={styles.detailsBackground} key={animal?.id}>
-                {/* <div className={styles.imagesContainer}>
-                    <img className={styles.selected} src={selectedImg} alt="" />
-                    <div className={styles.notSelected}>
-                        {
-                            images.map((img, i) => (
-                                <img 
-                                style={{border: selectedImg === img ? "4px solid purple": ""}}
-                                key={i} 
-                                src={img} 
-                                alt="dog"
-                                onClick={() => setSelectedImg(img)}
-                                />
-                            ))
-                        }
-                    </div>
-                </div> */
-/*               <div>
-                    
-                    <img alt={animal?.name} className={styles.mainImg} src={animal?.main_image} />
-                </div> 
-                <div className={styles.infoContainer}>
-                    <h1 className={styles.name}>{`${animal?.name}`}</h1>
-                    <h2 className={styles.info}>Size: {`${animal?.size}`} Sex: {`${animal?.sex}`}</h2>
-                    <h2 className={styles.info}>{`${animal?.description}`}</h2>
-                    <h2 className={styles.info}>{`Age: ${animal?.age}`}</h2>
-                    {
-                        !user ? 
-                        <div>
-                        <Button
-                            sx={{
-                                my: 2,
-                                display: "flex",
-                                ml:4,
-                                fontSize: 20,
-                                bgcolor: "black",
-                                fontWeight: 600,
-                                mx: 2,
-                            }}
-                            onClick={(e) => {
-                                Swal.fire({
-                                    title: "YOU HAVE TO BE LOGGED TO REQUEST ADOPTIONS!",
-                                    icon: "warning",
-                                    showDenyButton: true,
-                                    denyButtonText: "Cancel",
-                                    confirmButtonText: "Sign in",
-                                    confirmButtonColor: "green",
-                                }).then((res) => {
-                                    if (res.isConfirmed) {
-                                    navigate("/signUp");
-                                    }
-                                    });
-                                }}
-                            size="large"
-                            variant="outlined">
-                                ADOPT ME! 💓
-                        </Button>
-                        </div> :
-                        <Link to={`/home/animals/${animal?.id}/adoption`}>
-                        <Button
-                            sx={{
-                                my: 2,
-                                display: "flex",
-                                ml:4,
-                                fontSize: 20,
-                                bgcolor: "black",
-                                fontWeight: 600,
-                                mx: 2,
-                            }}
-                            size="large"
-                            variant="outlined">
-                                ADOPT ME! 💓
-                        </Button>
-                    </Link>
-                    } 
-                </div>
-            </div> 
-*/
