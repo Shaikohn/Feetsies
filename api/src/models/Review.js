@@ -19,6 +19,11 @@ module.exports = (sequelize) => {
             allowNull: true,
             unique:'userProductKey'
         },
+        score: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+            defaultValue:0
+        },
         review: {
             type: DataTypes.TEXT,
             allowNull: false,

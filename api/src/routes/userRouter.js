@@ -20,6 +20,7 @@ router.post('/create',addUser);
 router.put('/update', updateUser);
 router.get('/:id', getUserDetail);
 router.get('/cart/:id', getCart);
+router.get('/reviews/:userid', getMyReviews);
 router.delete('/cart/:id', deleteOneFromCart);
 router.delete('/cart/whole/:id', deleteWholeCart);
 

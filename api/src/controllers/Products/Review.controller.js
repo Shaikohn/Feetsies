@@ -1,11 +1,9 @@
 const {Review,Order_item,Product/*borrar product una vez refactoreadas las tablas*/} = require('../../db');
 
-const notBought = {err:'To review this product, you must buy it first!'}
-const alreadyReviewed = {err:'To review this product, you must buy it first!'}
 const serverError = {err:`Something happened and the request couldn't be completed`}
 
 async function addReviewToProduct(req,res){
-    const {userId, productName , review} = req.body;
+    const {userId, productName , review, score} = req.body;
     try {
         //consigo id del producto
         let product = await Product.findOne({
@@ -35,6 +33,7 @@ async function addReviewToProduct(req,res){
             userId:userId,
             productId:prodId,
             review:review,
+            score:score
         })
         return res.status(201).send({success:'Review created.'})
     } catch (error) {
@@ -43,7 +42,13 @@ async function addReviewToProduct(req,res){
     }
 }
 
+getMyReviews
+
+async function addReviewToProduct(req,res){
+    const {userId} = req.params;
+}
 
 module.exports={
-    addReviewToProduct
+    addReviewToProduct,
+    getMyReviews
 }

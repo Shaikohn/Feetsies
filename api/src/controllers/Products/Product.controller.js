@@ -2,8 +2,9 @@ const {
   Product,
   Product_type,
   Animal_type,
+  Review
 } = require("../../db");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const sequelize = require("sequelize");
 
 const emptyDB = { err: "Database empty" };
@@ -106,12 +107,21 @@ async function createProduct(req, res) {
 async function createElementWithTypes(element) {
   let productTypes = await element.getProduct_types();
   let animalTypes = await element.getAnimal_types();
+  let value=0;
+  let divideBy=0;
+  let avg = await Review.findAll({where:{productId:element.id}})
+  for (let i = 0; i < avg.length; i++) {
+    divideBy++;
+    value += avg[i].dataValues.score;
+  }
+  if(value!==0)avg = value / divideBy;
   productTypes = productTypes.map((e) => e.dataValues.name);
   animalTypes = animalTypes.map((e) => e.dataValues.name);
   return {
     ...element.dataValues,
     productTypes,
     animalTypes,
+    avg
   };
 }
 
