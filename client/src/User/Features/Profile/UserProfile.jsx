@@ -35,13 +35,14 @@ import Box from "@mui/material/Box";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { getUserDetail } from "../../../redux/actions/userDetailA";
-import ResponsiveAppBar from "../Header/HeaderMUI";
-
-
+import getPurchaseOrders from "../../../redux/actions/getOrdersUser";
+import axios from "axios";
 
 export default function UserProfile() {
   const [user] = useState(JSON.parse(localStorage.getItem("profile")));
   const { usuario } = useSelector((state) => state.userDetail);
+  const {purchaseOrder} = useSelector((state)=> state.purchaseOrder);
+  console.log(purchaseOrder)
 
   const [open, setOpen] = React.useState(false);
   //   const [openA, setOpenA] = React.useState(false);
@@ -64,8 +65,15 @@ export default function UserProfile() {
   //   };
 
   const dispatch = useDispatch();
+  
+
+
   useEffect(() => {
     dispatch(getUserDetail(user.data.id));
+    dispatch(getPurchaseOrders(user.data.id))
+    // setPurchaseOrder(
+    //  handleOrders()
+    // )
   }, [user]);
 
   // const order  = useSelector ((state) => state.userOrderR.userOrder);
@@ -119,9 +127,9 @@ export default function UserProfile() {
                       alt="Remy Sharp"
                       sx={{ width: 60, height: 60, ml: 0 }}
                     >
-                      {user.data.imagen ? (
+                      {usuario.image ? (
                         <img
-                          src={user.data.image}
+                          src={usuario.image}
                           className={style.foto}
                           alt=""
                         />
@@ -133,7 +141,7 @@ export default function UserProfile() {
                       )}
                     </Avatar>
                   </ListItemAvatar>
-                  
+
                   <ListItemText
                     primary={
                       <p className={style.espacio}> Hello {usuario?.name}</p>
@@ -175,6 +183,7 @@ export default function UserProfile() {
                         <p className={style.subTitulo}>Complete your name</p>
                       )}
                     </div>
+                    <hr/>
                     <div>
                       {usuario?.email ? (
                         <p className={style.subTitulo}>
@@ -184,6 +193,7 @@ export default function UserProfile() {
                         <p className={style.subTitulo}>Complete your email</p>
                       )}
                     </div>
+                    <hr/>
                     <div>
                       {usuario?.location ? (
                         <p className={style.subTitulo}>
@@ -195,6 +205,7 @@ export default function UserProfile() {
                         </p>
                       )}
                     </div>
+                    <hr/>
                     <div>
                       {usuario?.phoneNumber ? (
                         <p className={style.subTitulo}>
@@ -202,10 +213,11 @@ export default function UserProfile() {
                         </p>
                       ) : (
                         <p className={style.subTitulo}>
-                         Cellphone: add your cellphone
+                          Cellphone: add your cellphone
                         </p>
                       )}
                     </div>
+                    <hr/>
 
                     <div>
                       <Stack direction="row" fontSize="small">
@@ -243,9 +255,28 @@ export default function UserProfile() {
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <div>
-                    <p className={style.subTitulo}>
-                     There´s not order yet
-                    </p>
+                    {
+                    purchaseOrder ? (
+                      purchaseOrder.map((order) => {
+                        return(
+                        <div>
+                          <p className={style.subTitulo}
+                          >Mount: $ {order.total} </p>
+                          <p className={style.subTitulo}
+                          >Date: {order.createdAt}</p>
+                          
+                          <button>
+                            View details
+                          </button>
+                          <hr/>
+                        </div>
+                        
+                        )
+                      }))
+                     : ( <p className={style.subTitulo}>
+                        Cellphone: add your cellphone
+                      </p>
+                    )}
                   </div>
                 </ListItemIcon>
                 <ListItemText primary="" />
@@ -254,22 +285,21 @@ export default function UserProfile() {
           </Collapse>
         </List>
         <Link to="/">
-           
-              <Button
-                sx={{
-                  m: 1,
-                  width: "68ch",
-                  color: "#022335",
-                  bgcolor: "#fff",
-                  borderColor: "#022335",
-                  borderRadius: "10px",
-                }}
-                variant="contained"
-                startIcon={<KeyboardReturnIcon fontSize="large" />}
-              >
-                Back to home
-              </Button>
-          </Link>
+          <Button
+            sx={{
+              m: 1,
+              width: "68ch",
+              color: "#022335",
+              bgcolor: "#fff",
+              borderColor: "#022335",
+              borderRadius: "10px",
+            }}
+            variant="contained"
+            startIcon={<KeyboardReturnIcon fontSize="large" />}
+          >
+            Back to home
+          </Button>
+        </Link>
       </Grid>
     </div>
   );

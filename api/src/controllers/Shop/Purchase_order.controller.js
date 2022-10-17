@@ -21,9 +21,9 @@ async function addPurchaseOrder(req,res){
             totalCost += prods.items[i].price
         }
         let po = await Purchase_order.create({total:totalCost,userId:userId})
-        //console.log('total', totalCost);
-        //console.log('total', po.dataValues);
-        //CREAR ITEMS DE LA ORDEN DE COMPRA Y GUARDARLOS
+        console.log('total', totalCost);
+        console.log('total', po.dataValues);
+        // CREAR ITEMS DE LA ORDEN DE COMPRA Y GUARDARLOS
         for (let i = 0; i < prods.items.length; i++) {
             let newTuple = {
                 productName:prods.items[i].name,

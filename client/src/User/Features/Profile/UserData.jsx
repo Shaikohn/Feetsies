@@ -3,14 +3,18 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import style from "./userStyles.module.css";
+
 
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import Stack from "@mui/material/Stack";
-
+import InputAdornment, { inputAdornmentClasses } from "@mui/material/InputAdornment";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { alertTitleClasses } from "@mui/material";
+// import Loading from "../loading/Loading.jsx";
+// import { useSnackbar } from "notistack";
 // import { connect, useSelector, useDispatch } from "react-redux";
 // import { UpdateUserA } from "../../redux/actions/DashboardUpdateUserA"; //   UpdateProductR.UpdateProduct
 // import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -18,17 +22,13 @@ import Stack from "@mui/material/Stack";
 // import style from "./assets/PerfilDelUsuario.module.css";
 // import Grid from "@mui/material/Grid";
 // import AccountCircle from "@mui/icons-material/AccountCircle";
-import InputAdornment from "@mui/material/InputAdornment";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import { alertTitleClasses } from "@mui/material";
-// import Loading from "../loading/Loading.jsx";
-// import { useSnackbar } from "notistack";
+import style from "./userStyles.module.css";
 
 export default function UserData() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { usuario } = useSelector((state) => state.userDetail);
-  const [user] = useState(JSON.parse(localStorage.getItem("profile")));
+  // const [user] = useState(JSON.parse(localStorage.getItem("profile")));
   const [input, setInput] = useState({
     id: "",
     name: "",
@@ -37,10 +37,7 @@ export default function UserData() {
     phone_number: "",
     email: "",
   });
-  console.log({ userDeytail: usuario });
-  const [imageChosen, setImageChosen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState("");
+  
 
   useEffect(() => {
     setInput({
@@ -50,9 +47,40 @@ export default function UserData() {
       location: usuario.location,
       phone_number: usuario.phoneNumber,
       email: usuario.email,
+      image: usuario.image
     });
   }, [dispatch]);
+  //Cloudinary//
+  const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [imageChosen, setImageChosen] = useState(false);
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "proyecto-final-animals");
+    setImageChosen(true);
+    setLoading(true);
+    
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/tawaynaskp/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
 
+    console.log("data", file);
+
+    setImage(file.secure_url);
+    // setInput({
+    //   ...input,
+    //   image: image
+    // })
+    setLoading(false);
+  };
+  //HANDLE SUBMIT
   async function handleSubmit(e) {
     e.preventDefault();
     if (
@@ -60,10 +88,11 @@ export default function UserData() {
       input.lastName !== usuario.lastName ||
       input.phone_number !== usuario.phoneNumber ||
       input.email !== usuario.email ||
-      input.location !== usuario.location
+      input.location !== usuario.location ||
+      image !== usuario.image
     ) {
       try {
-        await axios.put("http://localhost:3001/users/update", input);
+        await axios.put("http://localhost:3001/users/update",{...input,image});
         alert("succesfull update");
         navigate("/profile");
       } catch (error) {
@@ -74,6 +103,7 @@ export default function UserData() {
     }
   }
 
+  //HANDLE CHANGE
   function handleChange(e) {
     e.preventDefault();
     setInput({
@@ -81,26 +111,7 @@ export default function UserData() {
       [e.target.name]: e.target.value,
     });
   }
-  async function uploadImage(e) {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "ecommerce");
-    setImageChosen(true);
-    setLoading(true);
-
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/hentech/image/upload",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const file = await res.json();
-    setImage(file.secure_url);
-    setLoading(false);
-    setInput({ ...input, picture: file.secure_url });
-  }
+  
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <Box
@@ -134,12 +145,11 @@ export default function UserData() {
                   borderRadius: "10px",
                 }}
                 // id="outlined-helperText"
-                label={usuario.name ? "Current name: " : "Name: "}
-                htmlFor="name"
+                label="Name: "
                 value={input.name}
                 name="name"
                 onChange={(e) => handleChange(e)}
-                defaultValue={usuario.name}
+                // defaultValue={usuario.name}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -153,12 +163,11 @@ export default function UserData() {
                   borderRadius: "10px",
                 }}
                 // id="outlined-helperText"
-                label={usuario.lastName ? "Current LastName: " : "LastName: "}
-                htmlFor="lastName"
+                label="LastName: "
                 value={input.lastName}
                 onChange={(e) => handleChange(e)}
                 name="lastName"
-                defaultValue={usuario.lastName}
+                // defaultValue={usuario.lastName}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -172,15 +181,12 @@ export default function UserData() {
                   borderRadius: "10px",
                 }}
                 // id="outlined-number"
-                label={
-                  usuario.phoneNnumber ? "Current cellphone: " : "Cellphone:"
-                }
-                htmlFor="phoneNumber"
+                label="Cellphone: "
                 value={input.phone_number}
                 onChange={(e) => handleChange(e)}
                 name="phone_number"
                 type="number"
-                defaultValue={usuario.phoneNumber}
+                // defaultValue={input.phone_number ? input.phone_number : "Add your cellphone"}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -194,38 +200,18 @@ export default function UserData() {
                   borderRadius: "10px",
                 }}
                 // id="outlined-number"
-                label={usuario.email ? "Current email: " : "Email:"}
-                htmlFor="email"
+                label="Email: "
                 value={input.email}
                 onChange={(e) => handleChange(e)}
                 name="email"
                 type="text"
-                defaultValue={usuario.email ? "" : "Add an email"}
+                // defaultValue={usuario.email ? "" : "Add an email"}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
             </div>
             <div>
-              <TextField
-                sx={{
-                  bgcolor: "#fff ",
-                  color: "#FFC400",
-                  borderRadius: "10px",
-                }}
-                // id="input-with-icon-textfield"
-                label={usuario.location ? "Current location" : "Location:"}
-                htmlFor="location"
-                value={input.location}
-                onChange={(e) => handleChange(e)}
-                name="location"
-                defaultValue={usuario.location}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </div>
-            {/* <div>
               <TextField
                 sx={{
                   bgcolor: "#fff ",
@@ -233,31 +219,48 @@ export default function UserData() {
                   borderRadius: "10px",
                 }}
                 id="input-with-icon-textfield"
-                label={usuario.picture ? "" : "Foto:"}
-                htmlFor="picture"
-                value={input.picture}
+                label="Location: "
+                value={input.location}
                 onChange={(e) => handleChange(e)}
-                name="picture"
-                defaultValue={usuario.picture ? "" : "Ingrese una foto"}
+                name="location"
+                // defaultValue={usuario.location}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                sx={{
+                  bgcolor: "#fff ",
+                  color: "#FFC400",
+                  borderRadius: "10px",
+                }}
+                id="input-with-icon-textfield"
+                label="Profile Foto: "
+                value={input.image}
+                onChange={(e) => handleChange(e)}
+                name="image"
+                // defaultValue={"I"}
                 InputProps={{
                   shrink: true,
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      {usuario.picture ? (
-                        <img
-                          src={usuario.picture}
-                          className={style.fotoBtn}
-                          alt=""
-                        />
-                      ) : (
-                        <img
-                          className={style.fotoBtn}
-                          src={user.picture}
-                          alt=""
-                        />
-                      )}
-                    </InputAdornment>
-                  ),
+                  // startAdornment: (
+                  //   <InputAdornment position="start">
+                  //     {usuario.image ? (
+                  //       <img
+                  //         src={usuario.image}
+                  //         className={style.fotoBtn}
+                  //         alt=""
+                  //       />
+                  //     ) : (
+                  //       <img
+                  //         className={style.fotoBtn}
+                  //         src={input.image}
+                  //         alt="add your image"
+                  //       />
+                  //     )}
+                  //   </InputAdornment>
+                  // ),
                 }}
                 variant="standard"
               />
@@ -278,9 +281,9 @@ export default function UserData() {
                     alt="Usuario"
                   />
                 ) : (
-                  <p>wait a few moment</p>
+                  <p>Wait a few moment</p>
                 ))}
-            </div> */}
+            </div>
           </div>
         </Box>
 

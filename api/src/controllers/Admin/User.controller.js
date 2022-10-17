@@ -39,7 +39,7 @@ async function deleteUser(req, res) {
 }
 
 async function updateUser(req, res) {
-  let { id, email, password, phone_number, location,name,lastName } = req.body;
+  let { id, email, password, phone_number, location,name,lastName,image } = req.body;
   try {
     let user = await User.findOne({
       where: {
@@ -47,7 +47,7 @@ async function updateUser(req, res) {
       },
     });
     if (user.length === 0 || !user) {
-      return res.status(404).send(notFoundVar);
+      return res.status(404).send(notFound);
     } else {
       if (name) user.name = name;
       if (lastName) user.lastName = lastName;
@@ -55,6 +55,7 @@ async function updateUser(req, res) {
       if (password) user.password = password;
       if (phone_number) user.phone_number = phone_number;
       if (location) user.location = location;
+      if (image) user.image = image;
       user.save();
       return res.status(200).send("User Updated.");
     }

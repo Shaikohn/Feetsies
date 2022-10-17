@@ -1,8 +1,9 @@
 import { POST_PURCHASE_ORDER } from "../actions/purchaseOrderAction";
+import { GET_PURCHASE_ORDERS_BY_USER_ID } from "../actions/getOrdersUser";
 
 
 const initialState = {
-    
+    purchaseOrder:[]
 }
 
 const purchaseOrderReducer = (state = initialState, {type, payload}) => {
@@ -12,6 +13,11 @@ const purchaseOrderReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 
+            }
+        case GET_PURCHASE_ORDERS_BY_USER_ID:
+            return {
+                ...state,
+                purchaseOrder:payload
             }
         default: 
             return state
