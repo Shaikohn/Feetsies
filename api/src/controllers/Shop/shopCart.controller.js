@@ -85,7 +85,7 @@ async function addCart(req,res){
             isInCart.quantity = parseInt(isInCart.quantity)+parseInt(quantity);
             await isInCart.save()
             return res.sendStatus(200)
-        }
+        }//
         let user = await User.findByPk(userId);
         let product = await Product.findByPk(productId);
         if(quantity>product.dataValues.stock) return res.status(400).send({err:'Not enough units of that product in stock!'});
