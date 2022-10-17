@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
 import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
@@ -21,6 +21,8 @@ import Stack from "@mui/material/Stack";
 import Rating from "@mui/material/Rating";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
+import axios from "axios";
+import { getProductDetails } from "../../../redux/actions/productDetailsActions";
 
 const stripePromise = loadStripe(
   "pk_test_51LpgGdIsUHqf6y0peEPMdjCDcsjuA2sdBcEGka27crrsnZrTLBpIdJZiAICPkWXYWeJzwabRyk2WtbH0yfdxmGFy0046Eu9UuK"
@@ -33,6 +35,9 @@ export default function ProductDetails({ product }) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [isOpenModal, openedModal, closeModal] = useModal(false);
   const [isNotLogged, openedLoggedModal, closeLoggedModal] = useModal(false);
+
+  const { productDetails } = useSelector((state) => state.ProductDetails);
+  console.log("dea", productDetails);
 
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data.id
@@ -55,10 +60,34 @@ export default function ProductDetails({ product }) {
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const onSubmit = (data) => console.log("Onsubmit", data);
 
   const [value, setValue] = useState(0);
   console.log(value);
+
+  useEffect(() => {
+    dispatch(getProductDetails());
+  }, []);
+
+  const onSubmit = async (data) => {
+    console.log("Onsubmit", data);
+    try {
+      if (value === 0) {
+        alert("You have to choose one or more stars to submit your review");
+      } else {
+        const review = await axios.post("/products/review", {
+          userId: user.data.id,
+          productName: productDetails.name,
+          review: data.comments,
+          score: value,
+          author: user.data.name,
+        });
+        console.log("axios review", review);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data.err);
+    }
+  };
 
   return (
     <Elements stripe={stripePromise}>
@@ -417,6 +446,47 @@ export default function ProductDetails({ product }) {
             Send Comment
           </Button>
         </form>
+      </Container>
+      <Container>
+        {productDetails.revs.map((reviews) => (
+          <>
+            {/* <h1>{reviews.author}</h1>
+            <h1>{reviews.score}</h1>
+            <h1>{reviews.review}</h1> */}
+
+            <Stack
+              direction="row"
+              spacing={2}
+              sx={{
+                display: "flex",
+                mt: 2.5,
+                justifyContent: "center",
+                alignContent: "center",
+                alignItems: "center",
+              }}
+              // overflow="auto"
+            >
+              <h2>{reviews.author}</h2>
+              <Rating name="simple-controlled" value={reviews.score} readOnly />
+              <Box
+                height={120}
+                sx={{
+                  m: 1,
+                  px: 1.5,
+                  py: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="h6" component="div">
+                  {reviews.review}
+                </Typography>
+              </Box>
+            </Stack>
+          </>
+        ))}
       </Container>
     </Elements>
   );
