@@ -5,7 +5,7 @@ export const CLEAR_USER_DETAIL = "CLEAR_USER_DETAIL"
 
 export const getUserDetail = (id)=>async (dispatch)=>{
     try {
-        const userDetail = await axios(`http://localhost:3001/users/${id}`)
+        const userDetail = await axios(`/users/${id}`)
         return dispatch({
             type:GET_USER_DETAIL,
             payload: userDetail.data

@@ -5,9 +5,16 @@ const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
 async function deleteInquiry(req, res) {
-    if (!req.body.id) return res.status(400).send(badReq);
+    let {id} = req.params
+    if (!id) return res.status(400).send(badReq);
     try {
-        let inq = await Inquiry.destroy({where:{id:req.body.id}})
+        let inq = await Inquiry.findOne({
+            where: { 
+                id:id
+            }
+        })
+
+        await inq.destroy()
         if(!inq) return res.status(404).send(notFound);
         return res.sendStatus(200);
     } catch (error) {
@@ -16,32 +23,36 @@ async function deleteInquiry(req, res) {
 }
 
 async function getAllInquiries(req, res) {
+
     try {
-        let inqs = await Inquiry.findAll({attributes: ['id', 'topic','description','read','isImportant']})
+        let inqs = await Inquiry.findAll({include: User})
         if(!inqs || inqs.length<1) return res.status(404).send(emptyDB);
         return res.send(inqs);
     } catch (error) {
-        console.log('huboerror')
-        console.log(error)
         return res.status(500).send(error);
     }
 }
 
 async function addInquiry(req, res) {
+    let {userId, topic, description} = req.body
     if(
-        !req.body.userId ||
-        !req.body.topic ||
-        !req.body.description
+        !userId ||
+        !topic ||
+        !description
     ){
         return res.status(400).send(badReq)
     }
     try {
         const newRow = await Inquiry.create({
-            topic:req.body.topic,
-            description:req.body.description
+            topic: topic,
+            description: description
         });
-        const user = await User.findOne({where:{id:req.body.userId}});
-        let aux = await user.addInquiry(newRow);
+        const user = await User.findOne({
+            where: {
+                id: userId
+            }
+        });
+        await user.addInquiry(newRow);
         return res.status(201).send('Information uploaded succesfully');
     } catch (error) {
         console.log(error)
@@ -50,27 +61,16 @@ async function addInquiry(req, res) {
 }
 
 async function getInquiryDetail(req, res) {
-    if (!req.params.id) return res.status(400).send(badReq);
+    let {id} = req.oarams
+    if (!id) return res.status(400).send(badReq);
     try {
-        let inq = await Inquiry.findOne({where:{id:req.params.id}})
-        if(!inq) return res.status(404).send(notFound);
-        let user = await User.findOne({where:{id:inq.dataValues.userId}})
-        if(!user) return res.status(404).send(notFound);
-        result = {
-            user:{
-                id:user.dataValues.id,
-                email:user.dataValues.email,
-                phoneNumber:user.dataValues.phone_number,
+        let inq = await Inquiry.findOne({
+            where: {
+                id: id
             },
-            inquiry:{
-                id: inq.dataValues.id,
-                topic: inq.dataValues.topic,
-                description: inq.dataValues.description,
-                read: inq.dataValues.read,
-                isImportant: inq.dataValues.isImportant,
-                createdAt: inq.dataValues.createdAt,
-            }
-        }
+            include: User
+        })
+        if(!inq) return res.status(404).send(notFound)
         return res.status(200).send(result);
     } catch (error) {
         return res.status(500).send(error);
