@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+//const Review = require('./models/Review');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,DB_NAME,
 } = process.env;
@@ -71,6 +72,7 @@ const {
   Product_product_type,
   Product_type,
   Purchase_order,
+  Review,
   User,
 } = sequelize.models;
 
@@ -104,6 +106,11 @@ Purchase_order.belongsTo(User);
 ////////////////////////////////////
 Purchase_order.hasMany(Order_item);
 Order_item.belongsTo(Purchase_order);
+////////////////////////////////////
+User.hasMany(Review);
+Review.belongsTo(User)
+Product.hasMany(Review)
+Review.belongsTo(Product)
 ////////////////////////////////////
 module.exports = {
   ...sequelize.models, 
