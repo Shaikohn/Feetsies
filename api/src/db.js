@@ -1,10 +1,9 @@
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
-const fs = require('fs');
-const path = require('path');
-const {
-  DB_USER, DB_PASSWORD, DB_HOST,DB_NAME,
-} = process.env;
+require("dotenv").config();
+const { Sequelize } = require("sequelize");
+const fs = require("fs");
+const path = require("path");
+//const Review = require('./models/Review');
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 let sequelize =
   process.env.NODE_ENV === "production"
@@ -43,18 +42,22 @@ const basename = path.basename(__filename);
 
 const modelDefiners = [];
 
-
-fs.readdirSync(path.join(__dirname, '/models'))
-  .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+fs.readdirSync(path.join(__dirname, "/models"))
+  .filter(
+    (file) =>
+      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+  )
   .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, '/models', file)));
+    modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
-
-modelDefiners.forEach(model => model(sequelize));
+modelDefiners.forEach((model) => model(sequelize));
 
 let entries = Object.entries(sequelize.models);
-let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
+let capsEntries = entries.map((entry) => [
+  entry[0][0].toUpperCase() + entry[0].slice(1),
+  entry[1],
+]);
 sequelize.models = Object.fromEntries(capsEntries);
 
 const {
@@ -62,7 +65,7 @@ const {
   Adoption_petition,
   Animal,
   Animal_type,
-  Cart_item, 
+  Cart_item,
   Inquiry,
   Order_item,
   Product,
@@ -71,15 +74,16 @@ const {
   Product_product_type,
   Product_type,
   Purchase_order,
+  Review,
   User,
 } = sequelize.models;
 
 // Relations
 
-Product.belongsToMany(Animal_type,{through:'product_animal_types'});
-Animal_type.belongsToMany(Product,{through:'product_animal_types'});
-Product.belongsToMany(Product_type,{through:'product_product_types'});
-Product_type.belongsToMany(Product,{through:'product_product_types'});
+Product.belongsToMany(Animal_type, { through: "product_animal_types" });
+Animal_type.belongsToMany(Product, { through: "product_animal_types" });
+Product.belongsToMany(Product_type, { through: "product_product_types" });
+Product_type.belongsToMany(Product, { through: "product_product_types" });
 /////////////
 User.hasMany(Adoption_petition);
 Adoption_petition.belongsTo(User);
@@ -98,14 +102,19 @@ Cart_item.belongsTo(User);
 /////////////////////////////////////
 User.hasMany(Purchase_order);
 Purchase_order.belongsTo(User);
-////////////////////////////////////
-User.hasMany(Purchase_order);
-Purchase_order.belongsTo(User);
+// ////////////////////////////////////
+// User.hasMany(Purchase_order);
+// Purchase_order.belongsTo(User);
 ////////////////////////////////////
 Purchase_order.hasMany(Order_item);
 Order_item.belongsTo(Purchase_order);
 ////////////////////////////////////
+User.hasMany(Review);
+Review.belongsTo(User);
+Product.hasMany(Review);
+Review.belongsTo(Product);
+////////////////////////////////////
 module.exports = {
-  ...sequelize.models, 
-  conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
+  ...sequelize.models,
+  conn: sequelize, // para importart la conexión { conn } = require('./db.js');
 };

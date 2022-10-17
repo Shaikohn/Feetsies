@@ -9,6 +9,8 @@ const {
     deleteProduct,
 } = require('../controllers/Products/Product.controller')
 
+
+const {addReviewToProduct} = require('../controllers/Products/Review.controller');
 /*const {
     addToCart
 } = require ('../controllers/Shop/Cart.controller')*/
@@ -26,6 +28,8 @@ router.get('/types',getAllTypes);
 router.get('/:id',getDetail)
 
 router.post('/create',createProduct)
+
+router.post('/review', addReviewToProduct)
 
 router.put('/update/:id',updateProduct)
 

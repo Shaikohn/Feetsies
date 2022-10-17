@@ -1,5 +1,5 @@
 //resubir
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -14,13 +14,17 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 // React Hook Form
 import { useForm } from "react-hook-form";
-import { signIn } from "../../../redux/actions/auth";
+import { google, signIn } from "../../../redux/actions/auth";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+// Google
+import { gapi } from "gapi-script";
+import { GoogleLogin } from "react-google-login";
 
 function Copyright(props) {
   return (
@@ -51,12 +55,12 @@ const SignIn = () => {
   } = useForm();
 
   //const onSubmit = async (data) => {
-    //console.log("Onsubmit", data);
-    // try {
-    //   await axios.post("/products/create", data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  //console.log("Onsubmit", data);
+  // try {
+  //   await axios.post("/products/create", data);
+  // } catch (error) {
+  //   console.log(error);
+  // }
   const dispatch = useDispatch();
 
   const navigateTo = useNavigate();
@@ -64,18 +68,15 @@ const SignIn = () => {
   const onSubmit = async (data) => {
     console.log("Onsubmit", data);
     try {
-      const login = await axios.post(
-        "/user/auth/login",
-        data
-      );
+      const login = await axios.post("/user/auth/login", data);
       console.log(login.data);
       dispatch(signIn(data, navigateTo));
       // navigateTo("/");
       Swal.fire({
-        title: 'Logged in', 
-        text: login.data.msg, 
-        icon: 'success',
-        timer: 5000
+        title: "Logged in",
+        text: login.data.msg,
+        icon: "success",
+        timer: 3000,
       });
       // if (
       //   login.data.response.data ===
@@ -93,14 +94,50 @@ const SignIn = () => {
       //   alert(`email ${email} invalid or not found`);
       // }
       Swal.fire({
-        title: 'Login Failed', 
-        text: error.response.data, 
-        icon: 'error',
-        timer: 5000
+        title: "Login Failed",
+        text: error.response.data,
+        icon: "error",
+        timer: 4000,
       });
     }
   };
   console.log(errors);
+
+  useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId:
+          "284615821327-2o4kocgfiqid8dtbmosb4ookl2du0c7k.apps.googleusercontent.com",
+        scope: "email",
+      });
+    }
+
+    gapi.load("client:auth2", start);
+  }, [dispatch]);
+
+  const googleSuccess = async (res) => {
+    const result = res?.profileObj;
+    const token = res?.tokenId;
+
+    try {
+      console.log(res);
+      dispatch(google(token, navigateTo));
+      Swal.fire({
+        title: "Logged in",
+        text: "Your Google account is now connected with the page!",
+        icon: "success",
+        timer: 2000,
+      });
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        title: "Login Failed",
+        text: "Sorry, the page couldnt connect to your Goggle account",
+        icon: "error",
+        timer: 3000,
+      });
+    }
+  };
 
   return (
     // <ThemeProvider theme={theme}>
@@ -112,7 +149,8 @@ const SignIn = () => {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: "url(https://www.comfortzone.com/-/media/Images/ComfortZone-NA/US/Blog/cats-playing-or-fighting.jpg)",
+          backgroundImage:
+            "url(https://www.comfortzone.com/-/media/Images/ComfortZone-NA/US/Blog/cats-playing-or-fighting.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"
@@ -147,7 +185,7 @@ const SignIn = () => {
             <TextField
               error={errors.email ? true : false}
               margin="normal"
-              fullWidth
+              style = {{width: "100%"}}
               id="email"
               label="Email Address"
               name="email"
@@ -168,7 +206,7 @@ const SignIn = () => {
             <TextField
               margin="normal"
               required
-              fullWidth
+              style = {{width: "100%"}}
               name="password"
               label="Password"
               type="password"
@@ -181,14 +219,38 @@ const SignIn = () => {
             {errors?.password?.type === "required" && (
               <span style={{ color: "red" }}>Your password is required</span>
             )}
+
             <Button
               type="submit"
-              fullWidth
+              style = {{width: "100%"}}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
               Sign In
             </Button>
+
+            <hr />
+            <h3>Or sign in with</h3>
+            <hr />
+            {/* Google Auth */}
+            <Grid container style = {{width: "100%"}} justifyContent="center">
+              <Grid
+                item
+                sx={{
+                  mt: 3,
+                  mb: 2,
+                }}
+              >
+                <GoogleLogin
+                  clientId="284615821327-2o4kocgfiqid8dtbmosb4ookl2du0c7k.apps.googleusercontent.com"
+                  buttonText="Sign In"
+                  onSuccess={googleSuccess}
+                  onFailure={googleSuccess}
+                  cookiePolicy={"single_host_origin"}
+                />
+              </Grid>
+            </Grid>
+
             <Grid container>
               <Grid item xs>
                 <Link to="/forgot-password" variant="body2">

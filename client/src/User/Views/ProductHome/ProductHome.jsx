@@ -6,17 +6,21 @@ import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import NavBarProd from "../../Features/NavBarProducts/navBarP.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
-import styles from "./ProductHome.module.css";
+import Image from "./Img/BgImg3.jpg";
+
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import { CardMedia, Paper } from "@mui/material";
 
 export default function ProductHome() {
   const dispatch = useDispatch();
+
   const { allProductsCopy } = useSelector((state) => state.products);
   const { page } = useSelector((state) => state.currentPage);
 
-  const [productsPerPage] = useState(8);
+  const [productsPerPage, setProductsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(page);
+
   const lastPositionPerPage = productsPerPage * currentPage;
   const firstPositionPerPage = lastPositionPerPage - productsPerPage;
   const currentProducts = allProductsCopy.slice(
@@ -32,33 +36,42 @@ export default function ProductHome() {
   }, [dispatch, page, allProductsCopy.length]);
 
   return (
-    <div>
-      <div>
-        <ResponsiveAppBar />
-      </div>
-      <div>
-        <NavBarProd />
-      </div>
-      <div className="div-pagination">
-        <Pagination
-          items={allProductsCopy.length}
-          itemsPerPage={productsPerPage}
-        />
-      </div>
-      {/* <Container maxWidth="lg"> */}
+    <Paper
+      elevation={0}
+      sx={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0.8, 0, 0)),url(${Image})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <ResponsiveAppBar />
+      <NavBarProd />
+      <Pagination
+        items={allProductsCopy.length}
+        itemsPerPage={productsPerPage}
+      />
       {currentProducts.length ? (
         <Grid
           container
           spacing={2}
-          direction="row"
-          justifyContent="space-evenly"
+          rowSpacing={5}
+          justifyContent="space-around"
           alignItems="center"
-          className={styles.bodyImg}
+          sx={{
+            my: 3,
+            "& .MuiGrid-root": {
+              py: 2.2,
+              pl: 1.8,
+              pr: 0,
+            },
+          }}
         >
           {currentProducts.map((p) => {
             return (
-              <Grid item xs={3} key={p.id}>
-                <Container>
+              <Grid display="flex" key={p.id} item xs={3}>
+                <Container sx={{ p: 0 }}>
                   <ProductCard
                     id={p.id}
                     key={p.id}
@@ -66,6 +79,7 @@ export default function ProductHome() {
                     image={p.image}
                     price={p.price}
                     productTypes={p.productTypes}
+                    avg={p.avg}
                   />
                 </Container>
               </Grid>
@@ -73,11 +87,22 @@ export default function ProductHome() {
           })}
         </Grid>
       ) : (
-        <div>
-          <img className={styles.loading} src={loading} alt="Loading..." />
-        </div>
+        <CardMedia
+          component="img"
+          image={loading}
+          alt="Loading..."
+          sx={{
+            backgroundRepeat: "repeat",
+            margin: "auto",
+            width: "100%",
+            height: "100%",
+          }}
+        />
       )}
-      {/* </Container> */}
-    </div>
+      <Pagination
+        items={allProductsCopy.length}
+        itemsPerPage={productsPerPage}
+      />
+    </Paper>
   );
 }

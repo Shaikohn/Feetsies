@@ -1,43 +1,60 @@
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { clearProductDetails, getProductDetails } from "../../../redux/actions/productDetailsActions";
+import {
+  clearProductDetails,
+  getProductDetails,
+} from "../../../redux/actions/productDetailsActions";
 import ProductDetails from "./ProductDetails";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
-import loading from "../ProductHome/Img/Loading.gif";
-import styles from "../ProductHome/ProductHome.module.css";
+
+import CardMedia from "@mui/material/CardMedia";
+import { Paper } from "@mui/material";
+import Image from "./Img/BgImg3.jpg";
+import loading from "./Img/Loading.gif";
 
 export default function ProductDetailsContainer() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const product = useSelector((state) => state.ProductDetails.productDetails);
 
-    const {id} = useParams()
-    const dispatch = useDispatch()
-    const product = useSelector((state) => state.ProductDetails.productDetails) 
-    console.log(product)
+  useEffect(() => {
+    dispatch(getProductDetails(id));
+    return () => {
+      dispatch(clearProductDetails());
+    };
+  }, [dispatch, id]);
 
-    useEffect(() => {
-        dispatch(getProductDetails(id))
-        return () => {
-            dispatch(clearProductDetails())
-        }
-    }, [dispatch, id])
-
-    return (
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0.8, 0, 0)),url(${Image})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <ResponsiveAppBar />
+      {
         <div>
-            <div>
-                <ResponsiveAppBar />
-            </div>
-            {
-                <div>
-                {Object.keys(product).length > 0 ? (
-                    <ProductDetails product={product} />
-                    ) : (
-                        <div>
-                        <img className={styles.loading} src={loading} alt="Loading..." />
-                    </div>
-                    )
-                }
-                </div>
-            }
+          {Object.keys(product).length > 0 ? (
+            <ProductDetails product={product} />
+          ) : (
+            <CardMedia
+              component="img"
+              image={loading}
+              alt="Loading..."
+              sx={{
+                margin: "auto",
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          )}
         </div>
-    )
+      }
+    </Paper>
+  );
 }

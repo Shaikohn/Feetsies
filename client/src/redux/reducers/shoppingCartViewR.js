@@ -1,9 +1,9 @@
-import { GET_CART } from "../actions/ShoppingCartView";
+import { GET_CART, UPDATE_ITEM_QUANTITY, UPDATE_ITEM_QUANTITY_STATE } from "../actions/ShoppingCartView";
 
 
 const initialState = {
     shoppingCart: [],
-    shoppingCartCopy: [] 
+    shoppingCartCopy: []
 }
 
 const getShoppingCartReducer = (state = initialState, {type, payload}) => {
@@ -14,8 +14,29 @@ const getShoppingCartReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 shoppingCart: payload,
-                shoppingCartCopy: payload
+                shoppingCartCopy: payload,
             }
+        
+        case UPDATE_ITEM_QUANTITY:
+            return {
+                ...state
+            //     shoppingCartCopy: {items: state.shoppingCartCopy.items?.map((item) => 
+            //         item.cartItemid === newItemQuantity.cartItemid 
+            //         ? {...item, quantity: newItemQuantity.quantity} 
+            //         : item
+            // )}}
+            }
+        case UPDATE_ITEM_QUANTITY_STATE:
+            const newItemQuantity = state.shoppingCartCopy.items?.find((item) => item.cartItemid === payload.cartItemId);
+            return {
+                ...state,
+                shoppingCartCopy: {items: state.shoppingCartCopy.items?.map((item) => 
+                            item.cartItemid === newItemQuantity.cartItemid 
+                            ? {...item, quantity: newItemQuantity.quantity} 
+                            : item
+                    )}
+            }
+
         default: 
             return state
     }

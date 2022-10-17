@@ -5,7 +5,7 @@ import {
 } from "../actions/shoppingCartA.js";
 
 const initialState = {
-    cart: [],
+    cart: []
 }
 
 const shoppingCartReducer = (state = initialState, {type, payload}) => {
@@ -65,6 +65,7 @@ const shoppingCartReducer = (state = initialState, {type, payload}) => {
             //     ...state,
             //     cart: state.cart.filter(i => i.id !== payload)
             // }
+
         default: 
             return state
     }

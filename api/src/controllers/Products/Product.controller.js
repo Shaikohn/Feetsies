@@ -2,8 +2,9 @@ const {
   Product,
   Product_type,
   Animal_type,
+  Review
 } = require("../../db");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 const sequelize = require("sequelize");
 
 const emptyDB = { err: "Database empty" };
@@ -99,20 +100,47 @@ async function createProduct(req, res) {
     const reg = await Product.findOne({ where: { name: obj.name } });
     return res.status(201).send(reg);
   } catch (error) {
+    console.log(error)
     return res.status(500).send(error);
   }
 }
 
 async function createElementWithTypes(element) {
-  let productTypes = await element.getProduct_types();
-  let animalTypes = await element.getAnimal_types();
-  productTypes = productTypes.map((e) => e.dataValues.name);
-  animalTypes = animalTypes.map((e) => e.dataValues.name);
-  return {
-    ...element.dataValues,
-    productTypes,
-    animalTypes,
-  };
+  try{
+    let productTypes = await element.getProduct_types();
+    let animalTypes = await element.getAnimal_types();
+    let value=0;
+    let divideBy=0;
+    let avg = await Review.findAll({where:{productId:element.id}})
+    let revs;
+    if (avg.length<1){
+      revs=[];
+    }else{
+      revs=[...avg];
+    }
+
+    for (let i = 0; i < avg.length; i++) {
+      divideBy++;
+      value += avg[i].dataValues.score;
+    }
+    if(value!==0){
+      avg = value / divideBy;
+    }else{
+      avg=0;
+    }
+    productTypes = productTypes.map((e) => e.dataValues.name);
+    animalTypes = animalTypes.map((e) => e.dataValues.name);
+    return {
+      ...element.dataValues,
+      productTypes,
+      animalTypes,
+      revs,
+      avg
+    };
+  }catch(error){
+    console.log(error)
+    return false;
+  }
 }
 
 async function updateProduct(req, res) {

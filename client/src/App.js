@@ -13,7 +13,7 @@ import SignUp from "./User/Features/Form/SignUp";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import SignIn from "./User/Features/Form/SignIn";
 
-import Dashboard, {DashboardLanding} from "./Admin/components/Dashboard";
+import Dashboard, { DashboardLanding } from "./Admin/components/Dashboard";
 import CheckEmails from "./User/Views/CheckEmail";
 import AccountConfirmed from "./User/Views/AccountConfirmed";
 import ResetPassword from "./User/Views/ResetPassword";
@@ -22,6 +22,9 @@ import { useState } from "react";
 import UsersList from "./Admin/components/UsersList";
 import ProductsList from "./Admin/components/ProductsList";
 import { AnimalsTable } from "./Admin/components/AnimalTable";
+import UserData from "./User/Features/Profile/UserData";
+import UserProfile from "./User/Features/Profile/UserProfile";
+import OrderDetail from "./User/Features/Profile/OrderDetail";
 
 function App() {
   const theme = createTheme({
@@ -49,11 +52,11 @@ function App() {
     // },
   });
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  console.log(user);
 
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
+       <div id='contact' style={{position: 'absolute', left: '70%', top:'35%', zIndex:1}}/>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home/products" element={<HomeProducts />} />
@@ -77,10 +80,7 @@ function App() {
           <Route exact path="/home/createProduct" element={<CreateProduct />} />
           <Route exact path="/home/shoppingView" element={<ShoppingView />} />
           {/* Sign Up Form */}
-          <Route
-            path="/signUp"
-            element={user ? <Navigate to="/" replace /> : <SignUp />}
-          />
+          <Route exact path="/signUp" element={<SignUp />} />
           {/* Sign in Form */}
           <Route
             path="/signIn"
@@ -108,13 +108,18 @@ function App() {
             path="/forgot-password"
             element={user ? <Navigate to="/" replace /> : <ForgotPassword />}
           />
-          <Route path='/dashboard' element={<Dashboard />}>
-            <Route path='' element={<DashboardLanding />} />
-            <Route path='animaltable' element={<AnimalsTable />} />
-            <Route path='users' element={<UsersList />} />
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="" element={<DashboardLanding />} />
+            <Route path="animaltable" element={<AnimalsTable />} />
+            <Route path="users" element={<UsersList />} />
+            <Route path="products" element={<ProductsList />} />
           </Route>
-          
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="profile" element={<UserProfile />} />
+          <Route path="profile/orderDetail/:id" element={<OrderDetail />} />
+          <Route path="user/data" element={<UserData />} />
+         
+
+          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </div>
     </ThemeProvider>

@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const {
     Cart_item,
     Product,
@@ -7,6 +8,22 @@ const {
 const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
+
+async function updateItem(req, res) {
+    try {
+        const {cartItemId,newQuant} = req.body;
+        if(!cartItemId || !newQuant) return res.status(400).send(badReq);
+        let tuple = await Cart_item.findOne({where:{id:cartItemId}})
+        tuple.quantity = newQuant;
+        await tuple.save();
+        return res.status(200).send({success:'Cart item updated.'});
+    } catch (error) {
+        console.log(error)
+        return res.status(200).send({err:'Server error....'});
+    }
+    
+
+}
 
 async function getCart(req, res) {
     if (!req.params.id) return res.status(400).send(badReq);
@@ -63,8 +80,13 @@ async function addCart(req,res){
     let {userId,productId,quantity} = req.body;
     
     try {
+        let isInCart = await Cart_item.findOne({where:{productId:productId, userId:userId}})
+        if(isInCart){
+            isInCart.quantity = parseInt(isInCart.quantity)+parseInt(quantity);
+            await isInCart.save()
+            return res.sendStatus(200)
+        }//
         let user = await User.findByPk(userId);
-        
         let product = await Product.findByPk(productId);
         if(quantity>product.dataValues.stock) return res.status(400).send({err:'Not enough units of that product in stock!'});
         let cItem = await user.createCart_item({quantity, productId});
@@ -80,5 +102,6 @@ module.exports = {
     addCart,
     deleteOneFromCart,
     deleteWholeCart,
-    getCart
+    getCart,
+    updateItem
 }

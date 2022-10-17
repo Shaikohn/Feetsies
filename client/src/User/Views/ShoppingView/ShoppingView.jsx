@@ -1,14 +1,16 @@
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getShoppingCart } from "../../../redux/actions/ShoppingCartView.js";
+import { getShoppingCart, updateItemQuantity, updateItemQuantityState } from "../../../redux/actions/ShoppingCartView.js";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import Card from "@mui/material/Card";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import Modals from "../../Features/Modals/Modals";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import "../../Features/Modals/Modals.css";
-import { CardContent, Typography } from "@mui/material";
+import { CardContent, IconButton, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import {
   removeOneFromCart,
@@ -20,31 +22,47 @@ import styles from "./ShoppingCheckout.module.css";
 import emptyCart from "./Img/emptyCart.png";
 import Dog from "./Img/Dog.jpg";
 import Swal from "sweetalert2";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const stripePromise = loadStripe(
   "pk_test_51LpgGdIsUHqf6y0peEPMdjCDcsjuA2sdBcEGka27crrsnZrTLBpIdJZiAICPkWXYWeJzwabRyk2WtbH0yfdxmGFy0046Eu9UuK"
 );
 
 export default function ShoppingView() {
+
+
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
+
   const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
-  console.log(shoppingCartCopy);
+
+  console.log(shoppingCartCopy)
+
+  const [load, setLoad] = useState(false);
+
+
   const [isOpenModal, openedModal, closeModal] = useModal(false);
 
-  const [userId, setUserId] = useState(
-    JSON.parse(localStorage?.getItem("profile")).data.id
-  );
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile")).data.id);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getShoppingCart(userId));
-  }, [reducerValue]);
+    if(userId) {
+        dispatch(getShoppingCart(userId));
+    }
+    setLoad(false);
+  }, [reducerValue, userId]);
 
   function handleDeleteOne(e) {
     e.preventDefault();
     dispatch(removeOneFromCart(e.target.value));
     forceUpdate();
+    Swal.fire({
+      title: 'Product removed', 
+      text: 'The product has been removed from the cart', 
+      icon: 'success',
+      timer: 1000
+    });
   }
 
   function handleClearCart(e) {
@@ -52,6 +70,14 @@ export default function ShoppingView() {
     dispatch(removeWholeCart(userId));
     forceUpdate();
   }
+
+  function handleChangeQuantity(e, newQuant, cartItemId) {
+    e.preventDefault();
+    setLoad(true);
+    dispatch(updateItemQuantity({cartItemId, newQuant}));
+    forceUpdate();
+  }
+
 
   if (shoppingCartCopy.total < 1) {
     return (
@@ -69,7 +95,9 @@ export default function ShoppingView() {
         <ResponsiveAppBar />
       </div>
       <div>
-        {shoppingCartCopy.items?.map((c) => (
+        <h1>SHOPPING CART</h1>
+        
+        {shoppingCartCopy.items?.sort((a, b) => a.cartItemId - b.cartItemId).map((c) => (
           <Container key={c.cartItemid}>
             <Typography
               gutterBottom
@@ -80,7 +108,6 @@ export default function ShoppingView() {
                 textDecoration: "none",
               }}
             >
-              SHOPPING CART
             </Typography>
             <Card sx={{ maxWidth: 345 }}>
               <Box bgcolor="text.disabled">
@@ -101,7 +128,7 @@ export default function ShoppingView() {
                     variant="body2"
                     color="text.secondary"
                   >
-                    {`$ ${c.price}`}
+                    {`$ ${c.price/c.quantity}`}
                   </Typography>
                   <Typography
                     component={"span"}
@@ -110,6 +137,24 @@ export default function ShoppingView() {
                   >
                     {`Unit x ${c.quantity}`}
                   </Typography>
+                  <Box 
+                    component="form"
+                    sx={{
+                      '& > :not(style)': { m: 1, width: '10ch' },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                  >
+                  <IconButton  onClick={(e) => {handleChangeQuantity(e, c.quantity + 1, c.cartItemid)}} disabled={load}>
+                    <AddIcon/>
+                  </IconButton>
+                  <Typography>
+                    {c.quantity} - {load && <CircularProgress color="success" />} 
+                  </Typography>
+                  <IconButton onClick={(e) => {handleChangeQuantity(e, c.quantity - 1, c.cartItemid)}} disabled={load}>
+                    <RemoveIcon/>
+                  </IconButton>
+                  </Box>
                 </CardContent>
               </Box>
               <Button
@@ -120,7 +165,7 @@ export default function ShoppingView() {
                 }}
                 value={c.cartItemid}
               >
-                Delete One
+                Delete Product
               </Button>
             </Card>
             <Typography
@@ -132,10 +177,10 @@ export default function ShoppingView() {
                 textDecoration: "none",
               }}
             >
-              {`Total $ ${shoppingCartCopy.total}`}
             </Typography>
           </Container>
         ))}
+        <h1>{`Total $ ${shoppingCartCopy.total }`}</h1>
         <Button
           size="small"
           variant="outlined"
@@ -163,6 +208,7 @@ export default function ShoppingView() {
         </Button>
         <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
           <h2 className="modalTitle">MAKE YOUR PET HAPPY!</h2>
+          <h3 className="modalPrice">{`$${shoppingCartCopy.total}`}</h3>
           <div>
             <img src={Dog} alt="" width="200px" height="200px" />
           </div>

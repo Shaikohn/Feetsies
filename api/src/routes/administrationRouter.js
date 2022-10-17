@@ -32,6 +32,7 @@ const {
   deletePetition,
   setPetitionAsRead,
   toggleImportantPetition,
+  setPetitionAsUnRead
 } = require("../controllers/Animals/Adoption_petition.controller");
 
 const { getAllPOs } = require("../controllers/Shop/Purchase_order.controller");
@@ -52,6 +53,7 @@ router.delete("/alta/:altaid", deleteAlta);
 router.get("/getpetitions", getAllPetitions);
 router.get("/petition/:petitionid", getPetitionDetail);
 router.put("/petition/setread/:petitionid", setPetitionAsRead);
+router.put("/petition/setunread/:petitionid", setPetitionAsUnRead);
 router.put("/petition/toggleimportant/:petitionid", toggleImportantPetition);
 router.delete("/petition/:petitionid", deletePetition);
 

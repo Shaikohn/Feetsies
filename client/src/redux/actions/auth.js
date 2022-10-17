@@ -1,26 +1,70 @@
+import Swal from "sweetalert2";
 import axios from "axios";
 export const AUTH = "AUTH";
-export const LOGOUT = "LOGOUT"
+export const LOGOUT = "LOGOUT";
+export const AUTH_GOOGLE = "AUTH_GOOGLE";
 
 export const signIn = (formData, navigateTo) => async (dispatch) => {
   try {
-    const { data } = await axios.post(
-      "/user/auth/login",
-      formData
-    );
+    const { data } = await axios.post("/user/auth/login", formData);
     dispatch({ type: AUTH, data });
-    navigateTo('/');
+    navigateTo("/");
   } catch (error) {
     console.log(error);
   }
 };
 
+export const google = (token, navigateTo) => async (dispatch) => {
+  try {
+    const { data } = await axios.post("/user/auth/google", { id_token: token });
+    dispatch({ type: AUTH_GOOGLE, data });
+    navigateTo("/");
+  } catch (error) {
+    console.log(error);
+    Swal.fire({
+      title: "Login Failed",
+      text: error.response.data.msg + "!",
+      icon: "error",
+      timer: 5000,
+    });
+    // alert(error.response.data.msg);
+  }
+};
+
+// export const google = async (id_token, navigateTo) => async (dispatch) => {
+//   try {
+//     const { data } = await axios.post("/user/auth/google", id_token);
+//     console.log(data);
+//     dispatch({ type: AUTH_GOOGLE, data });
+//     navigateTo("/");
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+// export function google(token) {
+//   return async function (dispatch) {
+//     try {
+//       var { data } = await axios.post("/user/auth/google", {
+//         id_token: token,
+//       });
+//       console.log(data);
+//       return dispatch({
+//         type: AUTH_GOOGLE,
+//         payload: data,
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// }
+
 export const logout = () => async (dispatch) => {
   try {
-      return dispatch({
-        type: LOGOUT
-      })
+    return dispatch({
+      type: LOGOUT,
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};

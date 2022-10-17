@@ -70,3 +70,8 @@
 .modalTitle {
     margin-top: -20px;
 }
+
+.modalPrice {
+    color: green;
+    margin-top: -20px;
+}

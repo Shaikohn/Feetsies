@@ -53,7 +53,7 @@ function NavBarProducts() {
         p: 1,
         borderRadius: 10,
       }}
-      bgcolor="#ffff9b"
+      bgcolor="#ffff9bb3"
     >
       <SearchBarProd />
       <Box sx={{ width: 190, height: 57 }}>
