@@ -79,7 +79,7 @@ export default function UserData() {
       image !== usuario.image
     ) {
       try {
-        await axios.put("http://localhost:3001/users/update", {
+        await axios.put("/users/update", {
           ...input,
           image,
         });
