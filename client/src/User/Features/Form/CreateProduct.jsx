@@ -91,14 +91,10 @@ const CreateProduct = () => {
 
   return (
     <div>
-      <div>
-        <ResponsiveAppBar />
-      </div>
+      <ResponsiveAppBar />
       <div className={styles.createForm}>
         <Grid>
-          <Card
-            style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
-          >
+          <Card sx={{maxWidth: 450, padding: "20px 5px", margin: "0 auto"}}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Product form
@@ -178,7 +174,7 @@ const CreateProduct = () => {
                     )}
                     {errors?.price?.type === "max" && (
                       <span style={{ color: "red" }}>
-                        the price can not be more than 1000
+                        The price can not be more than 1000
                       </span>
                     )}
                   </Grid>

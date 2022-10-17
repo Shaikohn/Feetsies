@@ -112,17 +112,17 @@ const UserTable = () => {
               <TableCell>{users.phone_number}</TableCell>
               <TableCell>
                 {users.isAdmin ? (
-                  <TableCell>
+                  <div>
                     <IconButton onClick={(e) => handleAdmin(e, users.id)}>
                       <LocalPoliceIcon />
                     </IconButton>
-                  </TableCell>
+                  </div>
                 ) : (
-                  <TableCell>
+                  <div>
                     <IconButton onClick={(e) => handleAdmin(e, users.id)}>
                       <AccountBoxIcon />
                     </IconButton>
-                  </TableCell>
+                  </div>
                 )}
               </TableCell>
               <TableCell>

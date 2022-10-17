@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
@@ -16,6 +16,8 @@ import Add from '@mui/icons-material/Add';
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
+
 
 
 
@@ -23,16 +25,12 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
 
   const arrayQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const [userId, setUserId] = useState(
-    JSON.parse(localStorage?.getItem("profile"))?.data.id
-  );
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const [quantity, setQuantity] = React.useState("");
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
 
   const handleChange = (event) => {
     setQuantity(event.target.value);
@@ -57,85 +55,118 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
         timer: 1000
       });
     }
+    dispatch(getShoppingCart(userId));
   }
   
   return (
     <div>
-    <Card 
-      elevation={5}
-      key={id}
-      sx={{ 
-        maxWidth: 345,
-        border: "1px solid #bada59",
-        borderRadius: 3,
-        bgcolor: "#ffff9bb0",
-        boxShadow: "0px 0px 10px 5px rgb(135 168 39);",
-        transition: "0.3s",
-        animation: "ease-in-out",
-        "&:hover": {
-          transform: "scale(1.02)",
-          boxShadow: "0px 0px 10px 8px rgb(92, 116, 20)"
-        }
-      }} 
-    >
-      <CardActionArea>
-        <Link to={`/home/products/${id}`}>
-          <CardMedia
-            component="img"
-            height="220px"
-            image={image}
-            alt="Product Image"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h4" component="div" fontFamily="Segoe Print"
-              sx={{color: "#567900", fontSize: 25, textShadow: "1px 1px 5px rgb(0, 0, 0)"}}
-            >
-              {name}
-            </Typography>
-            <Typography variant="h5" fontFamily="Segoe Print"
-              sx={{ mt: 1.5, color: "black", fontSize: 28,  textShadow: "1px 1px 5px white"}}
-            >
-              {`$ ${price}`}
-            </Typography>
-            <Typography component="div" color="text.secondary"
-              sx={{display: "flex", justifyContent: "center"}}
-            >
-              <Stack
-                direction="row"
-                spacing={2}
+      <Card 
+        elevation={5}
+        key={id}
+        sx={{ 
+          maxWidth: 345,
+          border: "1px solid #bada59",
+          borderRadius: 3,
+          bgcolor: "#ffff9bb0",
+          boxShadow: "0px 0px 10px 5px rgb(135 168 39);",
+          transition: "0.3s",
+          animation: "ease-in-out",
+          "&:hover": {
+            transform: "scale(1.02)",
+            boxShadow: "0px 0px 10px 8px rgb(92, 116, 20)"
+          }
+        }} 
+      >
+        <CardActionArea>
+          <Link to={`/home/products/${id}`}>
+            <CardMedia
+              component="img"
+              height="220px"
+              image={image}
+              alt="Product Image"
+            />
+            <CardContent sx={{display: "flex", flexDirection: "column"}}>
+              <Typography gutterBottom variant="h4" component="div" fontFamily="Segoe Print"
+                sx={{color: "#567900", fontSize: 25, textShadow: "1px 1px 5px rgb(0, 0, 0)"}}
+              >
+                {name}
+              </Typography>
+              <Typography variant="h5" fontFamily="Segoe Print"
+                sx={{ mt: 1.5, color: "black", fontSize: 28,  textShadow: "1px 1px 5px white"}}
+              >
+                {`$ ${price}`}
+              </Typography>
+              <Typography component="div" color="text.secondary"
+                sx={{display: "flex", justifyContent: "center"}}
+              >
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  sx={{
+                    display: "flex",
+                    mt: 2.5,
+                  }}
+                  // overflow="auto"
+                >
+                  {productTypes.map((tag, index) => {
+                    return (
+                      <Typography component={'span'}  key={index} 
+                        sx={{
+                          color: "black",
+                          fontSize: 14, 
+                          display: "flex",
+                          alignItems: "center",
+                          mx: 1, 
+                          border: "1px dashed #567900",
+                          borderRadius: 2,
+                          bgcolor: "#fedf6a" 
+                        }}
+                      >
+                        <LocalOfferIcon sx={{mx: 0.7, width: 15, height: 15, color: "#567900"}}/>
+                        <Typography component={'span'}  sx={{fontSize: 14, mx: 0.5}}>
+                          {tag}
+                        </Typography>
+                      </Typography>
+                    );
+                  })}
+                </Stack>
+              </Typography>
+            </CardContent>
+          </Link>
+        </CardActionArea>
+        <CardActions sx={{display: "flex", justifyContent: "space-evenly"}}>
+          {!user ? (
+            <Box>
+              <Button
+                startIcon={<Add />}
                 sx={{
-                  mt: 2.5,
+                  display: "flex",
+                  fontSize: 12,
+                  bgcolor: "secondary.main",
+                  fontWeight: 400,
+                  mx: 1,
+                }}
+                size="small"
+                variant="outlined"
+                onClick={(e) => {
+                  Swal.fire({
+                    title: "YOU HAVE TO BE LOGGED TO USE THE CART!",
+                    icon: "warning",
+                    showDenyButton: true,
+                    denyButtonText: "Cancel",
+                    confirmButtonText: "Sign in",
+                    confirmButtonColor: "green",
+                  }).then((res) => {
+                    if (res.isConfirmed) {
+                      navigate("/signUp");
+                    }
+                  });
                 }}
               >
-                {productTypes.map((tag, index) => {
-                  return (
-                    <Typography key={index} 
-                      sx={{
-                        color: "black",
-                        fontSize: 14, 
-                        display: "flex",
-                        alignItems: "center",
-                        mx: 1, 
-                        border: "1px dashed #567900",
-                        borderRadius: 2,
-                        bgcolor: "#fedf6a" 
-                      }}
-                    >
-                      <LocalOfferIcon sx={{mx: 0.7, width: 15, height: 15, color: "#567900"}}/>
-                      <Typography sx={{fontSize: 14, mx: 0.5}}>
-                        {tag}
-                      </Typography>
-                    </Typography>
-                  );
-                })}
-              </Stack>
-            </Typography>
-          </CardContent>
-        </Link>
-      </CardActionArea>
-      <CardActions sx={{display: "flex", justifyContent: "space-evenly"}}>
-        {!user ? (
-          <Box>
+                ADD TO CART
+              </Button>
+            </Box>
+          ) : (
             <Button
               startIcon={<Add />}
               sx={{
@@ -147,61 +178,31 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
               }}
               size="small"
               variant="outlined"
-              onClick={(e) => {
-                Swal.fire({
-                  title: "YOU HAVE TO BE LOGGED TO USE THE CART!",
-                  icon: "warning",
-                  showDenyButton: true,
-                  denyButtonText: "Cancel",
-                  confirmButtonText: "Sign in",
-                  confirmButtonColor: "green",
-                }).then((res) => {
-                  if (res.isConfirmed) {
-                    navigate("/signUp");
-                  }
-                });
-              }}
+              onClick={(e) => handlerAddToCart(e)}
             >
               ADD TO CART
             </Button>
-          </Box>
-        ) : (
-          <Button
-            startIcon={<Add />}
-            sx={{
-              display: "flex",
-              fontSize: 12,
-              bgcolor: "secondary.main",
-              fontWeight: 400,
-              mx: 1,
-            }}
-            size="small"
-            variant="outlined"
-            onClick={(e) => handlerAddToCart(e)}
-          >
-            ADD TO CART
-          </Button>
-        )}
-        <InputLabel id="quantity-label" sx={{color: "black"}}>x</InputLabel>
-          <Select
-                labelId="quantity-label"
-                id="quantity"
-                value={quantity}
-                label="Quantity"
-                onChange={handleChange}
-                sx={{height: 25}}
-              >
-                {arrayQuantity.map((m) => (
-                  <MenuItem
-                    value={m}
-                    key={m}
-                  >
-                    {m}
-                  </MenuItem>
-                ))}
-              </Select>
-      </CardActions>
-    </Card>
+          )}
+          <InputLabel id="quantity-label" sx={{color: "black"}}>x</InputLabel>
+            <Select
+                  labelId="quantity-label"
+                  id="quantity"
+                  value={quantity}
+                  label="Quantity"
+                  onChange={handleChange}
+                  sx={{height: 25}}
+                >
+                  {arrayQuantity.map((m) => (
+                    <MenuItem
+                      value={m}
+                      key={m}
+                    >
+                      {m}
+                    </MenuItem>
+                  ))}
+                </Select>
+        </CardActions>
+      </Card>
     </div>
   );
 }

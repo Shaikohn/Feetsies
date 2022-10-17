@@ -82,7 +82,7 @@ function NavBarAnimals() {
           p: 1,
           borderRadius: 10,
         }}
-        bgcolor="#ffff9b"
+        bgcolor="#ffff9bb3"
       >
         <SearchBarAnim />
         <Divider orientation="vertical" flexItem />

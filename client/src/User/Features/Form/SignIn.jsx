@@ -76,7 +76,7 @@ const SignIn = () => {
         title: "Logged in",
         text: login.data.msg,
         icon: "success",
-        timer: 5000,
+        timer: 3000,
       });
       // if (
       //   login.data.response.data ===
@@ -97,7 +97,7 @@ const SignIn = () => {
         title: "Login Failed",
         text: error.response.data,
         icon: "error",
-        timer: 5000,
+        timer: 4000,
       });
     }
   };
@@ -126,7 +126,7 @@ const SignIn = () => {
         title: "Logged in",
         text: "Your Google account is now connected with the page!",
         icon: "success",
-        timer: 5000,
+        timer: 2000,
       });
     } catch (error) {
       console.log(error);
@@ -134,7 +134,7 @@ const SignIn = () => {
         title: "Login Failed",
         text: "Sorry, the page couldnt connect to your Goggle account",
         icon: "error",
-        timer: 5000,
+        timer: 3000,
       });
     }
   };
@@ -185,7 +185,7 @@ const SignIn = () => {
             <TextField
               error={errors.email ? true : false}
               margin="normal"
-              fullWidth
+              style = {{width: "100%"}}
               id="email"
               label="Email Address"
               name="email"
@@ -206,7 +206,7 @@ const SignIn = () => {
             <TextField
               margin="normal"
               required
-              fullWidth
+              style = {{width: "100%"}}
               name="password"
               label="Password"
               type="password"
@@ -222,7 +222,7 @@ const SignIn = () => {
 
             <Button
               type="submit"
-              fullWidth
+              style = {{width: "100%"}}
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
@@ -233,7 +233,7 @@ const SignIn = () => {
             <h3>Or sign in with</h3>
             <hr />
             {/* Google Auth */}
-            <Grid container fullWidth justifyContent="center">
+            <Grid container style = {{width: "100%"}} justifyContent="center">
               <Grid
                 item
                 sx={{

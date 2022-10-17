@@ -5,8 +5,7 @@ import {
 } from "../actions/shoppingCartA.js";
 
 const initialState = {
-    cart: [],
-    iconCart: 0
+    cart: []
 }
 
 const shoppingCartReducer = (state = initialState, {type, payload}) => {
@@ -17,8 +16,7 @@ const shoppingCartReducer = (state = initialState, {type, payload}) => {
 
             return {
                 ...state,
-                cart: [...state.cart, payload],
-                iconCart: state.iconCart + 1 
+                cart: [...state.cart, payload]
             }
             // const newItem = state.cart.find((item) => item.productId === payload.productId);
             // const itemInCart = state.cart.find((item) => item.productId === newItem.productId);
@@ -40,8 +38,7 @@ const shoppingCartReducer = (state = initialState, {type, payload}) => {
         case REMOVE_ONE_FROM_CART:
             return {
                 ...state,
-                cart: [...state.cart, payload],
-                iconCart: state.iconCart - 1
+                cart: [...state.cart, payload]
             }
             // const itemToDelete = state.cart.find(i => i.id === payload.id);
 
@@ -62,8 +59,7 @@ const shoppingCartReducer = (state = initialState, {type, payload}) => {
         case REMOVE_WHOLE_CART:
             return {
                 ...state,
-                cart: [...state.cart, payload],
-                iconCart: 0
+                cart: [...state.cart, payload]
             }
             // return {
             //     ...state,

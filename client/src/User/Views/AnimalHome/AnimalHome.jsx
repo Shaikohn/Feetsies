@@ -6,10 +6,11 @@ import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import NavBarAnimals from "../../Features/NavBarAnimal/NavBarAni.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
+import Image from "./Img/BgImg3.jpg";
 
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import { CardMedia } from "@mui/material";
+import { CardMedia, Paper } from "@mui/material";
 
 
 export default function AnimalHome() {
@@ -37,7 +38,16 @@ export default function AnimalHome() {
   }, [dispatch, page, allAnimalsCopy.length]);
 
   return (
-    <div>
+    <Paper 
+    elevation={0} 
+    sx={{ 
+        backgroundImage: `url(${Image})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+    }}
+  >
       <ResponsiveAppBar />
       <NavBarAnimals />
       <Pagination
@@ -91,6 +101,6 @@ export default function AnimalHome() {
         items={allAnimalsCopy.length}
         itemsPerPage={animalsPerPage}
       />
-    </div>
+    </Paper>
   );
 }
