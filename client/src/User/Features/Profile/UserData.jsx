@@ -4,40 +4,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import Stack from "@mui/material/Stack";
-import InputAdornment, { inputAdornmentClasses } from "@mui/material/InputAdornment";
+
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import { alertTitleClasses } from "@mui/material";
-// import Loading from "../loading/Loading.jsx";
-// import { useSnackbar } from "notistack";
-// import { connect, useSelector, useDispatch } from "react-redux";
-// import { UpdateUserA } from "../../redux/actions/DashboardUpdateUserA"; //   UpdateProductR.UpdateProduct
-// import { useLocation, useNavigate, useParams } from "react-router-dom";
-// import { useAuth0 } from "@auth0/auth0-react";
-// import style from "./assets/PerfilDelUsuario.module.css";
-// import Grid from "@mui/material/Grid";
-// import AccountCircle from "@mui/icons-material/AccountCircle";
+
 import style from "./userStyles.module.css";
 
 export default function UserData() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { usuario } = useSelector((state) => state.userDetail);
-  // const [user] = useState(JSON.parse(localStorage.getItem("profile")));
+ 
   const [input, setInput] = useState({
     id: "",
     name: "",
     lastName: "",
     location: "",
     phone_number: "",
-    email: "",
+    password: "",
   });
-  
+ 
 
   useEffect(() => {
     setInput({
@@ -47,7 +37,7 @@ export default function UserData() {
       location: usuario.location,
       phone_number: usuario.phoneNumber,
       email: usuario.email,
-      image: usuario.image
+      image: usuario.image,
     });
   }, [dispatch]);
   //Cloudinary//
@@ -61,7 +51,7 @@ export default function UserData() {
     data.append("upload_preset", "proyecto-final-animals");
     setImageChosen(true);
     setLoading(true);
-    
+
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/tawaynaskp/image/upload",
       {
@@ -74,10 +64,7 @@ export default function UserData() {
     console.log("data", file);
 
     setImage(file.secure_url);
-    // setInput({
-    //   ...input,
-    //   image: image
-    // })
+
     setLoading(false);
   };
   //HANDLE SUBMIT
@@ -92,7 +79,10 @@ export default function UserData() {
       image !== usuario.image
     ) {
       try {
-        await axios.put("http://localhost:3001/users/update",{...input,image});
+        await axios.put("http://localhost:3001/users/update", {
+          ...input,
+          image,
+        });
         alert("succesfull update");
         navigate("/profile");
       } catch (error) {
@@ -111,8 +101,9 @@ export default function UserData() {
       [e.target.name]: e.target.value,
     });
   }
-  
+
   return (
+    <div className={style.container}>
     <form onSubmit={(e) => handleSubmit(e)}>
       <Box
         sx={{
@@ -154,6 +145,9 @@ export default function UserData() {
                   shrink: true,
                 }}
               />
+              {/* <span>
+                {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
+              </span> */}
             </div>
             <div>
               <TextField
@@ -173,6 +167,32 @@ export default function UserData() {
                 }}
               />
             </div>
+
+            <div>
+              <TextField
+                sx={{
+                  bgcolor: "#fff ",
+                  color: "#FFC400",
+                  borderRadius: "10px",
+                }}
+                // id="outlined-number"
+                label="New password: "
+                value={input.password}
+                onChange={(e) => handleChange(e)}
+                name="password"
+                type="password"
+                // defaultValue={usuario.email ? "" : "Add an email"}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+              <div style={{ color: "black" }}>
+                Password must have, one digit, one lowercase character, one
+                uppercase character and be at least 8 characters in length but
+                no more than 32
+              </div>
+              <br/>
+            </div>
             <div>
               <TextField
                 sx={{
@@ -187,25 +207,6 @@ export default function UserData() {
                 name="phone_number"
                 type="number"
                 // defaultValue={input.phone_number ? input.phone_number : "Add your cellphone"}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </div>
-            <div>
-              <TextField
-                sx={{
-                  bgcolor: "#fff ",
-                  color: "#FFC400",
-                  borderRadius: "10px",
-                }}
-                // id="outlined-number"
-                label="Email: "
-                value={input.email}
-                onChange={(e) => handleChange(e)}
-                name="email"
-                type="text"
-                // defaultValue={usuario.email ? "" : "Add an email"}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -244,23 +245,6 @@ export default function UserData() {
                 // defaultValue={"I"}
                 InputProps={{
                   shrink: true,
-                  // startAdornment: (
-                  //   <InputAdornment position="start">
-                  //     {usuario.image ? (
-                  //       <img
-                  //         src={usuario.image}
-                  //         className={style.fotoBtn}
-                  //         alt=""
-                  //       />
-                  //     ) : (
-                  //       <img
-                  //         className={style.fotoBtn}
-                  //         src={input.image}
-                  //         alt="add your image"
-                  //       />
-                  //     )}
-                  //   </InputAdornment>
-                  // ),
                 }}
                 variant="standard"
               />
@@ -327,5 +311,6 @@ export default function UserData() {
       </Box>
       <br />
     </form>
+    </div>
   );
 }

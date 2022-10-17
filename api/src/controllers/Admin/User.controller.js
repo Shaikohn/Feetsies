@@ -5,6 +5,8 @@ const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
+const bcrypt = require("bcryptjs");
+
 async function addUser(req, res) {
   if (!req.body.email || !req.body.password)
     return res.status(400).send(badReq);
@@ -38,8 +40,8 @@ async function deleteUser(req, res) {
   }
 }
 
-async function updateUser(req, res) {
-  let { id, email, password, phone_number, location,name,lastName,image } = req.body;
+async function updateUser (req, res) {
+  let { id, password, phone_number, location,name,lastName,image } = req.body;
   try {
     let user = await User.findOne({
       where: {
@@ -51,8 +53,10 @@ async function updateUser(req, res) {
     } else {
       if (name) user.name = name;
       if (lastName) user.lastName = lastName;
-      if (email) user.email = email;
-      if (password) user.password = password;
+      if (password){
+        const hashPassword= await bcrypt.hash(password, 8);
+        user.password = hashPassword;
+      } 
       if (phone_number) user.phone_number = phone_number;
       if (location) user.location = location;
       if (image) user.image = image;

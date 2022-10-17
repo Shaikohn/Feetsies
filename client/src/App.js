@@ -24,6 +24,7 @@ import ProductsList from "./Admin/components/ProductsList";
 import { AnimalsTable } from "./Admin/components/AnimalTable";
 import UserData from "./User/Features/Profile/UserData";
 import UserProfile from "./User/Features/Profile/UserProfile";
+import OrderDetail from "./User/Features/Profile/OrderDetail";
 
 function App() {
   const theme = createTheme({
@@ -78,11 +79,7 @@ function App() {
           <Route exact path="/home/createProduct" element={<CreateProduct />} />
           <Route exact path="/home/shoppingView" element={<ShoppingView />} />
           {/* Sign Up Form */}
-          <Route
-            exact
-            path="/signUp"
-            element={<SignUp />}
-          />
+          <Route exact path="/signUp" element={<SignUp />} />
           {/* Sign in Form */}
           <Route
             path="/signIn"
@@ -110,13 +107,17 @@ function App() {
             path="/forgot-password"
             element={user ? <Navigate to="/" replace /> : <ForgotPassword />}
           />
-          <Route path='/dashboard' element={<Dashboard />}>
-            <Route path='' element={<DashboardLanding />} />
-            <Route path='animaltable' element={<AnimalsTable />} />
-            <Route path='users' element={<UsersList />} />
-            <Route path='products' element={<ProductsList />} />
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="" element={<DashboardLanding />} />
+            <Route path="animaltable" element={<AnimalsTable />} />
+            <Route path="users" element={<UsersList />} />
+            <Route path="products" element={<ProductsList />} />
           </Route>
-          
+          <Route path="profile" element={<UserProfile />} />
+          <Route path="profile/orderDetail/:id" element={<OrderDetail />} />
+          <Route path="user/data" element={<UserData />} />
+         
+
           {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </div>

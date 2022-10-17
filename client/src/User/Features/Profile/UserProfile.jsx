@@ -11,7 +11,7 @@ import Collapse from "@mui/material/Collapse";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
@@ -26,17 +26,14 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import Stack from "@mui/material/Stack";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 
-import Rating from "@mui/material/Rating";
-import StarIcon from "@mui/icons-material/Star";
-import Box from "@mui/material/Box";
 
-import DeleteIcon from "@mui/icons-material/Delete";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+
+
+
 import { getUserDetail } from "../../../redux/actions/userDetailA";
 import getPurchaseOrders from "../../../redux/actions/getOrdersUser";
-import axios from "axios";
+
 
 export default function UserProfile() {
   const [user] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -53,16 +50,12 @@ export default function UserProfile() {
     setOpen(!open);
   };
 
-  //   const handleClickA = () => {
-  //     setOpenA(!openA);
-  //   };
+  
 
   const handleClickB = () => {
     setOpenB(!openB);
   };
-  //   const handleClickC = () => {
-  //     setOpenC(!openC);
-  //   };
+
 
   const dispatch = useDispatch();
   
@@ -71,17 +64,10 @@ export default function UserProfile() {
   useEffect(() => {
     dispatch(getUserDetail(user.data.id));
     dispatch(getPurchaseOrders(user.data.id))
-    // setPurchaseOrder(
-    //  handleOrders()
-    // )
+    
   }, [user]);
 
-  // const order  = useSelector ((state) => state.userOrderR.userOrder);
-  /* console.log("Soy order", order); */
-
-  // if(isLoading){
-  //     return <Loading />
-  // }
+ 
   return (
     <div className={style.container}>
       <Grid
@@ -257,17 +243,18 @@ export default function UserProfile() {
                   <div>
                     {
                     purchaseOrder ? (
-                      purchaseOrder.map((order) => {
+                      purchaseOrder.map((order,id) => {
                         return(
-                        <div>
+                        <div key={`${id}`}>
                           <p className={style.subTitulo}
                           >Mount: $ {order.total} </p>
                           <p className={style.subTitulo}
                           >Date: {order.createdAt}</p>
-                          
+                          <Link to={`orderDetail/${order.id}`}>
                           <button>
                             View details
                           </button>
+                          </Link>
                           <hr/>
                         </div>
                         
