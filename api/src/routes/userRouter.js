@@ -15,12 +15,16 @@ const {
     getCart,
 } = require('../controllers/Shop/shopCart.controller.js')
 
+const {
+    getMyReviews
+} = require('../controllers/Products/Review.controller.js')
+
 router.delete('/:id',deleteUser);
 router.post('/create',addUser);
 router.put('/update', updateUser);
 router.get('/:id', getUserDetail);
 router.get('/cart/:id', getCart);
-router.get('/reviews/:userid', getMyReviews);
+router.get('/reviews/:userId', getMyReviews);
 router.delete('/cart/:id', deleteOneFromCart);
 router.delete('/cart/whole/:id', deleteWholeCart);
 

@@ -42,10 +42,28 @@ async function addReviewToProduct(req,res){
     }
 }
 
-getMyReviews
 
-async function addReviewToProduct(req,res){
-    const {userId} = req.params;
+
+async function getMyReviews(req,res){
+    const {userId} = req.params;  
+    try{
+        let revData = await Review.findAll({where:{userId:userId}})
+        if(!revData || revData.length<1)return res.status(404).send({warning:'There are no reviews available.'})
+        let result= [];
+        for (let i = 0; i < revData.length; i++) {
+            let item = await Product.findOne({where:{id:revData[i].productId}})
+            result.push({
+                reviewId:revData[i].id,
+                score:revData[i].score,
+                productName:item.name,
+                comment:revData[i].review
+            })
+        }
+        return res.status(200).send(result)
+    }catch(error){
+        console.log(error)
+        return res.status(500).send(serverError)
+    }    
 }
 
 module.exports={
