@@ -7,6 +7,7 @@ import {
   Assignment,
   Home,
   Pets,
+  Dashboard
 } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
 import {
@@ -19,12 +20,20 @@ import CategoryIcon from "@mui/icons-material/Category";
 
 export const mainListItems = (
   <React.Fragment>
-    <Link to="/dashboard">
+    <Link to="/">
       <ListItemButton>
         <ListItemIcon>
           <Home />
         </ListItemIcon>
         <ListItemText primary="Home" />
+      </ListItemButton>
+    </Link>
+    <Link to="/dashboard">
+      <ListItemButton>
+        <ListItemIcon>
+          <Dashboard />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
       </ListItemButton>
     </Link>
     <Link to="/dashboard/animaltable">
