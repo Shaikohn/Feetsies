@@ -148,7 +148,7 @@ export default function ProductCard({ id, name, image, price, productTypes }) {
                 }}
                 size="small"
                 variant="outlined"
-                onClick={(e) => {
+                onClick={() => {
                   Swal.fire({
                     title: "YOU HAVE TO BE LOGGED TO USE THE CART!",
                     icon: "warning",
