@@ -115,7 +115,7 @@ function App() {
             <Route path='products' element={<ProductsList />}/>
           </Route>
           
-          <Route path="*" element={<Navigate to="/" replace />} />
+          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </div>
     </ThemeProvider>

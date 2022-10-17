@@ -208,6 +208,7 @@ export default function ShoppingView() {
         </Button>
         <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
           <h2 className="modalTitle">MAKE YOUR PET HAPPY!</h2>
+          <h3 className="modalPrice">{`$${shoppingCartCopy.total}`}</h3>
           <div>
             <img src={Dog} alt="" width="200px" height="200px" />
           </div>
