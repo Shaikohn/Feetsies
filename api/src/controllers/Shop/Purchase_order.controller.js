@@ -12,7 +12,7 @@ const notFound = { err: "Not Found" };
 
 async function addPurchaseOrder(req,res){
     let {prods,userId} = req.body; //esto deberia ser un arreglo, de un elemento minimo.
-    console.log("these are the values",prods.items, userId)
+    console.log("these are the values",prods, userId)
     if(prods.items.length<1 || !userId)return res.status(500).send(badReq);
     try {
         // crear la orden de compra con id de usuario y total de gasto
@@ -21,9 +21,9 @@ async function addPurchaseOrder(req,res){
             totalCost += prods.items[i].price
         }
         let po = await Purchase_order.create({total:totalCost,userId:userId})
-        //console.log('total', totalCost);
-        //console.log('total', po.dataValues);
-        //CREAR ITEMS DE LA ORDEN DE COMPRA Y GUARDARLOS
+        console.log('total', totalCost);
+        console.log('total', po.dataValues);
+        // CREAR ITEMS DE LA ORDEN DE COMPRA Y GUARDARLOS
         for (let i = 0; i < prods.items.length; i++) {
             let newTuple = {
                 productName:prods.items[i].name,
@@ -35,6 +35,32 @@ async function addPurchaseOrder(req,res){
             //console.log("new tuple was: ",newTuple)
             let saveTuple = await Order_item.create(newTuple);
         }
+        res.send({success:'Data created successfully'})
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send(error);
+    }
+}
+
+async function addOnePurchaseOrder(req,res){
+    let {prods,userId} = req.body; //esto deberia ser un arreglo, de un elemento minimo.
+    console.log("these are the values",prods, userId)
+    if(prods. length < 1 || !userId)return res.status(500).send(badReq);
+    try {
+        // crear la orden de compra con id de usuario y total de gasto
+        let totalCost = prods.price
+        let po = await Purchase_order.create({total:totalCost,userId:userId})
+        //console.log('total', totalCost);
+        //console.log('total', po.dataValues);
+        //CREAR ITEMS DE LA ORDEN DE COMPRA Y GUARDARLOS
+        let newTuple = {
+            productName: prods.name,
+            quantity: 1,
+            subtotal: prods.price,
+            purchaseOrderId: po.id,
+            userId:userId
+        }
+        let saveTuple = await Order_item.create(newTuple);
         res.send({success:'Data created successfully'})
     } catch (error) {
         console.log(error)
@@ -82,5 +108,6 @@ module.exports = {
     addPurchaseOrder,
     getAllPOs,
     getPurchaseOrderById,
-    getPOByUserId
+    getPOByUserId,
+    addOnePurchaseOrder
 }

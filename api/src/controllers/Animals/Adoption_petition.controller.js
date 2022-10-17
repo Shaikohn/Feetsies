@@ -92,7 +92,24 @@ async function setPetitionAsRead(req,res){
         await petition.save()
         return res.status(200).send({success:"Petition set as read"});
     } catch (error) {
-        console.log(error)
+        
+        return res.status(500).send(error);
+    }
+}
+async function setPetitionAsUnRead(req,res){
+    let {petitionid} = req.params
+    if(!petitionid)return res.status(400).send(badReq);
+    try {
+        let petition = await Adoption_petition.findOne({
+            where: {
+                id: petitionid
+            }
+        });
+        petition.read = false;
+        await petition.save()
+        return res.status(200).send({success:"Petition set as read"});
+    } catch (error) {
+        
         return res.status(500).send(error);
     }
 }
@@ -101,11 +118,12 @@ async function toggleImportantPetition(req,res){
     let {petitionid} = req.params
     if(!petitionid)return res.status(400).send(badReq);
     try {
-        let petition = Adoption_petition.findOne({
+        let petition = await Adoption_petition.findOne({
             where: {
                 id: petitionid
             }
         });
+        console.log(petition)
         petition.isImportant = !petition.isImportant;
         await petition.save()
         return res.status(200).send({success:"Petition important status changed"});
@@ -121,7 +139,8 @@ module.exports={
     getAllPetitions,
     getPetitionDetail,
     setPetitionAsRead,
-    toggleImportantPetition
+    toggleImportantPetition,
+    setPetitionAsUnRead
 }
 
 
