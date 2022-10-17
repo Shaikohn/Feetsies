@@ -47,8 +47,8 @@ export default function CheckoutForm({product}) {
                 timer: 5000
             });
             /* product.stock-- */
-            await axios.post('/cart/save', {
-                prods: [productDetails],
+            await axios.post('/cart/save/one', {
+                prods: productDetails,
                 userId,
             })
             elements.getElement(CardElement).clear()
