@@ -18,7 +18,7 @@ const {
 ////
 // Syncing all the models at once.
 conn
-  .sync({ force: true})
+  .sync({ force: true })
   .then(() => {
     return writeAnimalTypes();
   })
