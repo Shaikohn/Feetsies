@@ -116,9 +116,8 @@ function App() {
             <Route path='users' element={<UsersList />} />
             <Route path='products' element={<ProductsList />} />
           </Route>
-          <Route  exact path="/profile" element={<UserProfile />}/>
-          <Route  exact path="/user/data" element={<UserData />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          
+          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </div>
     </ThemeProvider>

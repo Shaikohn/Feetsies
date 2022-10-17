@@ -25,7 +25,6 @@ export default function ProductDetails({product}) {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
     const [isOpenModal, openedModal, closeModal] = useModal(false);
-    const [isNotLogged, openedLoggedModal, closeLoggedModal] = useModal(false);
 
     const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
     
@@ -178,7 +177,20 @@ export default function ProductDetails({product}) {
                                     }}
                                     size="large"
                                     variant="outlined"
-                                    onClick={openedLoggedModal}
+                                    onClick={() => {
+                                        Swal.fire({
+                                            title: "YOU HAVE TO BE LOGGED TO BUY A PRODUCT!",
+                                            icon: "warning",
+                                            showDenyButton: true,
+                                            denyButtonText: "Cancel",
+                                            confirmButtonText: "Sign in",
+                                            confirmButtonColor: "green",
+                                            }).then((res) => {
+                                            if (res.isConfirmed) {
+                                            navigate("/signUp");
+                                            }
+                                            });
+                                        }}
                                 >
                                     Buy
                                 </ButtonBase>
@@ -198,24 +210,23 @@ export default function ProductDetails({product}) {
                                     }}
                                     size="large"
                                     variant="outlined"
-                                    onClick={openedLoggedModal}
+                                    onClick={() => {
+                                        Swal.fire({
+                                            title: "YOU HAVE TO BE LOGGED TO USE THE CART!",
+                                            icon: "warning",
+                                            showDenyButton: true,
+                                            denyButtonText: "Cancel",
+                                            confirmButtonText: "Sign in",
+                                            confirmButtonColor: "green",
+                                            }).then((res) => {
+                                                if (res.isConfirmed) {
+                                            navigate("/signUp");
+                                                }
+                                            });
+                                        }}
                                 >
                                     Add To Cart
                                 </ButtonBase>
-                                <Modals isOpenModal={isNotLogged} closeModal={closeLoggedModal}>
-                                    <h2 className="modalTitle">YOU HAVE TO BE LOGGED TO BUY!</h2>
-                                    <div>
-                                        <img src={profileIcon} alt="" width="200px" height="200px" />
-                                    </div>
-                                    <div>
-                                        <button className="modalConfirm" onClick={() => {navigate("/signUp")}}>
-                                            SIGN UP!
-                                        </button>
-                                        <button className="modalClose" onClick={() => {closeLoggedModal()}}>
-                                            CLOSE
-                                        </button>
-                                    </div>
-                                </Modals>
                             </Box> 
                         :
                             <Box sx={{display: "flex"}}>
@@ -239,6 +250,21 @@ export default function ProductDetails({product}) {
                                 >
                                     Buy
                                 </ButtonBase>
+                                <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
+                                    <h2 className="modalTitle">MAKE YOUR PURCHASE WITH YOUR CREDIT CARD!</h2>
+                                    <h3 className="modalPrice">{`$${product?.price}`}</h3>
+                                    <div>
+                                        <img src={product?.image} alt="" width="200px" height="200px" />
+                                    </div>
+                                    <div>
+                                        <CheckoutForm product={product} />
+                                    </div>  
+                                    <div>
+                                        <button className="modalClose" onClick={closeModal}>
+                                            CLOSE
+                                        </button>
+                                    </div>
+            </Modals>
                                 <ButtonBase
                                     sx={{
                                         my: 2,
@@ -259,20 +285,6 @@ export default function ProductDetails({product}) {
                                 >
                                     Add To Cart
                                 </ButtonBase>
-                                <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
-                                    <h2 className="modalTitle">MAKE YOUR PURCHASE WITH YOUR CREDIT CARD!</h2>
-                                    <div>
-                                        <img src={product?.image} alt="" width="200px" height="200px" />
-                                    </div>
-                                    <div>
-                                        <CheckoutForm product={product} />
-                                    </div>  
-                                    <div>
-                                        <button className="modalClose" onClick={closeModal}>
-                                            CLOSE
-                                        </button>
-                                    </div>
-                                </Modals>
                             </Box>
                         }
                     </Box>
