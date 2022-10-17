@@ -331,7 +331,10 @@ export default function ResponsiveAppBar() {
                                 ))} */}
                 <MenuItem onClick={handleCloseUserMenu}>
                   <PersonIcon sx={{ mr: 2 }} />
+                  <Link to="/profile">
                   <Typography textAlign="center">Profile</Typography>
+                  </Link>
+                  
                 </MenuItem>
                 <MenuItem onClick={handleCloseUserMenu}>
                   <ManageAccountsIcon sx={{ mr: 2 }} />
