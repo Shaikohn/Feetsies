@@ -1,11 +1,9 @@
 const {Review,Order_item,Product/*borrar product una vez refactoreadas las tablas*/} = require('../../db');
 
-const notBought = {err:'To review this product, you must buy it first!'}
-const alreadyReviewed = {err:'To review this product, you must buy it first!'}
 const serverError = {err:`Something happened and the request couldn't be completed`}
 
 async function addReviewToProduct(req,res){
-    const {userId, productName , review} = req.body;
+    const {userId, productName , review, score} = req.body;
     try {
         //consigo id del producto
         let product = await Product.findOne({
@@ -35,6 +33,7 @@ async function addReviewToProduct(req,res){
             userId:userId,
             productId:prodId,
             review:review,
+            score:score
         })
         return res.status(201).send({success:'Review created.'})
     } catch (error) {
@@ -44,6 +43,30 @@ async function addReviewToProduct(req,res){
 }
 
 
+
+async function getMyReviews(req,res){
+    const {userId} = req.params;  
+    try{
+        let revData = await Review.findAll({where:{userId:userId}})
+        if(!revData || revData.length<1)return res.status(404).send({warning:'There are no reviews available.'})
+        let result= [];
+        for (let i = 0; i < revData.length; i++) {
+            let item = await Product.findOne({where:{id:revData[i].productId}})
+            result.push({
+                reviewId:revData[i].id,
+                score:revData[i].score,
+                productName:item.name,
+                comment:revData[i].review
+            })
+        }
+        return res.status(200).send(result)
+    }catch(error){
+        console.log(error)
+        return res.status(500).send(serverError)
+    }    
+}
+
 module.exports={
-    addReviewToProduct
+    addReviewToProduct,
+    getMyReviews
 }
