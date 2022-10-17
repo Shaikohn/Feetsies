@@ -1,47 +1,60 @@
 import React, { useEffect, useReducer, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import ReactDOM from 'react-dom'
+import {Card,
+        Paper,
+        Table,
+        TableBody,
+        TableCell,
+        TableContainer,
+        TableHead,
+        Stack,
+        Typography,
+        Avatar,
+        Box,
+        TableRow} from '@mui/material'
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
+import {ContactMail,
+        AccountBox,
+        TaskAlt,
+        LocalPolice,
+        LocationOn,
+        LocalPhone, 
+      Mail,
+       Close } from '@mui/icons-material/'
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllUsers,
   updateUserAdmin,
   updateUserBan,
 } from "../../redux/actions/getAllUsers";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
+
 import IconButton from "@mui/material/IconButton";
 import Swal from 'sweetalert2'
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+
+
 
 const UserTable = () => {
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const { allUsers } = useSelector((state) => state.users);
   const [userId, setUserId] = useState(
-    JSON.parse(localStorage?.getItem("profile")).data.id
+    JSON.parse(localStorage?.getItem("profile"))
   );
+  const [show, setShow] = React.useState(false)
+  const [userDetail, setUserDetail] = React.useState({})
+  const userSince = new Date(userDetail.createdAt)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllUsers());
-  }, [reducerValue, dispatch]);
-  console.log(allUsers);
+    console.log(userDetail)
+  }, [reducerValue, dispatch, userDetail]);
+  
+
+  function showUserContactInfo(user) {
+    setShow(true)
+    setUserDetail(user)
+  }
 
   const handleAdmin = (e, id) => {
     e.preventDefault();
@@ -87,7 +100,7 @@ const UserTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650, zindex: '0' }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -96,12 +109,13 @@ const UserTable = () => {
             <TableCell>Phone Number</TableCell>
             <TableCell>Admin</TableCell>
             <TableCell>Ban</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {allUsers.map((users) => (
             <TableRow
-              key={users.name}
+              key={users.id}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -114,13 +128,13 @@ const UserTable = () => {
                 {users.isAdmin ? (
                   <div>
                     <IconButton onClick={(e) => handleAdmin(e, users.id)}>
-                      <LocalPoliceIcon />
+                      <LocalPolice />
                     </IconButton>
                   </div>
                 ) : (
                   <div>
                     <IconButton onClick={(e) => handleAdmin(e, users.id)}>
-                      <AccountBoxIcon />
+                      <AccountBox />
                     </IconButton>
                   </div>
                 )}
@@ -128,7 +142,7 @@ const UserTable = () => {
               <TableCell>
                 {users.isBan ? (
                   <IconButton onClick={(e) => handleBan(e, users.id)}>
-                    <TaskAltIcon />
+                    <TaskAlt />
                   </IconButton>
                 ) : (
                   <IconButton onClick={(e) => handleBan(e, users.id)}>
@@ -136,9 +150,53 @@ const UserTable = () => {
                   </IconButton>
                 )}
               </TableCell>
+              <TableCell><IconButton onClick={() => showUserContactInfo(users)}><ContactMail/></IconButton></TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
+        { show && ReactDOM.createPortal(
+                  <Card sx={{width: 'fit-content', height: '15em', zIndex: '1', position:'relative', margin:'auto'}}>
+                  <Box sx={{ p: 2, display: 'flex', width:'fit-content', margin:'auto', alignItems:'center', height:'100%' }}>
+                    <Box style={{position: 'absolute', top: '1%', left: '1%'}}>
+                      <IconButton onClick={() =>setShow(false)}>
+                          <Close />
+                      </IconButton>
+                    </Box>
+                     <Box>
+                     <Avatar variant="rounded" src= {userDetail.image} sx={{margin: 'auto', width:'70%', height:'100%'}} />
+                     </Box>
+                      <Box>
+                      <Stack spacing={0.5}>
+                        <Typography fontWeight={700}>{userDetail.name} {userDetail.lastName}</Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{display: 'flex', alignItems: 'center'}}>
+                          <LocationOn sx={{color: 'grey[500]', display:'inline-flex'}} />
+                           {userDetail.location}
+                        </Typography>
+                        
+                         { 
+                          userDetail.phone_number !== 'No phone number added' ? (
+                            <Typography sx={{display:'flex', alignItems:'center'}}>
+                            <Mail /> <a href={`mailto:${userDetail.email}`} style={{margin:'auto'}}>{userDetail.email}</a>
+                            </Typography>
+                          )  : null
+                         
+                         }
+                       
+                        <Typography sx={{display:'flex', alignItems:'center'}}>
+                          <LocalPhone /> <a href={`tel:${userDetail.phone_number}`} style={{margin:'auto'}}>{userDetail.phone_number}</a>
+                        </Typography>
+                        <Typography sx={{display:'flex', alignItems: 'center'}}>
+                          User since: {userSince.getUTCFullYear()}
+                        </Typography>  
+                      </Stack>
+                    
+                      </Box>
+                  </Box>
+                </Card>,
+                document.querySelector('#contact')
+                )
+              }
       </Table>
     </TableContainer>
   );
