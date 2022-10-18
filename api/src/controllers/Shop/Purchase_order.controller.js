@@ -13,12 +13,26 @@ const notFound = { err: "Not Found" };
 async function addPurchaseOrder(req,res){
     let {prods,userId} = req.body; //esto deberia ser un arreglo, de un elemento minimo.
     console.log("these are the values",prods, userId)
-    if(prods.items.length<1 || !userId)return res.status(500).send(badReq);
+    if(prods.items.length<1 || !userId)return res.status(400).send(badReq);
     try {
-        // crear la orden de compra con id de usuario y total de gasto
+        //verifica stock de todos los elementos de la orden de compra
+        let noStockFlag = false;
+        let productStockFail = []
+        for (let i = 0; i < prods.items.length; i++) {
+            let product = await Product.findByPk(prods.items[i].productId)
+            if(product.stock<prods.items[i].quantity){
+                noStockFlag = true;
+                productStockFail.push(prods.items[i].name)
+            }
+        }
+        if(noStockFlag)return res.status(500).send({err:`We don't have enough units of the following products: ${productStockFail}. Please change the quantities of you purchase order or try again later`});
+        // crear la orden de compra con id de usuario, total de gasto y restar stock de productos
         let totalCost = 0;
         for (let i = 0; i < prods.items.length; i++) {
-            totalCost += prods.items[i].price
+            totalCost += prods.items[i].price;
+            let product = await Product.findByPk(prods.items[i].productId);
+            product.stock = parseInt(product.stock) - parseInt(prods.items[i].quantity);
+            product.save();
         }
         let po = await Purchase_order.create({total:totalCost,userId:userId})
         console.log('total', totalCost);
