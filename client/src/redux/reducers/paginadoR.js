@@ -1,12 +1,12 @@
 import { SET_CURRENT_PAGE, RESET_PAGINATION } from "../actions/paginadoA";
 
 
-const initialSate ={
+const initialState ={
     page: 1,
     pagination: {}
 }
 
-const paginadoReducer = (state=initialSate,{type,payload})=>{
+const paginadoReducer = (state=initialState,{type,payload})=>{
 
     switch (type){
         case SET_CURRENT_PAGE:

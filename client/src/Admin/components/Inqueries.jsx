@@ -1,31 +1,29 @@
 import * as React from 'react';
+import ReactDOM from 'react-dom'
 import Typography from '@mui/material/Typography';
 import {Clear, ClearAll} from '@mui/icons-material';
 import Title from './Title';
-import { Card, Box,  Stack, IconButton} from '@mui/material';
+import { Card, Box,  Stack, IconButton, Modal, Button} from '@mui/material';
 import {useDispatch, useSelector} from 'react-redux';
 import { getAllInquieres, delateOneInquery,cleanAllInqueries } from '../../redux/actions/inquiryActions';
-
-
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-
-
-
+import { UserCard } from './UserTable';
+import { ModalAdmin } from './Dashboard';
 
 export default function ShowInqueries() {
   let {inqueries} = useSelector(state => state.inqueries)
   let dispatch = useDispatch()
   let loading = 'Any inquery yet'
+  const [open, setOpen] = React.useState(false);
+  const [queriedInquery, setInquery] = React.useState({})
+  
+  
   
   React.useEffect(() => {
     if(inqueries.length === 0) {
       dispatch(getAllInquieres()) 
     }
-  }, [inqueries])
+    
+  }, [inqueries, open])
 
 
   function deleteInquery(id) {
@@ -34,18 +32,26 @@ export default function ShowInqueries() {
       dispatch(getAllInquieres())
     }, 500)
   }
+
+  function queryInquery(inquery){
+    setInquery(inquery)
+    setOpen(true)
+  }
   function cleanAll() {
     dispatch(cleanAllInqueries())
   }
 
 
-  function InqueryCard({topic, id}) {
+  function InqueryCard({inquery}) {
     return (
       <Card sx={{height:'fit-content', overflowWrap:'anywhere', marginTop:'1%'}}>
+       
         <Box sx={{height:'fit-content', margin:'auto'}}>
           <Stack direction='row' sx={{height:'2em', margin:'auto'}}>
-            <Typography sx={{fontSize:'1em', alignContent:'center', justifyContent:'center', display:'flex', marginLeft:'auto', marginRight:'auto'}}>{topic}</Typography>
-            <IconButton onClick={() => deleteInquery(id)} sx={{height: 'fit-content', alignContent:'center'}}>
+            <Button onClick={() => queryInquery(inquery) } sx={{height:'fit-content', width:'100%', margin:'auto', padding:'1%',display: 'flex', alignItems: 'center'}}>
+              <Typography  sx={{fontSize: '1em', margin: 'auto', display: 'flex', alignItems:'center'}}><Box sx={{margin: 'auto', alignSelf: 'center'}}>{inquery.topic}</Box></Typography>
+            </Button>
+            <IconButton onClick={() => deleteInquery(inquery.id)} sx={{height: 'fit-content', alignContent:'center'}}>
               <Clear sx={{fontSize:'.6em'}}/>
             </IconButton>
           </Stack>
@@ -56,6 +62,15 @@ export default function ShowInqueries() {
   return (
     <React.Fragment>
       <Title>Inqueries</Title>
+      <>
+        {
+          open && ReactDOM.createPortal(
+            <ModalAdmin item={queriedInquery} setOpen={setOpen} open={open} />,
+            document.querySelector('#adminModal')
+          )
+           
+        }
+      </>
       {
         inqueries.length === 0 ? (
           <h1>{loading}</h1>
@@ -65,7 +80,7 @@ export default function ShowInqueries() {
               
               return (
                
-                  <InqueryCard key={s.id} topic={s.topic} id={s.id} />
+                  <InqueryCard key={s.id} inquery={s} />
                 
               )
             })

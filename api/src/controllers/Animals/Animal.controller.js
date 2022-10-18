@@ -1,5 +1,4 @@
-const {Animal} = require('../../db.js')
-const {Animal_type} = require('../../db.js')
+const {Animal, Adoption_petition, Animal_type} = require('../../db.js')
 const {Op} = require('sequelize')
 const sequelize = require('sequelize')
 
@@ -13,7 +12,7 @@ const notFoundVar = {
 }
 async function getAllAnimals(req, res) {
     try {
-        let animals = await Animal.findAll()
+        let animals = await Animal.findAll({include: Animal_type})
         if(animals.length === 0) {
            return res.status(404).send(notFoundVar)
         } else {
@@ -31,11 +30,11 @@ async function getAnimalDetail(req, res) {
         let animalDetail = await Animal.findOne({
             where: {
                 id: id
-            }
+            },
+            include: [Animal_type, Adoption_petition]
         })
-        let typeId = animalDetail.dataValues.animal_typeId;
-        let type = await Animal_type.findOne({where:{id:typeId}});
-        animalDetail.dataValues.animal_type=type.dataValues.name;
+        let typeId = animalDetail.dataValues.animal_typeId
+        
         if(!animalDetail || animalDetail.length === 0) {
             return res.status(404).send(notFoundVar)
         } else {
@@ -49,10 +48,14 @@ async function getAnimalDetail(req, res) {
 }
 
 async function createAnimal(req,res) {
-    let {name, description, sex, breed, size, age,animalType} = req.body
+    let {name, description, sex, breed, size, age, animal_typeId} = req.body
     
     try {
-        let animtype = await Animal_type.findOne({where:{name:animalType}});
+        let animtype = await Animal_type.findOne({
+            where: {
+                id: animal_typeId
+            }
+        });
 
         let newAnimal = await Animal.create({
             name: name,
@@ -61,8 +64,10 @@ async function createAnimal(req,res) {
             sex: sex,
             breed: breed,
             age: age,
-            animal_typeId:animtype.dataValues.id
+            animal_typeId:animtype.dataValues.id,
+            include: Animal_type
         })
+        await newAnimal.addAnimal_types(animtype)
         return res.status(201).send(newAnimal)
     } catch (error) {
         return res.status(500).send(errorVar)
@@ -133,11 +138,11 @@ async function searchAnimal(req, res) {
                 queryAnimal[i].dataValues.animal_type=type.dataValues.name;
                 console.log(type.dataValues.name);
             }
-            console.log('log de respuesta',queryAnimal)
+    
             return res.status(200).send(queryAnimal)
         }
     } catch (error) {
-        console.log('log de error',error)
+        
         return res.status(500).send(errorVar)
     }
 }

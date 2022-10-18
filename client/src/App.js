@@ -25,6 +25,8 @@ import { AnimalsTable } from "./Admin/components/AnimalTable";
 import UserData from "./User/Features/Profile/UserData";
 import UserProfile from "./User/Features/Profile/UserProfile";
 import OrderDetail from "./User/Features/Profile/OrderDetail";
+import ProductHome from "./User/Views/ProductHome/ProductHome.jsx";
+
 
 function App() {
   const theme = createTheme({
@@ -57,9 +59,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
        <div id='contact' style={{position: 'absolute', left: '70%', top:'35%', zIndex:1}}/>
+       <div id='adminModal' />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          <Route exact path="/home/products" element={<HomeProducts />} />
+          <Route exact path="/home/products" element={<ProductHome />} />
           <Route exact path="/home/animals" element={<HomeAnimals />} />
           <Route
             exact
@@ -84,29 +87,29 @@ function App() {
           {/* Sign in Form */}
           <Route
             path="/signIn"
-            element={user ? <Navigate to="/" replace /> : <SignIn />}
+            element={<SignIn />}
           />
           <Route
             exact
             path="/checkEmail"
-            element={user ? <Navigate to="/" replace /> : <CheckEmails />}
+            element={<CheckEmails />}
           />
           <Route
             exact
             path="/confirm/:confirmationCode"
-            element={user ? <Navigate to="/" replace /> : <AccountConfirmed />}
+            element={<AccountConfirmed />}
           />
           {/* Reset Password */}
           <Route
             exact
             path="/reset-password/:id/:token"
-            element={user ? <Navigate to="/" replace /> : <ResetPassword />}
+            element={<ResetPassword />}
           />
           {/* Forgot Password */}
           <Route
             exact
             path="/forgot-password"
-            element={user ? <Navigate to="/" replace /> : <ForgotPassword />}
+            element={<ForgotPassword />}
           />
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="" element={<DashboardLanding />} />

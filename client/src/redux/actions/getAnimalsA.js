@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 export const GET_ALL_ANIMALS = "GET_ALL_ANIMALS";
 export const GET_ANIMAL_NAME = "GET_ANIMAL_NAME";
 
@@ -22,7 +23,12 @@ export function getAnimalName(name) {
                 payload: json.data
             });
         } catch(error) {
-            console.log(error);
+            Swal.fire({
+                title: "Error",
+                text: 'Animal couldnt be found!',
+                icon: "error",
+                timer: 3000,
+              });
             alert (`Animal cant be found! Error: ${error}`);
         }
     }

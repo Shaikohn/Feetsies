@@ -1,11 +1,12 @@
 import * as React from 'react';
+import ReactDOM from 'react-dom'
 import {Table, TableBody, TableCell, TableHead, TableRow, IconButton, Badge, MenuItem,  Tooltip, Menu, Button, Box } from '@mui/material';
 import Title from './Title';
 import {Drafts, Mail, DeleteForever, MoreVert, MarkAsUnread, MarkEmailRead, PriorityHigh, LowPriority} from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllPetitions, readAdoption, deletePetition, unReadAdoption, toggleimportance } from '../../redux/actions/adoptionAction';
 import {Link} from 'react-router-dom'
-
+import { ModalAdmin } from './Dashboard';
 
 function getDate(date) {
   let simplyDate  = ''
@@ -153,7 +154,8 @@ function preventDefault(event) {
 export default function AdoptionPetitions() {
   let {petitions} = useSelector(state => state.petitions)
   let dispatch = useDispatch()
-
+  const [petitionDetail, setPetition] = React.useState({})
+  const [show, setShow] = React.useState(false)
   React.useEffect(() => {
     if(petitions.length === 0) {
       dispatch(getAllPetitions())
@@ -165,7 +167,9 @@ export default function AdoptionPetitions() {
         
       }, 150000)
     }    
-  },[petitions])
+  },[petitions, show])
+  
+  
   
   function readAdoptionfn(id) {
     dispatch(readAdoption(id))
@@ -179,8 +183,26 @@ export default function AdoptionPetitions() {
       dispatch(getAllPetitions())
     }, 500)
   }
+
+  function getAdoptionPetition(petition) {
+    setPetition(petition)
+    setShow(true)
+    if(petition.read === true) {
+      unreadAdoptionfn(petition.id)
+    } else {
+      readAdoptionfn(petition.id)
+    }
+
+  }
+
   return (
     <React.Fragment >
+      {
+        show && ReactDOM.createPortal(
+          <ModalAdmin item={petitionDetail} setOpen={setShow} open={show} />,
+          document.querySelector('#adminModal')
+        )
+      }
       <Title>Requested adoptions</Title>
       <Table size="small">
         <TableHead>
@@ -212,17 +234,17 @@ export default function AdoptionPetitions() {
               <TableCell  size='small' align="center">
                 {
                   p.read === true ? (
-                    // <Link to={`petitionDetails/${p.id}/`}>
-                    <IconButton size='small' onClick={() => unreadAdoptionfn(p.id)} sx={{display:'flex', alignItems:'center', justifyContent:'center', width: '1em'}}><Drafts /></IconButton>
-                  // </Link>
+                    
+                    <IconButton size='small' onClick={() => getAdoptionPetition(p)} sx={{display:'flex', alignItems:'center', justifyContent:'center', width: '1em'}}><Drafts /></IconButton>
+                 
                   ): (
-                    // <Link to={`petitionDetails/${p.id}/`}>
-                      <IconButton size='small' onClick={() => readAdoptionfn(p.id)} sx={{display:'flex', alignItems:'center', justifyContent:'center', width:'1em'}}>
+                   
+                      <IconButton size='small' onClick={() => getAdoptionPetition(p)} sx={{display:'flex', alignItems:'center', justifyContent:'center', width:'1em'}}>
                         <Badge variant='dot' color="error">
                           <Mail color="action" />
                         </Badge>
                       </IconButton>
-                    // </Link>
+                    
                   )
                 }
               </TableCell>
