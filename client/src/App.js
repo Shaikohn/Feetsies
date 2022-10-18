@@ -25,6 +25,8 @@ import { AnimalsTable } from "./Admin/components/AnimalTable";
 import UserData from "./User/Features/Profile/UserData";
 import UserProfile from "./User/Features/Profile/UserProfile";
 import OrderDetail from "./User/Features/Profile/OrderDetail";
+import ProductHome from "./User/Views/ProductHome/ProductHome.jsx";
+
 
 function App() {
   const theme = createTheme({
@@ -59,7 +61,7 @@ function App() {
        <div id='contact' style={{position: 'absolute', left: '70%', top:'35%', zIndex:1}}/>
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          <Route exact path="/home/products" element={<HomeProducts />} />
+          <Route exact path="/home/products" element={<ProductHome />} />
           <Route exact path="/home/animals" element={<HomeAnimals />} />
           <Route
             exact

@@ -15,6 +15,7 @@ import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
+import { height } from "@mui/system";
 
 const Search = styled("div")(({ theme }) => ({
   width: "260px",
@@ -31,8 +32,8 @@ const Search = styled("div")(({ theme }) => ({
   },
 }));
 
-
 export default function ProductHome() {
+
   const dispatch = useDispatch();
 
   const { allProductsCopy } = useSelector((state) => state.products);
@@ -89,10 +90,12 @@ function handleOnSearch(e) {
       elevation={0}
       sx={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0.8, 0, 0)),url(${Image})`,
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          backgroundAttachment: "fixed",
+          height: "100%",
+          minHeight: "100vh"
       }}
     >
       <ResponsiveAppBar />
@@ -173,4 +176,4 @@ function handleOnSearch(e) {
       />
     </Paper>
   );
-}
+};

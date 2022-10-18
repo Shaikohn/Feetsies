@@ -96,8 +96,10 @@ function handleOnSearch(e) {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
-    }}
-  >
+        height: "100%",
+        minHeight: "100vh"
+      }}
+    >
       <ResponsiveAppBar />
       <Search sx={{
         marginBottom: '-59px',
