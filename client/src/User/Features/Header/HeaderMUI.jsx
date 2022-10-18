@@ -131,7 +131,7 @@ export default function ResponsiveAppBar() {
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
-                color: "inherit",
+                color: "#87a827",
                 textDecoration: "none",
               }}
             >
@@ -332,7 +332,7 @@ export default function ResponsiveAppBar() {
                 <MenuItem onClick={handleCloseUserMenu}>
                   <PersonIcon sx={{ mr: 2 }} />
                   <Link to="/profile">
-                  <Typography textAlign="center">Profile</Typography>
+                  <Typography textAlign="center" sx={{color: "black"}}>Profile</Typography>
                   </Link>
                   
                 </MenuItem>

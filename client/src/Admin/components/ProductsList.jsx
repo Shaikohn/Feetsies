@@ -7,23 +7,35 @@ import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
 import ProductTable from "./ProductTable";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 const mdTheme = createTheme();
 
 export default function ProductsList() {
+
+  const navigate = useNavigate();
+
   let notifications = useSelector((state) => state.petitions.notifications);
 
- 
-
-
   React.useEffect(() => {}, [notifications]);
+
+  function handleCreateProduct() {
+    navigate(`/dashboard/createProduct`);
+  }
+
   return (
     <ThemeProvider theme={mdTheme}>
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Link to='/home/createProduct'>
-              <Button variant='contained' color='success' sx={{display: 'flex', margin: 'auto', float: 'right'}}>Add a product</Button>
-            </Link>
+              <Button variant='contained' color='success' onClick={handleCreateProduct}
+                sx={{
+                  display: 'flex', 
+                  margin: 'auto', 
+                  float: 'right'
+                }}
+              >
+                Add a product
+              </Button>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>

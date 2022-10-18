@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
+import ResponsiveAppBar from "../Header/HeaderMUI.jsx";
 import styles from "./CreateProduct.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../../redux/actions/getProductsA.js";
 import Swal from "sweetalert2";
 import {
@@ -14,6 +14,8 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
+import { getProductDetails } from "../../../redux/actions/productDetailsActions";
+
 
 import IconButton from "@mui/material/IconButton";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
@@ -23,49 +25,8 @@ import Modal from "@mui/material/Modal";
 import Image from "./Img/backgroundDetails1.jpg";
 
 import { RMIUploader } from "react-multiple-image-uploader";
+import { useParams } from "react-router-dom";
 
-// const dataSources = [
-//   {
-//     id: 1,
-//     dataURL: "https://picsum.photos/seed/1/600",
-//   },
-//   {
-//     id: 2,
-//     dataURL: "https://picsum.photos/seed/2/600",
-//   },
-//   {
-//     id: 3,
-//     dataURL: "https://picsum.photos/seed/3/600",
-//   },
-//   {
-//     id: 4,
-//     dataURL: "https://picsum.photos/seed/4/600",
-//   },
-//   {
-//     id: 5,
-//     dataURL: "https://picsum.photos/seed/5/600",
-//   },
-//   {
-//     id: 6,
-//     dataURL: "https://picsum.photos/seed/6/600",
-//   },
-//   {
-//     id: 7,
-//     dataURL: "https://picsum.photos/seed/7/600",
-//   },
-//   {
-//     id: 8,
-//     dataURL: "https://picsum.photos/seed/8/600",
-//   },
-//   {
-//     id: 9,
-//     dataURL: "https://picsum.photos/seed/9/600",
-//   },
-//   {
-//     id: 10,
-//     dataURL: "https://picsum.photos/seed/10/600",
-//   },
-// ];
 
 const style = {
   position: "absolute",
@@ -79,7 +40,34 @@ const style = {
   p: 4,
 };
 
-const CreateProduct = () => {
+const UpdateProduct = () => {
+
+  const {productDetails} = useSelector((state) => state.ProductDetails);
+  const {id} = useParams();
+  console.log(productDetails);
+
+  
+  useEffect(() => {
+    dispatch(getProductDetails(id));
+  }, []);
+
+  const {
+    register,
+    formState,
+    formState: { errors, isSubmitSuccessful },
+    handleSubmit,
+    reset,
+  } = useForm({
+    defaultValues: {
+      name: "",
+      description: "",
+      stock: "",
+      price: "",
+      image: "",
+    },
+  });
+
+
   // NUEVA LIBRERIA
 
   const [dataSources, setDataSources] = useState([]);
@@ -140,26 +128,13 @@ const CreateProduct = () => {
 
   console.log(image);
 
-  const {
-    register,
-    formState,
-    formState: { errors, isSubmitSuccessful },
-    handleSubmit,
-    reset,
-  } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      stock: "",
-      price: "",
-      image: "",
-    },
-  });
+  
+
   console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
     console.log("Onsubmit", { ...data, image });
     try {
-      await axios.post("/products/create", {
+      await axios.put(`/products/update`, {
         ...data,
         imgToUse,
       });
@@ -182,6 +157,8 @@ const CreateProduct = () => {
       reset({ name: "", description: "", stock: "", price: "", image: "" });
     }
   }, [formState, reset, image]);
+
+
 
   return (
     <div>
@@ -228,14 +205,14 @@ const CreateProduct = () => {
             <Card sx={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
               <CardContent>
                 <Typography gutterBottom variant="h5">
-                  Product form
+                  Update Product 
                 </Typography>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Grid container spacing={1}>
                     <Grid xs={12} item>
                       <TextField
                         error={errors.name ? true : false}
-                        label="Product´s name"
+                        label={productDetails.name}
                         variant="outlined"
                         fullWidth
                         {...register("name", {
@@ -264,7 +241,7 @@ const CreateProduct = () => {
                     <Grid item xs={12}>
                       <TextField
                         error={errors.stock ? true : false}
-                        label="Stock"
+                        label={productDetails.stock}
                         variant="outlined"
                         type="number"
                         fullWidth
@@ -289,7 +266,7 @@ const CreateProduct = () => {
                       <TextField
                         error={errors.price ? true : false}
                         type="number"
-                        label="Price"
+                        label={productDetails.price}
                         variant="outlined"
                         fullWidth
                         {...register("price", {
@@ -315,7 +292,8 @@ const CreateProduct = () => {
                         label="Description"
                         multiline
                         rows={4}
-                        placeholder="Type your message here"
+                        defaultValue={productDetails.description}
+                        placeholder={productDetails.description}
                         variant="outlined"
                         fullWidth
                         {...register("description", {
@@ -343,7 +321,7 @@ const CreateProduct = () => {
                         color="primary"
                         fullWidth
                       >
-                        Create
+                        Update
                       </Button>
                     </Grid>
                   </Grid>
@@ -357,4 +335,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

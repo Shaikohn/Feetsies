@@ -81,8 +81,9 @@ async function getUserDetail(req, res) {
 
     if (!user) return res.status(404).send(notFound);
     
-    return res.status(200).send(result);
+    return res.status(200).send(user);
   } catch (error) {
+    console.log(error);
     return res.status(500).send(error);
   }
 }

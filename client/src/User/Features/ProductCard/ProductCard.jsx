@@ -121,7 +121,7 @@ export default function ProductCard({
               readOnly
             />
             {value !== null && (
-              <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+              <Box sx={{ ml: 2}}>{labels[hover !== -1 ? hover : value]}</Box>
             )}
             <CardMedia
               component="img"

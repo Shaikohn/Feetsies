@@ -114,23 +114,10 @@ export default function ProductDetails({ product }) {
             mx: 2,
           }}
         >
-          <Box>
-            {/* <div className={styles.imagesContainer}>
-                            <img className={styles.selected} src={selectedImg} alt="" />
-                            <div className={styles.notSelected}>
-                                {
-                                    images.map((img, i) => (
-                                        <img 
-                                        style={{border: selectedImg === img ? "4px solid purple": ""}}
-                                        key={i} 
-                                        src={img} 
-                                        alt="dog"
-                                        onClick={() => setSelectedImg(img)}
-                                        />
-                                    ))
-                                }
-                            </div>
-                        </div> */}
+          <Box sx={{display: "flex", flexDirection: "column"}}>
+            {productDetails.productImages?.map(i => (
+              <img src={i.image} alt="tu vieja" />
+            ))}
           </Box>
         </Grid>
         <Grid

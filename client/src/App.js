@@ -26,6 +26,7 @@ import UserData from "./User/Features/Profile/UserData";
 import UserProfile from "./User/Features/Profile/UserProfile";
 import OrderDetail from "./User/Features/Profile/OrderDetail";
 import ProductHome from "./User/Views/ProductHome/ProductHome.jsx";
+import UpdateProduct from "./User/Features/Form/UpdateProduct";
 
 
 function App() {
@@ -80,47 +81,43 @@ function App() {
             element={<Adoption />}
           />
           <Route exact path="/home/altaAdoption" element={<AltaAdoption />} />
-          <Route exact path="/home/createProduct" element={<CreateProduct />} />
           <Route exact path="/home/shoppingView" element={<ShoppingView />} />
-          {/* Sign Up Form */}
           <Route exact path="/signUp" element={<SignUp />} />
-          {/* Sign in Form */}
           <Route
             path="/signIn"
-            element={<SignIn />}
+            element={user ? <Navigate to="/" replace /> : <SignIn />}
           />
           <Route
             exact
             path="/checkEmail"
-            element={<CheckEmails />}
+            element={user ? <Navigate to="/" replace /> : <CheckEmails />}
           />
           <Route
             exact
             path="/confirm/:confirmationCode"
-            element={<AccountConfirmed />}
+            element={user ? <Navigate to="/" replace /> : <AccountConfirmed />}
           />
-          {/* Reset Password */}
           <Route
             exact
             path="/reset-password/:id/:token"
-            element={<ResetPassword />}
+            element={user ? <Navigate to="/" replace /> : <ResetPassword />}
           />
-          {/* Forgot Password */}
           <Route
             exact
             path="/forgot-password"
-            element={<ForgotPassword />}
+            element={user ? <Navigate to="/" replace /> : <ForgotPassword />}
           />
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="" element={<DashboardLanding />} />
             <Route path="animaltable" element={<AnimalsTable />} />
             <Route path="users" element={<UsersList />} />
             <Route path="products" element={<ProductsList />} />
+            <Route path="createProduct" element={<CreateProduct />} />
+            <Route path="updateProduct/:id" element={<UpdateProduct />} />
           </Route>
           <Route path="profile" element={<UserProfile />} />
           <Route path="profile/orderDetail/:id" element={<OrderDetail />} />
           <Route path="user/data" element={<UserData />} />
-         
 
           {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
