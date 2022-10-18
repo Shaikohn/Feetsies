@@ -1,5 +1,6 @@
 const {
   Product,
+  ProductImage,
   Product_type,
   Animal_type,
   Review
@@ -57,9 +58,11 @@ async function getDetail(req, res) {
     return res.status(400).send("Bad request");
   }
   try {
-    let reg = await Product.findOne({ where: { id: req.params.id } });
+    let reg = await Product.findOne({ where: { id: req.params.id },include:ProductImage });
     if (!reg) return res.status(400).send(notFound);
+    //console.log('logging reg', reg.dataValues);
     let aux = await createElementWithTypes(reg);
+    //console.log('logging aux', aux);
     return res.send(aux);
   } catch (error) {
     return res.status(500).send(error);
@@ -67,12 +70,12 @@ async function getDetail(req, res) {
 }
 
 async function createProduct(req, res) {
+  //console.log(req.body)
   const { name, description, price } = req.body;
   if (!name || !description || !price) return res.status(400).send(badReq);
   let obj = { name, description, price };
-  const { stock, image, productTypes, animalTypes } = req.body;
+  const { stock, imgToUse, productTypes, animalTypes } = req.body;
   if (stock) obj.stock = stock;
-  if (image) obj.image = image;
   if (!productTypes || productTypes.length > 0) {
     obj.productTypes = ["Other"];
   } else {
@@ -83,8 +86,20 @@ async function createProduct(req, res) {
   } else {
     obj.animalTypes = animalTypes;
   }
+  
   try {
-    const newProd = await Product.create(obj);
+    let newProd = await Product.create(obj);
+    if(imgToUse.length>0){
+      let productImages=[];
+      for (let i = 0; i < imgToUse.length; i++) {
+          productImages.push({image:imgToUse[i].dataURL});  
+        }
+      let pictures = await ProductImage.bulkCreate(productImages)  
+      let x = await newProd.addProductImages(pictures)
+    }else{
+      let d = await newProd.createProductImage({})
+    }
+    //const imgs = await Product.addImage
     for (let i = 0; i < obj.animalTypes.length; i++) {
       const aType = await Animal_type.findOne({
         where: { name: obj.animalTypes[i] },
@@ -109,6 +124,7 @@ async function createElementWithTypes(element) {
   try{
     let productTypes = await element.getProduct_types();
     let animalTypes = await element.getAnimal_types();
+    element.dataValues.image = element.dataValues.productImages[0].dataValues.image;
     let value=0;
     let divideBy=0;
     let avg = await Review.findAll({where:{productId:element.id}})
