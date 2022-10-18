@@ -35,14 +35,15 @@ import { google } from "../../../redux/actions/auth";
 function Copyright(props) {
   return (
     <Typography
-      variant="body2"
       color="text.secondary"
       align="center"
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link href="https://mui.com/">
+        <Typography sx={{color: "#87a827", fontSize: 15}}>
+          Your Website
+        </Typography>
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -63,9 +64,6 @@ const SignUp = () => {
     passwordConfirm: "",
     showPasswordConfirm: false,
   });
-
-  // console.log("pass", values);
-  // console.log("pass confirmada", values2);
 
   const navigateTo = useNavigate();
 
@@ -162,7 +160,6 @@ const SignUp = () => {
   };
 
   return (
-    // <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -441,18 +438,27 @@ const SignUp = () => {
             </Grid>
           </Grid>
 
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="center">
             <Grid item>
               <Link to="/signIn" variant="body2">
-                Already have an account? Sign in
+                <Typography sx={{color: "#87a827"}}>
+                  Already have an account? Sign in
+                </Typography>
               </Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright 
+        sx={{ 
+          mt: 3 , 
+          display: "flex", 
+          flexDirection: "row", 
+          alignItems: "center",
+          justifyContent: "center"
+        }} 
+      />
     </Container>
-    // </ThemeProvider>
   );
 };
 
