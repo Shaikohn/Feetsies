@@ -206,7 +206,7 @@ export default function ResponsiveAppBar() {
                   fontSize: 17,
                   bgcolor: "secondary.main",
                   fontWeight: 500,
-                  mx: 2,
+                  mx: 6,
                 }}
                 size="large"
                 variant="outlined"
@@ -223,14 +223,14 @@ export default function ResponsiveAppBar() {
                   fontSize: 17, 
                   bgcolor: "secondary.main",
                   fontWeight: 500,
-                  mx: 2 }}
+                  mx: 6 }}
                 size="large"
                 variant="outlined"
               >
                 ANIMALS
               </Button>
             </Link>
-            <Link to="/home/createProduct">
+            {/* <Link to="/home/createProduct">
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ 
@@ -245,7 +245,7 @@ export default function ResponsiveAppBar() {
               >
                 CREATE PRODUCT
               </Button>
-            </Link>
+            </Link> */}
           </Box>
           {!user ? (
               ""
@@ -334,12 +334,7 @@ export default function ResponsiveAppBar() {
                   <Link to="/profile">
                   <Typography textAlign="center" sx={{color: "black"}}>Profile</Typography>
                   </Link>
-                  
                 </MenuItem>
-                {/* <MenuItem onClick={handleCloseUserMenu}>
-                  <ManageAccountsIcon sx={{ mr: 2 }} />
-                  <Typography textAlign="center">Account</Typography>
-                </MenuItem> */}
                 <Divider />
                 {user.data.isAdmin ? (
                   <MenuItem onClick={handleDashboard}>
