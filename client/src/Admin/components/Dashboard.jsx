@@ -17,30 +17,32 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh'
+import { mainListItems } from "./listItems";
 import Chart from "./Chart";
 import Inqueries from "./Inqueries";
 import AdoptionPetitions from "./AdoptionPetitions";
 import { useSelector } from "react-redux";
 import {Outlet} from 'react-router-dom'
+import { Modal , Stack, Card} from "@mui/material";
+import { UserCard } from './UserTable';
+import { AnimalCard } from "./AnimalTable";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+
+export const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 'fit-content',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  textAlign: 'center',
+  p: 4,
+  borderRadius:'20px'
+};
+
 
 const drawerWidth = 240;
 
@@ -174,7 +176,7 @@ function DashboardContent() {
             <Grid container spacing={3}>
               <Outlet />
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
+           
           </Container>
         </Box>
       </Box>
@@ -182,10 +184,57 @@ function DashboardContent() {
   );
 }
 
+export function ModalAdmin({item, setOpen, open}) {
+  
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
+    return(
+      <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+      onLoad={() => handleOpen(true)}
+    >
+      <Card sx={{width: 'fit-content', height: '15em', zIndex: '2', borderRadius: '20px', justifyItems:'center'}}>
+      <Paper>
+      <Box sx={style}>
+        {
+          item.isImportant? (
+            <PriorityHighIcon />
+          ): null
+        }
+        <Stack direction={'row'}>
+        <UserCard userDetail={item.user} setShow={setOpen}/>
+        {
+          item.animal ? (
+            <AnimalCard animal={item.animal} />
+          ): null
+        }
+        </Stack>
+      <Stack sx={{margin: 'auto'}}>
+        <Typography sx={{margin: 'auto'}}>
+          <h3>Topic: </h3> {item.topic}
+        </Typography>
+        <Typography sx={{margin: 'auto'}}>
+          <h3>Description: </h3> {item.description}
+        </Typography>
+        </Stack>
+      </Box>
+      </Paper>
+      </Card>
+    </Modal>
+         
+        )
+    
+}
+
 
 export function DashboardLanding() {
   return (
     <React.Fragment>
+      
       <Grid item xs={12} md={12} lg={8}>
                 <Paper
                   sx={{

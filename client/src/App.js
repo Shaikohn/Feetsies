@@ -59,6 +59,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
        <div id='contact' style={{position: 'absolute', left: '70%', top:'35%', zIndex:1}}/>
+       <div id='adminModal' />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home/products" element={<ProductHome />} />

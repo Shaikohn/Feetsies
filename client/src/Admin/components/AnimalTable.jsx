@@ -1,10 +1,33 @@
 import Title from './Title';
-import { Avatar, TableCell, TableBody, TableHead, TableRow, IconButton, Grid, Button, Table } from "@mui/material";
+import { Avatar, TableCell, TableBody, TableHead, TableRow,  Table, Typography, Box, Stack } from "@mui/material";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllAnimals } from "../../redux/actions/getAnimalsA";
 import { Link } from 'react-router-dom';
 
+
+
+export function AnimalCard({animal}) {
+ 
+  return (
+    <Box sx={{ p: 2, display: 'flex', width:'fit-content', margin:'auto', alignItems:'center', height:'100%' }}>
+      <Box sx={{width: '50%'}}>
+        <Avatar variant="rounded" src={`${animal.main_image}`} sx={{margin: 'auto', width:'70%', height:'100%', borderRadius: '20px'}} />
+      </Box>
+      <Stack spacing={0.5}>
+      <Box>
+        <Link to={`/home/animals/${animal.id}`}>
+        <Typography fontWeight={700}>Name: {animal.name}</Typography>
+        </Link>
+        <Typography fontWeight={300}>Sex: {animal.sex}</Typography>
+        <Typography fontWeight={300}>Breed: {animal.breed}</Typography>
+        <Typography fontWeight={300}>Size: {animal.size}</Typography>
+        <Typography fontWeight={300}>Age: {animal.age} years old </Typography>        
+      </Box>
+      </Stack>
+    </Box>
+  )
+}
 
 export function AnimalsTable() {
     let {allAnimals} = useSelector(state => state.animals)
@@ -44,11 +67,11 @@ export function AnimalsTable() {
               <TableCell align="center">{p.breed}</TableCell>
               <TableCell align="center">{p.size}</TableCell>
               <TableCell align="center">{p.age} yrs</TableCell>
-              {/* <TableCell align='center'>{p.animal_types.map((type, i) => {
+              {<TableCell align='center'>{p.animal_types.map((type, i) => {
                 return (
                     <p>{type.name}</p>
                 )
-              } )}</TableCell> */}
+              } )}</TableCell> }
             </TableRow>
           ))}
         </TableBody>

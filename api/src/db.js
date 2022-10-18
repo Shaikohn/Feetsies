@@ -103,6 +103,10 @@ Cart_item.belongsTo(User);
 User.hasMany(Purchase_order);
 Purchase_order.belongsTo(User);
 // ////////////////////////////////////
+Animal_type.belongsToMany(Animal, {through: 'animal_animalsType'})
+Animal.belongsToMany(Animal_type, {through: 'animal_animalType'})
+
+
 // User.hasMany(Purchase_order);
 // Purchase_order.belongsTo(User);
 ////////////////////////////////////
