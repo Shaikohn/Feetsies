@@ -96,12 +96,12 @@ export default function ProductCard({
           border: "1px solid #bada59",
           borderRadius: 3,
           bgcolor: "#ffff9bb0",
-          boxShadow: "0px 0px 10px 5px rgb(135 168 39);",
+          boxShadow: "0px 0px 10px 5px #1d788e",
           transition: "0.3s",
           animation: "ease-in-out",
           "&:hover": {
             transform: "scale(1.02)",
-            boxShadow: "0px 0px 10px 8px rgb(92, 116, 20)",
+            boxShadow: "0px 0px 10px 8px #943656",
           },
         }}
       >

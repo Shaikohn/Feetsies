@@ -14,6 +14,10 @@ async function updateItem(req, res) {
         const {cartItemId,newQuant} = req.body;
         if(!cartItemId || !newQuant) return res.status(400).send(badReq);
         let tuple = await Cart_item.findOne({where:{id:cartItemId}})
+        let product = await Product.findOne({where:{id:tuple.productId}})
+        if((product.stock-newQuant)<0 || newQuant>product.stock){
+            return res.status(400).send({err:`Not enough units of ${product.name} in stock! The current stock is ${product.stock} units.`});
+        }
         tuple.quantity = newQuant;
         await tuple.save();
         return res.status(200).send({success:'Cart item updated.'});
@@ -80,17 +84,23 @@ async function addCart(req,res){
     let {userId,productId,quantity} = req.body;
     
     try {
+        //verificar que haya suficiente stock antes de aniadir a carrito
+        let product = await Product.findByPk(productId);
+        if((product.stock-quantity)<0 || quantity>product.stock){
+            return res.status(400).send({err:`Not enough units of ${product.name} in stock! The current stock is ${product.stock} units.`});
+        }
         let isInCart = await Cart_item.findOne({where:{productId:productId, userId:userId}})
         if(isInCart){
-            isInCart.quantity = parseInt(isInCart.quantity)+parseInt(quantity);
+            let combinedQuantity =parseInt(isInCart.quantity)+parseInt(quantity)
+            if((product.stock-combinedQuantity)<0 || combinedQuantity>product.stock){
+                return res.status(400).send({err:`Adding that quantity of ${product.name} to your cart will surpass the stock available, which is ${product.stock} units.`});
+            }
+            isInCart.quantity = combinedQuantity;
             await isInCart.save()
             return res.sendStatus(200)
         }//
         let user = await User.findByPk(userId);
-        let product = await Product.findByPk(productId);
-        if(quantity>product.dataValues.stock) return res.status(400).send({err:'Not enough units of that product in stock!'});
         let cItem = await user.createCart_item({quantity, productId});
-        // let rel = await product.setCart_item(cItem);
         return res.sendStatus(200)
     } catch (error) {
         console.log('log',error)
