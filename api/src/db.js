@@ -71,6 +71,7 @@ const {
   Product,
   Product_animal_type,
   Product_cart_item,
+  ProductImage,
   Product_product_type,
   Product_type,
   Purchase_order,
@@ -113,6 +114,9 @@ User.hasMany(Review);
 Review.belongsTo(User);
 Product.hasMany(Review);
 Review.belongsTo(Product);
+////////////////////////////////////
+Product.hasMany(ProductImage);
+ProductImage.belongsTo(Product);
 ////////////////////////////////////
 module.exports = {
   ...sequelize.models,
