@@ -48,6 +48,7 @@ const ProductTable = () => {
             <TableCell>Name</TableCell>
             <TableCell>Stock</TableCell>
             <TableCell>Price</TableCell>
+            <TableCell>Stock</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,32 +63,7 @@ const ProductTable = () => {
               <TableCell>{products.name}</TableCell>
               <TableCell>{products.stock}</TableCell>
               <TableCell>{products.price}</TableCell>
-              {/* <TableCell>
-                {users.isAdmin ? (
-                  <TableCell>
-                    <IconButton onClick={(e) => handleAdmin(e, users.id)}>
-                      <LocalPoliceIcon />
-                    </IconButton>
-                  </TableCell>
-                ) : (
-                  <TableCell>
-                    <IconButton onClick={(e) => handleAdmin(e, users.id)}>
-                      <AccountBoxIcon />
-                    </IconButton>
-                  </TableCell>
-                )}
-              </TableCell> */}
-              {/* <TableCell>
-                {users.isBan ? (
-                  <IconButton onClick={(e) => handleBan(e, users.id)}>
-                    <TaskAltIcon />
-                  </IconButton>
-                ) : (
-                  <IconButton onClick={(e) => handleBan(e, users.id)}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                )}
-              </TableCell> */}
+              <TableCell>{products.stock}</TableCell>
             </TableRow>
           ))}
         </TableBody>

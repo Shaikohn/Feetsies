@@ -32,8 +32,44 @@ import IconButton from "@mui/material/IconButton";
 import Swal from 'sweetalert2'
 
 
-
-
+export function UserCard({userDetail, setShow}) {
+  const userSince = new Date(userDetail.createdAt)
+  return (
+    
+                  <Box sx={{ p: 2, display: 'flex', width:'fit-content', margin:'auto', alignItems:'center', height:'100%' }}>
+                     <Box>
+                     <Avatar variant="rounded" src= {userDetail.image} sx={{margin: 'auto', width:'70%', height:'100%'}} />
+                     </Box>
+                      <Box>
+                      <Stack spacing={0.5}>
+                        <Typography fontWeight={700}>{userDetail.name} {userDetail.lastName}</Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{display: 'flex', alignItems: 'center'}}>
+                          <LocationOn sx={{color: 'grey[500]', display:'inline-flex'}} />
+                           {userDetail.location}
+                        </Typography>
+                        
+                         { 
+                          userDetail.phone_number !== 'No phone number added' ? (
+                            <Typography sx={{display:'flex', alignItems:'center'}}>
+                            <Mail /> <a href={`mailto:${userDetail.email}`} style={{margin:'auto'}}>{userDetail.email}</a>
+                            </Typography>
+                          )  : null
+                         
+                         }
+                       
+                        <Typography sx={{display:'flex', alignItems:'center'}}>
+                          <LocalPhone /> <a href={`tel:${userDetail.phone_number}`} style={{margin:'auto'}}>{userDetail.phone_number}</a>
+                        </Typography>
+                        <Typography sx={{display:'flex', alignItems: 'center'}}>
+                          User since: {userSince.getUTCFullYear()}
+                        </Typography>  
+                      </Stack>
+                    
+                      </Box>
+                  </Box>
+                
+  )
+}
 
 const UserTable = () => {
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -43,11 +79,10 @@ const UserTable = () => {
   );
   const [show, setShow] = React.useState(false)
   const [userDetail, setUserDetail] = React.useState({})
-  const userSince = new Date(userDetail.createdAt)
+  
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllUsers());
-    console.log(userDetail)
   }, [reducerValue, dispatch, userDetail]);
   
 
@@ -99,8 +134,8 @@ const UserTable = () => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650, zindex: '0' }} aria-label="simple table">
+    <TableContainer component={Paper} sx={{width: '100%'}}>
+      <Table sx={{ width:'100%', zindex: '0' }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -156,44 +191,16 @@ const UserTable = () => {
           ))}
         </TableBody>
         { show && ReactDOM.createPortal(
-                  <Card sx={{width: 'fit-content', height: '15em', zIndex: '1', position:'relative', margin:'auto'}}>
-                  <Box sx={{ p: 2, display: 'flex', width:'fit-content', margin:'auto', alignItems:'center', height:'100%' }}>
-                    <Box style={{position: 'absolute', top: '1%', left: '1%'}}>
-                      <IconButton onClick={() =>setShow(false)}>
-                          <Close />
-                      </IconButton>
-                    </Box>
-                     <Box>
-                     <Avatar variant="rounded" src= {userDetail.image} sx={{margin: 'auto', width:'80px', height:'80px'}} />
-                     </Box>
-                      <Box>
-                      <Stack spacing={0.5}>
-                        <Typography fontWeight={700}>{userDetail.name} {userDetail.lastName}</Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{display: 'flex', alignItems: 'center'}}>
-                          <LocationOn sx={{color: 'grey[500]', display:'inline-flex'}} />
-                           {userDetail.location}
-                        </Typography>
-                        
-                         { 
-                          userDetail.phone_number !== 'No phone number added' ? (
-                            <Typography sx={{display:'flex', alignItems:'center'}}>
-                            <Mail /> <a href={`mailto:${userDetail.email}`} style={{margin:'auto'}}>{userDetail.email}</a>
-                            </Typography>
-                          )  : null
-                         
-                         }
-                       
-                        <Typography sx={{display:'flex', alignItems:'center'}}>
-                          <LocalPhone /> <a href={`tel:${userDetail.phone_number}`} style={{margin:'auto'}}>{userDetail.phone_number}</a>
-                        </Typography>
-                        <Typography sx={{display:'flex', alignItems: 'center'}}>
-                          User since: {userSince.getUTCFullYear()}
-                        </Typography>  
-                      </Stack>
-                    
-                      </Box>
+          <Card sx={{width: 'fit-content', height: '15em', zIndex: '2' }}>
+                  <Box sx={{zIndex: '1', position:'relative', margin:'auto', boxShadow: '-5px 10px 15px black'}}>
+                  <Box sx={{position:'absolute', top: '-12%', left: '50%', backgroundColor:'white', borderRadius:'35%'}}> 
+                  <IconButton onClick={() =>setShow(false)} >
+                      <Close />
+                  </IconButton>
                   </Box>
-                </Card>,
+                  <UserCard userDetail={userDetail} setShow={setShow}/>
+                </Box>
+          </Card>,
                 document.querySelector('#contact')
                 )
               }
