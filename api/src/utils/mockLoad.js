@@ -450,7 +450,32 @@ async function loadUsers() {
 }
 
 async function loadAnimals() {
-  return Animal.bulkCreate(mockAnimals);
+  for(let i=0; i<mockAnimals.length; i++) {
+    try {
+      let animtype = await Animal_type.findOne({
+          where: {
+              id: mockAnimals[i].animal_typeId
+          }
+      });
+     
+
+      let newAnimal = await Animal.create({
+          name: mockAnimals[i].name,
+          description: mockAnimals[i].description,
+          size: mockAnimals[i].size,
+          sex: mockAnimals[i].sex,
+          breed: mockAnimals[i].breed,
+          age: mockAnimals[i].age,
+          animal_typeId:animtype.dataValues.id,
+          include: Animal_type
+      })
+      let animType = await newAnimal.addAnimal_types(animtype)
+    
+     
+  } catch (error) {
+      return res.status(500).send(errorVar)
+  }
+  }
 }
 
 async function loadProducts() {
@@ -529,13 +554,13 @@ async function loadProducts() {
       const aType = await Animal_type.findOne({
         where: { name: mockProducts[i].animalTypes[j] },
       });
-      const aux = await newProd.addAnimal_types(aType);
+      await newProd.addAnimal_types(aType);
     }
     for (let j = 0; j < mockProducts[i].productTypes.length; j++) {
       const pType = await Product_type.findOne({
         where: { name: mockProducts[i].productTypes[j] },
       });
-      const aux = await newProd.addProduct_types(pType);
+      await newProd.addProduct_types(pType);
     }
   }
 }
