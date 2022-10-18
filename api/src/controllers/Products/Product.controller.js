@@ -58,9 +58,11 @@ async function getDetail(req, res) {
     return res.status(400).send("Bad request");
   }
   try {
-    let reg = await Product.findOne({ where: { id: req.params.id } });
+    let reg = await Product.findOne({ where: { id: req.params.id },include:ProductImage });
     if (!reg) return res.status(400).send(notFound);
+    //console.log('logging reg', reg.dataValues);
     let aux = await createElementWithTypes(reg);
+    //console.log('logging aux', aux);
     return res.send(aux);
   } catch (error) {
     return res.status(500).send(error);
@@ -122,6 +124,7 @@ async function createElementWithTypes(element) {
   try{
     let productTypes = await element.getProduct_types();
     let animalTypes = await element.getAnimal_types();
+    element.dataValues.image = element.dataValues.productImages[0].dataValues.image;
     let value=0;
     let divideBy=0;
     let avg = await Review.findAll({where:{productId:element.id}})
