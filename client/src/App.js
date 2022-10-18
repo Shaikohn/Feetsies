@@ -84,29 +84,29 @@ function App() {
           {/* Sign in Form */}
           <Route
             path="/signIn"
-            element={user ? <Navigate to="/" replace /> : <SignIn />}
+            element={<SignIn />}
           />
           <Route
             exact
             path="/checkEmail"
-            element={user ? <Navigate to="/" replace /> : <CheckEmails />}
+            element={<CheckEmails />}
           />
           <Route
             exact
             path="/confirm/:confirmationCode"
-            element={user ? <Navigate to="/" replace /> : <AccountConfirmed />}
+            element={<AccountConfirmed />}
           />
           {/* Reset Password */}
           <Route
             exact
             path="/reset-password/:id/:token"
-            element={user ? <Navigate to="/" replace /> : <ResetPassword />}
+            element={<ResetPassword />}
           />
           {/* Forgot Password */}
           <Route
             exact
             path="/forgot-password"
-            element={user ? <Navigate to="/" replace /> : <ForgotPassword />}
+            element={<ForgotPassword />}
           />
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="" element={<DashboardLanding />} />

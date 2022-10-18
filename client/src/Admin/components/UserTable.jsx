@@ -164,7 +164,7 @@ const UserTable = () => {
                       </IconButton>
                     </Box>
                      <Box>
-                     <Avatar variant="rounded" src= {userDetail.image} sx={{margin: 'auto', width:'70%', height:'100%'}} />
+                     <Avatar variant="rounded" src= {userDetail.image} sx={{margin: 'auto', width:'80px', height:'80px'}} />
                      </Box>
                       <Box>
                       <Stack spacing={0.5}>
