@@ -79,7 +79,7 @@ export default function OrderDetail() {
       <Stack direction="row" spacing={2} >
         
       <Link to= "/profile" ><Button sx={{ m: 1, width: '20ch', color: '#022335', bgcolor:'#dee2e6', borderColor:'#022335',  borderRadius: "5px"}}   variant="outlined" startIcon={<KeyboardReturnIcon fontSize = "large"/>}>
-      volver
+      GO BACK
     </Button></Link>
      
 

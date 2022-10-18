@@ -336,10 +336,10 @@ export default function ResponsiveAppBar() {
                   </Link>
                   
                 </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
+                {/* <MenuItem onClick={handleCloseUserMenu}>
                   <ManageAccountsIcon sx={{ mr: 2 }} />
                   <Typography textAlign="center">Account</Typography>
-                </MenuItem>
+                </MenuItem> */}
                 <Divider />
                 {user.data.isAdmin ? (
                   <MenuItem onClick={handleDashboard}>

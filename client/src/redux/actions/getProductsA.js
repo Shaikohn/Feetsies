@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_PRODUCT_NAME = "GET_PRODUCT_NAME";
 
@@ -21,7 +22,12 @@ export function getProductName(name) {
                 payload: json.data
             });
         } catch(error) {
-            alert (`Product cant be found! Error: ${error}`);
+            Swal.fire({
+                title: "Error",
+                text: 'Product couldnt be found!',
+                icon: "error",
+                timer: 3000,
+            });
         }
     }
 }
