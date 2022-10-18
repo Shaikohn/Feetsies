@@ -14,7 +14,7 @@ const notFound = { err: "Not Found" };
 
 async function getAllProducts(req, res) {
   try {
-    let data = await Product.findAll();
+    let data = await Product.findAll({include:ProductImage});
     let result = [];
     for (let i = 0; i < data.length; i++) {
       result.push(await createElementWithTypes(data[i]));
@@ -38,6 +38,7 @@ async function searchProducts(req, res) {
           [Op.like]: searchValue,
         }),
       },
+      include:ProductImage 
     });
     if (lecture.length > 0) {
       let result = [];
@@ -124,6 +125,11 @@ async function createElementWithTypes(element) {
   try{
     let productTypes = await element.getProduct_types();
     let animalTypes = await element.getAnimal_types();
+    //console.log('the element content is as follows', element)
+    //console.log('the productimage content is as follows', element.dataValues.productImages);
+    //console.log('sub zero', element.dataValues.productImages[0]);
+    //console.log('this is the failing product', element)
+    //console.log('the image url should be this one ', element.dataValues.productImages[0].dataValues.image);
     element.dataValues.image = element.dataValues.productImages[0].dataValues.image;
     let value=0;
     let divideBy=0;
