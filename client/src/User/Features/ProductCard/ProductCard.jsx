@@ -22,7 +22,7 @@ import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 
 const labels = {
-  0.5: "Useless",
+  0: "---",
   1: "Useless+",
   1.5: "Poor",
   2: "Poor+",
@@ -57,7 +57,7 @@ export default function ProductCard({
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
 
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(avg);
   const [hover, setHover] = React.useState(-1);
 
   const handleChange = (event) => {
@@ -120,9 +120,11 @@ export default function ProductCard({
               }
               readOnly
             />
-            {value !== null && (
-              <Box sx={{ ml: 2}}>{labels[hover !== -1 ? hover : value]}</Box>
-            )}
+            <Typography sx={{ color: "#567900", fontWeight: "600" }}>
+              {value !== null && (
+                <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+              )}
+            </Typography>
             <CardMedia
               component="img"
               height="220px"

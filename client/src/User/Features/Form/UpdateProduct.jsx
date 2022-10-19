@@ -1,8 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useForm } from "react-hook-form";
-import ResponsiveAppBar from "../Header/HeaderMUI.jsx";
-import styles from "./CreateProduct.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../../../redux/actions/getProductsA.js";
 import Swal from "sweetalert2";
@@ -14,19 +12,16 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import { getProductDetails } from "../../../redux/actions/productDetailsActions";
-
-
-import IconButton from "@mui/material/IconButton";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import {
+  clearProductDetails,
+  getProductDetails,
+} from "../../../redux/actions/productDetailsActions";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Image from "./Img/backgroundDetails1.jpg";
 
 import { RMIUploader } from "react-multiple-image-uploader";
 import { useParams } from "react-router-dom";
-
 
 const style = {
   position: "absolute",
@@ -41,32 +36,25 @@ const style = {
 };
 
 const UpdateProduct = () => {
-
-  const {productDetails} = useSelector((state) => state.ProductDetails);
-  const {id} = useParams();
-  console.log(productDetails);
-
-  
-  useEffect(() => {
-    dispatch(getProductDetails(id));
-  }, []);
-
   const {
     register,
     formState,
     formState: { errors, isSubmitSuccessful },
     handleSubmit,
     reset,
-  } = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      stock: "",
-      price: "",
-      image: "",
-    },
-  });
+  } = useForm();
 
+  const dispatch = useDispatch();
+  const { productDetails } = useSelector((state) => state.ProductDetails);
+  const { id } = useParams();
+  console.log(productDetails);
+
+  useEffect(() => {
+    dispatch(getProductDetails(id));
+    return () => {
+      dispatch(clearProductDetails());
+    };
+  }, []);
 
   // NUEVA LIBRERIA
 
@@ -101,38 +89,9 @@ const UpdateProduct = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const dispatch = useDispatch();
-  // **** cloudinary ****
-  const [image, setImage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const uploadImage = async (e) => {
-    const files = e.target.files;
-    const data = new FormData();
-    data.append("file", files[0]);
-    data.append("upload_preset", "proyecto-final-animals");
-    setLoading(true);
-    const res = await fetch(
-      "https://api.cloudinary.com/v1_1/tawaynaskp/image/upload",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
-    const file = await res.json();
-
-    console.log("data", file);
-
-    setImage(file.secure_url);
-    setLoading(false);
-  };
-
-  console.log(image);
-
-  
-
   console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
-    console.log("Onsubmit", { ...data, image });
+    console.log("Onsubmit", { ...data });
     try {
       await axios.put(`/products/update`, {
         ...data,
@@ -144,7 +103,6 @@ const UpdateProduct = () => {
         icon: "success",
         timer: 5000,
       });
-      setImage("");
       dispatch(getAllProducts());
     } catch (error) {
       console.log(error);
@@ -156,182 +114,112 @@ const UpdateProduct = () => {
     if (formState.isSubmitSuccessful) {
       reset({ name: "", description: "", stock: "", price: "", image: "" });
     }
-  }, [formState, reset, image]);
-
-
+  }, [formState, reset]);
 
   return (
-    <div>
-      <div>
-        <Grid
-          container
-          rowSpacing={1}
-          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-          sx={{
-            my: 4,
-            mx: 2,
-            // backgroundImage: `url(${Image})`,
-            height: "90vh",
-            margin: "auto",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Grid item xs={6}>
-            <Button onClick={handleOpen}>Upload Images</Button>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <RMIUploader
-                  isOpen={visible}
-                  hideModal={hideModal}
-                  onSelect={onSelect}
-                  onUpload={onUpload}
-                  onRemove={onRemove}
-                  dataSources={dataSources}
-                />
-              </Box>
-            </Modal>
-            {imgToUse.map((imageSrc) => (
-              <img src={imageSrc.dataURL} alt="not fount" width={"250px"} />
-            ))}
-          </Grid>
-          <Grid item xs={6}>
-            <Card sx={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
-              <CardContent>
-                <Typography gutterBottom variant="h5">
-                  Update Product 
-                </Typography>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <Grid container spacing={1}>
-                    <Grid xs={12} item>
-                      <TextField
-                        error={errors.name ? true : false}
-                        label={productDetails.name}
-                        variant="outlined"
-                        fullWidth
-                        {...register("name", {
-                          required: true,
-                          pattern: /^[a-zA-Z ]*$/i,
-                          maxLength: 20,
-                        })}
-                        aria-invalid={errors.name ? "true" : "false"}
-                      />
-                      {errors?.name?.type === "required" && (
-                        <span style={{ color: "red" }}>
-                          This field is required
-                        </span>
-                      )}
-                      {errors?.name?.type === "maxLength" && (
-                        <span style={{ color: "red" }}>
-                          Product's name cannot exceed 20 characters
-                        </span>
-                      )}
-                      {errors?.name?.type === "pattern" && (
-                        <span style={{ color: "red" }}>
-                          Alphabetical characters only
-                        </span>
-                      )}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        error={errors.stock ? true : false}
-                        label={productDetails.stock}
-                        variant="outlined"
-                        type="number"
-                        fullWidth
-                        {...register("stock", {
-                          required: "Please type a number",
-                          max: 1000,
-                        })}
-                        aria-invalid={errors.stock ? "true" : "false"}
-                      />
-                      {errors?.stock?.type === "required" && (
-                        <span style={{ color: "red" }}>
-                          {errors.stock?.message}
-                        </span>
-                      )}
-                      {errors?.stock?.type === "max" && (
-                        <span style={{ color: "red" }}>
-                          the stock can not be more than 1000
-                        </span>
-                      )}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        error={errors.price ? true : false}
-                        type="number"
-                        label={productDetails.price}
-                        variant="outlined"
-                        fullWidth
-                        {...register("price", {
-                          required: "A price is required",
-                          max: 1000,
-                        })}
-                        aria-invalid={errors.price ? "true" : "false"}
-                      />
-                      {errors?.price?.type === "required" && (
-                        <span style={{ color: "red" }}>
-                          {errors.price?.message}
-                        </span>
-                      )}
-                      {errors?.price?.type === "max" && (
-                        <span style={{ color: "red" }}>
-                          The price can not be more than 1000
-                        </span>
-                      )}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        error={errors.description ? true : false}
-                        label="Description"
-                        multiline
-                        rows={4}
-                        defaultValue={productDetails.description}
-                        placeholder={productDetails.description}
-                        variant="outlined"
-                        fullWidth
-                        {...register("description", {
-                          required: true,
-                          maxLength: 120,
-                        })}
-                        aria-invalid={errors.description ? "true" : "false"}
-                      />
-                      {errors?.description?.type === "required" && (
-                        <span style={{ color: "red" }}>
-                          This field is required
-                        </span>
-                      )}
-                      {errors?.description?.type === "maxLength" && (
-                        <span style={{ color: "red" }}>
-                          Description cannot exceed 120 characters
-                        </span>
-                      )}
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                      >
-                        Update
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </form>
-              </CardContent>
-            </Card>
-          </Grid>
+    <>
+      <Grid
+        container
+        rowSpacing={1}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        sx={{
+          my: 4,
+          mx: 2,
+          // backgroundImage: `url(${Image})`,
+          height: "90vh",
+          margin: "auto",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Grid item xs={6}>
+          <Button onClick={handleOpen}>Upload Images</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <RMIUploader
+                isOpen={visible}
+                hideModal={hideModal}
+                onSelect={onSelect}
+                onUpload={onUpload}
+                onRemove={onRemove}
+                dataSources={dataSources}
+              />
+            </Box>
+          </Modal>
+          {imgToUse.map((imageSrc) => (
+            <img src={imageSrc.dataURL} alt="not fount" width={"250px"} />
+          ))}
         </Grid>
-      </div>
-    </div>
+        <Grid item xs={6}>
+          <Card sx={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
+            <CardContent>
+              <Typography gutterBottom variant="h5">
+                Update Product
+              </Typography>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={1}>
+                  <Grid xs={12} item>
+                    <TextField
+                      label="Product´s Name"
+                      type="text"
+                      multiline
+                      defaultValue={productDetails.name}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Stock"
+                      multiline
+                      defaultValue={productDetails.stock}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Price"
+                      multiline
+                      defaultValue={productDetails.price}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Description"
+                      multiline
+                      rows={4}
+                      defaultValue={productDetails.description}
+                      variant="outlined"
+                      fullWidth
+                    />
+                  </Grid>
+
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                    >
+                      Update
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </>
   );
 };
 
