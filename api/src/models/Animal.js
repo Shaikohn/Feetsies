@@ -34,10 +34,6 @@ module.exports= (sequelize) => {
             type: DataTypes.TEXT,
             allowNull: false
         },
-        animal_typeId: {
-            type: DataTypes.INTEGER,
-            defaultValue:4,
-        },
         main_image:{
             type: DataTypes.TEXT,
             defaultValue:defaultpic,
