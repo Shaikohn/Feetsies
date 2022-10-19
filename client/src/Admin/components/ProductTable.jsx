@@ -13,8 +13,8 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import IconButton from "@mui/material/IconButton";
 import { getAllProducts } from "../../redux/actions/getProductsA";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,6 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const ProductTable = () => {
-
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const { allProductsCopy } = useSelector((state) => state.products);
 
@@ -34,11 +33,10 @@ const ProductTable = () => {
     dispatch(getAllProducts());
   }, [reducerValue, dispatch]);
 
-
   async function handleDeleteProd(e, id) {
     e.preventDefault();
     try {
-      await axios.delete(`/products/${id}`)
+      await axios.delete(`/products/${id}`);
       dispatch(getAllProducts());
     } catch (error) {
       console.log(error);
@@ -47,7 +45,7 @@ const ProductTable = () => {
 
   function handleEditProd(e, id) {
     e.preventDefault();
-    navigate(`/dashboard/updateProduct/${id}`)
+    navigate(`/dashboard/updateProduct/${id}`);
   }
 
   //   const handleDelete = (e, id) => {
@@ -71,7 +69,6 @@ const ProductTable = () => {
             <TableCell>Name</TableCell>
             <TableCell>Stock</TableCell>
             <TableCell>Price</TableCell>
-            <TableCell>Stock</TableCell>
             <TableCell>Edit</TableCell>
             <TableCell>Delete</TableCell>
           </TableRow>
@@ -88,7 +85,6 @@ const ProductTable = () => {
               <TableCell>{products.name}</TableCell>
               <TableCell>{products.stock}</TableCell>
               <TableCell>{products.price}</TableCell>
-              <TableCell>{products.stock}</TableCell>
               <TableCell>
                 <IconButton onClick={(e) => handleEditProd(e, products.id)}>
                   <EditIcon />

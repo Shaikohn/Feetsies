@@ -28,7 +28,9 @@ import OrderDetail from "./User/Features/Profile/OrderDetail";
 import ProductHome from "./User/Views/ProductHome/ProductHome.jsx";
 import UpdateProduct from "./User/Features/Form/UpdateProduct";
 import Inquiry from "./User/Features/Form/Inquiry";
-
+import AnimalList from "./Admin/components/AnimalList";
+import CreateAnimal from "./User/Features/Form/CreateAnimal";
+import UpdateAnimal from "./User/Features/Form/UpdateAnimal";
 
 function App() {
   const theme = createTheme({
@@ -60,8 +62,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <div id='contact' style={{position: 'absolute', left: '70%', top:'35%', zIndex:1}}/>
-        <div id='adminModal' />
+        <div
+          id="contact"
+          style={{ position: "absolute", left: "70%", top: "35%", zIndex: 1 }}
+        />
+        <div id="adminModal" />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home/products" element={<ProductHome />} />
@@ -84,7 +89,11 @@ function App() {
           />
           <Route exact path="/home/altaAdoption" element={<AltaAdoption />} />
           <Route exact path="/home/shoppingView" element={<ShoppingView />} />
-          <Route exact path="/signUp" element={<SignUp />} />
+          <Route
+            exact
+            path="/signUp"
+            element={user ? <Navigate to="/" replace /> : <SignUp />}
+          />
           <Route
             path="/signIn"
             element={user ? <Navigate to="/" replace /> : <SignIn />}
@@ -111,11 +120,13 @@ function App() {
           />
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="" element={<DashboardLanding />} />
-            <Route path="animaltable" element={<AnimalsTable />} />
+            <Route path="animaltable" element={<AnimalList />} />
             <Route path="users" element={<UsersList />} />
             <Route path="products" element={<ProductsList />} />
             <Route path="createProduct" element={<CreateProduct />} />
+            <Route path="createAnimal" element={<CreateAnimal />} />
             <Route path="updateProduct/:id" element={<UpdateProduct />} />
+            <Route path="updateAnimal/:id" element={<UpdateAnimal />} />
           </Route>
           <Route path="profile" element={<UserProfile />} />
           <Route path="user/data" element={<UserData />} />
