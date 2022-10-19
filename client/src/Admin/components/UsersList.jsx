@@ -10,9 +10,6 @@ import UserTable from "./UserTable";
 
 
 
-
-
-
 const mdTheme = createTheme();
 
 export default function UsersList() {
@@ -21,7 +18,7 @@ export default function UsersList() {
   React.useEffect(() => {}, [notifications]);
   return (
     <ThemeProvider theme={mdTheme}>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", alignContent: "center"}}>
         <CssBaseline />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>

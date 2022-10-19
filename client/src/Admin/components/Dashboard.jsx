@@ -109,10 +109,10 @@ function DashboardContent() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute" open={open} sx={{ color: "#87a827", bgcolor: "black"}}>
           <Toolbar
             sx={{
-              pr: "24px", // keep right padding when drawer closed
+              p: 1.7 // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -121,24 +121,24 @@ function DashboardContent() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: "36px",
+                mr: "36px",
                 ...(open && { display: "none" }),
               }}
             >
-              <MenuIcon />
+              <MenuIcon sx={{width: 30, height: 30}}/>
             </IconButton>
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
+              color="#87a827"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{ flexGrow: 1 , fontWeight: 600, fontSize: 26, letterSpacing: ".3rem",}}
             >
-              Dashboard
+              DASHBOARD
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={notifications.length} color="secondary">
-                <NotificationsIcon />
+                <NotificationsIcon sx={{width: 30, height: 30}}/>
               </Badge>
             </IconButton>
           </Toolbar>
@@ -150,18 +150,18 @@ function DashboardContent() {
               alignItems: "center",
               justifyContent: "flex-end",
               px: [1],
+              bgcolor: "black",
+              p: 1.38
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
+              <ChevronLeftIcon sx={{color: "#87a827", width: 35, height: 35}}/>
             </IconButton>
           </Toolbar>
-          <Divider />
+          <Divider/>
           <List component="nav" sx={{overflowWrap:'break-word', wordBreak:'break-word', width: '100%'}}>
-            <Box><h2>Welcome {user}</h2></Box>
             {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {/* {secondaryListItems} */}
+            <Divider />
           </List>
         </Drawer>
         <Box
@@ -169,7 +169,7 @@ function DashboardContent() {
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === "light"
-                ? theme.palette.grey[100]
+                ? "#ffff9b"
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: "100vh",
@@ -177,7 +177,7 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
             <Grid container spacing={3}>
               <Outlet />
             </Grid>
@@ -234,25 +234,25 @@ export function ModalAdmin({ item, setOpen, open }) {
 export function DashboardLanding() {
   return (
     <React.Fragment>
-      <Grid item xs={12} md={12} lg={8}>
+      <Grid item xs={12} md={12} lg={6}>
         <Paper
           sx={{
             p: 2,
             display: "flex",
             flexDirection: "column",
-            height: 240,
+            height: 300,
           }}
         >
           <Chart />
         </Paper>
       </Grid>
-      <Grid item xs={24} md={12} lg={4}>
+      <Grid item xs={24} md={12} lg={6}>
         <Paper
           sx={{
             p: 2,
             display: "flex",
             flexDirection: "column",
-            height: 240,
+            height: 300,
             overflowY: "auto",
           }}
         >
