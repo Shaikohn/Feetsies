@@ -5,26 +5,12 @@ const badReq = { err: "Bad request" };
 const notFound = { err: "Not Found" };
 
 async function addPetition(req, res) {
-    let {userId, animId} = req.body
+    let {userId, animId, topic, description} = req.body
     try {
-        const newRow = await Adoption_petition.create({
-            topic: topic,
-            description: description,
-            include: [User, Animal]
-        });
-
-        const user = await User.findOne({
-            where: {
-                id: userId 
-            }
-        });
-        await user.addAdoption_petition(newRow);
-        let anim = await Animal.findOne({ 
-            where: {
-                id: animId
-            }
-        });
-        await anim.addAdoption_petition(newRow);
+        let animal = await Animal.findOne({where:{id:animId}})
+        let petition = await animal.createAdoption_petition({topic:topic,description:description})
+        let user = await User.findOne({where:{id:userId}});
+        await user.addAdoption_petition(petition);
         return res.status(201).send('Information uploaded succesfully');
     } catch (error) {
         console.log(error)
