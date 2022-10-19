@@ -54,6 +54,7 @@ export default function OrderDetail() {
             <StyledTableCell align="left">Name</StyledTableCell>
             <StyledTableCell align="center">Quantity</StyledTableCell>
             <StyledTableCell align="rigth">Unit Price($)</StyledTableCell>
+            <StyledTableCell align="rigth">Subtotal($)</StyledTableCell>
             
           </TableRow>
         </TableHead>
@@ -64,6 +65,7 @@ export default function OrderDetail() {
             <StyledTableRow key={id}>
               <StyledTableCell align="left">{e.productName}</StyledTableCell>
               <StyledTableCell align="center">{e.quantity}</StyledTableCell>
+              <StyledTableCell align="rigth">{e.subtotal / e.quantity}</StyledTableCell>
               <StyledTableCell align="rigth">{e.subtotal}</StyledTableCell>
             </StyledTableRow>
             )}
@@ -75,7 +77,6 @@ export default function OrderDetail() {
         }
         </TableBody>
       </Table>
-;
       <Stack direction="row" spacing={2} >
         
       <Link to= "/profile" ><Button sx={{ m: 1, width: '20ch', color: '#022335', bgcolor:'#dee2e6', borderColor:'#022335',  borderRadius: "5px"}}   variant="outlined" startIcon={<KeyboardReturnIcon fontSize = "large"/>}>
