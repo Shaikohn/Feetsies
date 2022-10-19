@@ -293,8 +293,7 @@ const CreateProduct = () => {
                         variant="outlined"
                         fullWidth
                         {...register("price", {
-                          required: "A price is required",
-                          max: 1000,
+                          required: "A price is required"
                         })}
                         aria-invalid={errors.price ? "true" : "false"}
                       />

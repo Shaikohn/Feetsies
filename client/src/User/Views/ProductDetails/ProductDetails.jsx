@@ -39,10 +39,9 @@ export default function ProductDetails({ product }) {
   const { productDetails } = useSelector((state) => state.ProductDetails);
 
   const [selectedImg, setSelectedImg] = useState(productDetails.productImages[0]) 
-
+  
   console.log("dea", productDetails);
   console.log("images", selectedImg)
-  
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
@@ -140,7 +139,7 @@ export default function ProductDetails({ product }) {
             mx: 2,
           }}
         >
-          <Box sx={{display: "flex", flexDirection: "column"}}>
+          {/* <Box sx={{display: "flex", flexDirection: "column"}}>
             {productDetails.productImages?.map((img, i) => (
               <img 
                   style={{border: selectedImg === img ? "4px solid purple": ""}}
@@ -151,9 +150,33 @@ export default function ProductDetails({ product }) {
                   />
               ))
             }
-            {/* {productDetails.productImages?.map(i => (
+            {productDetails.productImages?.map(i => (
               <img src={i.image} alt="tu vieja" />
-            ))} */}
+            ))}
+          </Box> */}
+          <Box 
+            sx={{
+              display: "flex", 
+              flexDirection: "column",
+              py: 1.3
+            }}
+          >
+            {productDetails.productImages?.map((img, i) => (
+              <CardMedia
+                component="img"
+                style={{border: selectedImg === img ? "3px solid #953757": ""}}
+                key={i} 
+                image={img.image} 
+                alt="dog"
+                onClick={() => setSelectedImg(img)}
+                sx={{
+                  borderRadius: "15px",
+                  my: 1.5
+                }}
+                height="80px"
+                width="auto"
+              />
+            ))}
           </Box>
         </Grid>
         <Grid
