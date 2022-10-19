@@ -460,7 +460,7 @@ async function loadAnimals() {
               id: mockAnimals[i].animal_typeId
           }
       });
-     
+    
 
       let newAnimal = await Animal.create({
           name: mockAnimals[i].name,
@@ -469,15 +469,11 @@ async function loadAnimals() {
           sex: mockAnimals[i].sex,
           breed: mockAnimals[i].breed,
           age: mockAnimals[i].age,
-          animal_typeId:animtype.dataValues.id,
-          include: Animal_type
       })
+      await newAnimal.setAnimal_types(animType)
       await newAnimal.createAnimalImage({});
-      let animType = await newAnimal.addAnimal_types(animtype)
-    
-     
   } catch (error) {
-      return res.status(500).send(errorVar)
+      console.log(error)
   }
   }
 }
