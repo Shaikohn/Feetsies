@@ -5,33 +5,73 @@ import styles from "./CreateProduct.module.css";
 import { useDispatch } from "react-redux";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import { Grid, Card, CardContent, Typography, TextField, Button} from "@mui/material";
-
+import Swal from 'sweetalert2'
+import { useNavigate } from "react-router-dom";
 
 const Inquiry = () => {
 
     const dispatch = useDispatch();
-
+    const navigate = useNavigate()
     const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data?.id);
 
     const { register, formState: { errors }, handleSubmit } = useForm({ 
         defaultValues: { topic: "", description: ""}
     });
 
+    useEffect(() => {
+        if (!userId) {
+            Swal.fire({
+                title: "YOU HAVE TO BE LOGGED TO SEND A INQUIRY!",
+                icon: "warning",
+                showDenyButton: true,
+                denyButtonText: "Cancel",
+                confirmButtonText: "Sign in",
+                confirmButtonColor: "green",
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    navigate("/signUp");
+                }
+            });
+        }
+    }, [userId])
+
     const onSubmit =  async (data) => {
         console.log("Onsubmit", data);
         try {
             if (!userId) {
-                alert("Need to be loged to use this form!")
+                Swal.fire({
+                    title: "YOU HAVE TO BE LOGGED TO SEND A INQUIRY!",
+                    icon: "warning",
+                    showDenyButton: true,
+                    denyButtonText: "Cancel",
+                    confirmButtonText: "Sign in",
+                    confirmButtonColor: "green",
+                }).then((res) => {
+                    if (res.isConfirmed) {
+                        navigate("/signUp");
+                    }
+                });
             } else {
                 await axios.post("/admin/inquiry", {
                     userId: userId,
                     topic: data.topic,
                     description: data.description
                 })
-                alert("The inquiry was send");
+                Swal.fire({
+                    title: "INQUIRY SENT",
+                    text: "An administrator will read it as soon as possible!",
+                    icon: "success",
+                    timer: 3000,
+                });
             }
         } catch (error) {
             console.log(error);
+            Swal.fire({
+                title: "INQUIRY NOT SENT",
+                text: "Sorry, something failed and the inquiry couldnt be send",
+                icon: "error",
+                timer: 3000,
+            });
         }
     }
     

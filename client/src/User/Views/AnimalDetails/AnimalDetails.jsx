@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ButtonBase, CardMedia, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import Swal from 'sweetalert2';
+import { useSelector } from "react-redux";
 
 /* import images from "./images"; */
 
@@ -14,6 +15,7 @@ export default function AnimalDetails({animal}) {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
     const navigate = useNavigate();
+    console.log(animal)
 
     /* const [selectedImg, setSelectedImg] = useState(images[0]) */
 

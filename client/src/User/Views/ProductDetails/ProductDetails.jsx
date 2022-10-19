@@ -13,7 +13,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { ButtonBase, CardMedia, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import profileIcon from "./Img/profileIcon.jpg";
 
 import Container from "@mui/material/Container";
 import { useForm } from "react-hook-form";
@@ -34,11 +33,10 @@ export default function ProductDetails({ product }) {
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const [isOpenModal, openedModal, closeModal] = useModal(false);
-  const [isNotLogged, openedLoggedModal, closeLoggedModal] = useModal(false);
-
   const { productDetails } = useSelector((state) => state.ProductDetails);
+  const [selectedImg, setSelectedImg] = useState(productDetails.productImages[0]) 
   console.log("dea", productDetails);
-
+  console.log("images", selectedImg)
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
@@ -72,7 +70,12 @@ export default function ProductDetails({ product }) {
     console.log("Onsubmit", data);
     try {
       if (value === 0) {
-        alert("You have to choose one or more stars to submit your review");
+        Swal.fire({
+        title: "REVIEW NOT SUBMITTED",
+        text: "You have to choose one or more stars to submit your review",
+        icon: "error",
+        timer: 3000,
+    });
       } else {
         const review = await axios.post("/products/review", {
           userId: user.data.id,
@@ -82,10 +85,27 @@ export default function ProductDetails({ product }) {
           author: user.data.name,
         });
         console.log("axios review", review);
+        Swal.fire({
+          title: "REVIEW SUBMITTED",
+          text: "Thanks for giving your opinion!",
+          icon: "success",
+          timer: 3000,
+      });
       }
     } catch (error) {
       console.log(error);
-      alert(error.response.data.err);
+      Swal.fire({
+        title: "REVIEW NOT SUBMITTED",
+        text: error.response.data.err,
+        icon: "error",
+        timer: 3000,
+    });
+    Swal.fire({
+      title: "REVIEW NOT SUBMITTED",
+      text: error.response.data.err,
+      icon: "error",
+      timer: 3000,
+  });
     }
   };
 
@@ -115,9 +135,20 @@ export default function ProductDetails({ product }) {
           }}
         >
           <Box sx={{display: "flex", flexDirection: "column"}}>
-            {productDetails.productImages?.map(i => (
+          {
+                                    productDetails.productImages?.map((img, i) => (
+                                        <img 
+                                        style={{border: selectedImg === img ? "4px solid purple": ""}}
+                                        key={i} 
+                                        src={img.image} 
+                                        alt="dog"
+                                        onClick={() => setSelectedImg(img)}
+                                        />
+                                    ))
+                                }
+            {/* {productDetails.productImages?.map(i => (
               <img src={i.image} alt="tu vieja" />
-            ))}
+            ))} */}
           </Box>
         </Grid>
         <Grid
@@ -137,7 +168,7 @@ export default function ProductDetails({ product }) {
             component="img"
             height="500px"
             width="500px"
-            image={product?.image}
+            image={selectedImg.image}
             alt={product?.name}
             sx={{
               borderRadius: "20px",
@@ -240,7 +271,20 @@ export default function ProductDetails({ product }) {
                   }}
                   size="large"
                   variant="outlined"
-                  onClick={openedLoggedModal}
+                  onClick={() => {
+                    Swal.fire({
+                      title: "YOU HAVE TO BE LOGGED TO BUY A PRODUCT!",
+                      icon: "warning",
+                      showDenyButton: true,
+                      denyButtonText: "Cancel",
+                      confirmButtonText: "Sign in",
+                      confirmButtonColor: "green",
+                    }).then((res) => {
+                      if (res.isConfirmed) {
+                        navigate("/signUp");
+                      }
+                    });
+                  }}
                 >
                   Buy
                 </ButtonBase>
@@ -260,39 +304,23 @@ export default function ProductDetails({ product }) {
                   }}
                   size="large"
                   variant="outlined"
-                  onClick={openedLoggedModal}
+                  onClick={() => {
+                    Swal.fire({
+                      title: "YOU HAVE TO BE LOGGED TO USE THE CART!",
+                      icon: "warning",
+                      showDenyButton: true,
+                      denyButtonText: "Cancel",
+                      confirmButtonText: "Sign in",
+                      confirmButtonColor: "green",
+                    }).then((res) => {
+                      if (res.isConfirmed) {
+                        navigate("/signUp");
+                      }
+                    });
+                  }}
                 >
                   Add To Cart
                 </ButtonBase>
-                <Modals isOpenModal={isNotLogged} closeModal={closeLoggedModal}>
-                  <h2 className="modalTitle">YOU HAVE TO BE LOGGED TO BUY!</h2>
-                  <div>
-                    <img
-                      src={profileIcon}
-                      alt=""
-                      width="200px"
-                      height="200px"
-                    />
-                  </div>
-                  <div>
-                    <button
-                      className="modalConfirm"
-                      onClick={() => {
-                        navigate("/signUp");
-                      }}
-                    >
-                      SIGN UP!
-                    </button>
-                    <button
-                      className="modalClose"
-                      onClick={() => {
-                        closeLoggedModal();
-                      }}
-                    >
-                      CLOSE
-                    </button>
-                  </div>
-                </Modals>
               </Box>
             ) : (
               <Box sx={{ display: "flex" }}>
