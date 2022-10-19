@@ -101,7 +101,7 @@ function DashboardContent() {
   React.useEffect(() => {}, [notifications]);
 
   const [user, setUser] = React.useState(
-    JSON.parse(localStorage.getItem("profile"))?.data?.name
+    JSON.parse(localStorage.getItem("profile"))?.data?.name.split(' ')[0]
   );
   console.log(user);
 
@@ -157,8 +157,8 @@ function DashboardContent() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">
-            <h2>Welcome {user}</h2>
+          <List component="nav" sx={{overflowWrap:'break-word', wordBreak:'break-word', width: '100%'}}>
+            <Box><h2>Welcome {user}</h2></Box>
             {mainListItems}
             <Divider sx={{ my: 1 }} />
             {/* {secondaryListItems} */}
