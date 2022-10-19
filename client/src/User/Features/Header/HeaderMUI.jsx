@@ -77,7 +77,7 @@ export default function ResponsiveAppBar() {
     setUser(null);
     Swal.fire({
       title: "Logged out",
-      text: "you have logged out",
+      text: "You have logged out!",
       icon: "success",
       timer: 3000,
     })

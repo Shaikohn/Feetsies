@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2'
 import Spinner from './Spinner';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getProductDetails } from '../../../redux/actions/productDetailsActions';
 
 export default function CheckoutForm({product}) {
@@ -16,6 +16,7 @@ export default function CheckoutForm({product}) {
     const [loading, setLoading] = useState(false)
     const {productDetails} = useSelector((state) => state.ProductDetails)
     const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
+    const navigate = useNavigate()
     console.log(userId)
     console.log(productDetails)
     useEffect(() => {
@@ -40,18 +41,19 @@ export default function CheckoutForm({product}) {
                 description: product.description
             })
             setLoading(false)
-            Swal.fire({
-                title: 'Payment done', 
-                text: data.message, 
-                icon: 'success',
-                timer: 5000
-            });
             /* product.stock-- */
             await axios.post('/cart/save/one', {
                 prods: productDetails,
                 userId,
             })
             elements.getElement(CardElement).clear()
+            navigate("/profile")
+            Swal.fire({
+                title: 'Payment done', 
+                text: data.message, 
+                icon: 'success',
+                timer: 5000
+            });
             }
             catch(error) {
                 Swal.fire({
