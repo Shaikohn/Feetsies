@@ -20,12 +20,28 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import Swal from "sweetalert2"
 import style from "./userStyles.module.css";
 import { OutlinedInput } from "@mui/material";
+import Modal from "@mui/material/Modal";
 
-export default function UserData() {
+export default function UserData({open, setOpen}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { usuario } = useSelector((state) => state.userDetail);
   const [errorPas, setErrorPas] = useState(false)
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const styleUser = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'fit-content',
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    borderRadius: '20px',
+    boxShadow: 24,
+    p: 4,
+    paddingLeft: '-50%'
+  };
 
   const [values, setValues] = useState({
     password: "",
@@ -151,7 +167,16 @@ export default function UserData() {
   }
 
   return (
-    <div className={style.container}>
+    <Modal
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+  onLoad={() => handleOpen()}
+  >
+    <Box sx={styleUser}>
+
+      <div className={style.container}>
       <form onSubmit={(e) => handleSubmit(e)}>
         <Box
           sx={{
@@ -427,5 +452,7 @@ export default function UserData() {
         <br />
       </form>
     </div>
+    </Box>
+    </Modal>
   );
 }

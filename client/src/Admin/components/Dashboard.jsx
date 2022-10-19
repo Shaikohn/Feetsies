@@ -158,7 +158,10 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav" sx={{overflowWrap:'break-word', wordBreak:'break-word', width: '100%'}}>
-            <Box><h2>Welcome {user}</h2></Box>
+            {
+              open && 
+              <Box><h2>Welcome {user}</h2></Box>
+            }
             {mainListItems}
             <Divider sx={{ my: 1 }} />
             {/* {secondaryListItems} */}
