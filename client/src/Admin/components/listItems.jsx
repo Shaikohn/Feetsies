@@ -7,7 +7,7 @@ import {
   Assignment,
   Home,
   Pets,
-  Dashboard
+  Dashboard,
 } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
 import {
