@@ -15,6 +15,7 @@ import {
   ListItemButton,
   ListItemText,
   ListSubheader,
+  Typography,
 } from "@mui/material";
 import CategoryIcon from "@mui/icons-material/Category";
 
@@ -23,41 +24,61 @@ export const mainListItems = (
     <Link to="/">
       <ListItemButton>
         <ListItemIcon>
-          <Home />
+          <Home sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
         </ListItemIcon>
-        <ListItemText primary="Home" />
+        <ListItemText>
+          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+            Home
+          </Typography>
+        </ListItemText>
       </ListItemButton>
     </Link>
     <Link to="/dashboard">
       <ListItemButton>
         <ListItemIcon>
-          <Dashboard />
+          <Dashboard sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
         </ListItemIcon>
-        <ListItemText primary="Dashboard" />
+        <ListItemText>
+          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+            Dashboard
+          </Typography>
+        </ListItemText>
       </ListItemButton>
     </Link>
     <Link to="/dashboard/animaltable">
       <ListItemButton>
         <ListItemIcon>
-          <Pets />
+          <Pets sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
         </ListItemIcon>
-        <ListItemText primary="Animals" />
+        <ListItemText>
+          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+            Animals
+          </Typography>
+        </ListItemText>
       </ListItemButton>
     </Link>
     <Link to="/dashboard/users">
       <ListItemButton>
         <ListItemIcon>
-          <People />
+          <People sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
         </ListItemIcon>
-        <ListItemText primary="Users" />
+        <ListItemText>
+          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+            Users
+          </Typography>
+        </ListItemText>
       </ListItemButton>
     </Link>
     <Link to="/dashboard/products">
       <ListItemButton>
         <ListItemIcon>
-          <CategoryIcon />
+          <CategoryIcon sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
         </ListItemIcon>
-        <ListItemText primary="Products" />
+        <ListItemText>
+          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+            Products
+          </Typography>
+        </ListItemText>
       </ListItemButton>
     </Link>
     {/* <ListItemButton>
