@@ -68,6 +68,7 @@ const {
   Adoption_alta,
   Adoption_petition,
   Animal,
+  AnimalImage,
   Animal_type,
   Cart_item, 
   Inquiry,
@@ -121,6 +122,10 @@ Review.belongsTo(Product)
 ////////////////////////////////////
 Product.hasMany(ProductImage);
 ProductImage.belongsTo(Product);
+////////////////////////////////////
+////////////////////////////////////
+Animal.hasMany(AnimalImage);
+AnimalImage.belongsTo(Animal);
 ////////////////////////////////////
 module.exports = {
   ...sequelize.models, 

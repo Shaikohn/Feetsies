@@ -472,6 +472,7 @@ async function loadAnimals() {
           animal_typeId:animtype.dataValues.id,
           include: Animal_type
       })
+      await newAnimal.createAnimalImage({});
       let animType = await newAnimal.addAnimal_types(animtype)
     
      

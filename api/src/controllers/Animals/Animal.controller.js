@@ -1,4 +1,4 @@
-const {Animal, Adoption_petition, Animal_type} = require('../../db.js')
+const {Animal, Adoption_petition, Animal_type,AnimalImage} = require('../../db.js')
 const {Op} = require('sequelize')
 const sequelize = require('sequelize')
 
@@ -12,14 +12,19 @@ const notFoundVar = {
 }
 async function getAllAnimals(req, res) {
     try {
-        let animals = await Animal.findAll({include: Animal_type})
+        //let animals = await Animal.findAll();
+        let animals = await Animal.findAll({include:[Animal_type,AnimalImage]})
+        for (let i = 0; i < animals.length; i++) {
+            animals[i].main_image = animals[i].animalImages[0].image;
+        }
         if(animals.length === 0) {
-           return res.status(404).send(notFoundVar)
+            return res.status(404).send(notFoundVar)
         } else {
             return res.status(200).send(animals)
         }
     } catch (error) {
-        return res.status(500).send(errorVar)
+        console.log(error);
+        return res.status(500).send(error)
     }
 }
 
@@ -31,8 +36,9 @@ async function getAnimalDetail(req, res) {
             where: {
                 id: id
             },
-            include: [Animal_type, Adoption_petition]
+            include: [AnimalImage, Animal_type, Adoption_petition]
         })
+        animalDetail.main_image = animalDetail.animalImages[0].image;
         let typeId = animalDetail.dataValues.animal_typeId
         
         if(!animalDetail || animalDetail.length === 0) {
@@ -136,6 +142,7 @@ async function searchAnimal(req, res) {
                 let typeId = queryAnimal[i].dataValues.animal_typeId;
                 let type = await Animal_type.findOne({where:{id:typeId}});
                 queryAnimal[i].dataValues.animal_type=type.dataValues.name;
+                queryAnimal[i].main_image = queryAnimal[i].animalImages[0].image;
                 console.log(type.dataValues.name);
             }
     
