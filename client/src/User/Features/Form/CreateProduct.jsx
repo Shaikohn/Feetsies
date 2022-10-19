@@ -201,31 +201,9 @@ const CreateProduct = () => {
             alignItems: "center",
           }}
         >
+          
           <Grid item xs={6}>
-            <Button onClick={handleOpen}>Upload Images</Button>
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <RMIUploader
-                  isOpen={visible}
-                  hideModal={hideModal}
-                  onSelect={onSelect}
-                  onUpload={onUpload}
-                  onRemove={onRemove}
-                  dataSources={dataSources}
-                />
-              </Box>
-            </Modal>
-            {imgToUse.map((imageSrc) => (
-              <img src={imageSrc.dataURL} alt="not fount" width={"250px"} />
-            ))}
-          </Grid>
-          <Grid item xs={6}>
-            <Card sx={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
+            <Card sx={{ padding: "20px 5px", margin: "0 auto" }}>
               <CardContent>
                 <Typography gutterBottom variant="h5">
                   Product form
@@ -334,7 +312,29 @@ const CreateProduct = () => {
                         </span>
                       )}
                     </Grid>
-
+                    <Grid item xs={6}>
+                      <Button onClick={handleOpen}>Upload Images</Button>
+                      <Modal
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style}>
+                          <RMIUploader
+                            isOpen={visible}
+                            hideModal={hideModal}
+                            onSelect={onSelect}
+                            onUpload={onUpload}
+                            onRemove={onRemove}
+                            dataSources={dataSources}
+                          />
+                        </Box>
+                      </Modal>
+                      {imgToUse.map((imageSrc) => (
+                        <img src={imageSrc.dataURL} alt="not fount" width={"250px"} />
+                      ))}
+                    </Grid>
                     <Grid item xs={12}>
                       <Button
                         type="submit"
