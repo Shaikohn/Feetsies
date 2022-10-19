@@ -1,69 +1,10 @@
-.container{
-    
-        /* // minHeight: "100%",
-        // minWidht: "100%", */
-        background-color:#f9f4e0;
-        background-size:100%;
-        padding-top: 20px;
-        padding-bottom: 300px;
-    
-}
-
-
-.iconos{
-    color: #bada59 ;
-    
-}
-.espacio{
-    margin-left: 20px ;
-    
-}
-
-.modificar{
-    color: #1A2027 ;
-    text-decoration:none;
-    font-size: 14px;
-    /* border-color: red 10px; */
-}
-
 .foto{
-    border-radius:400px;
+    border-radius: 400px;
     width: 60px;
     height: 60px;
-    
 }
-.foto2{
 
+.foto2{
     width: 80px;
     height: auto;
-
-}
-
-.fotoBtn{
-    border-radius:600px;
-    width: 30px;
-    height: auto;
-    
-}
-
-
-
-.volver {
-    background-color: rgba(255, 255, 255, 0.795);
-    display:inline-block;
-    cursor:pointer;
-    color: var(--navbar-bg-color);
-    font-family:Verdana;
-    font-size:14px;
-    font-weight:bold;
-    padding:4px 10px;
-    text-decoration:none;
-     margin-left: 1%; 
-
-    border-color: rgba(255, 255, 255, 0.795);
-}
-.volver:hover{
-    background-color: var(--navbar-bg-color);
-    color:rgba(255, 255, 255, 0.795);
-    border-color: rgba(255, 255, 255, 0.795);
 }

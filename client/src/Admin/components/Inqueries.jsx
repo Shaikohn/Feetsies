@@ -45,7 +45,6 @@ export default function ShowInqueries() {
   function InqueryCard({inquery}) {
     return (
       <Card sx={{height:'fit-content', overflowWrap:'anywhere', marginTop:'1%'}}>
-       
         <Box sx={{height:'fit-content', margin:'auto'}}>
           <Stack direction='row' sx={{height:'2em', margin:'auto'}}>
             <Button onClick={() => queryInquery(inquery) } sx={{height:'fit-content', width:'100%', margin:'auto', padding:'1%',display: 'flex', alignItems: 'center'}}>

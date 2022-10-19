@@ -129,9 +129,8 @@ function App() {
             <Route path="updateAnimal/:id" element={<UpdateAnimal />} />
           </Route>
           <Route path="profile" element={<UserProfile />} />
-          <Route path="profile/orderDetail/:id" element={<OrderDetail />} />
           <Route path="user/data" element={<UserData />} />
-
+          <Route path="profile/orderDetail/:id" element={<OrderDetail />} />
           {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </div>
