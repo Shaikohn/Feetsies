@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
 import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
 import CheckoutForm from "../../Features/CheckoutForm/CheckoutForm";
@@ -21,13 +21,23 @@ import Rating from "@mui/material/Rating";
 import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import { getProductDetails } from "../../../redux/actions/productDetailsActions";
+import {
+  clearProductDetails,
+  getProductDetails,
+} from "../../../redux/actions/productDetailsActions";
+import {
+  clearProducts,
+  getAllProducts,
+} from "../../../redux/actions/getProductsA";
 
 const stripePromise = loadStripe(
   "pk_test_51LpgGdIsUHqf6y0peEPMdjCDcsjuA2sdBcEGka27crrsnZrTLBpIdJZiAICPkWXYWeJzwabRyk2WtbH0yfdxmGFy0046Eu9UuK"
 );
 
 export default function ProductDetails({ product }) {
+  const { id } = useParams();
+
+  const [refresh, setRefresh] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,10 +48,12 @@ export default function ProductDetails({ product }) {
 
   const { productDetails } = useSelector((state) => state.ProductDetails);
 
-  const [selectedImg, setSelectedImg] = useState(productDetails.productImages[0]) 
-  
+  const [selectedImg, setSelectedImg] = useState(
+    productDetails.productImages[0]
+  );
+
   console.log("dea", productDetails);
-  console.log("images", selectedImg)
+  console.log("images", selectedImg);
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
@@ -68,19 +80,22 @@ export default function ProductDetails({ product }) {
   console.log(value);
 
   useEffect(() => {
-    dispatch(getProductDetails());
-  }, []);
+    dispatch(getProductDetails(id));
+    return () => {
+      dispatch(clearProductDetails());
+    };
+  }, [id]);
 
   const onSubmit = async (data) => {
     console.log("Onsubmit", data);
     try {
       if (value === 0) {
         Swal.fire({
-        title: "REVIEW NOT SUBMITTED",
-        text: "You have to choose one or more stars to submit your review",
-        icon: "error",
-        timer: 3000,
-    });
+          title: "REVIEW NOT SUBMITTED",
+          text: "You have to choose one or more stars to submit your review",
+          icon: "error",
+          timer: 3000,
+        });
       } else {
         const review = await axios.post("/products/review", {
           userId: user.data.id,
@@ -95,7 +110,11 @@ export default function ProductDetails({ product }) {
           text: "Thanks for giving your opinion!",
           icon: "success",
           timer: 3000,
-      });
+        });
+        setRefresh(!refresh);
+        dispatch(clearProductDetails());
+        dispatch(getProductDetails(id));
+        dispatch(getAllProducts());
       }
     } catch (error) {
       console.log(error);
@@ -104,13 +123,13 @@ export default function ProductDetails({ product }) {
         text: error.response.data.err,
         icon: "error",
         timer: 3000,
-    });
-    Swal.fire({
-      title: "REVIEW NOT SUBMITTED",
-      text: error.response.data.err,
-      icon: "error",
-      timer: 3000,
-  });
+      });
+      Swal.fire({
+        title: "REVIEW NOT SUBMITTED",
+        text: error.response.data.err,
+        icon: "error",
+        timer: 3000,
+      });
     }
   };
 
@@ -154,24 +173,26 @@ export default function ProductDetails({ product }) {
               <img src={i.image} alt="tu vieja" />
             ))}
           </Box> */}
-          <Box 
+          <Box
             sx={{
-              display: "flex", 
+              display: "flex",
               flexDirection: "column",
-              py: 1.3
+              py: 1.3,
             }}
           >
             {productDetails.productImages?.map((img, i) => (
               <CardMedia
                 component="img"
-                style={{border: selectedImg === img ? "3px solid #953757": ""}}
-                key={i} 
-                image={img.image} 
+                style={{
+                  border: selectedImg === img ? "3px solid #953757" : "",
+                }}
+                key={i}
+                image={img.image}
                 alt="dog"
                 onClick={() => setSelectedImg(img)}
                 sx={{
                   borderRadius: "15px",
-                  my: 1.5
+                  my: 1.5,
                 }}
                 height="80px"
                 width="auto"

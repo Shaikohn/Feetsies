@@ -225,7 +225,7 @@ const CreateProduct = () => {
             ))}
           </Grid>
           <Grid item xs={6}>
-            <Card sx={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
+            <Card sx={{ padding: "20px 5px", margin: "0 auto" }}>
               <CardContent>
                 <Typography gutterBottom variant="h5">
                   Product form
@@ -293,7 +293,7 @@ const CreateProduct = () => {
                         variant="outlined"
                         fullWidth
                         {...register("price", {
-                          required: "A price is required"
+                          required: "A price is required",
                         })}
                         aria-invalid={errors.price ? "true" : "false"}
                       />
