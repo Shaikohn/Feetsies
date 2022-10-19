@@ -28,15 +28,21 @@ const stripePromise = loadStripe(
 );
 
 export default function ProductDetails({ product }) {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
   const [isOpenModal, openedModal, closeModal] = useModal(false);
+
   const { productDetails } = useSelector((state) => state.ProductDetails);
+
   const [selectedImg, setSelectedImg] = useState(productDetails.productImages[0]) 
+
   console.log("dea", productDetails);
   console.log("images", selectedImg)
+  
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
@@ -135,17 +141,16 @@ export default function ProductDetails({ product }) {
           }}
         >
           <Box sx={{display: "flex", flexDirection: "column"}}>
-          {
-                                    productDetails.productImages?.map((img, i) => (
-                                        <img 
-                                        style={{border: selectedImg === img ? "4px solid purple": ""}}
-                                        key={i} 
-                                        src={img.image} 
-                                        alt="dog"
-                                        onClick={() => setSelectedImg(img)}
-                                        />
-                                    ))
-                                }
+            {productDetails.productImages?.map((img, i) => (
+              <img 
+                  style={{border: selectedImg === img ? "4px solid purple": ""}}
+                  key={i} 
+                  src={img.image} 
+                  alt="dog"
+                  onClick={() => setSelectedImg(img)}
+                  />
+              ))
+            }
             {/* {productDetails.productImages?.map(i => (
               <img src={i.image} alt="tu vieja" />
             ))} */}
