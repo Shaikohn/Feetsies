@@ -7,7 +7,7 @@ import NavBarAnimals from "../../Features/NavBarAnimal/NavBarAni.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
 import loading from "./Img/Loading.gif";
 import Image from "./Img/BgImg3.jpg";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import { CardMedia, Paper } from "@mui/material";
@@ -27,18 +27,16 @@ const Search = styled("div")(({ theme }) => ({
   borderRadius: "20px",
   "&:hover": {
     border: "2px solid #567900",
-    backgroundColor: "#c8ad39"
+    backgroundColor: "#c8ad39",
   },
 }));
 
-
 export default function AnimalHome() {
-
   const dispatch = useDispatch();
 
   const { allAnimalsCopy } = useSelector((state) => state.animals);
   const { page, search } = useSelector((state) => state.currentPage);
-  const [newSearch, setSearch] = useState(search)
+  const [newSearch, setSearch] = useState(search);
   const [animalsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(page);
   const lastPositionPerPage = animalsPerPage * currentPage;
@@ -47,71 +45,75 @@ export default function AnimalHome() {
     firstPositionPerPage,
     lastPositionPerPage
   );
-  const filteredPage = allAnimalsCopy.filter(d => d.name.includes(newSearch)).length
-  console.log(filteredPage)
+  const filteredPage = allAnimalsCopy.filter((d) =>
+    d.name.includes(newSearch)
+  ).length;
+  console.log(filteredPage);
 
-
-  console.log(allAnimalsCopy)
+  console.log(allAnimalsCopy);
 
   useEffect(() => {
     if (allAnimalsCopy.length === 0) {
       dispatch(getAllAnimals());
     }
-    setSearch(search)
+    setSearch(search);
     setCurrentPage(page);
   }, [dispatch, page, allAnimalsCopy.length, search]);
 
   function filteredAnimals() {
-    if(newSearch === '') {
-        return currentAnimals
-    } 
-    const filtered = allAnimalsCopy.filter(d => d.name.toLowerCase().includes(newSearch.toLowerCase()))
-    
-    if(filtered.length < 1) {
+    if (newSearch === "") {
+      return currentAnimals;
+    }
+    const filtered = allAnimalsCopy.filter((d) =>
+      d?.name?.toLowerCase().includes(newSearch.toLowerCase())
+    );
+
+    if (filtered.length < 1) {
       Swal.fire({
         title: "NOT FOUND",
         icon: "error",
-        text: 'Sorry, we couldnt find that animal',
+        text: "Sorry, we couldnt find that animal",
         confirmButtonText: "Clean search",
         confirmButtonColor: "green",
       }).then((res) => {
         if (res.isConfirmed) {
-          setSearch('');
+          setSearch("");
         }
       });
-    } 
-    console.log("filtered", filtered)
-    return filtered.slice(firstPositionPerPage,
-      lastPositionPerPage)
-}
+    }
+    console.log("filtered", filtered);
+    return filtered.slice(firstPositionPerPage, lastPositionPerPage);
+  }
 
-function handleOnSearch(e) {
-  setSearch(e.target.value)
-}
+  function handleOnSearch(e) {
+    setSearch(e.target.value);
+  }
 
   return (
-    <Paper 
-    elevation={0} 
-    sx={{ 
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0.8, 0, 0)),url(${Image})`,
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      backgroundSize: "cover",
-      backgroundAttachment: "fixed",
-      height: "100%",
-      minHeight: "100vh"
-    }}
+    <Paper
+      elevation={0}
+      sx={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0.8, 0, 0)),url(${Image})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+        height: "100%",
+        minHeight: "100vh",
+      }}
     >
       <ResponsiveAppBar />
-      <Search sx={{
-        marginBottom: '-59px',
-        marginLeft: "20px", 
-        marginTop: "20px",
-        zIndex: 1,
-    }}>
-      <IconButton sx={{ px: 1.3 }} color="primary">
-        <SearchIcon  sx={{ width: 35, height: 35 }}/>
-      </IconButton>
+      <Search
+        sx={{
+          marginBottom: "-59px",
+          marginLeft: "20px",
+          marginTop: "20px",
+          zIndex: 1,
+        }}
+      >
+        <IconButton sx={{ px: 1.3 }} color="primary">
+          <SearchIcon sx={{ width: 35, height: 35 }} />
+        </IconButton>
         <InputBase
           inputProps={{ "aria-label": "search" }}
           type="text"
@@ -120,12 +122,9 @@ function handleOnSearch(e) {
           value={newSearch}
           onChange={handleOnSearch}
         />
-    </Search>
-    <NavBarAnimals />
-    <Pagination
-        items={filteredPage}
-        itemsPerPage={animalsPerPage}
-      />
+      </Search>
+      <NavBarAnimals />
+      <Pagination items={filteredPage} itemsPerPage={animalsPerPage} />
       {filteredAnimals().length ? (
         <Grid
           container
@@ -138,14 +137,14 @@ function handleOnSearch(e) {
             "& .MuiGrid-root": {
               py: 2.2,
               pl: 1.8,
-              pr: 0
-            }
+              pr: 0,
+            },
           }}
         >
           {filteredAnimals().map((a) => {
             return (
               <Grid display="flex" key={a.id} item xs={3}>
-                <Container sx={{p: 0}}>
+                <Container sx={{ p: 0 }}>
                   <AnimalCard
                     id={a.id}
                     key={a.id}
@@ -160,19 +159,19 @@ function handleOnSearch(e) {
           })}
         </Grid>
       ) : (
-        <CardMedia component="img" image={loading}  alt="Loading..." 
+        <CardMedia
+          component="img"
+          image={loading}
+          alt="Loading..."
           sx={{
             backgroundRepeat: "repeat",
             margin: "auto",
             width: "100%",
-            height: "100%"
+            height: "100%",
           }}
         />
       )}
-      <Pagination
-        items={filteredPage}
-        itemsPerPage={animalsPerPage}
-      />
+      <Pagination items={filteredPage} itemsPerPage={animalsPerPage} />
     </Paper>
   );
 }

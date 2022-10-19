@@ -201,7 +201,6 @@ const CreateProduct = () => {
             alignItems: "center",
           }}
         >
-          
           <Grid item xs={6}>
             <Card sx={{ padding: "20px 5px", margin: "0 auto" }}>
               <CardContent>
@@ -271,7 +270,7 @@ const CreateProduct = () => {
                         variant="outlined"
                         fullWidth
                         {...register("price", {
-                          required: "A price is required"
+                          required: "A price is required",
                         })}
                         aria-invalid={errors.price ? "true" : "false"}
                       />
@@ -332,7 +331,11 @@ const CreateProduct = () => {
                         </Box>
                       </Modal>
                       {imgToUse.map((imageSrc) => (
-                        <img src={imageSrc.dataURL} alt="not fount" width={"250px"} />
+                        <img
+                          src={imageSrc.dataURL}
+                          alt="not fount"
+                          width={"250px"}
+                        />
                       ))}
                     </Grid>
                     <Grid item xs={12}>
