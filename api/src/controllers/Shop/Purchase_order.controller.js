@@ -32,7 +32,7 @@ async function addPurchaseOrder(req,res){
             totalCost += prods.items[i].price;
             let product = await Product.findByPk(prods.items[i].productId);
             product.stock = parseInt(product.stock) - parseInt(prods.items[i].quantity);
-            product.save();
+            await product.save();
         }
         let po = await Purchase_order.create({total:totalCost,userId:userId})
         console.log('total', totalCost);
@@ -61,9 +61,13 @@ async function addOnePurchaseOrder(req,res){
     console.log("these are the values",prods, userId)
     if(prods. length < 1 || !userId)return res.status(500).send(badReq);
     try {
+        let product = await Product.findByPk(prods.id);
+        if(product.stock-1<0) return res.status(500).send({err:`We don't have enough units of ${product.name}.Please change the quantities of your purchase or try again later`});
         // crear la orden de compra con id de usuario y total de gasto
         let totalCost = prods.price
         let po = await Purchase_order.create({total:totalCost,userId:userId})
+        product.stock = product.stock-1;
+        await product.save()
         //console.log('total', totalCost);
         //console.log('total', po.dataValues);
         //CREAR ITEMS DE LA ORDEN DE COMPRA Y GUARDARLOS
