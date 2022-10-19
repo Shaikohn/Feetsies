@@ -1,8 +1,16 @@
 const {DataTypes} = require('sequelize')
-
+//
 
 module.exports= (sequelize) => {
     sequelize.define('adoption_petition', {
+        userId: {
+            type: DataTypes.INTEGER,
+            unique:'animalUser'
+        },
+        animalId: {
+            type: DataTypes.INTEGER,
+            unique:'animalUser'
+        },
         id: {
             type: DataTypes.INTEGER,
             autoIncrement:true,
