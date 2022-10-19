@@ -16,6 +16,7 @@ import usersReducer from "./reducers/getAllUsersR";
 import userDetailReducer from "./reducers/userDetailR";
 import purchaseOrderReducer from "./reducers/purchaseOrderReducer";
 import orderDetailreducer from "./reducers/orderDetailR";
+import userReviewsReducer from "./reducers/getReviewsUserR";
 
 export const store = createStore(
   combineReducers({
@@ -32,7 +33,8 @@ export const store = createStore(
     users: usersReducer,
     userDetail: userDetailReducer,
     purchaseOrder : purchaseOrderReducer,
-    orderDetail: orderDetailreducer
+    orderDetail: orderDetailreducer,
+    userReviews: userReviewsReducer
   }),
   composeWithDevTools(applyMiddleware(thunk))
 );
