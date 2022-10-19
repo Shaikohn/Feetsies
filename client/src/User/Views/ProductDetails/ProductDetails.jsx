@@ -195,7 +195,7 @@ export default function ProductDetails({ product }) {
                   my: 1.5,
                 }}
                 height="80px"
-                width="auto"
+                maxWidth="auto"
               />
             ))}
           </Box>
