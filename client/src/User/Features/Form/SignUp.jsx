@@ -34,15 +34,11 @@ import { google } from "../../../redux/actions/auth";
 
 function Copyright(props) {
   return (
-    <Typography
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
+    <Typography color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link href="https://mui.com/">
-        <Typography sx={{color: "#87a827", fontSize: 15}}>
-          Your Website
+        <Typography sx={{ color: "#87a827", fontSize: 15 }}>
+          FEETSIES
         </Typography>
       </Link>{" "}
       {new Date().getFullYear()}
@@ -188,7 +184,7 @@ const SignUp = () => {
               <TextField
                 error={errors.name ? true : false}
                 name="name"
-                style = {{width: "100%"}}
+                style={{ width: "100%" }}
                 id="name"
                 label="Name"
                 autoFocus
@@ -216,7 +212,7 @@ const SignUp = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 error={errors.lastName ? true : false}
-                style = {{width: "100%"}}
+                style={{ width: "100%" }}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
@@ -286,7 +282,7 @@ const SignUp = () => {
             <Grid item xs={12}>
               <TextField
                 error={errors.email ? true : false}
-                style = {{width: "100%"}}
+                style={{ width: "100%" }}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -309,7 +305,7 @@ const SignUp = () => {
                 : ""}
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" style = {{width: "100%"}}>
+              <FormControl variant="outlined" style={{ width: "100%" }}>
                 <InputLabel htmlFor="outlined-adornment-password1">
                   Password
                 </InputLabel>
@@ -356,7 +352,7 @@ const SignUp = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" style = {{width: "100%"}}>
+              <FormControl variant="outlined" style={{ width: "100%" }}>
                 <InputLabel>Confirm password</InputLabel>
                 <OutlinedInput
                   type={values2.showPasswordConfirm ? "text" : "password"}
@@ -409,7 +405,7 @@ const SignUp = () => {
 
           <Button
             type="submit"
-            style = {{width: "100%"}}
+            style={{ width: "100%" }}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
@@ -420,7 +416,7 @@ const SignUp = () => {
           <h3>Or sign in with</h3>
           <hr />
           {/* Google Auth */}
-          <Grid container style = {{width: "100%"}} justifyContent="center">
+          <Grid container style={{ width: "100%" }} justifyContent="center">
             <Grid
               item
               sx={{
@@ -441,7 +437,7 @@ const SignUp = () => {
           <Grid container justifyContent="center">
             <Grid item>
               <Link to="/signIn" variant="body2">
-                <Typography sx={{color: "#87a827"}}>
+                <Typography sx={{ color: "#87a827" }}>
                   Already have an account? Sign in
                 </Typography>
               </Link>
@@ -449,14 +445,14 @@ const SignUp = () => {
           </Grid>
         </Box>
       </Box>
-      <Copyright 
-        sx={{ 
-          mt: 3 , 
-          display: "flex", 
-          flexDirection: "row", 
+      <Copyright
+        sx={{
+          mt: 3,
+          display: "flex",
+          flexDirection: "row",
           alignItems: "center",
-          justifyContent: "center"
-        }} 
+          justifyContent: "center",
+        }}
       />
     </Container>
   );
