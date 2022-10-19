@@ -206,7 +206,7 @@ export default function ResponsiveAppBar() {
                   fontSize: 17,
                   bgcolor: "secondary.main",
                   fontWeight: 500,
-                  mx: 6,
+                  mx: 3,
                 }}
                 size="large"
                 variant="outlined"
@@ -223,14 +223,14 @@ export default function ResponsiveAppBar() {
                   fontSize: 17, 
                   bgcolor: "secondary.main",
                   fontWeight: 500,
-                  mx: 6 }}
+                  mx: 3 }}
                 size="large"
                 variant="outlined"
               >
                 ANIMALS
               </Button>
             </Link>
-            {/* <Link to="/home/createProduct">
+            <Link to="/home/inquiry">
               <Button
                 onClick={handleCloseNavMenu}
                 sx={{ 
@@ -239,13 +239,13 @@ export default function ResponsiveAppBar() {
                   fontSize: 17,
                   bgcolor: "secondary.main",
                   fontWeight: 500, 
-                  mx: 2 }}
+                  mx: 3 }}
                 size="large"
                 variant="outlined"
               >
-                CREATE PRODUCT
+                INQUIRY
               </Button>
-            </Link> */}
+            </Link>
           </Box>
           {!user ? (
               ""

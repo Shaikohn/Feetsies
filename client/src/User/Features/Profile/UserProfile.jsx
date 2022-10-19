@@ -27,47 +27,41 @@ import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import Stack from "@mui/material/Stack";
 
-
-
-
-
 import { getUserDetail } from "../../../redux/actions/userDetailA";
 import getPurchaseOrders from "../../../redux/actions/getOrdersUser";
-
+import getReviewsUser from "../../../redux/actions/getReviewsUserA";
 
 export default function UserProfile() {
   const [user] = useState(JSON.parse(localStorage.getItem("profile")));
   const { usuario } = useSelector((state) => state.userDetail);
-  const {purchaseOrder} = useSelector((state)=> state.purchaseOrder);
-  console.log(purchaseOrder)
-
+  const { purchaseOrder } = useSelector((state) => state.purchaseOrder);
+  const { reviews } = useSelector((state) => state.userReviews);
+  console.log(purchaseOrder);
+  console.log(reviews)
   const [open, setOpen] = React.useState(false);
-  //   const [openA, setOpenA] = React.useState(false);
   const [openB, setOpenB] = React.useState(false);
-  //   const [openC, setOpenC] = React.useState(false);
+  const [openC, setOpenC] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  
-
   const handleClickB = () => {
     setOpenB(!openB);
   };
 
+  const handleClickC = () => {
+    setOpenC(!openC);
+  };
 
   const dispatch = useDispatch();
-  
-
 
   useEffect(() => {
     dispatch(getUserDetail(user.data.id));
-    dispatch(getPurchaseOrders(user.data.id))
-    
+    dispatch(getPurchaseOrders(user.data.id));
+    dispatch(getReviewsUser(user.data.id));
   }, [user]);
 
- 
   return (
     <div className={style.container}>
       <Grid
@@ -169,7 +163,7 @@ export default function UserProfile() {
                         <p className={style.subTitulo}>Complete your name</p>
                       )}
                     </div>
-                    <hr/>
+                    <hr />
                     <div>
                       {usuario?.email ? (
                         <p className={style.subTitulo}>
@@ -179,7 +173,7 @@ export default function UserProfile() {
                         <p className={style.subTitulo}>Complete your email</p>
                       )}
                     </div>
-                    <hr/>
+                    <hr />
                     <div>
                       {usuario?.location ? (
                         <p className={style.subTitulo}>
@@ -191,7 +185,7 @@ export default function UserProfile() {
                         </p>
                       )}
                     </div>
-                    <hr/>
+                    <hr />
                     <div>
                       {usuario?.phoneNumber ? (
                         <p className={style.subTitulo}>
@@ -203,7 +197,7 @@ export default function UserProfile() {
                         </p>
                       )}
                     </div>
-                    <hr/>
+                    <hr />
 
                     <div>
                       <Stack direction="row" fontSize="small">
@@ -241,27 +235,72 @@ export default function UserProfile() {
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemIcon>
                   <div>
-                    {
-                    purchaseOrder ? (
-                      purchaseOrder.map((order,id) => {
-                        return(
-                        <div key={`${id}`}>
-                          <p className={style.subTitulo}
-                          >Mount: $ {order.total} </p>
-                          <p className={style.subTitulo}
-                          >Date: {order.createdAt}</p>
-                          <Link to={`orderDetail/${order.id}`}>
-                          <button>
-                            View details
-                          </button>
-                          </Link>
-                          <hr/>
-                        </div>
+                    {purchaseOrder ? (
+                      purchaseOrder.map((order, id) => {
+                        return (
+                          <div key={`${id}`}>
+                            <p className={style.subTitulo}>
+                              Mount: $ {order.total}{" "}
+                            </p>
+                            <p className={style.subTitulo}>
+                              Date: {order.createdAt}
+                            </p>
+                            <Link to={`orderDetail/${order.id}`}>
+                              <button>View details</button>
+                            </Link>
+                            <hr />
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <p className={style.subTitulo}>
+                        Not found purchase orders
+                      </p>
+                    )}
+                  </div>
+                </ListItemIcon>
+                <ListItemText primary="" />
+              </ListItemButton>
+            </List>
+          </Collapse>
+
+          <ListItemButton onClick={handleClickC}>
+            <ListItemIcon>
+              <LocalMallIcon className={style.iconos} fontSize="large" />
+            </ListItemIcon>
+            <ListItemText primary="My Reviews" />
+            {openC ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={openC} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemIcon>
+                  <div>
+                    {reviews ? (
+                      reviews.map((review, id) => {
+                        return (
+                          <div key={`${id}`}>
+                            <p className={style.subTitulo}>
+                              Score: {review.score}{" "}
+                            </p>
+                           
+                            <p className={style.subTitulo}>
+                              Product: {review.productName}
+                            </p>
                         
-                        )
-                      }))
-                     : ( <p className={style.subTitulo}>
-                        Cellphone: add your cellphone
+                            <p className={style.subTitulo}>
+                              Review: {review.comment}
+                            </p>
+                            {/* <Link to={`orderDetail/${order.id}`}>
+                              <button>View details</button>
+                            </Link> */}
+                            <hr/>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <p className={style.subTitulo}>
+                        Not found reviews
                       </p>
                     )}
                   </div>
@@ -271,6 +310,7 @@ export default function UserProfile() {
             </List>
           </Collapse>
         </List>
+
         <Link to="/">
           <Button
             sx={{

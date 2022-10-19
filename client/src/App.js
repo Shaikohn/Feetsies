@@ -27,6 +27,7 @@ import UserProfile from "./User/Features/Profile/UserProfile";
 import OrderDetail from "./User/Features/Profile/OrderDetail";
 import ProductHome from "./User/Views/ProductHome/ProductHome.jsx";
 import UpdateProduct from "./User/Features/Form/UpdateProduct";
+import Inquiry from "./User/Features/Form/Inquiry";
 
 
 function App() {
@@ -59,12 +60,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-       <div id='contact' style={{position: 'absolute', left: '70%', top:'35%', zIndex:1}}/>
-       <div id='adminModal' />
+        <div id='contact' style={{position: 'absolute', left: '70%', top:'35%', zIndex:1}}/>
+        <div id='adminModal' />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home/products" element={<ProductHome />} />
           <Route exact path="/home/animals" element={<HomeAnimals />} />
+          <Route exact path="/home/inquiry" element={<Inquiry />} />
           <Route
             exact
             path="/home/products/:id"
