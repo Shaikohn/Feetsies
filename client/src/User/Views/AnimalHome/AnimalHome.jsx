@@ -37,8 +37,8 @@ export default function AnimalHome() {
   const dispatch = useDispatch();
 
   const { allAnimalsCopy } = useSelector((state) => state.animals);
-  const { page } = useSelector((state) => state.currentPage);
-  const [search, setSearch] = useState('')
+  const { page, search } = useSelector((state) => state.currentPage);
+  const [newSearch, setSearch] = useState(search)
   const [animalsPerPage] = useState(8);
   const [currentPage, setCurrentPage] = useState(page);
   const lastPositionPerPage = animalsPerPage * currentPage;
@@ -47,7 +47,7 @@ export default function AnimalHome() {
     firstPositionPerPage,
     lastPositionPerPage
   );
-  const filteredPage = allAnimalsCopy.filter(d => d.name.includes(search)).length
+  const filteredPage = allAnimalsCopy.filter(d => d.name.includes(newSearch)).length
   console.log(filteredPage)
 
 
@@ -57,14 +57,16 @@ export default function AnimalHome() {
     if (allAnimalsCopy.length === 0) {
       dispatch(getAllAnimals());
     }
+    setSearch(search)
     setCurrentPage(page);
-  }, [dispatch, page, allAnimalsCopy.length]);
+  }, [dispatch, page, allAnimalsCopy.length, search]);
 
   function filteredAnimals() {
-    if(search === '') {
+    if(newSearch === '') {
         return currentAnimals
     } 
-    const filtered = allAnimalsCopy.filter(d => d.name.toLowerCase().includes(search.toLowerCase()))
+    const filtered = allAnimalsCopy.filter(d => d.name.toLowerCase().includes(newSearch.toLowerCase()))
+    
     if(filtered.length < 1) {
       Swal.fire({
         title: "NOT FOUND",
@@ -115,7 +117,7 @@ function handleOnSearch(e) {
           type="text"
           placeholder="Search…"
           autoComplete="off"
-          value={search}
+          value={newSearch}
           onChange={handleOnSearch}
         />
     </Search>

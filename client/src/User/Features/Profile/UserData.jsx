@@ -17,7 +17,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-
+import Swal from "sweetalert2"
 import style from "./userStyles.module.css";
 import { OutlinedInput } from "@mui/material";
 
@@ -115,13 +115,29 @@ export default function UserData() {
           ...input,
           image,
         });
-        alert("succesfull update");
+        Swal.fire({
+          title: "UPDATED",
+          text: "Your user info has been updated!",
+          icon: "success",
+          timer: 1000,
+        });
         navigate("/profile");
       } catch (error) {
         console.log(error);
+        Swal.fire({
+          title: "NOT UPDATED",
+          text: "Sorry, something failed and the info couldnt be updated",
+          icon: "error",
+          timer: 3000,
+        });
       }
     } else {
-      alert("no dates to update");
+      Swal.fire({
+        title: "NOT UPDATED",
+        text: "No changes detected!",
+        icon: "warning",
+        timer: 3000,
+    });
     }
   }
 

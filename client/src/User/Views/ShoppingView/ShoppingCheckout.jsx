@@ -8,6 +8,7 @@ import { getShoppingCart } from "../../../redux/actions/ShoppingCartView.js";
 import Swal from 'sweetalert2'
 import Spinner from '../../Features/CheckoutForm/Spinner';
 import { postPurchaseOrder } from '../../../redux/actions/purchaseOrderAction';
+import { useNavigate } from 'react-router-dom';
 
 export default function ShoppingCheckout() {
 
@@ -17,6 +18,7 @@ export default function ShoppingCheckout() {
     const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart)
     const dispatch = useDispatch();
     const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
+    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch(getShoppingCart(userId));
@@ -46,12 +48,6 @@ export default function ShoppingCheckout() {
                 /* description: product.description */
             })
             setLoading(false)
-            Swal.fire({
-                title: 'Payment done', 
-                text: data.message, 
-                icon: 'success',
-                timer: 5000
-            });
             /* product.stock-- */
             elements.getElement(CardElement).clear()
             await axios.post('/cart/save', {
@@ -59,6 +55,13 @@ export default function ShoppingCheckout() {
                 userId,
             })
             handleClearCart(e)
+            navigate("/profile")
+            Swal.fire({
+                title: 'Payment done', 
+                text: data.message, 
+                icon: 'success',
+                timer: 5000
+            });
             }
             catch(error) {
                 elements.getElement(CardElement).clear()
