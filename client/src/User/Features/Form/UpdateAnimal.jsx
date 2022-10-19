@@ -12,30 +12,19 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import {
-  clearProductDetails,
-  getProductDetails,
-} from "../../../redux/actions/productDetailsActions";
 
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-
-import { RMIUploader } from "react-multiple-image-uploader";
 import { useParams } from "react-router-dom";
+import {
+  clearAnimalDetails,
+  getAnimalDetails,
+} from "../../../redux/actions/animalDetailsActions.js";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 900,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
-const UpdateProduct = () => {
+const UpdateAnimal = () => {
   const {
     register,
     formState,
@@ -45,68 +34,21 @@ const UpdateProduct = () => {
   } = useForm();
 
   const dispatch = useDispatch();
-  const { productDetails } = useSelector((state) => state.ProductDetails);
+  const { animalDetails } = useSelector((state) => state.AnimalDetails);
   const { id } = useParams();
   console.log(id);
-  console.log(productDetails);
+  console.log(animalDetails);
 
   useEffect(() => {
-    dispatch(getProductDetails(id));
+    dispatch(getAnimalDetails(id));
     return () => {
-      dispatch(clearProductDetails());
+      dispatch(clearAnimalDetails());
     };
   }, []);
 
-  // NUEVA LIBRERIA
-
-  const [dataSources, setDataSources] = useState([]);
-  const [imgToUse, setImgToUse] = useState([]);
-
-  const [visible, setVisible] = useState(false);
-  const handleSetVisible = () => {
-    setVisible(true);
-  };
-  const hideModal = () => {
-    setVisible(false);
-  };
-  const onUpload = (data) => {
-    console.log("Upload files", data);
-    setDataSources(data);
-  };
-  const onSelect = (data) => {
-    console.log("Select files", data);
-    setImgToUse(data);
-  };
-  const onRemove = (id) => {
-    console.log("Remove image id", id);
-  };
-
-  console.log("nuevas imagenes", dataSources);
-
-  console.log("imagenes a subir", imgToUse);
-
-  // modal material-ui
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
-    console.log("Onsubmit", { ...data, imgToUse });
-    try {
-      await axios.put(`/products/update/${id}`, {
-        ...data,
-      });
-      Swal.fire({
-        title: "Success",
-        text: "Product Updated",
-        icon: "success",
-        timer: 5000,
-      });
-      dispatch(getAllProducts());
-    } catch (error) {
-      console.log(error);
-    }
+    console.log("Onsubmit", data);
   };
   console.log(errors);
 
@@ -115,6 +57,23 @@ const UpdateProduct = () => {
       reset({ name: "", description: "", stock: "", price: "", image: "" });
     }
   }, [formState, reset]);
+
+  //   Selects
+  const [size, setSize] = React.useState("");
+  const [sex, setSex] = React.useState("");
+  const [types, setTypes] = React.useState("");
+
+  const handleChangeSize = (event) => {
+    setSize(event.target.value);
+  };
+
+  const handleChangeSex = (event) => {
+    setSex(event.target.value);
+  };
+
+  const handleChangeTypes = (event) => {
+    setTypes(event.target.value);
+  };
 
   return (
     <>
@@ -134,46 +93,25 @@ const UpdateProduct = () => {
         }}
       >
         <Grid item xs={6}>
-          {/* <Button onClick={handleOpen}>Update Images</Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <RMIUploader
-                isOpen={visible}
-                hideModal={hideModal}
-                onSelect={onSelect}
-                onUpload={onUpload}
-                onRemove={onRemove}
-                dataSources={dataSources}
-              />
-            </Box>
-          </Modal> */}
-          {productDetails?.productImages?.map((img) => (
+          {/* {productDetails?.productImages?.map((img) => (
             <img src={img.image} alt="not fount" width={"250px"} />
-          ))}
-          {/* {imgToUse.map((imageSrc) => (
-            <img src={imageSrc.dataURL} alt="not fount" width={"250px"} />
           ))} */}
         </Grid>
         <Grid item xs={6}>
           <Card sx={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
             <CardContent>
               <Typography gutterBottom variant="h5">
-                Update Product
+                Update Animal
               </Typography>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={1}>
                   <Grid xs={12} item>
                     <TextField
                       error={errors.name ? true : false}
-                      label="Product´s Name"
+                      label="Animal´s Name"
                       type="text"
                       multiline
-                      defaultValue={productDetails.name}
+                      defaultValue={animalDetails.name}
                       variant="outlined"
                       fullWidth
                       {...register("name", {
@@ -200,54 +138,97 @@ const UpdateProduct = () => {
                     )}
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      error={errors.stock ? true : false}
-                      label="Stock"
-                      multiline
-                      defaultValue={productDetails.stock}
-                      variant="outlined"
-                      fullWidth
-                      {...register("stock", {
-                        required: "Please type a number",
-                        max: 1000,
-                      })}
-                      aria-invalid={errors.stock ? "true" : "false"}
-                    />
-                    {errors?.stock?.type === "required" && (
-                      <span style={{ color: "red" }}>
-                        {errors.stock?.message}
-                      </span>
-                    )}
-                    {errors?.stock?.type === "max" && (
-                      <span style={{ color: "red" }}>
-                        the stock can not be more than 1000
-                      </span>
-                    )}
+                    <FormControl name="sex" fullWidth {...register("sex")}>
+                      <InputLabel name="sex" id="demo-simple-select-label">
+                        Sex
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={sex}
+                        label="Sex"
+                        onChange={handleChangeSex}
+                        name="sex"
+                      >
+                        <MenuItem value="Male">Male</MenuItem>
+                        <MenuItem value="Female">Female</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      error={errors.price ? true : false}
-                      label="Price"
+                      label="Breed"
                       multiline
-                      defaultValue={productDetails.price}
+                      defaultValue={animalDetails.breed}
                       variant="outlined"
                       fullWidth
-                      {...register("price", {
+                      {...register("breed", {
                         required: "A price is required",
                         max: 1000,
                       })}
-                      aria-invalid={errors.price ? "true" : "false"}
                     />
-                    {errors?.price?.type === "required" && (
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl fullWidth name="size" {...register("size")}>
+                      <InputLabel name="size" id="demo-simple-select-label">
+                        Size
+                      </InputLabel>
+                      <Select
+                        // defaultValue={animalDetails.}
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={size}
+                        label="Size"
+                        onChange={handleChangeSize}
+                        name="size"
+                      >
+                        <MenuItem value="Small">Small</MenuItem>
+                        <MenuItem value="Medium">Medium</MenuItem>
+                        <MenuItem value="Large">Large</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      error={errors.age ? true : false}
+                      type="number"
+                      label="Age"
+                      variant="outlined"
+                      fullWidth
+                      {...register("age", {
+                        required: "A age is required",
+                        max: 1000,
+                      })}
+                      aria-invalid={errors.age ? "true" : "false"}
+                    />
+                    {errors?.age?.type === "required" && (
                       <span style={{ color: "red" }}>
-                        {errors.price?.message}
+                        {errors.age?.message}
                       </span>
                     )}
-                    {errors?.price?.type === "max" && (
+                    {errors?.age?.type === "max" && (
                       <span style={{ color: "red" }}>
                         The price can not be more than 1000
                       </span>
                     )}
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl name="types" fullWidth {...register("types")}>
+                      <InputLabel name="types" id="demo-simple-select-label">
+                        Types
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={types}
+                        label="Types"
+                        onChange={handleChangeTypes}
+                        name="types"
+                      >
+                        <MenuItem value="Cat">Cat</MenuItem>
+                        <MenuItem value="Dog">Dog</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
@@ -255,7 +236,7 @@ const UpdateProduct = () => {
                       label="Description"
                       multiline
                       rows={4}
-                      defaultValue={productDetails.description}
+                      defaultValue={animalDetails.description}
                       variant="outlined"
                       fullWidth
                       {...register("description", {
@@ -296,4 +277,4 @@ const UpdateProduct = () => {
   );
 };
 
-export default UpdateProduct;
+export default UpdateAnimal;

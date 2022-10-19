@@ -4,8 +4,13 @@
 
 .createForm {
   background-image: url("./Img/backgroundDetails1.jpg");
-  height: 100vh;
-  margin: auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  height: 100%;
+  min-height: 100vh;
+  /* margin: auto; */
   display: flex;
   justify-content: center;
   align-items: center;
