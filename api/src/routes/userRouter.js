@@ -3,7 +3,7 @@ const router = Router();
 
 const {
     getUserPetitions,
-} = require('../controllers/Admin/Adoption_petition.controller')
+} = require('../controllers/Animals/Adoption_petition.controller')
 
 const {
     addUser,
