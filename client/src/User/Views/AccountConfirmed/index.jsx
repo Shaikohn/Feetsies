@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import Swal from "sweetalert2"
 
 const AccountConfirmed = () => {
   const { confirmationCode } = useParams();
@@ -13,7 +14,12 @@ const AccountConfirmed = () => {
     axios
       .get(`/user/auth/confirm/${confirmationCode}`)
       .catch((error) => {
-        alert(error);
+        Swal.fire({
+          title: "AUTENTICATION FAILED",
+          text: error,
+          icon: "error",
+          timer: 2000,
+        });
         navigate("/");
       });
   }, []);

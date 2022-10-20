@@ -33,7 +33,12 @@ const ResetPassword = () => {
     axios
       .get(`/user/auth/reset-password/${id}/${token}`)
       .catch((error) => {
-        alert(error);
+        Swal.fire({
+          title: "RESET PASSWORD FAILED",
+          text: error,
+          icon: "error",
+          timer: 2000,
+        });
         navigate("/");
       });
   }, []);

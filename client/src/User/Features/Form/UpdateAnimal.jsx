@@ -61,9 +61,21 @@ const UpdateAnimal = () => {
         types: data.types,
         description: data.description,
       });
+      Swal.fire({
+        title: "SUCESS",
+        text: "Animal Updated!",
+        icon: "success",
+        timer: 2000,
+      });
       dispatch(getAllAnimals());
       navigate("/dashboard/animaltable");
     } catch (error) {
+      Swal.fire({
+        title: "ANIMAL NOT UPDATED",
+        text: "Sorry, something failed",
+        icon: "error",
+        timer: 2000,
+      });
       console.log(error);
     }
   };

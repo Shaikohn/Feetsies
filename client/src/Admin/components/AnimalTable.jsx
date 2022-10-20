@@ -14,7 +14,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearAnimals, getAllAnimals } from "../../redux/actions/getAnimalsA";
 import { Link, useNavigate } from "react-router-dom";
-
+import Swal from 'sweetalert2'
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import IconButton from "@mui/material/IconButton";
@@ -75,10 +75,21 @@ export function AnimalsTable() {
     e.preventDefault();
     try {
       await axios.delete(`/animals/${id}`);
-      alert("Animal deleted");
+      Swal.fire({
+        title: "SUCESS",
+        text: "The animal has been deleted!",
+        icon: "success",
+        timer: 3000,
+    });
       dispatch(clearAnimals());
       dispatch(getAllAnimals());
     } catch (error) {
+      Swal.fire({
+        title: "ANIMAL NOT DELETED",
+        text: "Sorry, something failed",
+        icon: "error",
+        timer: 3000,
+      });
       console.log(error);
     }
   }

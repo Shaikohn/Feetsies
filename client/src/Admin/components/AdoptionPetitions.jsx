@@ -38,6 +38,7 @@ import { Link } from "react-router-dom";
 import { ModalAdmin } from "./Dashboard";
 import { useEffect } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 function getDate(date) {
   let simplyDate = "";
@@ -86,10 +87,21 @@ function TableMenu({ row, read, unread }) {
   async function deletePetitionfn(id) {
     try {
       await axios.delete(`/admin/petition/${id}`);
-      alert("petition deleted");
+      Swal.fire({
+        title: "SUCESS",
+        text: "The petition has been deleted!",
+        icon: "success",
+        timer: 3000,
+    });
       dispatch(clearPetition());
       dispatch(getAllPetitions());
     } catch (error) {
+      Swal.fire({
+        title: "PETITION NOT DELETED",
+        text: "Sorry, something failed",
+        icon: "error",
+        timer: 3000,
+      });
       console.log(error);
     }
   }
