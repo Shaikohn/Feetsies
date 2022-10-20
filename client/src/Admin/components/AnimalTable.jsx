@@ -75,8 +75,9 @@ export function AnimalsTable() {
     e.preventDefault();
     try {
       await axios.delete(`/animals/${id}`);
-      alert("Animal deleted");
       dispatch(getAllAnimals());
+      alert("Animal deleted");
+      
     } catch (error) {
       console.log(error);
     }
