@@ -92,8 +92,6 @@ export default function UserData({open, setOpen}) {
   }, [dispatch]);
   //Cloudinary//
   const [image, setImage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [imageChosen, setImageChosen] = useState(false);
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
@@ -110,20 +108,15 @@ export default function UserData({open, setOpen}) {
       }
     );
     const file = await res.json();
-
-    console.log("data", file);
-
     setInput({...input, image:file.secure_url});
     setImage(file.secure_url)
     
 
-    setLoading(false);
+    
   };
   //HANDLE SUBMIT
   async function handleSubmit(e) {
     e.preventDefault();
-    
-    console.log(image)
     if (
       input.name !== usuario.name ||
       input.lastName !== usuario.lastName ||
@@ -219,12 +212,6 @@ export default function UserData({open, setOpen}) {
                   alt="Usuario"
                 />
                   
-                {/* {imageChosen &&
-                  (!loading ? ( */}
-                    
-                  {/* ) : (
-                    <p>Wait a few moment</p>
-                  ))} */}
                 <TextField
                   sx={{
                     bgcolor: "#fff ",
@@ -393,25 +380,6 @@ export default function UserData({open, setOpen}) {
                 </div>
               )
             :""}
-              <div>
-                <TextField
-                  sx={{
-                    bgcolor: "#fff ",
-                    color: "#FFC400",
-                    borderRadius: "10px",
-                  }}
-                  id="input-with-icon-textfield"
-                  label="Profile Foto: "
-                  value={input.image}
-                  onChange={(e) => handleChange(e)}
-                  name="image"
-                  // defaultValue={"I"}
-                  InputProps={{
-                    shrink: true,
-                  }}
-                  variant="standard"
-                />
-              </div>
             </div>
           </Box>
 
