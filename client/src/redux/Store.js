@@ -41,7 +41,7 @@ export const store = createStore(
     orderDetail: orderDetailreducer,
 
     userReviews: userReviewsReducer,
-    adoptionUser: adoptionRequestReducer
+    adoptionUser: adoptionRequestReducer,
 
     orders: allOrders,
     userReviews: userReviewsReducer,

@@ -51,7 +51,7 @@ export default function OrderDetail() {
   return ( 
     <Card sx={{height:'fit-content', overflowWrap:'anywhere', marginTop:'1%'}}>
       <TableContainer component={Paper} sx={{ mt: 2,}}>
-        <Table sx={{ minWidth: 700, bgcolor: "#e5e5e5", color: "#3a0ca3" }} aria-label="customized table">
+        <Table sx={{ minWidth: 700, bgcolor: "#87a827", color: "#3a0ca3" }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">Name</StyledTableCell>
