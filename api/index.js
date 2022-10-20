@@ -18,13 +18,13 @@ const {
 
 // Syncing all the models at once.
 conn
-  .sync({ force: true })
-  .then(() => {
+  .sync({ force: false })
+  /*.then(() => {
     return writeAnimalTypes();
   })
   .then(() => {
     return writeProductTypes();
-  })
+  })*/
   /*.then(() => {
     console.log("+ Writing users in database...");
     return loadUsers();
