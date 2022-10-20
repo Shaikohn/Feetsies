@@ -68,6 +68,7 @@ function App() {
           style={{ position: "absolute", left: "70%", top: "35%", zIndex: 1 }}
         />
         <div id="adminModal" />
+        <div id='userModal' />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home/products" element={<ProductHome />} />

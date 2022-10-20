@@ -155,18 +155,14 @@ const UpdateAnimal = () => {
                     )}
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl name="sex" fullWidth {...register("sex")}>
-                      <InputLabel name="sex" id="demo-simple-select-label">
-                        Sex
-                      </InputLabel>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Sex</InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={animalDetails.sex}
-                        multiline
+                        value={sex}
                         label="Sex"
                         onChange={handleChangeSex}
-                        name="sex"
                       >
                         <MenuItem value="Male">Male</MenuItem>
                         <MenuItem value="Female">Female</MenuItem>

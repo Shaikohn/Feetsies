@@ -1,4 +1,5 @@
 import * as React from "react";
+import ReactDOM from 'react-dom'
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -36,6 +37,7 @@ import { Paper, Typography } from "@mui/material";
 import Image from "./Img/BgImg3.jpg";
 import { Box, Container, fontSize } from "@mui/system";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import UserData from "./UserData";
 
 
 export default function UserProfile() {
@@ -45,10 +47,8 @@ export default function UserProfile() {
   const { usuario } = useSelector((state) => state.userDetail);
   const { purchaseOrder } = useSelector((state) => state.purchaseOrder);
   const { reviews } = useSelector((state) => state.userReviews);
-
-  console.log(purchaseOrder);
-  console.log(reviews)
-
+  const [openModal, setOpenModal] = React.useState(false);
+  
   const [open, setOpen] = React.useState(false);
   const [openB, setOpenB] = React.useState(false);
   const [openC, setOpenC] = React.useState(false);
@@ -68,10 +68,12 @@ export default function UserProfile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserDetail(user.data.id));
-    dispatch(getPurchaseOrders(user.data.id));
-    dispatch(getReviewsUser(user.data.id));
-  }, [user]);
+    if (!usuario.id) {
+      dispatch(getUserDetail(user.data.id));
+      dispatch(getPurchaseOrders(user.data.id));
+      dispatch(getReviewsUser(user.data.id));
+    }
+  }, [usuario]);
 
   return (
     <Paper
@@ -87,6 +89,12 @@ export default function UserProfile() {
       }}
     >
       <ResponsiveAppBar />
+      {
+        openModal && ReactDOM.createPortal(
+          <UserData open={openModal} setOpen={setOpenModal} />,
+          document.querySelector('#userModal')
+        )
+      }
       <Grid
         container
         sx={{ 
@@ -231,11 +239,11 @@ export default function UserProfile() {
                             <EditIcon fontSize="large" sx={{color: "#c8ad39", width: 23, height: 23}}/>
                           }
                         >
-                          <Link to="/user/data">
+                          <Button onClick={() => setOpenModal(true)}>
                             <Typography sx={{color: "white", fontWeight: 500}}>
                               {" "}Update your personal data{" "}
                             </Typography>
-                          </Link>
+                          </Button>
                         </Button>
                       </Stack>
                     </Box>

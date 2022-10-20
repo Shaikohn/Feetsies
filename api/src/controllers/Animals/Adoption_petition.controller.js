@@ -46,6 +46,23 @@ async function deletePetition(req, res) {
   }
 }
 
+async function getUserPetitions(req, res) {
+  let { userid } = req.params;
+  if (!userid) return res.status(400).send(badReq);
+  try {
+    let results = await Adoption_petition.findAll({
+      where: { userId: userid },
+      include: Animal,
+    });
+    if (!results || results.length < 1)
+      return res.status(404).send({ err: "You dont have adoption petitions" });
+    return res.status(404).send({ err: "You dont have adoption petitions" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ err: "server error" });
+  }
+}
+
 async function getPetitionDetail(req, res) {
   let { petitionid } = req.params;
   if (!petitionid) return res.status(400).send(badReq);
@@ -142,4 +159,5 @@ module.exports = {
   setPetitionAsRead,
   toggleImportantPetition,
   setPetitionAsUnRead,
+  getUserPetitions,
 };
