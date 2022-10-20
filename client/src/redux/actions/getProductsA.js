@@ -2,6 +2,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 export const GET_ALL_PRODUCTS = "GET_ALL_PRODUCTS";
 export const GET_PRODUCT_NAME = "GET_PRODUCT_NAME";
+export const CLEAR_PRODUCTS = "CLEAR_PRODUCTS";
 
 export const getAllProducts = ()=>(dispatch)=>{
     axios ("/products/all")
@@ -31,3 +32,9 @@ export function getProductName(name) {
         }
     }
 }
+
+export const clearProducts = () => {
+    return {
+      type: CLEAR_PRODUCTS,
+    };
+  };

@@ -84,8 +84,10 @@ const CreateProduct = () => {
 
   const [dataSources, setDataSources] = useState([]);
   const [imgToUse, setImgToUse] = useState([]);
-
+  console.log("data", dataSources)
+  console.log("img", imgToUse)
   const [visible, setVisible] = useState(false);
+  
   const handleSetVisible = () => {
     setVisible(true);
   };
@@ -202,7 +204,9 @@ const CreateProduct = () => {
           }}
         >
           <Grid item xs={6}>
-            <Button onClick={handleOpen}>Upload Images</Button>
+            <Button onClick={handleOpen} sx={{
+              marginBottom: "10px"
+            }}>Upload Images</Button>
             <Modal
               open={open}
               onClose={handleClose}
@@ -220,9 +224,6 @@ const CreateProduct = () => {
                 />
               </Box>
             </Modal>
-            {imgToUse.map((imageSrc) => (
-              <img src={imageSrc.dataURL} alt="not fount" width={"250px"} />
-            ))}
           </Grid>
           <Grid item xs={6}>
             <Card sx={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}>
@@ -351,6 +352,9 @@ const CreateProduct = () => {
             </Card>
           </Grid>
         </Grid>
+        {imgToUse.map((imageSrc) => (
+              <img src={imageSrc.dataURL} alt="not fount" width={"100px"} height={"100px"} style={{marginLeft: "10px", border: "solid 3px", borderColor:"blue"}} />
+            ))}
       </div>
     </div>
   );

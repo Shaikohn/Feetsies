@@ -55,7 +55,7 @@ function NavBarProducts() {
       }}
       bgcolor="#ffff9bb3"
     >
-      {/* <SearchBarProd /> */}
+      <SearchBarProd /> 
       <Box sx={{ width: 190, height: 57 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">
