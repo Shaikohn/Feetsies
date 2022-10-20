@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllAnimals } from "../../redux/actions/getAnimalsA";
+import { clearAnimals, getAllAnimals } from "../../redux/actions/getAnimalsA";
 import { Link, useNavigate } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -76,6 +76,7 @@ export function AnimalsTable() {
     try {
       await axios.delete(`/animals/${id}`);
       alert("Animal deleted");
+      dispatch(clearAnimals());
       dispatch(getAllAnimals());
     } catch (error) {
       console.log(error);

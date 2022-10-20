@@ -1,4 +1,8 @@
-import { GET_ALL_ANIMALS, GET_ANIMAL_NAME } from "../actions/getAnimalsA";
+import {
+  CLEAR_ANIMALS,
+  GET_ALL_ANIMALS,
+  GET_ANIMAL_NAME,
+} from "../actions/getAnimalsA";
 import { FILTER_SEX_ANIMALS } from "../actions/filterSexAnimals";
 import { FILTER_SIZE_ANIMALS } from "../actions/filterSizeAnimals";
 
@@ -31,14 +35,21 @@ const animalsReducer = (state = initialState, { type, payload }) => {
         allAnimalsCopy: filteredSex,
       };
     case FILTER_SIZE_ANIMALS:
-        const filteredSize = 
+      const filteredSize =
         payload === "All"
-        ?state.allAnimals
-        :state.allAnimalsCopy.filter( anim => anim.size === payload)
-        return {
-            ...state,
-            allAnimalsCopy: filteredSize
-        }
+          ? state.allAnimals
+          : state.allAnimalsCopy.filter((anim) => anim.size === payload);
+      return {
+        ...state,
+        allAnimalsCopy: filteredSize,
+      };
+
+    case CLEAR_ANIMALS:
+      return {
+        ...state,
+        allAnimals: [],
+        allAnimalsCopy: [],
+      };
     default:
       return state;
   }
