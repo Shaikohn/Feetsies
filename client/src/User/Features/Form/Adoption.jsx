@@ -20,9 +20,15 @@ import {
   Button,
   Drawer,
 } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { getAllPetitions } from "../../../redux/actions/adoptionAction";
 
 const Adoption = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+  console.log(id);
 
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data?.id
@@ -33,26 +39,29 @@ const Adoption = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: { topic: "", description: "", name: "" },
+    defaultValues: { topic: "", description: "" },
   });
 
   const onSubmit = async (data) => {
     console.log("Onsubmit", data);
 
-    // try {
-    //   if (!userId) {
-    //     alert("Need to be loged to use this form!");
-    //   } else {
-    //     await axios.post("/admin/inquiry", {
-    //       userId: userId,
-    //       topic: data.topic,
-    //       description: data.description,
-    //     });
-    //     alert("The inquiry was send");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      if (!userId) {
+        alert("Need to be loged to use this form!");
+      } else {
+        await axios.post("/animals/take", {
+          userId: userId,
+          animId: id,
+          topic: data.topic,
+          description: data.description,
+        });
+        alert("The inquiry was send");
+        dispatch(getAllPetitions());
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -79,21 +88,6 @@ const Adoption = () => {
                     {errors?.topic?.type === "required" && (
                       <span style={{ color: "red" }}>
                         A short reason is required
-                      </span>
-                    )}
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      error={errors.name ? true : false}
-                      label="Name"
-                      variant="outlined"
-                      fullWidth
-                      {...register("name", { required: true })}
-                      aria-invalid={errors.name ? "true" : "false"}
-                    />
-                    {errors?.name?.type === "required" && (
-                      <span style={{ color: "red" }}>
-                        Your name is required
                       </span>
                     )}
                   </Grid>
