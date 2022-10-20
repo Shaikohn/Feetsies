@@ -56,15 +56,17 @@ export default function CheckoutForm({product}) {
             });
             }
             catch(error) {
+                setLoading(false)
                 Swal.fire({
                     title: 'Payment failed', 
                     text: error.response.data, 
                     icon: 'error',
                     timer: 5000
                 });
-                setLoading(false)
             }
+        setLoading(false)
         }
+        setLoading(false)
     }
 
     return (
