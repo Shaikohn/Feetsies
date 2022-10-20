@@ -31,6 +31,7 @@ import Inquiry from "./User/Features/Form/Inquiry";
 import AnimalList from "./Admin/components/AnimalList";
 import CreateAnimal from "./User/Features/Form/CreateAnimal";
 import UpdateAnimal from "./User/Features/Form/UpdateAnimal";
+import OrderList from "./Admin/components/OrderList";
 
 function App() {
   const theme = createTheme({
@@ -126,6 +127,7 @@ function App() {
             <Route path="products" element={<ProductsList />} />
             <Route path="createProduct" element={<CreateProduct />} />
             <Route path="createAnimal" element={<CreateAnimal />} />
+            <Route path="orders" element={<OrderList />} />
             <Route path="updateProduct/:id" element={<UpdateProduct />} />
             <Route path="updateAnimal/:id" element={<UpdateAnimal />} />
           </Route>

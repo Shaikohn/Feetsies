@@ -1,25 +1,26 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const router = Router();
 
 const {
-    getUserPetitions,
-} = require('../controllers/Animals/Adoption_petition.controller')
+  getUserPetitions,
+} = require("../controllers/Animals/Adoption_petition.controller");
 
 const {
-    addUser,
-    deleteUser,
-    getAllUsers,
-    getUserDetail,
-    updateUser,
-} = require('../controllers/Admin/User.controller')
+  addUser,
+  deleteUser,
+  getAllUsers,
+  getUserDetail,
+  updateUser,
+} = require("../controllers/Admin/User.controller");
 
 const {
-    deleteOneFromCart,
-    deleteWholeCart,
-    getCart,
-} = require('../controllers/Shop/shopCart.controller.js')
+  deleteOneFromCart,
+  deleteWholeCart,
+  getCart,
+} = require("../controllers/Shop/shopCart.controller.js");
 
 const {
+
     getMyReviews
 } = require('../controllers/Products/Review.controller.js')
 
@@ -37,3 +38,4 @@ router.get('/petitions/:userid', getUserPetitions);
 
 
 module.exports = router;
+

@@ -60,6 +60,7 @@ const Adoption = () => {
         navigate("/");
       }
     } catch (error) {
+      alert("You already requested this animal's adoption");
       console.log(error);
     }
   };
