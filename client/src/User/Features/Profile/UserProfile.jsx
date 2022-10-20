@@ -52,6 +52,7 @@ export default function UserProfile() {
   const [open, setOpen] = React.useState(false);
   const [openB, setOpenB] = React.useState(false);
   const [openC, setOpenC] = React.useState(false);
+  const [openD, setOpenD] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -64,16 +65,19 @@ export default function UserProfile() {
   const handleClickC = () => {
     setOpenC(!openC);
   };
+  const handleClickD = () => {
+    setOpenD(!openD);
+  };
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!usuario.id) {
+    
       dispatch(getUserDetail(user.data.id));
       dispatch(getPurchaseOrders(user.data.id));
       dispatch(getReviewsUser(user.data.id));
-    }
-  }, [usuario]);
+  
+  }, [dispatch]);
 
   return (
     <Paper
@@ -214,9 +218,9 @@ export default function UserProfile() {
                     </Box>
                     <Divider sx={{fontWeight: 700, m: 0.4, bgcolor: "#567900", border: "1px solid #567900"}} />
                     <Box>
-                      {usuario?.phoneNumber ? (
+                      {usuario?.phone_number ? (
                         <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
-                          Cellphone: {usuario.phoneNumber}
+                          Cellphone: {usuario.phone_number}
                         </Typography>
                       ) : (
                         <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
@@ -270,7 +274,7 @@ export default function UserProfile() {
               <ListItemButton sx={{ py: 0, px: 2, display: "flex", justifyContent: "center"}}>
                 <ListItemIcon sx={{p: 2}}>
                   <Container>
-                    {purchaseOrder ? (
+                    {purchaseOrder.length ? (
                       purchaseOrder.map((order, id) => {
                         return (
                           <Box key={`${id}`}>
@@ -331,7 +335,7 @@ export default function UserProfile() {
               <ListItemButton sx={{ py: 0, px: 2, display: "flex", justifyContent: "center"}}>
                 <ListItemIcon sx={{p: 2}}>
                   <Container>
-                    {reviews ? (
+                    {reviews.length ? (
                       reviews.map((review, id) => {
                         return (
                           <Box key={`${id}`}>
@@ -360,6 +364,55 @@ export default function UserProfile() {
               </ListItemButton>
             </List>
           </Collapse>
+
+          <ListItemButton onClick={handleClickD} sx={{my: 2}}>
+            <ListItemIcon>
+              <LocalMallIcon sx={{color: "#567900", width: 45, height: 45}} fontSize="large" />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography sx={{fontSize: 22, fontWeight: 600}}>
+                My adoption request
+              </Typography>
+            </ListItemText>
+            {openC ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+
+          <Collapse in={openD} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton sx={{ py: 0, px: 2, display: "flex", justifyContent: "center"}}>
+                <ListItemIcon sx={{p: 2}}>
+                  <Container>
+                    {reviews.length ? (
+                      reviews.map((review, id) => {
+                        return (
+                          <Box key={`${id}`}>
+                            <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                              Score: {review.score}{" "}
+                            </Typography>
+                          
+                            <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                              Product: {review.productName}
+                            </Typography>
+                        
+                            <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                              Review: {review.comment}
+                            </Typography>
+                            <Divider sx={{fontWeight: 700, m: 0.4, bgcolor: "#567900", border: "1px solid #567900"}} />
+                          </Box>
+                        );
+                      })
+                    ) : (
+                      <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                        Not request found
+                      </Typography>
+                    )}
+                  </Container>
+                </ListItemIcon>
+              </ListItemButton>
+            </List>
+          </Collapse>
+
+         
         </List>
 
         <Link to="/">

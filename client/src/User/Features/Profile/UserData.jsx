@@ -22,6 +22,13 @@ import style from "./userStyles.module.css";
 import { OutlinedInput } from "@mui/material";
 import Modal from "@mui/material/Modal";
 
+function validate(input) {
+  let errors = {};
+  if (input.password !== input.password2 ) errors.password = "Password should match";
+  
+  return errors;
+}
+
 
 export default function UserData({open, setOpen}) {
   const navigate = useNavigate();
@@ -68,7 +75,7 @@ export default function UserData({open, setOpen}) {
       showPasswordConfirm: !values2.showPasswordConfirm,
     });
   };
-
+  const [errors, setError] = useState({});
   const [input, setInput] = useState({
     id: "",
     name: "",
@@ -164,6 +171,13 @@ export default function UserData({open, setOpen}) {
       ...input,
       [e.target.name]: e.target.value,
     });
+    setError(
+      validate({
+        ...input,
+        password: e.target.value,
+        password2: e.target.value
+      })
+    )
   }
 
   return (
@@ -377,6 +391,10 @@ export default function UserData({open, setOpen}) {
                       uppercase character and be at least 8 characters in length but
                       no more than 32
                     </div>
+                    {
+                      errors?<div style={{ color: "red", marginBottom:"10px" }}>{errors.password}</div>
+                      :""
+                    }
                 </div>
               )
             :""}
