@@ -2,6 +2,10 @@ const { Router } = require('express');
 const router = Router();
 
 const {
+    getUserPetitions,
+} = require('../controllers/Admin/Adoption_petition.controller')
+
+const {
     addUser,
     deleteUser,
     getAllUsers,
@@ -27,6 +31,7 @@ router.get('/cart/:id', getCart);
 router.get('/reviews/:userId', getMyReviews);
 router.delete('/cart/:id', deleteOneFromCart);
 router.delete('/cart/whole/:id', deleteWholeCart);
+router.get('/petitions/:id', getUserDetail);
 
 
 
