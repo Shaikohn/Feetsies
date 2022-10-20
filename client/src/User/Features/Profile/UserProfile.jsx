@@ -47,10 +47,8 @@ export default function UserProfile() {
   const { usuario } = useSelector((state) => state.userDetail);
   const { purchaseOrder } = useSelector((state) => state.purchaseOrder);
   const { reviews } = useSelector((state) => state.userReviews);
-
-  console.log(purchaseOrder);
-  console.log(reviews)
   const [openModal, setOpenModal] = React.useState(false);
+  
   const [open, setOpen] = React.useState(false);
   const [openB, setOpenB] = React.useState(false);
   const [openC, setOpenC] = React.useState(false);
@@ -70,10 +68,12 @@ export default function UserProfile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserDetail(user.data.id));
-    dispatch(getPurchaseOrders(user.data.id));
-    dispatch(getReviewsUser(user.data.id));
-  }, [user]);
+    if (!usuario.id) {
+      dispatch(getUserDetail(user.data.id));
+      dispatch(getPurchaseOrders(user.data.id));
+      dispatch(getReviewsUser(user.data.id));
+    }
+  }, [usuario]);
 
   return (
     <Paper
