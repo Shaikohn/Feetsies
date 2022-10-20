@@ -101,7 +101,7 @@ function DashboardContent() {
   React.useEffect(() => {}, [notifications]);
 
   const [user, setUser] = React.useState(
-    JSON.parse(localStorage.getItem("profile"))?.data?.name.split(' ')[0]
+    JSON.parse(localStorage.getItem("profile"))?.data?.name.split(" ")[0]
   );
   console.log(user);
 
@@ -109,10 +109,14 @@ function DashboardContent() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open} sx={{ color: "#87a827", bgcolor: "black"}}>
+        <AppBar
+          position="absolute"
+          open={open}
+          sx={{ color: "#87a827", bgcolor: "black" }}
+        >
           <Toolbar
             sx={{
-              p: 1.7 // keep right padding when drawer closed
+              p: 1.7, // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -125,20 +129,25 @@ function DashboardContent() {
                 ...(open && { display: "none" }),
               }}
             >
-              <MenuIcon sx={{width: 30, height: 30}}/>
+              <MenuIcon sx={{ width: 30, height: 30 }} />
             </IconButton>
             <Typography
               component="h1"
               variant="h6"
               color="#87a827"
               noWrap
-              sx={{ flexGrow: 1 , fontWeight: 600, fontSize: 26, letterSpacing: ".3rem",}}
+              sx={{
+                flexGrow: 1,
+                fontWeight: 600,
+                fontSize: 26,
+                letterSpacing: ".3rem",
+              }}
             >
               DASHBOARD
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={notifications.length} color="secondary">
-                <NotificationsIcon sx={{width: 30, height: 30}}/>
+                <NotificationsIcon sx={{ width: 30, height: 30 }} />
               </Badge>
             </IconButton>
           </Toolbar>
@@ -151,19 +160,24 @@ function DashboardContent() {
               justifyContent: "flex-end",
               px: [1],
               bgcolor: "black",
-              p: 1.38
+              p: 1.38,
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon sx={{color: "#87a827", width: 35, height: 35}}/>
+              <ChevronLeftIcon
+                sx={{ color: "#87a827", width: 35, height: 35 }}
+              />
             </IconButton>
           </Toolbar>
-          <Divider/>
-          <List component="nav" sx={{overflowWrap:'break-word', wordBreak:'break-word', width: '100%'}}>
-            {
-              open && 
-              <Box><h2>Welcome {user}</h2></Box>
-            }
+          <Divider />
+          <List
+            component="nav"
+            sx={{
+              overflowWrap: "break-word",
+              wordBreak: "break-word",
+              width: "100%",
+            }}
+          >
             {mainListItems}
             <Divider />
           </List>
@@ -238,7 +252,7 @@ export function ModalAdmin({ item, setOpen, open }) {
 export function DashboardLanding() {
   return (
     <React.Fragment>
-      <Grid item xs={12} md={12} lg={6}>
+      {/* <Grid item xs={12} md={12} lg={6}>
         <Paper
           sx={{
             p: 2,
@@ -249,8 +263,8 @@ export function DashboardLanding() {
         >
           <Chart />
         </Paper>
-      </Grid>
-      <Grid item xs={24} md={12} lg={6}>
+      </Grid> */}
+      <Grid item xs={24} md={12} lg={12}>
         <Paper
           sx={{
             p: 2,
