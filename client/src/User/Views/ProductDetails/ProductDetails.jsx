@@ -49,10 +49,12 @@ export default function ProductDetails({ product }) {
 
   const { productDetails } = useSelector((state) => state.ProductDetails);
 
-  const [selectedImg, setSelectedImg] = useState(productDetails.productImages[0]) 
-  
+  const [selectedImg, setSelectedImg] = useState(
+    productDetails.productImages[0]
+  );
+
   console.log("dea", productDetails);
-  console.log("images", selectedImg)
+  console.log("images", selectedImg);
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
@@ -90,11 +92,11 @@ export default function ProductDetails({ product }) {
     try {
       if (value === 0) {
         Swal.fire({
-        title: "REVIEW NOT SUBMITTED",
-        text: "You have to choose one or more stars to submit your review",
-        icon: "error",
-        timer: 3000,
-    });
+          title: "REVIEW NOT SUBMITTED",
+          text: "You have to choose one or more stars to submit your review",
+          icon: "error",
+          timer: 3000,
+        });
       } else {
         const review = await axios.post("/products/review", {
           userId: user.data.id,
@@ -122,13 +124,13 @@ export default function ProductDetails({ product }) {
         text: error.response.data.err,
         icon: "error",
         timer: 3000,
-    });
-    Swal.fire({
-      title: "REVIEW NOT SUBMITTED",
-      text: error.response.data.err,
-      icon: "error",
-      timer: 3000,
-  });
+      });
+      Swal.fire({
+        title: "REVIEW NOT SUBMITTED",
+        text: error.response.data.err,
+        icon: "error",
+        timer: 3000,
+      });
     }
   };
 
@@ -159,17 +161,19 @@ export default function ProductDetails({ product }) {
         >
           <Box 
             sx={{
-              display: "flex", 
+              display: "flex",
               flexDirection: "column",
-              py: 1.3
+              py: 1.3,
             }}
           >
             {productDetails.productImages?.map((img, i) => (
               <CardMedia
                 component="img"
-                style={{border: selectedImg === img ? "3px solid #953757": ""}}
-                key={i} 
-                image={img.image} 
+                style={{
+                  border: selectedImg === img ? "3px solid #953757" : "",
+                }}
+                key={i}
+                image={img.image}
                 alt="dog"
                 onClick={() => setSelectedImg(img)}
                 sx={{

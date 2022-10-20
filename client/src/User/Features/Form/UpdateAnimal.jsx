@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   clearAnimalDetails,
   getAnimalDetails,
@@ -23,8 +23,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { getAllAnimals } from "../../../redux/actions/getAnimalsA.js";
 
 const UpdateAnimal = () => {
+  const navigate = useNavigate();
   const {
     register,
     formState,
@@ -49,6 +51,21 @@ const UpdateAnimal = () => {
   console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
     console.log("Onsubmit", data);
+    try {
+      await axios.put(`/animals/${id}`, {
+        name: data.name,
+        sex: data.sex,
+        breed: data.breed,
+        size: data.size,
+        age: data.age,
+        types: data.types,
+        description: data.description,
+      });
+      dispatch(getAllAnimals());
+      navigate("/dashboard/animaltable");
+    } catch (error) {
+      console.log(error);
+    }
   };
   console.log(errors);
 
@@ -138,17 +155,14 @@ const UpdateAnimal = () => {
                     )}
                   </Grid>
                   <Grid item xs={12}>
-                    <FormControl name="sex" fullWidth {...register("sex")}>
-                      <InputLabel name="sex" id="demo-simple-select-label">
-                        Sex
-                      </InputLabel>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">Sex</InputLabel>
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={sex}
                         label="Sex"
                         onChange={handleChangeSex}
-                        name="sex"
                       >
                         <MenuItem value="Male">Male</MenuItem>
                         <MenuItem value="Female">Female</MenuItem>
@@ -194,6 +208,12 @@ const UpdateAnimal = () => {
                       type="number"
                       label="Age"
                       variant="outlined"
+                      defaultValue={animalDetails.age}
+                      multiline
+                      inputProps={{
+                        name: "age",
+                        id: "uncontrolled-native",
+                      }}
                       fullWidth
                       {...register("age", {
                         required: "A age is required",

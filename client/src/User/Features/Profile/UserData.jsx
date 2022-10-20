@@ -15,17 +15,42 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-
+import { getUserDetail } from "../../../redux/actions/userDetailA";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import Swal from "sweetalert2"
 import style from "./userStyles.module.css";
 import { OutlinedInput } from "@mui/material";
+import Modal from "@mui/material/Modal";
 
-export default function UserData() {
+function validate(input) {
+  let errors = {};
+  if (input.password !== input.password2 ) errors.password = "Password should match";
+  
+  return errors;
+}
+
+
+export default function UserData({open, setOpen}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { usuario } = useSelector((state) => state.userDetail);
   const [errorPas, setErrorPas] = useState(false)
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false)
+  ;
+  const styleUser = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 'fit-content',
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    borderRadius: '20px',
+    boxShadow: 24,
+    p: 4,
+    paddingLeft: '-50%'
+  };
 
   const [values, setValues] = useState({
     password: "",
@@ -50,7 +75,7 @@ export default function UserData() {
       showPasswordConfirm: !values2.showPasswordConfirm,
     });
   };
-
+  const [errors, setError] = useState({});
   const [input, setInput] = useState({
     id: "",
     name: "",
@@ -74,15 +99,13 @@ export default function UserData() {
   }, [dispatch]);
   //Cloudinary//
   const [image, setImage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [imageChosen, setImageChosen] = useState(false);
   const uploadImage = async (e) => {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
     data.append("upload_preset", "proyecto-final-animals");
-    setImageChosen(true);
-    setLoading(true);
+    // setImageChosen(true);
+    // setLoading(true);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/tawaynaskp/image/upload",
@@ -92,12 +115,11 @@ export default function UserData() {
       }
     );
     const file = await res.json();
+    setInput({...input, image:file.secure_url});
+    setImage(file.secure_url)
+    
 
-    console.log("data", file);
-
-    setImage(file.secure_url);
-
-    setLoading(false);
+    
   };
   //HANDLE SUBMIT
   async function handleSubmit(e) {
@@ -121,7 +143,8 @@ export default function UserData() {
           icon: "success",
           timer: 1000,
         });
-        navigate("/profile");
+        dispatch(getUserDetail(input.id))
+        handleClose();
       } catch (error) {
         console.log(error);
         Swal.fire({
@@ -148,26 +171,35 @@ export default function UserData() {
       ...input,
       [e.target.name]: e.target.value,
     });
+    setError(
+      validate({
+        ...input,
+        password2: e.target.value
+      })
+    )
   }
 
   return (
-    <div className={style.container}>
+    <Modal
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+  onLoad={() => handleOpen()}
+  >
+    <Box sx={styleUser}>
+
+      <div style={{width: '100%', margin:'auto'}}>
       <form onSubmit={(e) => handleSubmit(e)}>
         <Box
           sx={{
-            "& .MuiTextField-root": { m: 1, width: "60ch", color: "white" },
-            width: "62ch",
-            my: "5%",
-            mx: "30%",
-            maxWidth: "100%",
-            bgcolor: "#d8d8d8",
-            borderRadius: "10px",
+            "& .MuiTextField-root": {width: "100%", color: "white", m: 1 }           
           }}
         >
           <Box
             component="form"
             sx={{
-              "& .MuiTextField-root": { m: 1, width: "60ch", color: "#000" },
+              "& .MuiTextField-root": { width: "100%", color: "#000", },
               maxWidth: "100%",
               bgcolor: "#d8d8d8",
               borderRadius: "10px",
@@ -175,8 +207,24 @@ export default function UserData() {
             noValidate
             autoComplete="off"
           >
-            <div>
+            <div style={{margin:'auto', padding:'3%', width: '100%'}}>
               <div>
+              <input
+                  className={style.seleccionarArchivo}
+                  type="file"
+                  name="file"
+                  onChange={uploadImage}
+                  draggable
+                  style={{borderRadius: '50%', width: '7em', height:'7em', marginLeft:'38%', position: 'absolute', opacity:'0%'}}
+                />
+               
+                <img
+                  className={style.seleccionarArchivo}
+                  src={input.image}
+                  style={{ width: "7em", height:'7em', borderRadius: "50%", marginLeft:'45%', objectFit: 'cover' }}
+                  alt="Usuario"
+                />
+                  
                 <TextField
                   sx={{
                     bgcolor: "#fff ",
@@ -342,47 +390,13 @@ export default function UserData() {
                       uppercase character and be at least 8 characters in length but
                       no more than 32
                     </div>
+                    {
+                      errors?<div style={{ color: "red", marginBottom:"10px" }}>{errors.password}</div>
+                      :""
+                    }
                 </div>
               )
             :""}
-              <div>
-                <TextField
-                  sx={{
-                    bgcolor: "#fff ",
-                    color: "#FFC400",
-                    borderRadius: "10px",
-                  }}
-                  id="input-with-icon-textfield"
-                  label="Profile Foto: "
-                  value={input.image}
-                  onChange={(e) => handleChange(e)}
-                  name="image"
-                  // defaultValue={"I"}
-                  InputProps={{
-                    shrink: true,
-                  }}
-                  variant="standard"
-                />
-
-                <input
-                  className={style.seleccionarArchivo}
-                  type="file"
-                  name="file"
-                  onChange={uploadImage}
-                ></input>
-
-                {imageChosen &&
-                  (!loading ? (
-                    <img
-                      className={style.seleccionarArchivo}
-                      src={image}
-                      style={{ width: "50%" }}
-                      alt="Usuario"
-                    />
-                  ) : (
-                    <p>Wait a few moment</p>
-                  ))}
-              </div>
             </div>
           </Box>
 
@@ -403,29 +417,13 @@ export default function UserData() {
               >
                 Save changes
               </Button>
-            </Stack>
-            <Link to="/profile">
-              <Stack direction="row" spacing={2}>
-                <Button
-                  sx={{
-                    m: 1,
-                    width: "68ch",
-                    color: "#022335",
-                    bgcolor: "#fff",
-                    borderColor: "#022335",
-                    borderRadius: "10px",
-                  }}
-                  variant="contained"
-                  startIcon={<KeyboardReturnIcon fontSize="large" />}
-                >
-                  Back
-                </Button>
-              </Stack>
-            </Link>
+            </Stack>            
           </Box>
         </Box>
         <br />
       </form>
     </div>
+    </Box>
+    </Modal>
   );
 }

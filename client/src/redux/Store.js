@@ -18,6 +18,11 @@ import purchaseOrderReducer from "./reducers/purchaseOrderReducer";
 import orderDetailreducer from "./reducers/orderDetailR";
 import userReviewsReducer from "./reducers/getReviewsUserR";
 
+import adoptionRequestReducer from "./reducers/getRequestAdopUserR";
+
+import allOrders from "./reducers/getAllOrderR";
+
+
 export const store = createStore(
   combineReducers({
     products: productsReducer,
@@ -32,9 +37,15 @@ export const store = createStore(
     auth: authReducer,
     users: usersReducer,
     userDetail: userDetailReducer,
-    purchaseOrder : purchaseOrderReducer,
+    purchaseOrder: purchaseOrderReducer,
     orderDetail: orderDetailreducer,
-    userReviews: userReviewsReducer
+
+    userReviews: userReviewsReducer,
+    adoptionUser: adoptionRequestReducer,
+
+    orders: allOrders,
+    userReviews: userReviewsReducer,
+
   }),
   composeWithDevTools(applyMiddleware(thunk))
 );

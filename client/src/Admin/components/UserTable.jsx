@@ -35,38 +35,34 @@ import Swal from 'sweetalert2'
 export function UserCard({userDetail, setShow}) {
   const userSince = new Date(userDetail.createdAt)
   return (
-    
-                  <Box sx={{ p: 2, display: 'flex', width:'fit-content', margin:'auto', alignItems:'center', height:'100%' }}>
-                     <Box>
-                     <Avatar variant="rounded" src= {userDetail.image} sx={{margin: 'auto', width:'70%', height:'100%'}} />
-                     </Box>
-                      <Box>
-                      <Stack spacing={0.5}>
-                        <Typography fontWeight={700}>{userDetail.name} {userDetail.lastName}</Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{display: 'flex', alignItems: 'center'}}>
-                          <LocationOn sx={{color: 'grey[500]', display:'inline-flex'}} />
-                           {userDetail.location}
-                        </Typography>
-                        
-                         { 
-                          userDetail.phone_number !== 'No phone number added' ? (
-                            <Typography sx={{display:'flex', alignItems:'center'}}>
-                            <Mail /> <a href={`mailto:${userDetail.email}`} style={{margin:'auto'}}>{userDetail.email}</a>
-                            </Typography>
-                          )  : null
-                         
-                         }
-                       
-                        <Typography sx={{display:'flex', alignItems:'center'}}>
-                          <LocalPhone /> <a href={`tel:${userDetail.phone_number}`} style={{margin:'auto'}}>{userDetail.phone_number}</a>
-                        </Typography>
-                        <Typography sx={{display:'flex', alignItems: 'center'}}>
-                          User since: {userSince.getUTCFullYear()}
-                        </Typography>  
-                      </Stack>
-                    
-                      </Box>
-                  </Box>
+    <Box sx={{ p: 2, display: 'flex', width:'fit-content', margin:'auto', alignItems:'center', height:'100%' }}>
+        <Box sx={{margin: '1%'}}>
+        <Avatar variant="rounded" src= {userDetail.image} sx={{margin: 'auto', width:'5em', height:'5em'}} />
+        </Box>
+        <Box sx={{margin: '1%', width:'20em', overflowWrap:'break-word', wordBreak:'break-word'}}>
+        <Stack spacing={0.5}>
+          <Typography fontWeight={700}>{userDetail.name} {userDetail.lastName}</Typography>
+          <Typography variant="body2" color="text.secondary" sx={{display:'flex', alignItems:'center', marginRight: '1%'}}>
+            <LocationOn sx={{color: 'grey[500]', display:'inline-flex', marginRight: '1%'}} />
+              <p style={{margin:'auto'}}>{userDetail.location}</p>
+          </Typography>
+            <Typography sx={{display:'flex', alignItems:'center'}}>
+              <Mail sx={{color: 'grey[500]', display:'inline-flex', marginRight: '1%'}}/> <a href={`mailto:${userDetail.email}`} style={{margin:'auto'}}>{userDetail.email}</a>
+            </Typography>
+            { 
+            userDetail.phone_number !== 'No phone number added' ? (
+                <Typography sx={{display:'flex', alignItems:'center', marginRight: '1%'}}>
+                  <LocalPhone sx={{color: 'grey[500]', display:'inline-flex', marginRight: '1%'}}/> <a href={`tel:${userDetail.phone_number}`} style={{margin:'auto'}}>{userDetail.phone_number}</a>
+                </Typography>
+              )  : null
+            }
+          <Typography sx={{display:'flex', alignItems: 'center'}}>
+            User since: {userSince.getUTCFullYear()}
+          </Typography>  
+        </Stack>
+      
+        </Box>
+    </Box>
                 
   )
 }
@@ -191,12 +187,12 @@ const UserTable = () => {
           ))}
         </TableBody>
         { show && ReactDOM.createPortal(
-          <Card sx={{width: 'fit-content', height: '15em', zIndex: '2' }}>
-                  <Box sx={{zIndex: '1', position:'relative', margin:'auto', boxShadow: '-5px 10px 15px black'}}>
+          <Card sx={{width: 'fit-content', height: 'fit-content', zIndex: '1', display: 'flex', alignItems: 'center', boxShadow: '-5px 10px 15px black', overflow: 'visible' }}>
+                <Box sx={{zIndex: '2', position:'relative', margin:'auto'}}>
                   <Box sx={{position:'absolute', top: '-12%', left: '50%', backgroundColor:'white', borderRadius:'35%'}}> 
-                  <IconButton onClick={() =>setShow(false)} >
-                      <Close />
-                  </IconButton>
+                    <IconButton onClick={() =>setShow(false)} >
+                        <Close />
+                    </IconButton>
                   </Box>
                   <UserCard userDetail={userDetail} setShow={setShow}/>
                 </Box>

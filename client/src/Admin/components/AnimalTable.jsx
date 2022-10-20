@@ -75,8 +75,9 @@ export function AnimalsTable() {
     e.preventDefault();
     try {
       await axios.delete(`/animals/${id}`);
-      alert("Animal deleted");
       dispatch(getAllAnimals());
+      alert("Animal deleted");
+      
     } catch (error) {
       console.log(error);
     }
@@ -124,13 +125,7 @@ export function AnimalsTable() {
               <TableCell align="center">{p.breed}</TableCell>
               <TableCell align="center">{p.size}</TableCell>
               <TableCell align="center">{p.age} yrs</TableCell>
-              {
-                <TableCell align="center">
-                  {p.animal_types.map((type, i) => {
-                    return <p>{type.name}</p>;
-                  })}
-                </TableCell>
-              }
+              {<TableCell align="center">{p?.animal_type.name}</TableCell>}
               <TableCell align="center">
                 <IconButton onClick={(e) => handleEditAnimal(e, p.id)}>
                   <EditIcon />

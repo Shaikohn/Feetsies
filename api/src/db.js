@@ -68,6 +68,7 @@ const {
   Adoption_alta,
   Adoption_petition,
   Animal,
+  AnimalImage,
   Animal_type,
   Cart_item, 
   Inquiry,
@@ -103,13 +104,13 @@ User.hasMany(Inquiry);
 Inquiry.belongsTo(User);
 /////////////////////////////////////
 User.hasMany(Cart_item);
-Cart_item.belongsTo(User);
+Cart_item.belongsTo(User);//
 /////////////////////////////////////
 User.hasMany(Purchase_order);
 Purchase_order.belongsTo(User);
-// ////////////////////////////////////
-Animal_type.belongsToMany(Animal, {through: 'animal_animalsType'})
-Animal.belongsToMany(Animal_type, {through: 'animal_animalType'})
+//////////////////////////////////////
+//Animal_type.belongsToMany(Animal, {through: 'animal_animalsType'})
+//Animal.belongsToMany(Animal_type, {through: 'animal_animalType'})
 ////////////////////////////////////
 Purchase_order.hasMany(Order_item);
 Order_item.belongsTo(Purchase_order);
@@ -121,6 +122,12 @@ Review.belongsTo(Product)
 ////////////////////////////////////
 Product.hasMany(ProductImage);
 ProductImage.belongsTo(Product);
+////////////////////////////////////
+Animal_type.hasMany(Animal);
+Animal.belongsTo(Animal_type);
+////////////////////////////////////
+Animal.hasMany(AnimalImage);
+AnimalImage.belongsTo(Animal);
 ////////////////////////////////////
 module.exports = {
   ...sequelize.models, 
