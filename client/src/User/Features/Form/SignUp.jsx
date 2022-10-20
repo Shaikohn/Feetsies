@@ -34,15 +34,12 @@ import { google } from "../../../redux/actions/auth";
 
 function Copyright(props) {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
+    <Typography color="text.secondary" align="center" {...props}>
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link href="https://mui.com/">
+        <Typography sx={{ color: "#87a827", fontSize: 15 }}>
+          FEETSIES
+        </Typography>
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -63,9 +60,6 @@ const SignUp = () => {
     passwordConfirm: "",
     showPasswordConfirm: false,
   });
-
-  // console.log("pass", values);
-  // console.log("pass confirmada", values2);
 
   const navigateTo = useNavigate();
 
@@ -145,7 +139,7 @@ const SignUp = () => {
       console.log(res);
       dispatch(google(token, navigateTo));
       Swal.fire({
-        title: "Logged in",
+        title: "LOGGED IN",
         text: "Your google account is now connected with the page!",
         icon: "success",
         timer: 5000,
@@ -153,7 +147,7 @@ const SignUp = () => {
     } catch (error) {
       console.log(error);
       Swal.fire({
-        title: "Login Failed",
+        title: "LOGIN FAILED",
         text: "Sorry, the page couldnt connect to your Goggle account",
         icon: "error",
         timer: 5000,
@@ -162,7 +156,6 @@ const SignUp = () => {
   };
 
   return (
-    // <ThemeProvider theme={theme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -191,7 +184,7 @@ const SignUp = () => {
               <TextField
                 error={errors.name ? true : false}
                 name="name"
-                style = {{width: "100%"}}
+                style={{ width: "100%" }}
                 id="name"
                 label="Name"
                 autoFocus
@@ -219,7 +212,7 @@ const SignUp = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 error={errors.lastName ? true : false}
-                style = {{width: "100%"}}
+                style={{ width: "100%" }}
                 id="lastName"
                 label="Last Name"
                 name="lastName"
@@ -289,7 +282,7 @@ const SignUp = () => {
             <Grid item xs={12}>
               <TextField
                 error={errors.email ? true : false}
-                style = {{width: "100%"}}
+                style={{ width: "100%" }}
                 id="email"
                 label="Email Address"
                 name="email"
@@ -312,7 +305,7 @@ const SignUp = () => {
                 : ""}
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" style = {{width: "100%"}}>
+              <FormControl variant="outlined" style={{ width: "100%" }}>
                 <InputLabel htmlFor="outlined-adornment-password1">
                   Password
                 </InputLabel>
@@ -359,7 +352,7 @@ const SignUp = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <FormControl variant="outlined" style = {{width: "100%"}}>
+              <FormControl variant="outlined" style={{ width: "100%" }}>
                 <InputLabel>Confirm password</InputLabel>
                 <OutlinedInput
                   type={values2.showPasswordConfirm ? "text" : "password"}
@@ -412,7 +405,7 @@ const SignUp = () => {
 
           <Button
             type="submit"
-            style = {{width: "100%"}}
+            style={{ width: "100%" }}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
@@ -423,7 +416,7 @@ const SignUp = () => {
           <h3>Or sign in with</h3>
           <hr />
           {/* Google Auth */}
-          <Grid container style = {{width: "100%"}} justifyContent="center">
+          <Grid container style={{ width: "100%" }} justifyContent="center">
             <Grid
               item
               sx={{
@@ -441,18 +434,27 @@ const SignUp = () => {
             </Grid>
           </Grid>
 
-          <Grid container justifyContent="flex-end">
+          <Grid container justifyContent="center">
             <Grid item>
               <Link to="/signIn" variant="body2">
-                Already have an account? Sign in
+                <Typography sx={{ color: "#87a827" }}>
+                  Already have an account? Sign in
+                </Typography>
               </Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+      <Copyright
+        sx={{
+          mt: 3,
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      />
     </Container>
-    // </ThemeProvider>
   );
 };
 

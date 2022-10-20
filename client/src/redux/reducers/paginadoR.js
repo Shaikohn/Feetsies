@@ -1,12 +1,13 @@
-import { SET_CURRENT_PAGE, RESET_PAGINATION } from "../actions/paginadoA";
+import { SET_CURRENT_PAGE, RESET_PAGINATION, SET_CURRENT_SEARCH } from "../actions/paginadoA";
 
 
-const initialSate ={
+const initialState ={
     page: 1,
-    pagination: {}
+    pagination: {},
+    search: '',
 }
 
-const paginadoReducer = (state=initialSate,{type,payload})=>{
+const paginadoReducer = (state=initialState,{type,payload})=>{
 
     switch (type){
         case SET_CURRENT_PAGE:
@@ -18,6 +19,10 @@ const paginadoReducer = (state=initialSate,{type,payload})=>{
             return {
                 ...state, 
                 pagination: payload
+            }
+        case SET_CURRENT_SEARCH:
+            return {
+                search: payload
             }
 
         default:

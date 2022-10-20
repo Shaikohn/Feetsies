@@ -15,46 +15,46 @@ const {
   loadInquiries,
   loadCarts,
 } = require("./src/utils/mockLoad");
-////
+
 // Syncing all the models at once.
 conn
-  .sync({ force: false })
-  /*.then(() => {
+  .sync({ force: true })
+  .then(() => {
     return writeAnimalTypes();
   })
   .then(() => {
     return writeProductTypes();
   })
-  .then(() => {
+  /*.then(() => {
     console.log("+ Writing users in database...");
     return loadUsers();
-  })
-  .then(async () => {
+  })*/
+  /*.then(async () => {
     console.log("- Wrote Users in database.");
     console.log("+ Writing products in database...");
     await loadProducts();
-  })
-  .then(() => {
+  })*/
+ /* .then(() => {
     console.log("- Wrote Products in database.");
     console.log("+ Writing Animals in database...");
     return loadAnimals();
-  })
-  .then(async () => {
+  })*/
+  /*.then(async () => {
     console.log("- Wrote Animals in database."),
       console.log("+ Writing Adoption petitions in database...");
     await loadPetitions();
-  })
-  .then(async () => {
+  })*/
+  /*.then(async () => {
     console.log("- Wrote Adoption petitions in database."),
       console.log("+ Writing Adoption altas in database...");
     await loadAltas();
-  })
-  .then(async () => {
+  })*/
+  /*.then(async () => {
     console.log("- Wrote Adoption altas in database."),
       console.log("+ Writing Inquiries in database...");
     await loadInquiries();
-  })
-  .then(async () => {
+  })*/
+  /*.then(async () => {
     console.log("- Wrote Inquiries in database."),
       console.log("+ Writing Cart items in database...");
     await loadCarts();

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ButtonBase, CardMedia, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import Swal from 'sweetalert2';
+import { useSelector } from "react-redux";
 
 /* import images from "./images"; */
 
@@ -14,6 +15,7 @@ export default function AnimalDetails({animal}) {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
     const navigate = useNavigate();
+    console.log(animal)
 
     /* const [selectedImg, setSelectedImg] = useState(images[0]) */
 
@@ -30,7 +32,7 @@ export default function AnimalDetails({animal}) {
                 }}
                 key={animal?.id}
             >   
-                <Grid item xs={1} 
+                {/* <Grid item xs={1} 
                     sx={{
                         border: "5px groove #567900", 
                         borderRadius: "10px",
@@ -40,25 +42,7 @@ export default function AnimalDetails({animal}) {
                         mx: 2
                     }}
                 >
-                    <Box>
-                        {/* <div className={styles.imagesContainer}>
-                            <img className={styles.selected} src={selectedImg} alt="" />
-                            <div className={styles.notSelected}>
-                                {
-                                    images.map((img, i) => (
-                                        <img 
-                                        style={{border: selectedImg === img ? "4px solid purple": ""}}
-                                        key={i} 
-                                        src={img} 
-                                        alt="dog"
-                                        onClick={() => setSelectedImg(img)}
-                                        />
-                                    ))
-                                }
-                            </div>
-                        </div> */}
-                    </Box>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={5} 
                     sx={{ 
                         // border: "5px groove #567900", 

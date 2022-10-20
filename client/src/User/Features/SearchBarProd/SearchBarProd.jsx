@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getProductName } from "../../../redux/actions/getProductsA.js";
 import { resetPagination } from "../../../redux/actions/paginadoA.js";
-
+import Swal from "sweetalert2";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
@@ -42,7 +42,12 @@ export default function SearchBarProd() {
       dispatch(resetPagination({ current: 1 }));
       setName("");
     } else {
-      alert("Enter a name of product");
+      Swal.fire({
+        title: "Error",
+        text: 'You have to enter a name!',
+        icon: "error",
+        timer: 3000,
+      });
     }
   }
 

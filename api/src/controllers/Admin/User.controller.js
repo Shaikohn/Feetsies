@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const { User } = require("../../db");
+const { User, Adoption_petition } = require("../../db");
 
 const emptyDB = { err: "Database empty" };
 const badReq = { err: "Bad request" };
@@ -69,22 +69,21 @@ async function updateUser (req, res) {
 }
 
 async function getUserDetail(req, res) {
-  if (!req.params.id) return res.status(400).send(badReq);
+  let {id} = req.params
+  if (!id) return res.status(400).send(badReq);
   try {
-    let user = await User.findOne({ where: { id: req.params.id } });
+    let user = await User.findOne({ 
+      where: { 
+        id: id
+      }, 
+      include: Adoption_petition
+    });
+
     if (!user) return res.status(404).send(notFound);
-    result = {
-      id: user.dataValues.id,
-      name: user.dataValues.name,
-      lastName:  user.dataValues.lastName,
-      isAdmin:  user.dataValues.isAdmin,
-      image:  user.dataValues.image,
-      email: user.dataValues.email,
-      phoneNumber: user.dataValues.phone_number,
-      location: user.dataValues.location,
-    };
-    return res.status(200).send(result);
+    
+    return res.status(200).send(user);
   } catch (error) {
+    console.log(error);
     return res.status(500).send(error);
   }
 }

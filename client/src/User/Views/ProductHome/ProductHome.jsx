@@ -1,7 +1,10 @@
 import ProductCard from "../../Features/ProductCard/ProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getAllProducts } from "../../../redux/actions/getProductsA";
+import {
+  clearProducts,
+  getAllProducts,
+} from "../../../redux/actions/getProductsA";
 import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import NavBarProd from "../../Features/NavBarProducts/navBarP.jsx";
 import Pagination from "../../Features/Paginado/Paginado.jsx";
@@ -33,6 +36,9 @@ export default function ProductHome() {
       dispatch(getAllProducts());
     }
     setCurrentPage(page);
+    return () => {
+      dispatch(clearProducts());
+    };
   }, [dispatch, page, allProductsCopy.length]);
 
   return (

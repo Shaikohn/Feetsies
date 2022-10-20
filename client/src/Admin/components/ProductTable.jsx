@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,6 +13,10 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import IconButton from "@mui/material/IconButton";
 import { getAllProducts } from "../../redux/actions/getProductsA";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -21,11 +25,28 @@ function createData(name, calories, fat, carbs, protein) {
 const ProductTable = () => {
   const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
   const { allProductsCopy } = useSelector((state) => state.products);
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllProducts());
   }, [reducerValue, dispatch]);
-  console.log(allProductsCopy);
+
+  async function handleDeleteProd(e, id) {
+    e.preventDefault();
+    try {
+      await axios.delete(`/products/${id}`);
+      dispatch(getAllProducts());
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function handleEditProd(e, id) {
+    e.preventDefault();
+    navigate(`/dashboard/updateProduct/${id}`);
+  }
 
   //   const handleDelete = (e, id) => {
   //     e.preventDefault();
@@ -48,6 +69,8 @@ const ProductTable = () => {
             <TableCell>Name</TableCell>
             <TableCell>Stock</TableCell>
             <TableCell>Price</TableCell>
+            <TableCell>Edit</TableCell>
+            <TableCell>Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,32 +85,16 @@ const ProductTable = () => {
               <TableCell>{products.name}</TableCell>
               <TableCell>{products.stock}</TableCell>
               <TableCell>{products.price}</TableCell>
-              {/* <TableCell>
-                {users.isAdmin ? (
-                  <TableCell>
-                    <IconButton onClick={(e) => handleAdmin(e, users.id)}>
-                      <LocalPoliceIcon />
-                    </IconButton>
-                  </TableCell>
-                ) : (
-                  <TableCell>
-                    <IconButton onClick={(e) => handleAdmin(e, users.id)}>
-                      <AccountBoxIcon />
-                    </IconButton>
-                  </TableCell>
-                )}
-              </TableCell> */}
-              {/* <TableCell>
-                {users.isBan ? (
-                  <IconButton onClick={(e) => handleBan(e, users.id)}>
-                    <TaskAltIcon />
-                  </IconButton>
-                ) : (
-                  <IconButton onClick={(e) => handleBan(e, users.id)}>
-                    <RemoveCircleOutlineIcon />
-                  </IconButton>
-                )}
-              </TableCell> */}
+              <TableCell>
+                <IconButton onClick={(e) => handleEditProd(e, products.id)}>
+                  <EditIcon />
+                </IconButton>
+              </TableCell>
+              <TableCell>
+                <IconButton onClick={(e) => handleDeleteProd(e, products.id)}>
+                  <DeleteForeverIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

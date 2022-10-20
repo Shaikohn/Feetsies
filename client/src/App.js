@@ -25,6 +25,13 @@ import { AnimalsTable } from "./Admin/components/AnimalTable";
 import UserData from "./User/Features/Profile/UserData";
 import UserProfile from "./User/Features/Profile/UserProfile";
 import OrderDetail from "./User/Features/Profile/OrderDetail";
+import ProductHome from "./User/Views/ProductHome/ProductHome.jsx";
+import UpdateProduct from "./User/Features/Form/UpdateProduct";
+import Inquiry from "./User/Features/Form/Inquiry";
+import AnimalList from "./Admin/components/AnimalList";
+import CreateAnimal from "./User/Features/Form/CreateAnimal";
+import UpdateAnimal from "./User/Features/Form/UpdateAnimal";
+import OrderList from "./Admin/components/OrderList";
 
 function App() {
   const theme = createTheme({
@@ -56,11 +63,17 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-       <div id='contact' style={{position: 'absolute', left: '70%', top:'35%', zIndex:1}}/>
+        <div
+          id="contact"
+          style={{ position: "absolute", left: "70%", top: "35%", zIndex: 1 }}
+        />
+        <div id="adminModal" />
+        <div id='userModal' />
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
-          <Route exact path="/home/products" element={<HomeProducts />} />
+          <Route exact path="/home/products" element={<ProductHome />} />
           <Route exact path="/home/animals" element={<HomeAnimals />} />
+          <Route exact path="/home/inquiry" element={<Inquiry />} />
           <Route
             exact
             path="/home/products/:id"
@@ -77,11 +90,12 @@ function App() {
             element={<Adoption />}
           />
           <Route exact path="/home/altaAdoption" element={<AltaAdoption />} />
-          <Route exact path="/home/createProduct" element={<CreateProduct />} />
           <Route exact path="/home/shoppingView" element={<ShoppingView />} />
-          {/* Sign Up Form */}
-          <Route exact path="/signUp" element={<SignUp />} />
-          {/* Sign in Form */}
+          <Route
+            exact
+            path="/signUp"
+            element={user ? <Navigate to="/" replace /> : <SignUp />}
+          />
           <Route
             path="/signIn"
             element={user ? <Navigate to="/" replace /> : <SignIn />}
@@ -96,13 +110,11 @@ function App() {
             path="/confirm/:confirmationCode"
             element={user ? <Navigate to="/" replace /> : <AccountConfirmed />}
           />
-          {/* Reset Password */}
           <Route
             exact
             path="/reset-password/:id/:token"
             element={user ? <Navigate to="/" replace /> : <ResetPassword />}
           />
-          {/* Forgot Password */}
           <Route
             exact
             path="/forgot-password"
@@ -110,15 +122,18 @@ function App() {
           />
           <Route path="/dashboard" element={<Dashboard />}>
             <Route path="" element={<DashboardLanding />} />
-            <Route path="animaltable" element={<AnimalsTable />} />
+            <Route path="animaltable" element={<AnimalList />} />
             <Route path="users" element={<UsersList />} />
             <Route path="products" element={<ProductsList />} />
+            <Route path="createProduct" element={<CreateProduct />} />
+            <Route path="createAnimal" element={<CreateAnimal />} />
+            <Route path="orders" element={<OrderList />} />
+            <Route path="updateProduct/:id" element={<UpdateProduct />} />
+            <Route path="updateAnimal/:id" element={<UpdateAnimal />} />
           </Route>
           <Route path="profile" element={<UserProfile />} />
-          <Route path="profile/orderDetail/:id" element={<OrderDetail />} />
           <Route path="user/data" element={<UserData />} />
-         
-
+          <Route path="profile/orderDetail/:id" element={<OrderDetail />} />
           {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </div>

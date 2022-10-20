@@ -22,7 +22,7 @@ import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 
 const labels = {
-  0.5: "Useless",
+  0: "---",
   1: "Useless+",
   1.5: "Poor",
   2: "Poor+",
@@ -57,7 +57,7 @@ export default function ProductCard({
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
 
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(avg);
   const [hover, setHover] = React.useState(-1);
 
   const handleChange = (event) => {
@@ -96,12 +96,12 @@ export default function ProductCard({
           border: "1px solid #bada59",
           borderRadius: 3,
           bgcolor: "#ffff9bb0",
-          boxShadow: "0px 0px 10px 5px rgb(135 168 39);",
+          boxShadow: "0px 0px 10px 5px #1d788e",
           transition: "0.3s",
           animation: "ease-in-out",
           "&:hover": {
             transform: "scale(1.02)",
-            boxShadow: "0px 0px 10px 8px rgb(92, 116, 20)",
+            boxShadow: "0px 0px 10px 8px #943656",
           },
         }}
       >
@@ -120,9 +120,11 @@ export default function ProductCard({
               }
               readOnly
             />
-            {value !== null && (
-              <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
-            )}
+            <Typography sx={{ color: "#567900", fontWeight: "600" }}>
+              {value !== null && (
+                <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+              )}
+            </Typography>
             <CardMedia
               component="img"
               height="220px"

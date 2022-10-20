@@ -17,30 +17,30 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
+import { mainListItems } from "./listItems";
 import Chart from "./Chart";
 import Inqueries from "./Inqueries";
 import AdoptionPetitions from "./AdoptionPetitions";
 import { useSelector } from "react-redux";
-import {Outlet} from 'react-router-dom'
+import { Outlet } from "react-router-dom";
+import { Modal, Stack, Card } from "@mui/material";
+import { UserCard } from "./UserTable";
+import { AnimalCard } from "./AnimalTable";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+export const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "fit-content",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  textAlign: "center",
+  p: 4,
+  borderRadius: "20px",
+};
 
 const drawerWidth = 240;
 
@@ -99,14 +99,24 @@ function DashboardContent() {
   };
 
   React.useEffect(() => {}, [notifications]);
+
+  const [user, setUser] = React.useState(
+    JSON.parse(localStorage.getItem("profile"))?.data?.name.split(" ")[0]
+  );
+  console.log(user);
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar
+          position="absolute"
+          open={open}
+          sx={{ color: "#87a827", bgcolor: "black" }}
+        >
           <Toolbar
             sx={{
-              pr: "24px", // keep right padding when drawer closed
+              p: 1.7, // keep right padding when drawer closed
             }}
           >
             <IconButton
@@ -115,24 +125,29 @@ function DashboardContent() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: "36px",
+                mr: "36px",
                 ...(open && { display: "none" }),
               }}
             >
-              <MenuIcon />
+              <MenuIcon sx={{ width: 30, height: 30 }} />
             </IconButton>
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
+              color="#87a827"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{
+                flexGrow: 1,
+                fontWeight: 600,
+                fontSize: 26,
+                letterSpacing: ".3rem",
+              }}
             >
-              Dashboard
+              DASHBOARD
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={notifications.length} color="secondary">
-                <NotificationsIcon />
+                <NotificationsIcon sx={{ width: 30, height: 30 }} />
               </Badge>
             </IconButton>
           </Toolbar>
@@ -144,17 +159,27 @@ function DashboardContent() {
               alignItems: "center",
               justifyContent: "flex-end",
               px: [1],
+              bgcolor: "black",
+              p: 1.38,
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
+              <ChevronLeftIcon
+                sx={{ color: "#87a827", width: 35, height: 35 }}
+              />
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">
+          <List
+            component="nav"
+            sx={{
+              overflowWrap: "break-word",
+              wordBreak: "break-word",
+              width: "100%",
+            }}
+          >
             {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {/* {secondaryListItems} */}
+            <Divider />
           </List>
         </Drawer>
         <Box
@@ -162,7 +187,7 @@ function DashboardContent() {
           sx={{
             backgroundColor: (theme) =>
               theme.palette.mode === "light"
-                ? theme.palette.grey[100]
+                ? "#ffff9b"
                 : theme.palette.grey[900],
             flexGrow: 1,
             height: "100vh",
@@ -170,11 +195,10 @@ function DashboardContent() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 6, mb: 6 }}>
             <Grid container spacing={3}>
               <Outlet />
             </Grid>
-            <Copyright sx={{ pt: 4 }} />
           </Container>
         </Box>
       </Box>
@@ -182,42 +206,84 @@ function DashboardContent() {
   );
 }
 
+export function ModalAdmin({ item, setOpen, open }) {
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+      onLoad={() => handleOpen(true)}
+    >
+      <Card
+        sx={{
+          width: "fit-content",
+          height: "15em",
+          zIndex: "2",
+          borderRadius: "20px",
+          justifyItems: "center",
+        }}
+      >
+        <Paper>
+          <Box sx={style}>
+            {item.isImportant ? <PriorityHighIcon /> : null}
+            <Stack direction={"row"}>
+              <UserCard userDetail={item.user} setShow={setOpen} />
+              {item.animal ? <AnimalCard animal={item.animal} /> : null}
+            </Stack>
+            <Stack sx={{ margin: "auto" }}>
+              <Typography sx={{ margin: "auto" }}>
+                <h3>Topic: </h3> {item.topic}
+              </Typography>
+              <Typography sx={{ margin: "auto" }}>
+                <h3>Description: </h3> {item.description}
+              </Typography>
+            </Stack>
+          </Box>
+        </Paper>
+      </Card>
+    </Modal>
+  );
+}
 
 export function DashboardLanding() {
   return (
     <React.Fragment>
-      <Grid item xs={12} md={12} lg={8}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                  <Chart />
-                </Paper>
-              </Grid>  
-              <Grid item xs={24} md={12} lg={4}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 240,
-                    overflowY: "auto",
-                  }}
-                >
-                  <Inqueries />
-                </Paper>
-              </Grid>
-              <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                  <AdoptionPetitions />
-                </Paper>
-              </Grid>
+      {/* <Grid item xs={12} md={12} lg={6}>
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: 300,
+          }}
+        >
+          <Chart />
+        </Paper>
+      </Grid> */}
+      <Grid item xs={24} md={12} lg={12}>
+        <Paper
+          sx={{
+            p: 2,
+            display: "flex",
+            flexDirection: "column",
+            height: 300,
+            overflowY: "auto",
+          }}
+        >
+          <Inqueries />
+        </Paper>
+      </Grid>
+      <Grid item xs={12}>
+        <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+          <AdoptionPetitions />
+        </Paper>
+      </Grid>
     </React.Fragment>
-  )
+  );
 }
 
 export default function Dashboard() {

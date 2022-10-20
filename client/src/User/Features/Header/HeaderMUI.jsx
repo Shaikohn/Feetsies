@@ -24,15 +24,14 @@ import PersonIcon from "@mui/icons-material/Person";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
 // import MenuIcon from '@mui/icons-material/Menu';
 import decode from "jwt-decode";
 import { getShoppingCart } from "../../../redux/actions/ShoppingCartView";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 export default function ResponsiveAppBar() {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -40,7 +39,9 @@ export default function ResponsiveAppBar() {
   const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
   const count = shoppingCartCopy.items?.length;
 
-  const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem("profile"))?.data.id);
+  const [userId, setUserId] = useState(
+    JSON.parse(localStorage?.getItem("profile"))?.data.id
+  );
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -48,7 +49,6 @@ export default function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
     forceUpdate();
@@ -77,10 +77,10 @@ export default function ResponsiveAppBar() {
     setUser(null);
     Swal.fire({
       title: "Logged out",
-      text: "you have logged out",
+      text: "You have logged out!",
       icon: "success",
       timer: 3000,
-    })
+    });
     forceUpdate();
   };
 
@@ -94,10 +94,10 @@ export default function ResponsiveAppBar() {
   //   console.log("information token", decoded);
 
   useEffect(() => {
-    if(userId) {
+    if (userId) {
       dispatch(getShoppingCart(userId));
     }
-  }, [userId, dispatch])
+  }, [userId, dispatch]);
 
   useEffect(() => {
     const token = user?.token;
@@ -113,11 +113,7 @@ export default function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/">
-            <Avatar
-              alt=""
-              src={logo}
-              sx={{ width: 110, height: 110, m: 1 }}
-            />
+            <Avatar alt="" src={logo} sx={{ width: 110, height: 110, m: 1 }} />
           </Link>
           <Link to="/">
             <Typography
@@ -131,7 +127,7 @@ export default function ResponsiveAppBar() {
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
-                color: "inherit",
+                color: "#87a827",
                 textDecoration: "none",
               }}
             >
@@ -193,9 +189,9 @@ export default function ResponsiveAppBar() {
                     >
                         LOGO
                     </Typography> */}
-          <Box 
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }} 
-            justifyContent="center" 
+          <Box
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+            justifyContent="center"
             alignItems="center"
           >
             <Link to="/home/products">
@@ -206,7 +202,7 @@ export default function ResponsiveAppBar() {
                   fontSize: 17,
                   bgcolor: "secondary.main",
                   fontWeight: 500,
-                  mx: 2,
+                  mx: 3,
                 }}
                 size="large"
                 variant="outlined"
@@ -217,59 +213,61 @@ export default function ResponsiveAppBar() {
             <Link to="/home/animals">
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ 
-                  my: 2, 
-                  display: "block", 
-                  fontSize: 17, 
+                sx={{
+                  my: 2,
+                  display: "block",
+                  fontSize: 17,
                   bgcolor: "secondary.main",
                   fontWeight: 500,
-                  mx: 2 }}
+                  mx: 3,
+                }}
                 size="large"
                 variant="outlined"
               >
                 ANIMALS
               </Button>
             </Link>
-            <Link to="/home/createProduct">
+            <Link to="/home/inquiry">
               <Button
                 onClick={handleCloseNavMenu}
-                sx={{ 
-                  my: 2, 
-                  display: "block", 
+                sx={{
+                  my: 2,
+                  display: "block",
                   fontSize: 17,
                   bgcolor: "secondary.main",
-                  fontWeight: 500, 
-                  mx: 2 }}
+                  fontWeight: 500,
+                  mx: 3,
+                }}
                 size="large"
                 variant="outlined"
               >
-                CREATE PRODUCT
+                INQUIRY
               </Button>
             </Link>
           </Box>
           {!user ? (
-              ""
-            ) : (
-              <Box sx={{ flexGrow: 0, mr: 11 }} size="large">
-                <Link to="/home/shoppingView">
-                  <Tooltip
-                    title="Cart"
-                    TransitionComponent={Zoom}
-                    TransitionProps={{ timeout: 500 }}
-                    arrow
-                  >
-                    <IconButton sx={{ width: 50, height: 50 }}>
-                      <Badge badgeContent={count} color="primary">
-                        <ShoppingCartIcon
-                          fontSize="large"
-                          sx={{ color: "white", width: 40, height: 40 }}
-                        />
-                      </Badge>
-                    </IconButton>
-                  </Tooltip>
-                </Link>
-              </Box>
-            )}
+            ""
+          ) : (
+            <Box sx={{ flexGrow: 0, mr: 11 }} size="large">
+              <Link to="/home/shoppingView">
+                <Tooltip
+                  title="Cart"
+                  TransitionComponent={Zoom}
+                  TransitionProps={{ timeout: 500 }}
+                  arrow
+                >
+                  <IconButton sx={{ width: 50, height: 50 }}>
+                    <Badge badgeContent={count} color="primary">
+                      <ShoppingCartIcon
+                        fontSize="large"
+                        sx={{ color: "white", width: 40, height: 40 }}
+                      />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            </Box>
+          )}
           {!user ? (
             <Box sx={{ flexGrow: 0 }} size="large">
               <Link to="/signUp">
@@ -300,12 +298,16 @@ export default function ResponsiveAppBar() {
                 // PopperProps={}
               >
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar sx={{ bgcolor: "#567900", width: 55, height: 55 }}>
-                    <AccountCircleIcon
-                      fontSize="large"
-                      sx={{ color: "#fedf6a", width: 35, height: 35 }}
-                    />
-                  </Avatar>
+                  {user ? (
+                    <Avatar alt={user?.data?.name} src={user?.data.image} />
+                  ) : (
+                    <Avatar sx={{ bgcolor: "#567900", width: 55, height: 55 }}>
+                      <AccountCircleIcon
+                        fontSize="large"
+                        sx={{ color: "#fedf6a", width: 35, height: 35 }}
+                      />
+                    </Avatar>
+                  )}
                 </IconButton>
               </Tooltip>
               <Menu
@@ -332,13 +334,10 @@ export default function ResponsiveAppBar() {
                 <MenuItem onClick={handleCloseUserMenu}>
                   <PersonIcon sx={{ mr: 2 }} />
                   <Link to="/profile">
-                  <Typography textAlign="center">Profile</Typography>
+                    <Typography textAlign="center" sx={{ color: "black" }}>
+                      Profile
+                    </Typography>
                   </Link>
-                  
-                </MenuItem>
-                <MenuItem onClick={handleCloseUserMenu}>
-                  <ManageAccountsIcon sx={{ mr: 2 }} />
-                  <Typography textAlign="center">Account</Typography>
                 </MenuItem>
                 <Divider />
                 {user.data.isAdmin ? (

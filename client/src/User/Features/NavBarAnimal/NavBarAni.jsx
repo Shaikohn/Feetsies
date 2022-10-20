@@ -84,7 +84,7 @@ function NavBarAnimals() {
         }}
         bgcolor="#ffff9bb3"
       >
-        <SearchBarAnim />
+        <SearchBarAnim /> 
         <Divider orientation="vertical" flexItem />
         {arraySize.map((ele, id) => {
           return (
