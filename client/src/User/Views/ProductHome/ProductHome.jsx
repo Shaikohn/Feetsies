@@ -86,7 +86,6 @@ export default function ProductHome() {
                     price={p.price}
                     productTypes={p.productTypes}
                     avg={p.avg}
-                    stock={p.stock}
                   />
                 </Container>
               </Grid>

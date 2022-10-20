@@ -45,7 +45,6 @@ export default function ProductCard({
   price,
   productTypes,
   avg,
-  stock
 }) {
   const arrayQuantity = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -72,14 +71,6 @@ export default function ProductCard({
       Swal.fire({
         title: "Product not added",
         text: "You have to select a quantity!",
-        icon: "error",
-        timer: 2000,
-      });
-    }
-    if(stock < 1 || stock < quantity) {
-      Swal.fire({
-        title: "Product not added",
-        text: "There is no stock!",
         icon: "error",
         timer: 2000,
       });
