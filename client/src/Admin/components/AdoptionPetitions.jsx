@@ -32,9 +32,12 @@ import {
   deletePetition,
   unReadAdoption,
   toggleimportance,
+  clearPetition,
 } from "../../redux/actions/adoptionAction";
 import { Link } from "react-router-dom";
 import { ModalAdmin } from "./Dashboard";
+import { useEffect } from "react";
+import axios from "axios";
 
 function getDate(date) {
   let simplyDate = "";
@@ -80,12 +83,17 @@ function TableMenu({ row, read, unread }) {
     setAnchorEl(null);
   };
 
-  function deletePetitionfn(id) {
-    dispatch(deletePetition(id));
-    setTimeout(() => {
+  async function deletePetitionfn(id) {
+    try {
+      await axios.delete(`/admin/petition/${id}`);
+      alert("petition deleted");
+      dispatch(clearPetition());
       dispatch(getAllPetitions());
-    }, 500);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   function toggleImportancefn(id) {
     dispatch(toggleimportance(id));
     setTimeout(() => {
@@ -346,9 +354,9 @@ export default function AdoptionPetitions() {
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
+      {/* <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
         See more orders
-      </Link>
+      </Link> */}
     </React.Fragment>
   );
 }

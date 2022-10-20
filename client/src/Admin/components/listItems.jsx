@@ -24,10 +24,10 @@ export const mainListItems = (
     <Link to="/">
       <ListItemButton>
         <ListItemIcon>
-          <Home sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
+          <Home sx={{ color: "#567900", width: 35, height: 35, mr: 4 }} />
         </ListItemIcon>
         <ListItemText>
-          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+          <Typography sx={{ color: "#87a827", fontWeight: 600, fontSize: 24 }}>
             Home
           </Typography>
         </ListItemText>
@@ -36,10 +36,10 @@ export const mainListItems = (
     <Link to="/dashboard">
       <ListItemButton>
         <ListItemIcon>
-          <Dashboard sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
+          <Dashboard sx={{ color: "#567900", width: 35, height: 35, mr: 4 }} />
         </ListItemIcon>
         <ListItemText>
-          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+          <Typography sx={{ color: "#87a827", fontWeight: 600, fontSize: 24 }}>
             Dashboard
           </Typography>
         </ListItemText>
@@ -48,10 +48,10 @@ export const mainListItems = (
     <Link to="/dashboard/animaltable">
       <ListItemButton>
         <ListItemIcon>
-          <Pets sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
+          <Pets sx={{ color: "#567900", width: 35, height: 35, mr: 4 }} />
         </ListItemIcon>
         <ListItemText>
-          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+          <Typography sx={{ color: "#87a827", fontWeight: 600, fontSize: 24 }}>
             Animals
           </Typography>
         </ListItemText>
@@ -60,10 +60,10 @@ export const mainListItems = (
     <Link to="/dashboard/users">
       <ListItemButton>
         <ListItemIcon>
-          <People sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
+          <People sx={{ color: "#567900", width: 35, height: 35, mr: 4 }} />
         </ListItemIcon>
         <ListItemText>
-          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+          <Typography sx={{ color: "#87a827", fontWeight: 600, fontSize: 24 }}>
             Users
           </Typography>
         </ListItemText>
@@ -72,11 +72,27 @@ export const mainListItems = (
     <Link to="/dashboard/products">
       <ListItemButton>
         <ListItemIcon>
-          <CategoryIcon sx={{color: "#567900", width: 35, height: 35, mr: 4}}/>
+          <CategoryIcon
+            sx={{ color: "#567900", width: 35, height: 35, mr: 4 }}
+          />
         </ListItemIcon>
         <ListItemText>
-          <Typography sx={{color: "#87a827", fontWeight: 600, fontSize: 24}}>
+          <Typography sx={{ color: "#87a827", fontWeight: 600, fontSize: 24 }}>
             Products
+          </Typography>
+        </ListItemText>
+      </ListItemButton>
+    </Link>
+    <Link to="/dashboard/orders">
+      <ListItemButton>
+        <ListItemIcon>
+          <CategoryIcon
+            sx={{ color: "#567900", width: 35, height: 35, mr: 4 }}
+          />
+        </ListItemIcon>
+        <ListItemText>
+          <Typography sx={{ color: "#87a827", fontWeight: 600, fontSize: 24 }}>
+            Orders
           </Typography>
         </ListItemText>
       </ListItemButton>
