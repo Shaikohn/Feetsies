@@ -174,7 +174,6 @@ export default function UserData({open, setOpen}) {
     setError(
       validate({
         ...input,
-        password: e.target.value,
         password2: e.target.value
       })
     )

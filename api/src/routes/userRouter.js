@@ -31,7 +31,7 @@ router.get('/cart/:id', getCart);
 router.get('/reviews/:userId', getMyReviews);
 router.delete('/cart/:id', deleteOneFromCart);
 router.delete('/cart/whole/:id', deleteWholeCart);
-router.get('/petitions/:id', getUserDetail);
+router.get('/petitions/:userid', getUserPetitions);
 
 
 

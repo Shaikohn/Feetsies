@@ -44,7 +44,7 @@ async function getUserPetitions(req, res) {
     try {
         let results = await Adoption_petition.findAll({where:{userId:userid},include:Animal})
         if(!results || results.length<1)return res.status(404).send({err:'You dont have adoption petitions'});
-        return res.status(404).send({err:'You dont have adoption petitions'});
+        return res.status(200).send(results);
     } catch (error) {
         console.log(error)
         return res.status(500).send({err:'server error'});
