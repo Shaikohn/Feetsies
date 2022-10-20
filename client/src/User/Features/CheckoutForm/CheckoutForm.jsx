@@ -65,6 +65,7 @@ export default function CheckoutForm({product}) {
                 setLoading(false)
             }
         }
+        setLoading(false)
     }
 
     return (

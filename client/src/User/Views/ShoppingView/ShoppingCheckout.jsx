@@ -74,7 +74,7 @@ export default function ShoppingCheckout() {
                 setLoading(false)
             }
         }
-
+    setLoading(false)
     }
 
     return (
