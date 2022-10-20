@@ -8,6 +8,9 @@ async function addPetition(req, res) {
     let {userId, animId, topic, description} = req.body
     try {
         let animal = await Animal.findOne({where:{id:animId}})
+        let exists = await Adoption_petition.findOne({where:{animalId:animId,userId:userId}});
+        //console.log(exists);
+        if(exists)return res.status(400).send({err:"You already requested this animal's adoption"});
         let petition = await animal.createAdoption_petition({topic:topic,description:description})
         let user = await User.findOne({where:{id:userId}});
         await user.addAdoption_petition(petition);
