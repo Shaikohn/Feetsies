@@ -55,7 +55,7 @@ export default function ShoppingCheckout() {
                 userId,
             })
             handleClearCart(e)
-            navigate("/profile")
+            navigate("/home/products")
             Swal.fire({
                 title: 'Payment done', 
                 text: data.message, 

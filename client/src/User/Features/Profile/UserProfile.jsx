@@ -1,5 +1,5 @@
 import * as React from "react";
-import ReactDOM from 'react-dom'
+import ReactDOM from "react-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -31,27 +31,36 @@ import Stack from "@mui/material/Stack";
 import { getUserDetail } from "../../../redux/actions/userDetailA";
 import getPurchaseOrders from "../../../redux/actions/getOrdersUser";
 import getReviewsUser from "../../../redux/actions/getReviewsUserA";
+import getRequestAdoptionsUser from "../../../redux/actions/requestAdoptionUser";
 
 import ResponsiveAppBar from "../Header/HeaderMUI";
 import { Paper, Typography } from "@mui/material";
 import Image from "./Img/BgImg3.jpg";
 import { Box, Container, fontSize } from "@mui/system";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import UserData from "./UserData";
 
-
 export default function UserProfile() {
-
   const [user] = useState(JSON.parse(localStorage.getItem("profile")));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserDetail(user.data.id));
+    dispatch(getPurchaseOrders(user.data.id));
+    dispatch(getReviewsUser(user.data.id));
+    dispatch(getRequestAdoptionsUser(user.data.id));
+  }, [dispatch]);
 
   const { usuario } = useSelector((state) => state.userDetail);
   const { purchaseOrder } = useSelector((state) => state.purchaseOrder);
   const { reviews } = useSelector((state) => state.userReviews);
+  const {adoptions} = useSelector((state)=> state.adoptionUser)
+
   const [openModal, setOpenModal] = React.useState(false);
-  
   const [open, setOpen] = React.useState(false);
   const [openB, setOpenB] = React.useState(false);
   const [openC, setOpenC] = React.useState(false);
+  const [openD, setOpenD] = React.useState(false);
 
   const handleClick = () => {
     setOpen(!open);
@@ -64,16 +73,9 @@ export default function UserProfile() {
   const handleClickC = () => {
     setOpenC(!openC);
   };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!usuario.id) {
-      dispatch(getUserDetail(user.data.id));
-      dispatch(getPurchaseOrders(user.data.id));
-      dispatch(getReviewsUser(user.data.id));
-    }
-  }, [usuario]);
+  const handleClickD = () => {
+    setOpenD(!openD);
+  };
 
   return (
     <Paper
@@ -85,28 +87,26 @@ export default function UserProfile() {
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
         height: "100%",
-        minHeight: "100vh"
+        minHeight: "100vh",
       }}
     >
       <ResponsiveAppBar />
-      {
-        openModal && ReactDOM.createPortal(
+      {openModal &&
+        ReactDOM.createPortal(
           <UserData open={openModal} setOpen={setOpenModal} />,
-          document.querySelector('#userModal')
-        )
-      }
+          document.querySelector("#userModal")
+        )}
       <Grid
         container
-        sx={{ 
+        sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           alignContent: "center",
-          width: "100%", 
-          my: "5%", 
-          maxWidth: "100%" 
+          width: "100%",
+          my: "5%",
+          maxWidth: "100%",
         }}
-        
       >
         <List
           sx={{
@@ -124,12 +124,12 @@ export default function UserProfile() {
                 borderRadius: "15px",
                 display: "flex",
                 justifyContent: "flex-start",
-                m: 0.7
+                m: 0.7,
               }}
               component="div"
               id="nested-list-subheader"
             >
-              <ListItem sx={{display: "flex"}}>
+              <ListItem sx={{ display: "flex" }}>
                 <ListItemAvatar
                   sx={{
                     display: "flex",
@@ -141,91 +141,137 @@ export default function UserProfile() {
                     sx={{ width: 60, height: 60, ml: 0 }}
                   >
                     {usuario.image ? (
-                      <img src={usuario.image} className={style.foto} alt=""/>
+                      <img src={usuario.image} className={style.foto} alt="" />
                     ) : (
-                      <AccountCircleIcon className={style.foto2} fontSize="large" />
+                      <AccountCircleIcon
+                        className={style.foto2}
+                        fontSize="large"
+                      />
                     )}
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText sx={{display: "flex", flexDirection: "column", m: 1.5}}
+                <ListItemText
+                  sx={{ display: "flex", flexDirection: "column", m: 1.5 }}
                   primary={
-                    <Typography sx={{fontWeight: 600, mx: 2}}> Hello {usuario?.name}</Typography>}
-                  secondary={usuario?.isAdmin === true ? (
-                    <Typography sx={{fontWeight: 600, mx: 2}}> Administrator </Typography>
-                  ) : (
-                    ""
-                  )}
+                    <Typography sx={{ fontWeight: 600, mx: 2 }}>
+                      {" "}
+                      Hello {usuario?.name}
+                    </Typography>
+                  }
+                  secondary={
+                    usuario?.isAdmin === true ? (
+                      <Typography sx={{ fontWeight: 600, mx: 2 }}>
+                        {" "}
+                        Administrator{" "}
+                      </Typography>
+                    ) : (
+                      ""
+                    )
+                  }
                 />
               </ListItem>
             </ListSubheader>
           }
         >
-        <ListItemButton onClick={handleClick} sx={{my: 2}}>
-          <ListItemIcon>
-            <AccountCircleIcon sx={{color: "#567900", width: 45, height: 45}} fontSize= "large" />
-          </ListItemIcon>
-          <ListItemText>
-            <Typography sx={{fontSize: 22, fontWeight: 600}}>
-              My personal data
-            </Typography>
-          </ListItemText>
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
+          <ListItemButton onClick={handleClick} sx={{ my: 2 }}>
+            <ListItemIcon>
+              <AccountCircleIcon
+                sx={{ color: "#567900", width: 45, height: 45 }}
+                fontSize="large"
+              />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography sx={{ fontSize: 22, fontWeight: 600 }}>
+                My personal data
+              </Typography>
+            </ListItemText>
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
 
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ py: 0, px: 2, display: "flex", justifyContent: "center"}}>
-                <ListItemIcon sx={{p: 2}}>
+              <ListItemButton
+                sx={{ py: 0, px: 2, display: "flex", justifyContent: "center" }}
+              >
+                <ListItemIcon sx={{ p: 2 }}>
                   <Container>
                     <Box>
                       {usuario?.name ? (
-                        <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                        <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                           User: {usuario.name + " " + usuario.lastName}
                         </Typography>
                       ) : (
-                        <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                        <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                           Complete your name
                         </Typography>
                       )}
                     </Box>
-                    <Divider sx={{fontWeight: 700, m: 0.4, bgcolor: "#567900", border: "1px solid #567900"}} />
+                    <Divider
+                      sx={{
+                        fontWeight: 700,
+                        m: 0.4,
+                        bgcolor: "#567900",
+                        border: "1px solid #567900",
+                      }}
+                    />
                     <Box>
                       {usuario?.email ? (
-                        <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                        <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                           Email: {usuario.email}
                         </Typography>
                       ) : (
-                        <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                        <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                           Complete your email
                         </Typography>
                       )}
                     </Box>
-                    <Divider sx={{fontWeight: 700, m: 0.4, bgcolor: "#567900", border: "1px solid #567900"}} />
+                    <Divider
+                      sx={{
+                        fontWeight: 700,
+                        m: 0.4,
+                        bgcolor: "#567900",
+                        border: "1px solid #567900",
+                      }}
+                    />
                     <Box>
                       {usuario?.location ? (
-                        <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                        <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                           Location: {usuario.location}
                         </Typography>
                       ) : (
-                        <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                        <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                           Location: Add your location
                         </Typography>
                       )}
                     </Box>
-                    <Divider sx={{fontWeight: 700, m: 0.4, bgcolor: "#567900", border: "1px solid #567900"}} />
+                    <Divider
+                      sx={{
+                        fontWeight: 700,
+                        m: 0.4,
+                        bgcolor: "#567900",
+                        border: "1px solid #567900",
+                      }}
+                    />
                     <Box>
-                      {usuario?.phoneNumber ? (
-                        <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
-                          Cellphone: {usuario.phoneNumber}
+                      {usuario?.phone_number ? (
+                        <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
+                          Cellphone: {usuario.phone_number}
                         </Typography>
                       ) : (
-                        <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                        <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                           Cellphone: Add your cellphone
                         </Typography>
                       )}
                     </Box>
-                    <Divider sx={{fontWeight: 700, m: 0.4, bgcolor: "#567900", border: "1px solid #567900"}} />
-                    <Box sx={{m: 1.5, mb: 0}}>
+                    <Divider
+                      sx={{
+                        fontWeight: 700,
+                        m: 0.4,
+                        bgcolor: "#567900",
+                        border: "1px solid #567900",
+                      }}
+                    />
+                    <Box sx={{ m: 1.5, mb: 0 }}>
                       <Stack direction="row" fontSize="small">
                         <Button
                           sx={{
@@ -236,12 +282,18 @@ export default function UserProfile() {
                           }}
                           variant="contained"
                           startIcon={
-                            <EditIcon fontSize="large" sx={{color: "#c8ad39", width: 23, height: 23}}/>
+                            <EditIcon
+                              fontSize="large"
+                              sx={{ color: "#c8ad39", width: 23, height: 23 }}
+                            />
                           }
                         >
                           <Button onClick={() => setOpenModal(true)}>
-                            <Typography sx={{color: "white", fontWeight: 500}}>
-                              {" "}Update your personal data{" "}
+                            <Typography
+                              sx={{ color: "white", fontWeight: 500 }}
+                            >
+                              {" "}
+                              Update your personal data{" "}
                             </Typography>
                           </Button>
                         </Button>
@@ -253,12 +305,15 @@ export default function UserProfile() {
             </List>
           </Collapse>
 
-          <ListItemButton onClick={handleClickB} sx={{my: 2}}>
+          <ListItemButton onClick={handleClickB} sx={{ my: 2 }}>
             <ListItemIcon>
-              <LocalMallIcon sx={{color: "#567900", width: 45, height: 45}} fontSize="large" />
+              <LocalMallIcon
+                sx={{ color: "#567900", width: 45, height: 45 }}
+                fontSize="large"
+              />
             </ListItemIcon>
             <ListItemText>
-              <Typography sx={{fontSize: 22, fontWeight: 600}}>
+              <Typography sx={{ fontSize: 22, fontWeight: 600 }}>
                 My purchase orders
               </Typography>
             </ListItemText>
@@ -267,17 +322,19 @@ export default function UserProfile() {
 
           <Collapse in={openB} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ py: 0, px: 2, display: "flex", justifyContent: "center"}}>
-                <ListItemIcon sx={{p: 2}}>
+              <ListItemButton
+                sx={{ py: 0, px: 2, display: "flex", justifyContent: "center" }}
+              >
+                <ListItemIcon sx={{ p: 2 }}>
                   <Container>
-                    {purchaseOrder ? (
+                    {purchaseOrder.length ? (
                       purchaseOrder.map((order, id) => {
                         return (
                           <Box key={`${id}`}>
-                            <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                               Mount: $ {order.total}{" "}
                             </Typography>
-                            <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                               Date: {order.createdAt}
                             </Typography>
                             <Button
@@ -286,25 +343,45 @@ export default function UserProfile() {
                                 bgcolor: "black",
                                 borderRadius: "15px",
                                 color: "white",
-                                my: 2
+                                my: 2,
                               }}
                               variant="contained"
                               startIcon={
-                                <VisibilityIcon fontSize="large" sx={{color: "#c8ad39", width: 20, height: 20}}/>
+                                <VisibilityIcon
+                                  fontSize="large"
+                                  sx={{
+                                    color: "#c8ad39",
+                                    width: 20,
+                                    height: 20,
+                                  }}
+                                />
                               }
                             >
                               <Link to={`orderDetail/${order.id}`}>
-                                <Typography sx={{color: "white", fontWeight: 500, fontSize: 12}}>
+                                <Typography
+                                  sx={{
+                                    color: "white",
+                                    fontWeight: 500,
+                                    fontSize: 12,
+                                  }}
+                                >
                                   View details
                                 </Typography>
                               </Link>
                             </Button>
-                            <Divider sx={{fontWeight: 700, m: 0.4, bgcolor: "#567900", border: "1px solid #567900"}} />
+                            <Divider
+                              sx={{
+                                fontWeight: 700,
+                                m: 0.4,
+                                bgcolor: "#567900",
+                                border: "1px solid #567900",
+                              }}
+                            />
                           </Box>
                         );
                       })
                     ) : (
-                      <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                      <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                         Not found purchase orders
                       </Typography>
                     )}
@@ -314,12 +391,15 @@ export default function UserProfile() {
             </List>
           </Collapse>
 
-          <ListItemButton onClick={handleClickC} sx={{my: 2}}>
+          <ListItemButton onClick={handleClickC} sx={{ my: 2 }}>
             <ListItemIcon>
-              <LocalMallIcon sx={{color: "#567900", width: 45, height: 45}} fontSize="large" />
+              <LocalMallIcon
+                sx={{ color: "#567900", width: 45, height: 45 }}
+                fontSize="large"
+              />
             </ListItemIcon>
             <ListItemText>
-              <Typography sx={{fontSize: 22, fontWeight: 600}}>
+              <Typography sx={{ fontSize: 22, fontWeight: 600 }}>
                 My Reviews
               </Typography>
             </ListItemText>
@@ -328,31 +408,106 @@ export default function UserProfile() {
 
           <Collapse in={openC} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItemButton sx={{ py: 0, px: 2, display: "flex", justifyContent: "center"}}>
-                <ListItemIcon sx={{p: 2}}>
+              <ListItemButton
+                sx={{ py: 0, px: 2, display: "flex", justifyContent: "center" }}
+              >
+                <ListItemIcon sx={{ p: 2 }}>
                   <Container>
-                    {reviews ? (
+                    {reviews.length ? (
                       reviews.map((review, id) => {
                         return (
                           <Box key={`${id}`}>
-                            <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                               Score: {review.score}{" "}
                             </Typography>
-                          
-                            <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                               Product: {review.productName}
                             </Typography>
-                        
-                            <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                               Review: {review.comment}
                             </Typography>
-                            <Divider sx={{fontWeight: 700, m: 0.4, bgcolor: "#567900", border: "1px solid #567900"}} />
+                            <Divider
+                              sx={{
+                                fontWeight: 700,
+                                m: 0.4,
+                                bgcolor: "#567900",
+                                border: "1px solid #567900",
+                              }}
+                            />
                           </Box>
                         );
                       })
                     ) : (
-                      <Typography sx={{p: 0.5, pb: 0, color: "black"}}>
+                      <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                         Not found reviews
+                      </Typography>
+                    )}
+                  </Container>
+                </ListItemIcon>
+              </ListItemButton>
+            </List>
+          </Collapse>
+
+          <ListItemButton onClick={handleClickD} sx={{ my: 2 }}>
+            <ListItemIcon>
+              <LocalMallIcon
+                sx={{ color: "#567900", width: 45, height: 45 }}
+                fontSize="large"
+              />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography sx={{ fontSize: 22, fontWeight: 600 }}>
+                My adoption request
+              </Typography>
+            </ListItemText>
+            {openC ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+
+          <Collapse in={openD} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItemButton
+                sx={{ py: 0, px: 2, display: "flex", justifyContent: "center" }}
+              >
+                <ListItemIcon sx={{ p: 2 }}>
+                  <Container>
+                    {adoptions.length ? (
+                      adoptions.map((adop, id) => {
+                        return (
+                          <Box key={`${id}`}>
+                            <img src={adop.animal.main_image} width="100px" height="100px" alt="pet"/>
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
+                              Name: {adop.animal.name}{" "}
+                            </Typography>
+
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
+                              Sex: {adop.animal.sex}
+                            </Typography>
+
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
+                              Age: {adop.animal.age}
+                            </Typography>
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
+                              Size: {adop.animal.size}
+                            </Typography>
+                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
+                              Description: {adop.animal.description}
+                            </Typography>
+                            <Divider
+                              sx={{
+                                fontWeight: 700,
+                                m: 0.4,
+                                bgcolor: "#567900",
+                                border: "1px solid #567900",
+                              }}
+                            />
+                          </Box>
+                        );
+                      })
+                    ) : (
+                      <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
+                        Not request found
                       </Typography>
                     )}
                   </Container>
@@ -371,10 +526,15 @@ export default function UserProfile() {
               bgcolor: "black",
               borderRadius: "15px",
               color: "white",
-              my: 2
+              my: 2,
             }}
             variant="contained"
-            startIcon={<KeyboardReturnIcon fontSize="large" sx={{color: "#c8ad39", width: 25, height: 25}}/>}
+            startIcon={
+              <KeyboardReturnIcon
+                fontSize="large"
+                sx={{ color: "#c8ad39", width: 25, height: 25 }}
+              />
+            }
           >
             Back to home
           </Button>

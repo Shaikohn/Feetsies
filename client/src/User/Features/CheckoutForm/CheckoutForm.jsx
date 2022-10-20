@@ -47,7 +47,7 @@ export default function CheckoutForm({product}) {
                 userId,
             })
             elements.getElement(CardElement).clear()
-            navigate("/profile")
+            navigate("/home/products")
             Swal.fire({
                 title: 'Payment done', 
                 text: data.message, 
