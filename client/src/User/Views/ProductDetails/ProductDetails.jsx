@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
@@ -45,6 +45,7 @@ export default function ProductDetails({ product }) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const [isOpenModal, openedModal, closeModal] = useModal(false);
+  const [isOpenReview, openedReview, closeReview] = useModal(false)
 
   const { productDetails } = useSelector((state) => state.ProductDetails);
 
@@ -110,8 +111,8 @@ export default function ProductDetails({ product }) {
           text: "Thanks for giving your opinion!",
           icon: "success",
           timer: 3000,
-        });
-        setRefresh(!refresh);
+      });
+      setRefresh(!refresh);
         dispatch(clearProductDetails());
         dispatch(getProductDetails(id));
         dispatch(getAllProducts());
@@ -158,22 +159,7 @@ export default function ProductDetails({ product }) {
             mx: 2,
           }}
         >
-          {/* <Box sx={{display: "flex", flexDirection: "column"}}>
-            {productDetails.productImages?.map((img, i) => (
-              <img 
-                  style={{border: selectedImg === img ? "4px solid purple": ""}}
-                  key={i} 
-                  src={img.image} 
-                  alt="dog"
-                  onClick={() => setSelectedImg(img)}
-                  />
-              ))
-            }
-            {productDetails.productImages?.map(i => (
-              <img src={i.image} alt="tu vieja" />
-            ))}
-          </Box> */}
-          <Box
+          <Box 
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -193,6 +179,8 @@ export default function ProductDetails({ product }) {
                 sx={{
                   borderRadius: "15px",
                   my: 1.5,
+                  height:"100px",
+                  width: "100px"
                 }}
                 height="80px"
                 maxWidth="auto"
@@ -202,7 +190,7 @@ export default function ProductDetails({ product }) {
         </Grid>
         <Grid
           item
-          xs={5}
+          xs={4}
           sx={{
             // border: "5px groove #567900",
             borderRadius: "10px",
@@ -227,7 +215,7 @@ export default function ProductDetails({ product }) {
         </Grid>
         <Grid
           item
-          xs={5}
+          xs={6}
           sx={{
             border: "5px groove #567900",
             borderRadius: "10px",
@@ -370,6 +358,39 @@ export default function ProductDetails({ product }) {
                 >
                   Add To Cart
                 </ButtonBase>
+                <ButtonBase
+                  sx={{
+                    my: 2,
+                    mx: 4,
+                    width: "160px",
+                    height: "50px",
+                    border: "3px groove #c8ad39",
+                    borderRadius: "15px",
+                    color: "white",
+                    display: "flex",
+                    fontSize: 20,
+                    bgcolor: "black",
+                    fontWeight: 600,
+                  }}
+                  size="large"
+                  variant="outlined"
+                  onClick={() => {
+                    Swal.fire({
+                      title: "YOU HAVE TO BE LOGGED TO ADD A REVIEW!",
+                      icon: "warning",
+                      showDenyButton: true,
+                      denyButtonText: "Cancel",
+                      confirmButtonText: "Sign in",
+                      confirmButtonColor: "green",
+                    }).then((res) => {
+                      if (res.isConfirmed) {
+                        navigate("/signUp");
+                      }
+                    });
+                  }}
+                >
+                  Add a review
+                </ButtonBase>
               </Box>
             ) : (
               <Box sx={{ display: "flex" }}>
@@ -413,6 +434,26 @@ export default function ProductDetails({ product }) {
                 >
                   Add To Cart
                 </ButtonBase>
+                <ButtonBase
+                  sx={{
+                    my: 2,
+                    mx: 4,
+                    width: "160px",
+                    height: "50px",
+                    border: "3px groove #c8ad39",
+                    borderRadius: "15px",
+                    color: "white",
+                    display: "flex",
+                    fontSize: 20,
+                    bgcolor: "black",
+                    fontWeight: 600,
+                  }}
+                  size="large"
+                  variant="outlined"
+                  onClick={openedReview}
+                >
+                  Add a review
+                </ButtonBase>
                 <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
                   <h2 className="modalTitle">
                     MAKE YOUR PURCHASE WITH YOUR CREDIT CARD!
@@ -436,24 +477,20 @@ export default function ProductDetails({ product }) {
                 </Modals>
               </Box>
             )}
-          </Box>
-        </Grid>
-      </Grid>
-      <Container>
+            <Modals isOpenModal={isOpenReview} closeModal={closeReview}>
+                  <h2 className="modalTitle">
+                    ADD A REVIEW!
+                  </h2>
+                  <div>
+                    <img
+                      src={product?.image}
+                      alt=""
+                      width="100px"
+                      height="100px"
+                    />
+                  </div>
+                  <Container>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack
-            direction="row"
-            spacing={2}
-            sx={{
-              display: "flex",
-              mt: 2.5,
-              justifyContent: "center",
-              alignContent: "center",
-              alignItems: "center",
-            }}
-            // overflow="auto"
-          >
-            <h2>{user?.data?.name}</h2>
             <Rating
               name="simple-controlled"
               value={value}
@@ -461,22 +498,6 @@ export default function ProductDetails({ product }) {
                 setValue(newValue);
               }}
             />
-            {/* <Rating
-    name="hover-feedback"
-    value={value}
-    precision={0.5}
-    getLabelText={getLabelText}
-    onChange={(event, newValue) => {
-      setValue(newValue);
-    }}
-    onChangeActive={(event, newHover) => {
-      setHover(newHover);
-    }}
-    emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-  />
-  {value !== null && (
-    <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
-  )} */}
             <TextField
               error={errors.comments ? true : false}
               label="Comments"
@@ -505,12 +526,25 @@ export default function ProductDetails({ product }) {
                 Description cannot exceed 130 characters
               </span>
             )}
-          </Stack>
-          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
-            Send Comment
+          <Button 
+                type="submit" 
+                variant="contained" 
+                sx={{width: '150px', backgroundColor: 'rgb(31, 202, 31)', fontWeight: 300, marginTop: "30px"}}
+                onClick={closeReview}
+                >
+            SEND
           </Button>
         </form>
       </Container>
+                  <div>
+                    <button className="modalClose" onClick={closeReview}>
+                      CLOSE
+                    </button>
+                  </div>
+                </Modals>
+          </Box>
+        </Grid>
+      </Grid>
       <Container>
         {productDetails.revs.map((reviews) => (
           <>
