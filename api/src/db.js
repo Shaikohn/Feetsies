@@ -6,7 +6,7 @@ const path = require('path');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,DB_NAME,
 } = process.env;
-
+//
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
@@ -29,8 +29,10 @@ let sequelize =
             
           },
           keepAlive: true,
+          useUTC: false
         },
         ssl: true,
+        timeZone:'-03:00',
       })
     : new Sequelize(DB_NAME, DB_USER, DB_PASSWORD,{
       host:'localhost',
