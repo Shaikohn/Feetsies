@@ -124,13 +124,7 @@ export function AnimalsTable() {
               <TableCell align="center">{p.breed}</TableCell>
               <TableCell align="center">{p.size}</TableCell>
               <TableCell align="center">{p.age} yrs</TableCell>
-              {
-                <TableCell align="center">
-                  {p.animal_types.map((type, i) => {
-                    return <p>{type.name}</p>;
-                  })}
-                </TableCell>
-              }
+              {<TableCell align="center">{p?.animal_type.name}</TableCell>}
               <TableCell align="center">
                 <IconButton onClick={(e) => handleEditAnimal(e, p.id)}>
                   <EditIcon />

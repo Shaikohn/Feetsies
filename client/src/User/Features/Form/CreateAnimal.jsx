@@ -19,6 +19,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { getAllAnimals } from "../../../redux/actions/getAnimalsA.js";
+import { useNavigate } from "react-router-dom";
 
 // const dataSources = [
 //   {
@@ -76,6 +78,7 @@ const style = {
 };
 
 const CreateAnimal = () => {
+  const navigate = useNavigate();
   // **** cloudinary ****
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -124,21 +127,22 @@ const CreateAnimal = () => {
   console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
     console.log("Onsubmit", { ...data, image });
-    // try {
-    //   await axios.post("/products/create", {
-    //     ...data,
-    //     imgToUse,
-    //   });
-    //   Swal.fire({
-    //     title: "Success",
-    //     text: "Product Created",
-    //     icon: "success",
-    //     timer: 5000,
-    //   });
-    //   dispatch(getAllProducts());
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      await axios.post("/animals", {
+        ...data,
+        image,
+      });
+      Swal.fire({
+        title: "Success",
+        text: "Animal Created",
+        icon: "success",
+        timer: 5000,
+      });
+      dispatch(getAllAnimals());
+      navigate("/dashboard/animaltable");
+    } catch (error) {
+      console.log(error);
+    }
   };
   console.log(errors);
 
