@@ -180,9 +180,8 @@ export default function ProductDetails({ product }) {
                   borderRadius: "15px",
                   my: 1.5,
                   height:"100px",
-                  width: "100px"
+                  width: "100%"
                 }}
-                height="80px"
                 maxWidth="auto"
               />
             ))}

@@ -98,13 +98,19 @@ const UpdateProduct = () => {
         ...data,
       });
       Swal.fire({
-        title: "Success",
+        title: "SUCESS",
         text: "Product Updated",
         icon: "success",
-        timer: 5000,
+        timer: 2000,
       });
       dispatch(getAllProducts());
     } catch (error) {
+      Swal.fire({
+        title: "PRODUCT NOT UPDATED",
+        text: "Sorry, something failed",
+        icon: "error",
+        timer: 2000,
+      });
       console.log(error);
     }
   };

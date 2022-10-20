@@ -20,18 +20,18 @@ const onSubmit = async (data) => {
       data
     );
     Swal.fire({
-      title: 'Email sent', 
-      text: "Check your inbox", 
+      title: 'EMAIL SENT', 
+      text: "Check your inbox!", 
       icon: 'success',
-      timer: 5000
+      timer: 3000
     });
   } catch (error) {
     console.log(error);
     Swal.fire({
-      title: 'Cant send email', 
+      title: 'EMAIL NOT SENT', 
       text: error?.response?.data?.status, 
       icon: 'error',
-      timer: 5000
+      timer: 3000
     });
   }
 };

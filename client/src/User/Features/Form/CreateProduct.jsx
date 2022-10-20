@@ -166,14 +166,20 @@ const CreateProduct = () => {
         imgToUse,
       });
       Swal.fire({
-        title: "Success",
+        title: "SUCCESS",
         text: "Product Created",
         icon: "success",
-        timer: 5000,
+        timer: 2000,
       });
       setImage("");
       dispatch(getAllProducts());
     } catch (error) {
+      Swal.fire({
+        title: "PRODUCT NOT CREATED",
+        text: "Sorry, something failed",
+        icon: "error",
+        timer: 2000,
+      });
       console.log(error);
     }
   };

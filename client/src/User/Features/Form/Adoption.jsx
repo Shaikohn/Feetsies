@@ -47,7 +47,18 @@ const Adoption = () => {
 
     try {
       if (!userId) {
-        alert("Need to be loged to use this form!");
+        Swal.fire({
+          title: "YOU HAVE TO BE LOGGED TO REQUEST ADOPTIONS!",
+          icon: "warning",
+          showDenyButton: true,
+          denyButtonText: "Cancel",
+          confirmButtonText: "Sign in",
+          confirmButtonColor: "green",
+      }).then((res) => {
+          if (res.isConfirmed) {
+          navigate("/signUp");
+          }
+          });
       } else {
         await axios.post("/animals/take", {
           userId: userId,
@@ -55,12 +66,22 @@ const Adoption = () => {
           topic: data.topic,
           description: data.description,
         });
-        alert("The inquiry was send");
+        Swal.fire({
+          title: "SUCESS",
+          text: "Adoption request sent!",
+          icon: "success",
+          timer: 2000,
+        });
         dispatch(getAllPetitions());
         navigate("/");
       }
     } catch (error) {
-      alert("You already requested this animal's adoption");
+      Swal.fire({
+          title: "REQUEST NOT SENT!",
+          text: "You already requested this animal's adoption!",
+          icon: "error",
+          timer: 2000,
+        });
       console.log(error);
     }
   };

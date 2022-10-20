@@ -13,6 +13,7 @@ import {
 } from "../../redux/actions/inquiryActions";
 import { ModalAdmin } from "./Dashboard";
 import axios from "axios";
+import Swal from 'sweetalert2'
 
 export default function ShowInqueries() {
   let { inqueries } = useSelector((state) => state.inqueries);
@@ -31,10 +32,21 @@ export default function ShowInqueries() {
     // dispatch(delateOneInquery(id));
     try {
       await axios.delete(`/admin/inquiry/${id}`);
-      alert("inquiry deleted");
+      Swal.fire({
+        title: "SUCESS",
+        text: "The inquiry has been deleted!",
+        icon: "success",
+        timer: 3000,
+    });
       dispatch(clearAll());
       dispatch(getAllInquieres());
     } catch (error) {
+      Swal.fire({
+        title: "INQUIRY NOT DELETED",
+        text: "Sorry, something failed",
+        icon: "error",
+        timer: 3000,
+      });
       console.log(error);
     }
   }

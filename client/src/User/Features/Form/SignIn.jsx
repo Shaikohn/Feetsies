@@ -73,7 +73,7 @@ const SignIn = () => {
       dispatch(signIn(data, navigateTo));
       // navigateTo("/");
       Swal.fire({
-        title: "Logged in",
+        title: "LOGGED IN",
         text: login.data.msg,
         icon: "success",
         timer: 3000,
@@ -94,7 +94,7 @@ const SignIn = () => {
       //   alert(`email ${email} invalid or not found`);
       // }
       Swal.fire({
-        title: "Login Failed",
+        title: "LOGIN FAILED",
         text: error.response.data,
         icon: "error",
         timer: 4000,

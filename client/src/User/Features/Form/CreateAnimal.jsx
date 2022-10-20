@@ -133,14 +133,20 @@ const CreateAnimal = () => {
         image,
       });
       Swal.fire({
-        title: "Success",
-        text: "Animal Created",
+        title: "SUCCESS",
+        text: "Animal Created!",
         icon: "success",
-        timer: 5000,
+        timer: 2000,
       });
       dispatch(getAllAnimals());
       navigate("/dashboard/animaltable");
     } catch (error) {
+      Swal.fire({
+        title: "ANIMAL NOT CREATED",
+        text: "Sorry, something failed",
+        icon: "error",
+        timer: 2000,
+      });
       console.log(error);
     }
   };
