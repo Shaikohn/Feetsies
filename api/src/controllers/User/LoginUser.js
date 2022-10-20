@@ -20,7 +20,7 @@ async function loginUser(req, res) {
       throw new Error("Pending Account. Please Verify Your Email!");
     }
     if (user.isBan) {
-      throw new Error("This user is banned, talk with an admin!");
+      throw new Error("This user is banned! If you want to request an unban, write to feetsies12324@gmail.com");
     }
 
     return res.status(200).send({

@@ -97,7 +97,6 @@ const SignIn = () => {
         title: "LOGIN FAILED",
         text: error.response.data,
         icon: "error",
-        timer: 4000,
       });
     }
   };
