@@ -21,7 +21,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
 import { RMIUploader } from "react-multiple-image-uploader";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -36,6 +36,7 @@ const style = {
 };
 
 const UpdateProduct = () => {
+  const navigate = useNavigate();
   const {
     register,
     formState,
@@ -104,6 +105,7 @@ const UpdateProduct = () => {
         timer: 2000,
       });
       dispatch(getAllProducts());
+      navigate("/dashboard/products");
     } catch (error) {
       Swal.fire({
         title: "PRODUCT NOT UPDATED",

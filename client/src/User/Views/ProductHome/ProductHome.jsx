@@ -50,6 +50,8 @@ export default function ProductHome() {
         backgroundPosition: "center",
         backgroundSize: "cover",
         backgroundAttachment: "fixed",
+        height: "100%",
+        minHeight: "100vh",
       }}
     >
       <ResponsiveAppBar />
