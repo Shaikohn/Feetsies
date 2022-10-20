@@ -20,17 +20,22 @@ const {
 } = require("../controllers/Shop/shopCart.controller.js");
 
 const {
-  getMyReviews,
-} = require("../controllers/Products/Review.controller.js");
 
-router.delete("/:id", deleteUser);
-router.post("/create", addUser);
-router.put("/update", updateUser);
-router.get("/:id", getUserDetail);
-router.get("/cart/:id", getCart);
-router.get("/reviews/:userId", getMyReviews);
-router.delete("/cart/:id", deleteOneFromCart);
-router.delete("/cart/whole/:id", deleteWholeCart);
-router.get("/petitions/:id", getUserPetitions);
+    getMyReviews
+} = require('../controllers/Products/Review.controller.js')
+
+router.delete('/:id',deleteUser);
+router.post('/create',addUser);
+router.put('/update', updateUser);
+router.get('/:id', getUserDetail);
+router.get('/cart/:id', getCart);
+router.get('/reviews/:userId', getMyReviews);
+router.delete('/cart/:id', deleteOneFromCart);
+router.delete('/cart/whole/:id', deleteWholeCart);
+router.get('/petitions/:userid', getUserPetitions);
+
+
+
 
 module.exports = router;
+
