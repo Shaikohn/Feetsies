@@ -45,7 +45,7 @@ export default function ProductDetails({ product }) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const [isOpenModal, openedModal, closeModal] = useModal(false);
-  const [isOpenReview, openedReview, closeReview] = useModal(false)
+  const [isOpenReview, openedReview, closeReview] = useModal(false);
 
   const { productDetails } = useSelector((state) => state.ProductDetails);
 
@@ -111,8 +111,8 @@ export default function ProductDetails({ product }) {
           text: "Thanks for giving your opinion!",
           icon: "success",
           timer: 3000,
-      });
-      setRefresh(!refresh);
+        });
+        setRefresh(!refresh);
         dispatch(clearProductDetails());
         dispatch(getProductDetails(id));
         dispatch(getAllProducts());
@@ -159,7 +159,7 @@ export default function ProductDetails({ product }) {
             mx: 2,
           }}
         >
-          <Box 
+          <Box
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -179,8 +179,8 @@ export default function ProductDetails({ product }) {
                 sx={{
                   borderRadius: "15px",
                   my: 1.5,
-                  height:"100px",
-                  width: "100%"
+                  height: "100px",
+                  width: "100%",
                 }}
                 maxWidth="auto"
               />
@@ -477,70 +477,68 @@ export default function ProductDetails({ product }) {
               </Box>
             )}
             <Modals isOpenModal={isOpenReview} closeModal={closeReview}>
-                  <h2 className="modalTitle">
-                    ADD A REVIEW!
-                  </h2>
-                  <div>
-                    <img
-                      src={product?.image}
-                      alt=""
-                      width="100px"
-                      height="100px"
-                    />
-                  </div>
-                  <Container>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Rating
-              name="simple-controlled"
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-            />
-            <TextField
-              error={errors.comments ? true : false}
-              label="Comments"
-              multiline
-              rows={4}
-              placeholder="Type your comments here"
-              variant="outlined"
-              fullWidth
-              {...register("comments", {
-                required: true,
-                minLength: 8,
-                maxLength: 120,
-              })}
-              aria-invalid={errors.comments ? "true" : "false"}
-            />
-            {errors?.comments?.type === "required" && (
-              <span style={{ color: "red" }}>This field is required</span>
-            )}
-            {errors?.comments?.type === "minLength" && (
-              <span style={{ color: "red" }}>
-                Description must be more than 7 characters
-              </span>
-            )}
-            {errors?.comments?.type === "maxLength" && (
-              <span style={{ color: "red" }}>
-                Description cannot exceed 130 characters
-              </span>
-            )}
-          <Button 
-                type="submit" 
-                variant="contained" 
-                sx={{width: '150px', backgroundColor: 'rgb(31, 202, 31)', fontWeight: 300, marginTop: "30px"}}
-                onClick={closeReview}
-                >
-            SEND
-          </Button>
-        </form>
-      </Container>
-                  <div>
-                    <button className="modalClose" onClick={closeReview}>
-                      CLOSE
-                    </button>
-                  </div>
-                </Modals>
+              <h2 className="modalTitle">ADD A REVIEW!</h2>
+              <div>
+                <img src={product?.image} alt="" width="100px" height="100px" />
+              </div>
+              <Container>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Rating
+                    name="simple-controlled"
+                    value={value}
+                    onChange={(event, newValue) => {
+                      setValue(newValue);
+                    }}
+                  />
+                  <TextField
+                    error={errors.comments ? true : false}
+                    label="Comments"
+                    multiline
+                    rows={4}
+                    placeholder="Type your comments here"
+                    variant="outlined"
+                    fullWidth
+                    {...register("comments", {
+                      required: true,
+                      minLength: 8,
+                      maxLength: 120,
+                    })}
+                    aria-invalid={errors.comments ? "true" : "false"}
+                  />
+                  {errors?.comments?.type === "required" && (
+                    <span style={{ color: "red" }}>This field is required</span>
+                  )}
+                  {errors?.comments?.type === "minLength" && (
+                    <span style={{ color: "red" }}>
+                      Description must be more than 7 characters
+                    </span>
+                  )}
+                  {errors?.comments?.type === "maxLength" && (
+                    <span style={{ color: "red" }}>
+                      Description cannot exceed 130 characters
+                    </span>
+                  )}
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "150px",
+                      backgroundColor: "rgb(31, 202, 31)",
+                      fontWeight: 300,
+                      marginTop: "30px",
+                    }}
+                    onClick={closeReview}
+                  >
+                    SEND
+                  </Button>
+                </form>
+              </Container>
+              <div>
+                <button className="modalClose" onClick={closeReview}>
+                  CLOSE
+                </button>
+              </div>
+            </Modals>
           </Box>
         </Grid>
       </Grid>
