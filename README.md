@@ -5,10 +5,7 @@ INTEGRANTES:
 
 - CARDOZO, PABLO. Github: https://github.com/PCardozo
 - GARNERO, TOMÁS. Github: https://github.com/Tomas-Garnero
-- HUÉRFANO, SEBASTIÁN. Github: https://github.com/Thereapson
 - KOHN, SHAI. Github: https://github.com/Shaikohn
-- MEDINA, FELIPE. Github: https://github.com/FM9408
-- SOSA, GIOVANY. Github: https://github.com/GioUwU
 - VENTOSILLA, ANDERSON. Github: https://github.com/aNd12326
 - VILLEGAS, ANDRÉS. Github: https://github.com/andres711
 
@@ -34,10 +31,7 @@ MEMBERS:
 
 - CARDOZO, PABLO. Github: https://github.com/PCardozo
 - GARNERO, TOMÁS. Github: https://github.com/Tomas-Garnero
-- HUÉRFANO, SEBASTIÁN. Github: https://github.com/Thereapson
 - KOHN, SHAI. Github: https://github.com/Shaikohn
-- MEDINA, FELIPE. Github: https://github.com/FM9408
-- SOSA, GIOVANY. Github: https://github.com/GioUwU
 - VENTOSILLA, ANDERSON. Github: https://github.com/aNd12326
 - VILLEGAS, ANDRÉS. Github: https://github.com/andres711
 
