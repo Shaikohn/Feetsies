@@ -1,4 +1,4 @@
-SPANISH////////////////////////////////////////////////////////////////////////////////////////////////
+///////// SPANISH
 PROYECTO FINAL DE HENRY - COHORTE 28B - GRUPO 3
 
 INTEGRANTES:
@@ -24,7 +24,7 @@ En esta aplicación, el usuario podrá:
 A su vez, la Administración tendrá permisos especiales que le permitirán revisar toda la información disponible en la página, como el stock de los productos, su precio, qué animales se encuentran disponibles para adopción, entre más funciones.
 
 
-ENGLISH////////////////////////////////////////////////////////////////////////////////////////////////
+///////// ENGLISH
 HENRY FINAL PROJECT - COHORT 28B - GROUP 3
 
 MEMBERS:
@@ -39,10 +39,10 @@ PROJECT PROPOSAL:
 
 The project proposed for this FP instance is that of a page belonging to a pet shelter, which in turn has E-Commerce elements.
 In this application, the user will be able to:
--View animals available for adoption
--Apply for adoption
--Express a wish to put an animal up for adoption
--View product catalog
--Execute purchases
--View purchases made
--Send queries to the administration
+- View animals available for adoption
+- Apply for adoption
+- Express a wish to put an animal up for adoption
+- View product catalog
+- Execute purchases
+- View purchases made
+- Send queries to the administration

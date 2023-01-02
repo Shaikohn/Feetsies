@@ -29,7 +29,7 @@ const forgotPassword = async (req, res = response) => {
     { expiresIn: "5m" }
   );
 
-  const link = `https://pfgrupo3.vercel.app/reset-password/${searchUser.id}/${token}`;
+  const link = `http://localhost:3000/reset-password/${searchUser.id}/${token}`;
 
   sendLinkResetPassword(userName, email, link);
 

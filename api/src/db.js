@@ -4,45 +4,14 @@ const fs = require('fs');
 const path = require('path');
 //const Review = require('./models/Review');
 const {
-  DB_USER, DB_PASSWORD, DB_HOST,DB_NAME,
+  DB_USER, DB_PASSWORD, DB_HOST,DB_NAME, DB_DEPLOY
 } = process.env;
 //
-let sequelize =
-  process.env.NODE_ENV === "production"
-    ? new Sequelize({
-        database: DB_NAME,
-        dialect: "postgres",
-        host: DB_HOST,
-        port: 5432,
-        username: DB_USER,
-        password: DB_PASSWORD,
-        pool: {
-          max: 3,
-          min: 1,
-          idle: 10000,
-        },
-        dialectOptions: {
-          ssl: {
-            require: true,
-            // Ref.: https://github.com/brianc/node-postgres/issues/2009
-            rejectUnauthorized: false,
-            
-          },
-          keepAlive: true,
-          useUTC: false
-        },
-        ssl: true,
-        timeZone:'-03:00',
-      })
-    : new Sequelize(DB_NAME, DB_USER, DB_PASSWORD,{
-      host:'localhost',
-      dialect:'postgres',
-      dialectOptions:{
-        useUTC: false
-      },
-      timeZone:'-03:00',
-      logging:false,
-    });
+let sequelize = new Sequelize(
+  DB_DEPLOY,
+  {logging: false, native: false}
+)
+
 
 /*const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`, {
   logging: false, 
