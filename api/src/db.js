@@ -4,11 +4,11 @@ const fs = require('fs');
 const path = require('path');
 //const Review = require('./models/Review');
 const {
-  DB_USER, DB_PASSWORD, DB_HOST,DB_NAME, DB_DEPLOY
+  DB_RAILWAY, DB_RENDER
 } = process.env;
 //
 let sequelize = new Sequelize(
-  DB_DEPLOY,
+  DB_RENDER,
   {logging: false, native: false}
 )
 
