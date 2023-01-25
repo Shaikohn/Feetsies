@@ -35,7 +35,7 @@ export function AnimalCard({ animal }) {
       <Box sx={{ width: "50%" }}>
         <Avatar
           variant="rounded"
-          src={`${animal.main_image}`}
+          src={`${animal?.main_image}`}
           sx={{
             margin: "auto",
             width: "70%",
@@ -46,13 +46,13 @@ export function AnimalCard({ animal }) {
       </Box>
       <Stack spacing={0.5}>
         <Box>
-          <Link to={`/home/animals/${animal.id}`}>
-            <Typography fontWeight={700}>Name: {animal.name}</Typography>
+          <Link to={`/home/animals/${animal?.id}`}>
+            <Typography fontWeight={700}>Name: {animal?.name}</Typography>
           </Link>
-          <Typography fontWeight={300}>Sex: {animal.sex}</Typography>
-          <Typography fontWeight={300}>Breed: {animal.breed}</Typography>
-          <Typography fontWeight={300}>Size: {animal.size}</Typography>
-          <Typography fontWeight={300}>Age: {animal.age} years old </Typography>
+          <Typography fontWeight={300}>Sex: {animal?.sex}</Typography>
+          <Typography fontWeight={300}>Breed: {animal?.breed}</Typography>
+          <Typography fontWeight={300}>Size: {animal?.size}</Typography>
+          <Typography fontWeight={300}>Age: {animal?.age} years old </Typography>
         </Box>
       </Stack>
     </Box>
@@ -118,7 +118,7 @@ export function AnimalsTable() {
         </TableHead>
         <TableBody>
           {allAnimals?.map((p) => (
-            <TableRow key={p.id}>
+            <TableRow key={p?.id}>
               <TableCell
                 align="center"
                 sx={{
@@ -130,13 +130,13 @@ export function AnimalsTable() {
                 <Avatar src={p.main_image} />
               </TableCell>
               <TableCell align="center">
-                <Link to={`/home/animals/${p.id}`}>{p.name}</Link>
+                <Link to={`/home/animals/${p?.id}`}>{p?.name}</Link>
               </TableCell>
-              <TableCell align="center">{p.sex}</TableCell>
-              <TableCell align="center">{p.breed}</TableCell>
-              <TableCell align="center">{p.size}</TableCell>
-              <TableCell align="center">{p.age} yrs</TableCell>
-              {<TableCell align="center">{p?.animal_type.name}</TableCell>}
+              <TableCell align="center"> {p?.sex} </TableCell>
+              <TableCell align="center"> {p?.breed} </TableCell>
+              <TableCell align="center"> {p?.size} </TableCell>
+              <TableCell align="center"> {p?.age} yrs </TableCell>
+              {<TableCell align="center"> {p?.animal_type?.name} </TableCell>}
               <TableCell align="center">
                 <IconButton onClick={(e) => handleEditAnimal(e, p.id)}>
                   <EditIcon />

@@ -120,8 +120,8 @@ async function togglebanUser(req, res) {
         where: { id: userid },
       }
     );
-    console.log(user.dataValues.isBan);
-    return res.status(200).send({ success: "User Ban status changed" });
+    dato.save()
+    return res.status(200).send(dato);
   } catch (error) {
     return res.status(500).send(error);
   }

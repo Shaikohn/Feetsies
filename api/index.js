@@ -18,8 +18,8 @@ const {
 
 // Syncing all the models at once.
 conn
-  .sync({ force: true })
-  .then(() => {
+  .sync({ force: false })
+  /* .then(() => {
     return writeAnimalTypes();
   })
   .then(() => {
@@ -61,7 +61,7 @@ conn
   })
   .then(() => {
     console.log("- Wrote Cart items in database.");
-  })
+  }) */
   .then(() => {
     //Leave force true until we need to deploy. This way, testing datatypes and responses will be easier.
     server.listen(process.env.PORT || 3001, () => {
