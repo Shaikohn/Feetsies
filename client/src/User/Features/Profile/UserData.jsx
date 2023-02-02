@@ -411,6 +411,7 @@ export default function UserData({open, setOpen}) {
                   borderColor: "#022335",
                   borderRadius: "10px",
                 }}
+                style={{textAlign: 'center'}}
                 type="submit"
                 variant="contained"
                 startIcon={<EditIcon fontSize="large" />}
