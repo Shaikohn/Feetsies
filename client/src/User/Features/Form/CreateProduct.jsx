@@ -84,8 +84,6 @@ const CreateProduct = () => {
 
   const [dataSources, setDataSources] = useState([]);
   const [imgToUse, setImgToUse] = useState([]);
-  console.log("data", dataSources)
-  console.log("img", imgToUse)
   const [visible, setVisible] = useState(false);
   
   const handleSetVisible = () => {
@@ -95,20 +93,13 @@ const CreateProduct = () => {
     setVisible(false);
   };
   const onUpload = (data) => {
-    console.log("Upload files", data);
     setDataSources(data);
   };
   const onSelect = (data) => {
-    console.log("Select files", data);
     setImgToUse(data);
   };
   const onRemove = (id) => {
-    console.log("Remove image id", id);
   };
-
-  console.log("nuevas imagenes", dataSources);
-
-  console.log("imagenes a subir", imgToUse);
 
   // modal material-ui
   const [open, setOpen] = React.useState(false);
@@ -134,13 +125,9 @@ const CreateProduct = () => {
     );
     const file = await res.json();
 
-    console.log("data", file);
-
     setImage(file.secure_url);
     setLoading(false);
   };
-
-  console.log(image);
 
   const {
     register,
@@ -157,9 +144,7 @@ const CreateProduct = () => {
       image: "",
     },
   });
-  console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
-    console.log("Onsubmit", { ...data, image });
     try {
       await axios.post("/products/create", {
         ...data,
@@ -183,7 +168,6 @@ const CreateProduct = () => {
       console.log(error);
     }
   };
-  console.log(errors);
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {

@@ -99,8 +99,6 @@ const CreateAnimal = () => {
     );
     const file = await res.json();
 
-    console.log("data", file);
-
     setImage(file.secure_url);
     setLoading(false);
   };
@@ -124,9 +122,7 @@ const CreateAnimal = () => {
       types: "",
     },
   });
-  console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
-    console.log("Onsubmit", { ...data, image });
     try {
       await axios.post("/animals", {
         ...data,
@@ -150,7 +146,6 @@ const CreateAnimal = () => {
       console.log(error);
     }
   };
-  console.log(errors);
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
