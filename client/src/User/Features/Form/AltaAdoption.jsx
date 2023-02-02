@@ -9,8 +9,6 @@ const AltaAdoption = () => {
   } = useForm();
   const onSubmit = (data) => console.log("Onsubmit", data);
 
-  console.log(errors);
-
   // **** cloudinary ****
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,8 +26,6 @@ const AltaAdoption = () => {
       }
     );
     const file = await res.json();
-
-    console.log("data", file);
 
     setImage(file.secure_url);
     setLoading(false);

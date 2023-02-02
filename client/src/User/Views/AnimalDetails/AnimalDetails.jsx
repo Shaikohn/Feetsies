@@ -15,7 +15,6 @@ export default function AnimalDetails({animal}) {
 
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
     const navigate = useNavigate();
-    console.log(animal)
 
     /* const [selectedImg, setSelectedImg] = useState(images[0]) */
 

@@ -20,8 +20,6 @@ import axios from "axios";
 
 const ResetPassword = () => {
   const { id, token } = useParams();
-  console.log(id);
-  console.log(token);
 
   const navigate = useNavigate();
 
@@ -80,7 +78,6 @@ const ResetPassword = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       await axios.post(
         `/user/auth/reset-password/${id}/${token}`,

@@ -19,8 +19,6 @@ export default function CheckoutForm({ product }) {
     JSON.parse(localStorage?.getItem("profile")).data.id
   );
   const navigate = useNavigate();
-  console.log(userId);
-  console.log(productDetails);
   useEffect(() => {
     dispatch(getProductDetails(id));
   }, [dispatch, id]);

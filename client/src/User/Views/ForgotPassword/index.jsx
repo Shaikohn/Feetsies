@@ -13,7 +13,6 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useForm } from "react-hook-form";
 
 const onSubmit = async (data) => {
-  console.log(data);
   try {
     const sendEmail = await axios.post(
       "/user/auth/forgot-password",

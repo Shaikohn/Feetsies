@@ -28,7 +28,6 @@ const Adoption = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  console.log(id);
 
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data?.id
@@ -43,8 +42,6 @@ const Adoption = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log("Onsubmit", data);
-
     try {
       if (!userId) {
         Swal.fire({

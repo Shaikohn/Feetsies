@@ -49,7 +49,6 @@ const Inquiry = () => {
   }, [userId]);
 
   const onSubmit = async (data) => {
-    console.log("Onsubmit", data);
     try {
       if (!userId) {
         Swal.fire({

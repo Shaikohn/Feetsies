@@ -8,8 +8,6 @@ const AccountConfirmed = () => {
   const { confirmationCode } = useParams();
   const navigate = useNavigate();
 
-  console.log(confirmationCode);
-
   useEffect(() => {
     axios
       .get(`/user/auth/confirm/${confirmationCode}`)

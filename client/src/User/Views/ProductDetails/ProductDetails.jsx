@@ -53,8 +53,6 @@ export default function ProductDetails({ product }) {
     productDetails.productImages[0]
   );
 
-  console.log("dea", productDetails);
-  console.log("images", selectedImg);
   const [userId, setUserId] = useState(
     JSON.parse(localStorage?.getItem("profile"))?.data.id
   );
@@ -78,7 +76,6 @@ export default function ProductDetails({ product }) {
   } = useForm();
 
   const [value, setValue] = useState(0);
-  console.log(value);
 
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -88,7 +85,6 @@ export default function ProductDetails({ product }) {
   }, [id]);
 
   const onSubmit = async (data) => {
-    console.log("Onsubmit", data);
     try {
       if (value === 0) {
         Swal.fire({
@@ -105,7 +101,6 @@ export default function ProductDetails({ product }) {
           score: value,
           author: user.data.name,
         });
-        console.log("axios review", review);
         Swal.fire({
           title: "REVIEW SUBMITTED",
           text: "Thanks for giving your opinion!",

@@ -43,7 +43,6 @@ export default function OrderDetail() {
   const {id} = useParams()
   const dispatch = useDispatch();
   const {elements} = useSelector((state)=> state.orderDetail.orderDetail);
-  console.log(elements)
   useEffect(() => {
     dispatch(getOrderDetail(id))
   }, [dispatch])
