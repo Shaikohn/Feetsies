@@ -421,9 +421,9 @@ export default function UserData({open, setOpen}) {
                 sx={{
                   m: 1,
                   width: "70ch",
-                  color: "#022335",
+                  color: "#f25d07",
                   bgcolor: "#fff",
-                  borderColor: "#022335",
+                  borderColor: "#f25d07",
                   borderRadius: "10px",
                 }}
                 onClick={handleClose}
