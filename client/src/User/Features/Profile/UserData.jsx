@@ -189,7 +189,7 @@ export default function UserData({open, setOpen}) {
   >
     <Box sx={styleUser}>
 
-      <div style={{width: '100%', margin:'auto', height:'500px'}}>
+      <div style={{width: '100%', margin:'auto'}}>
       <form onSubmit={(e) => handleSubmit(e)}>
         <Box
           sx={{
@@ -270,7 +270,7 @@ export default function UserData({open, setOpen}) {
                     bgcolor: "#fff ",
                     color: "#FFC400",
                     borderRadius: "10px",
-                    mt:"20px"
+                    mt:"10px"
                   }}
                   // id="outlined-number"
                   label="Cellphone: "
