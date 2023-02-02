@@ -178,8 +178,8 @@ const UpdateAnimal = () => {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
+                    <label>Breed</label>
                     <TextField
-                      label="Breed"
                       multiline
                       defaultValue={animalDetails.breed}
                       variant="outlined"
@@ -211,10 +211,10 @@ const UpdateAnimal = () => {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
+                    <label>Age</label>
                     <TextField
                       error={errors.age ? true : false}
                       type="number"
-                      label="Age"
                       variant="outlined"
                       defaultValue={animalDetails.age}
                       multiline
@@ -259,9 +259,9 @@ const UpdateAnimal = () => {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
+                    <label>Description</label>
                     <TextField
                       error={errors.description ? true : false}
-                      label="Description"
                       multiline
                       rows={4}
                       defaultValue={animalDetails.description}

@@ -165,9 +165,9 @@ const UpdateProduct = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={1}>
                   <Grid xs={12} item>
+                    <label>Name</label>
                     <TextField
                       error={errors.name ? true : false}
-                      label="Product´s Name"
                       type="text"
                       multiline
                       defaultValue={productDetails.name}
@@ -197,9 +197,9 @@ const UpdateProduct = () => {
                     )}
                   </Grid>
                   <Grid item xs={12}>
+                    <label>Stock</label>
                     <TextField
                       error={errors.stock ? true : false}
-                      label="Stock"
                       multiline
                       defaultValue={productDetails.stock}
                       variant="outlined"
@@ -222,9 +222,9 @@ const UpdateProduct = () => {
                     )}
                   </Grid>
                   <Grid item xs={12}>
+                    <label>Price</label>
                     <TextField
                       error={errors.price ? true : false}
-                      label="Price"
                       multiline
                       defaultValue={productDetails.price}
                       variant="outlined"
@@ -247,9 +247,9 @@ const UpdateProduct = () => {
                     )}
                   </Grid>
                   <Grid item xs={12}>
+                    <label>Description</label>
                     <TextField
                       error={errors.description ? true : false}
-                      label="Description"
                       multiline
                       rows={4}
                       defaultValue={productDetails.description}
