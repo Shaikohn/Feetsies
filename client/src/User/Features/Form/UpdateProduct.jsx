@@ -105,7 +105,6 @@ const UpdateProduct = () => {
       console.log(error);
     }
   };
-  console.log(errors);
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
