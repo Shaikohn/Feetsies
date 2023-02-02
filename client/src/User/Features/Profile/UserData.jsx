@@ -417,12 +417,7 @@ export default function UserData({open, setOpen}) {
               >
                 Save changes
               </Button>
-            </Stack>            
-          </Box>
-        </Box>
-        <br />
-      </form>
-      <Button
+              <Button
                 sx={{
                   m: 1,
                   width: "70ch",
@@ -437,6 +432,11 @@ export default function UserData({open, setOpen}) {
               >
                 Close
               </Button>
+            </Stack>            
+          </Box>
+        </Box>
+        <br />
+      </form>
     </div>
     {/* </Box> */}
     </Modal>
