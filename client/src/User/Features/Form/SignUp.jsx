@@ -73,15 +73,12 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (data, e) => {
-    console.log(data);
     try {
       const register = await axios.post("/user/auth/register", data);
-      console.log(register);
       if (
         register.data.message ===
         "User was registered successfully! Please check your email"
       ) {
-        console.log({ token: register.data.token });
         navigateTo("/checkEmail");
       }
       setCustomError("");
@@ -136,7 +133,6 @@ const SignUp = () => {
     const token = res?.tokenId;
 
     try {
-      console.log(res);
       dispatch(google(token, navigateTo));
       Swal.fire({
         title: "LOGGED IN",

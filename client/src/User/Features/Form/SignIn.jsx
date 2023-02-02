@@ -66,10 +66,8 @@ const SignIn = () => {
   const navigateTo = useNavigate();
 
   const onSubmit = async (data) => {
-    console.log("Onsubmit", data);
     try {
       const login = await axios.post("/user/auth/login", data);
-      console.log(login.data);
       dispatch(signIn(data, navigateTo));
       // navigateTo("/");
       Swal.fire({
@@ -119,7 +117,6 @@ const SignIn = () => {
     const token = res?.tokenId;
 
     try {
-      console.log(res);
       dispatch(google(token, navigateTo));
       Swal.fire({
         title: "Logged in",

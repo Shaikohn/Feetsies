@@ -36,7 +36,7 @@ import getRequestAdoptionsUser from "../../../redux/actions/requestAdoptionUser"
 import ResponsiveAppBar from "../Header/HeaderMUI";
 import { Paper, Typography } from "@mui/material";
 import Image from "./Img/BgImg3.jpg";
-import { Box, Container, fontSize } from "@mui/system";
+import { Box, Container } from "@mui/system";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import UserData from "./UserData";
 

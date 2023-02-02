@@ -68,7 +68,6 @@ export function AnimalsTable() {
     if (allAnimals.length === 0) {
       dispatch(getAllAnimals());
     }
-    console.log(allAnimals);
   }, [allAnimals]);
 
   async function handleDeleteAnimal(e, id) {

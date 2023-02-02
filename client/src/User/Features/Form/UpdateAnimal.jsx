@@ -38,8 +38,6 @@ const UpdateAnimal = () => {
   const dispatch = useDispatch();
   const { animalDetails } = useSelector((state) => state.AnimalDetails);
   const { id } = useParams();
-  console.log(id);
-  console.log(animalDetails);
 
   useEffect(() => {
     dispatch(getAnimalDetails(id));
@@ -48,9 +46,7 @@ const UpdateAnimal = () => {
     };
   }, []);
 
-  console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
-    console.log("Onsubmit", data);
     try {
       await axios.put(`/animals/${id}`, {
         name: data.name,
@@ -135,9 +131,9 @@ const UpdateAnimal = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={1}>
                   <Grid xs={12} item>
+                    <label>Name</label>
                     <TextField
                       error={errors.name ? true : false}
-                      label="Animal´s Name"
                       type="text"
                       multiline
                       defaultValue={animalDetails.name}

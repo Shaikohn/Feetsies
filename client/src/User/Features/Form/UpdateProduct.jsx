@@ -48,8 +48,6 @@ const UpdateProduct = () => {
   const dispatch = useDispatch();
   const { productDetails } = useSelector((state) => state.ProductDetails);
   const { id } = useParams();
-  console.log(id);
-  console.log(productDetails);
 
   useEffect(() => {
     dispatch(getProductDetails(id));
@@ -71,29 +69,20 @@ const UpdateProduct = () => {
     setVisible(false);
   };
   const onUpload = (data) => {
-    console.log("Upload files", data);
     setDataSources(data);
   };
   const onSelect = (data) => {
-    console.log("Select files", data);
     setImgToUse(data);
   };
   const onRemove = (id) => {
-    console.log("Remove image id", id);
   };
-
-  console.log("nuevas imagenes", dataSources);
-
-  console.log("imagenes a subir", imgToUse);
 
   // modal material-ui
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  console.log(isSubmitSuccessful);
   const onSubmit = async (data) => {
-    console.log("Onsubmit", { ...data, imgToUse });
     try {
       await axios.put(`/products/update/${id}`, {
         ...data,

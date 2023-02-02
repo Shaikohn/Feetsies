@@ -39,8 +39,6 @@ export default function ShoppingView() {
 
   const { shoppingCartCopy } = useSelector((state) => state.getShoppingCart);
 
-  console.log(shoppingCartCopy)
-
   const [load, setLoad] = useState(false);
 
 

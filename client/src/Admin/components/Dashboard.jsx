@@ -103,7 +103,6 @@ function DashboardContent() {
   const [user, setUser] = React.useState(
     JSON.parse(localStorage.getItem("profile"))?.data?.name.split(" ")[0]
   );
-  console.log(user);
 
   return (
     <ThemeProvider theme={mdTheme}>

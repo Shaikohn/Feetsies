@@ -19,7 +19,6 @@ const OrderTable = () => {
   useEffect(() => {
     dispatch(getAllOrder());
   }, [dispatch]);
-  console.log(orders);
 
   return (
     <TableContainer component={Paper}>
