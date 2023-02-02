@@ -411,7 +411,6 @@ export default function UserData({open, setOpen}) {
                   borderColor: "#022335",
                   borderRadius: "10px",
                 }}
-                style={{textAlign: 'center'}}
                 type="submit"
                 variant="contained"
                 startIcon={<EditIcon fontSize="large" />}
@@ -423,6 +422,21 @@ export default function UserData({open, setOpen}) {
         </Box>
         <br />
       </form>
+      <Button
+                sx={{
+                  m: 1,
+                  width: "70ch",
+                  color: "#022335",
+                  bgcolor: "#fff",
+                  borderColor: "#022335",
+                  borderRadius: "10px",
+                }}
+                onClick={handleClose}
+                variant="contained"
+                startIcon={<EditIcon fontSize="large" />}
+              >
+                Close
+              </Button>
     </div>
     {/* </Box> */}
     </Modal>
