@@ -426,6 +426,7 @@ export default function UserData({open, setOpen}) {
                   borderColor: "#f25d07",
                   borderRadius: "10px",
                 }}
+                style={{marginTop: '10px', height: '80px'}}
                 onClick={handleClose}
                 variant="contained"
                 startIcon={<EditIcon fontSize="large" />}
