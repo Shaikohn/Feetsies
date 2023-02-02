@@ -209,7 +209,7 @@ export default function UserData({open, setOpen}) {
           >
             <div style={{margin:'auto', padding:'3%', width: '100%'}}>
               <div>
-              <input
+              {/* <input
                   className={style.seleccionarArchivo}
                   type="file"
                   name="file"
@@ -223,7 +223,7 @@ export default function UserData({open, setOpen}) {
                   src={input.image}
                   style={{ width: "7em", height:'7em', borderRadius: "50%", marginLeft:'45%', objectFit: 'cover' }}
                   alt="Usuario"
-                />
+                /> */}
                   
                 <TextField
                   sx={{
