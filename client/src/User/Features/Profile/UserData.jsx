@@ -187,7 +187,7 @@ export default function UserData({open, setOpen}) {
   aria-describedby="modal-modal-description"
   onLoad={() => handleOpen()}
   >
-    <Box sx={styleUser}>
+    <Box>
 
       <div style={{width: '100%', margin:'auto'}}>
       <form onSubmit={(e) => handleSubmit(e)}>
