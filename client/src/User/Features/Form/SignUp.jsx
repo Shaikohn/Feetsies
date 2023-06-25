@@ -36,11 +36,11 @@ function Copyright(props) {
   return (
     <Typography color="text.secondary" align="center" {...props}>
       {"Copyright © "}
-      <Link href="https://mui.com/">
+      <a href="https://mui.com/">
         <Typography sx={{ color: "#87a827", fontSize: 15 }}>
           FEETSIES
         </Typography>
-      </Link>{" "}
+      </a>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
