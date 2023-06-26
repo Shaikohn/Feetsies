@@ -98,7 +98,6 @@ const SignIn = () => {
       });
     }
   };
-  console.log(errors);
 
   useEffect(() => {
     function start() {

@@ -12,7 +12,6 @@ const validateCreateUser = [
         }
       });
     }),
-  body("password").isAlphanumeric().isLength({ min: 8 }),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

@@ -18,7 +18,7 @@ router.use('/admin', adminRouter);
 router.use('/users', userRouter);
 router.use('/api/checkout', stripeRouter)
 router.use('/cart', cartRouter);
-router.use('/user/auth/', userLoginRouter);
+router.use('/user/auth', userLoginRouter);
 router.use("/emails", emailsRouter);
 
 // Configurar los routers

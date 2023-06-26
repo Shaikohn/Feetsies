@@ -184,6 +184,7 @@ const SignUp = () => {
                 id="name"
                 label="Name"
                 autoFocus
+                autoComplete="off"
                 {...register("name", {
                   required: true,
                   pattern: /^[a-zA-Z ]*$/i,
@@ -212,6 +213,7 @@ const SignUp = () => {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
+                autoComplete="off"
                 {...register("lastName", {
                   required: "This field is required",
                   pattern: /^[a-zA-Z ]*$/i,
@@ -282,6 +284,7 @@ const SignUp = () => {
                 id="email"
                 label="Email Address"
                 name="email"
+                autoComplete="off"
                 {...register("email", {
                   required: true,
                   pattern: /^\S+@\S+$/i,
@@ -330,7 +333,7 @@ const SignUp = () => {
                   error={errors.password ? true : false}
                   {...register("password", {
                     required: "Password is required!",
-                    pattern: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
+                    pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                   })}
                 />
                 {errors.password && (
