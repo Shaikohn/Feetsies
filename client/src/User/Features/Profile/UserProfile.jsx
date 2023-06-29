@@ -92,10 +92,8 @@ export default function UserProfile() {
     >
       <ResponsiveAppBar />
       {openModal &&
-        ReactDOM.createPortal(
-          <UserData open={openModal} setOpen={setOpenModal} />,
-          document.querySelector("#userModal")
-        )}
+        <UserData open={openModal} setOpen={setOpenModal} />
+      }
       <Grid
         container
         sx={{
@@ -281,6 +279,7 @@ export default function UserProfile() {
                             color: "white",
                           }}
                           variant="contained"
+                          onClick={() => setOpenModal(true)}
                           startIcon={
                             <EditIcon
                               fontSize="large"
@@ -288,14 +287,12 @@ export default function UserProfile() {
                             />
                           }
                         >
-                          <Button onClick={() => setOpenModal(true)}>
-                            <Typography
-                              sx={{ color: "white", fontWeight: 500 }}
-                            >
-                              {" "}
-                              Update your personal data{" "}
-                            </Typography>
-                          </Button>
+                          <Typography
+                            sx={{ color: "white", fontWeight: 500 }}
+                          >
+                            {" "}
+                            Update your personal data{" "}
+                          </Typography>
                         </Button>
                       </Stack>
                     </Box>

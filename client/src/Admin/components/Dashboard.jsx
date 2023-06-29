@@ -235,10 +235,10 @@ export function ModalAdmin({ item, setOpen, open }) {
             </Stack>
             <Stack sx={{ margin: "auto" }}>
               <Typography sx={{ margin: "auto" }}>
-                <h3>Topic: </h3> {item.topic}
+                <strong>Topic:</strong> {item.topic}
               </Typography>
               <Typography sx={{ margin: "auto" }}>
-                <h3>Description: </h3> {item.description}
+              <strong>Description:</strong> {item.description}
               </Typography>
             </Stack>
           </Box>

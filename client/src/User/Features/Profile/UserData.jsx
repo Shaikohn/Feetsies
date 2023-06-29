@@ -22,14 +22,6 @@ import style from "./userStyles.module.css";
 import { OutlinedInput } from "@mui/material";
 import Modal from "@mui/material/Modal";
 
-function validate(input) {
-  let errors = {};
-  if (input.password !== input.password2 ) errors.password = "Password should match";
-  
-  return errors;
-}
-
-
 export default function UserData({open, setOpen}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -51,6 +43,12 @@ export default function UserData({open, setOpen}) {
     p: 4,
     paddingLeft: '-50%'
   };
+
+  function validate(input) {
+    let errors = {};
+    if (input.password.length > 1 && input.password !== input.password2 ) errors.password = "Password should match";
+    return errors;
+  }
 
   const [values, setValues] = useState({
     password: "",
@@ -87,15 +85,27 @@ export default function UserData({open, setOpen}) {
   });
 
   useEffect(() => {
-    setInput({
-      ...input,
-      id: usuario.id,
-      name: usuario.name,
-      lastName: usuario.lastName,
-      location: usuario.location,
-      phone_number: usuario.phoneNumber,
-      image: usuario.image,
-    });
+    if(typeof phone_number !== Number) {
+      setInput({
+        ...input,
+        id: usuario.id,
+        name: usuario.name,
+        lastName: usuario.lastName,
+        location: usuario.location,
+        phone_number: "",
+        image: usuario.image,
+      });
+    } else {
+      setInput({
+        ...input,
+        id: usuario.id,
+        name: usuario.name,
+        lastName: usuario.lastName,
+        location: usuario.location,
+        phone_number: usuario.phone_number,
+        image: usuario.image,
+      });
+    }
   }, [dispatch]);
   //Cloudinary//
   const [image, setImage] = useState("");
@@ -130,7 +140,7 @@ export default function UserData({open, setOpen}) {
       input.phone_number !== usuario.phoneNumber ||
       input.email !== usuario.email ||
       input.location !== usuario.location ||
-      image !== usuario.image
+      image !== usuario.image & !errors
     ) {
       try {
         await axios.put("/users/update", {
@@ -197,7 +207,7 @@ export default function UserData({open, setOpen}) {
           }}
         >
           <Box
-            component="form"
+            /* component="form" */
             sx={{
               "& .MuiTextField-root": { width: "100%", color: "#000", },
               maxWidth: "100%",
@@ -350,7 +360,7 @@ export default function UserData({open, setOpen}) {
                   <div>
                     <FormControl variant="outlined" style={{ width: "98%" }} sx={{mt:"15px"}}>
                       <InputLabel
-                        htmlFor="outlined-adornment-password1"
+                        htmlFor="outlined-adornment-password2"
                         // shrink="true"
                       >
                         Confirm new password
@@ -361,7 +371,7 @@ export default function UserData({open, setOpen}) {
                           color: "000",
                           borderRadius: "10px",
                         }}
-                        id="outlined-adornment-password1"
+                        id="outlined-adornment-password2"
                         onChange={(e) => handleChange(e)}
                         name="password2"
                         value={input.password2}
@@ -370,7 +380,7 @@ export default function UserData({open, setOpen}) {
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword}
+                              onClick={handleClickShowPassword2}
                               // onMouseDown={handleMouseDownPassword}
                               edge="end"
                             >

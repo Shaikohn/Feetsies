@@ -32,20 +32,20 @@ import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { google } from "../../../redux/actions/auth";
 
-function Copyright(props) {
+/* function Copyright(props) {
   return (
     <Typography color="text.secondary" align="center" {...props}>
       {"Copyright © "}
-      <a href="https://mui.com/">
+      <Link href="https://mui.com/">
         <Typography sx={{ color: "#87a827", fontSize: 15 }}>
           FEETSIES
         </Typography>
-      </a>{" "}
+      </Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
   );
-}
+} */
 
 const theme = createTheme();
 
@@ -444,7 +444,7 @@ const SignUp = () => {
           </Grid>
         </Box>
       </Box>
-      <Copyright
+      {/* <Copyright
         sx={{
           mt: 3,
           display: "flex",
@@ -452,7 +452,7 @@ const SignUp = () => {
           alignItems: "center",
           justifyContent: "center",
         }}
-      />
+      /> */}
     </Container>
   );
 };

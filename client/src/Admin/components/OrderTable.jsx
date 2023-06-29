@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import getAllOrder from "../../redux/actions/getAllOrder";
+import Title from "./Title";
 
 const OrderTable = () => {
   const { orders } = useSelector((state) => state.orders);
@@ -21,7 +22,10 @@ const OrderTable = () => {
   }, [dispatch]);
 
   return (
-    <TableContainer component={Paper}>
+    <div>
+      {
+        orders.length > 1 ?
+        <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -47,7 +51,9 @@ const OrderTable = () => {
           ))}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer> : <Title>There is no order yet!</Title>
+      }
+    </div>
   );
 };
 

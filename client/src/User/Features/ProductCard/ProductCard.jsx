@@ -120,11 +120,11 @@ export default function ProductCard({
               }
               readOnly
             />
-            <Typography sx={{ color: "#567900", fontWeight: "600" }}>
+            {/* <Typography sx={{ color: "#567900", fontWeight: "600" }}>
               {value !== null && (
                 <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
               )}
-            </Typography>
+            </Typography> */}
             <CardMedia
               component="img"
               height="220px"

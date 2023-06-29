@@ -89,9 +89,7 @@ export default function ShowInqueries() {
                   alignItems: "center",
                 }}
               >
-                <Box sx={{ margin: "auto", alignSelf: "center" }}>
-                  {inquery.topic}
-                </Box>
+                {inquery.topic}
               </Typography>
             </Button>
             <IconButton

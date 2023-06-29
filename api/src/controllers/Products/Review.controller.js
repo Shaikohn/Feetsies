@@ -59,10 +59,10 @@ async function getMyReviews(req, res) {
   const { userId } = req.params;
   try {
     let revData = await Review.findAll({ where: { userId: userId } });
-    if (!revData || revData.length < 1)
+    /* if (!revData || revData.length < 1)
       return res
         .status(404)
-        .send({ warning: "There are no reviews available." });
+        .send({ warning: "There are no reviews available." }); */
     let result = [];
     for (let i = 0; i < revData.length; i++) {
       let item = await Product.findOne({ where: { id: revData[i].productId } });

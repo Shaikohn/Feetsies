@@ -116,7 +116,7 @@ async function getPOByUserId(req, res) {
   try {
     let { userid } = req.params;
     let pos = await Purchase_order.findAll({ where: { userId: userid } });
-    if (pos.length < 1) return res.status(404).send(notFound);
+    /* if (pos.length < 1) return res.status(404).send(notFound); */
     return res.status(200).send(pos);
   } catch (error) {
     console.log(error);
@@ -130,7 +130,7 @@ async function getAllPOs(req, res) {
       attributes: ["id", "total", "createdAt", "userId"],
       include: User,
     });
-    if (pos.length < 1) return res.status(404).send(emptyDB);
+    /* if (pos.length < 1) return res.status(404).send(emptyDB); */
     return res.status(200).send(pos);
   } catch (error) {
     console.log(error);

@@ -44,7 +44,7 @@ export function UserCard({userDetail, setShow}) {
           <Typography fontWeight={700}>{userDetail.name} {userDetail.lastName}</Typography>
           <Typography variant="body2" color="text.secondary" sx={{display:'flex', alignItems:'center', marginRight: '1%'}}>
             <LocationOn sx={{color: 'grey[500]', display:'inline-flex', marginRight: '1%'}} />
-              <p style={{margin:'auto'}}>{userDetail.location}</p>
+              <span style={{margin:'auto'}}>{userDetail.location}</span>
           </Typography>
             <Typography sx={{display:'flex', alignItems:'center'}}>
               <Mail sx={{color: 'grey[500]', display:'inline-flex', marginRight: '1%'}}/> <a href={`mailto:${userDetail.email}`} style={{margin:'auto'}}>{userDetail.email}</a>
@@ -57,7 +57,7 @@ export function UserCard({userDetail, setShow}) {
               )  : null
             }
           <Typography sx={{display:'flex', alignItems: 'center'}}>
-            User since: {userSince.getUTCFullYear()}
+          <span style={{margin:'auto'}}> User since {userSince.getUTCFullYear()} </span>
           </Typography>  
         </Stack>
       

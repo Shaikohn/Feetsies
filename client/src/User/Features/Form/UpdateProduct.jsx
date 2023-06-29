@@ -148,8 +148,8 @@ const UpdateProduct = () => {
               />
             </Box>
           </Modal> */}
-          {productDetails?.productImages?.map((img) => (
-            <img src={img.image} alt="not fount" width={"250px"} />
+          {productDetails?.productImages?.map((img, i) => (
+            <img key={i} src={img.image} alt="not fount" width={"250px"} />
           ))}
           {/* {imgToUse.map((imageSrc) => (
             <img src={imageSrc.dataURL} alt="not fount" width={"250px"} />
