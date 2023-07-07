@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/actions/shoppingCartA";
@@ -59,6 +59,7 @@ export default function ProductCard({
 
   const [value, setValue] = React.useState(avg);
   const [hover, setHover] = React.useState(-1);
+  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const handleChange = (event) => {
     setQuantity(event.target.value);
@@ -82,6 +83,7 @@ export default function ProductCard({
         icon: "success",
         timer: 1000,
       });
+      forceUpdate()
     }
     dispatch(getShoppingCart(userId));
   }
@@ -223,7 +225,7 @@ export default function ProductCard({
                 }}
                 size="small"
                 variant="outlined"
-                onClick={() => {
+h                onClick={() => {
                   Swal.fire({
                     title: "YOU HAVE TO BE LOGGED TO USE THE CART!",
                     icon: "warning",

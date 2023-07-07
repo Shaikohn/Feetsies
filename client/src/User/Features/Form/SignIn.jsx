@@ -67,7 +67,6 @@ const SignIn = () => {
 
   const onSubmit = async (data) => {
     try {
-      console.log("a")
       const login = await axios.post("/user/auth/login", data);
       dispatch(signIn(data, navigateTo));
       // navigateTo("/");

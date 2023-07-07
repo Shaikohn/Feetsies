@@ -50,7 +50,7 @@ export default function ShoppingView() {
 
   useEffect(() => {
     if(userId) {
-        dispatch(getShoppingCart(userId));
+      dispatch(getShoppingCart(userId));
     }
     setLoad(false);
   }, [reducerValue, userId]);
@@ -58,13 +58,13 @@ export default function ShoppingView() {
   function handleDeleteOne(e) {
     e.preventDefault();
     dispatch(removeOneFromCart(e.target.value));
-    forceUpdate();
     Swal.fire({
       title: 'Product removed', 
       text: 'The product has been removed from the cart', 
       icon: 'success',
       timer: 1000
     });
+    forceUpdate();
   }
 
   function handleClearCart(e) {
@@ -319,8 +319,12 @@ export default function ShoppingView() {
           <Modals isOpenModal={isOpenModal} closeModal={closeModal}>
             <h2 className="modalTitle">MAKE YOUR PET HAPPY!</h2>
             <h2 className="modalPrice">{`$${shoppingCartCopy.total}`}</h2>
+            <div style={{display: 'flex'}}>
+              <p style={{color: 'green'}}>Correct test card: 4242424242424242</p>
+              <p style={{color: 'red'}}>Declined test card: 4000000000000002</p>
+            </div>
             <div>
-              <img src={Dog} alt="" width="200px" height="200px" />
+              <img style={{borderRadius: '10px', height: '150px', width: '300px'}} src={Dog} alt="" />
             </div>
             <div className={styles.buyInputs}>
               <ShoppingCheckout />

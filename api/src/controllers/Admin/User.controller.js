@@ -113,16 +113,17 @@ async function togglebanUser(req, res) {
     } else {
       valor = true;
     }
-    console.log(user.dataValues.isBan);
+    /* console.log(user.dataValues.isBan); */
     const dato = await User.update(
       { isBan: valor },
       {
         where: { id: userid },
       }
     );
-    dato.save()
-    return res.status(200).send(dato);
+    user.save()
+    return res.status(200).send(user);
   } catch (error) {
+    console.log(error)
     return res.status(500).send(error);
   }
 }
@@ -142,14 +143,14 @@ async function toggleAdmin(req, res) {
     } else {
       valor = true;
     }
-    console.log(user.dataValues.isAdmin);
+    /* console.log(user.dataValues.isAdmin); */
     const dato = await User.update(
       { isAdmin: valor },
       {
         where: { id: userid },
       }
     );
-    console.log(user.dataValues.isAdmin);
+    /* console.log(user.dataValues.isAdmin); */
     return res.status(200).send(user);
   } catch (error) {
     return res.status(500).send(error);

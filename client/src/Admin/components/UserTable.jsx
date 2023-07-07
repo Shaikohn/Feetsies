@@ -98,7 +98,8 @@ const UserTable = () => {
         icon: 'error',
         timer: 3000
       });
-    } else {
+    } 
+    else {
       Swal.fire({
         title: 'User updated', 
         text: 'User role has been updated', 
@@ -108,10 +109,8 @@ const UserTable = () => {
     }
   };
 
-  const handleBan = (e, id) => {
+  const handleBan = (e, id, users) => {
     e.preventDefault();
-    dispatch(updateUserBan(id));
-    forceUpdate();
     if(userId === id) {
       Swal.fire({
         title: 'User not updated', 
@@ -119,7 +118,18 @@ const UserTable = () => {
         icon: 'error',
         timer: 3000
       });
-    } else {
+    }
+    if(users.isAdmin === true) {
+      Swal.fire({
+        title: 'User not updated', 
+        text: 'You cant ban an admin!', 
+        icon: 'error',
+        timer: 3000
+      });
+    }
+    else {
+      dispatch(updateUserBan(id));
+      forceUpdate();
       Swal.fire({
         title: 'User updated', 
         text: 'User status has been updated', 
@@ -172,11 +182,11 @@ const UserTable = () => {
               </TableCell>
               <TableCell>
                 {users.isBan ? (
-                  <IconButton onClick={(e) => handleBan(e, users.id)}>
+                  <IconButton onClick={(e) => handleBan(e, users.id, users)}>
                     <TaskAlt />
                   </IconButton>
                 ) : (
-                  <IconButton onClick={(e) => handleBan(e, users.id)}>
+                  <IconButton onClick={(e) => handleBan(e, users.id, users)}>
                     <RemoveCircleOutlineIcon />
                   </IconButton>
                 )}

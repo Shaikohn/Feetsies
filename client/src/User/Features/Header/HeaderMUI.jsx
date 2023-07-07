@@ -97,7 +97,7 @@ export default function ResponsiveAppBar() {
     if (userId) {
       dispatch(getShoppingCart(userId));
     }
-  }, [userId, dispatch]);
+  }, [userId, dispatch, ignored]);
 
   useEffect(() => {
     const token = user?.token;
