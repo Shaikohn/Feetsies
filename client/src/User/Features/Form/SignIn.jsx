@@ -103,7 +103,7 @@ const SignIn = () => {
     function start() {
       gapi.client.init({
         clientId:
-          "284615821327-2o4kocgfiqid8dtbmosb4ookl2du0c7k.apps.googleusercontent.com",
+          "188844152504-6cfeoicbmi1ioo4gsiaf8uf7d1petuhb.apps.googleusercontent.com",
         scope: "email",
       });
     }
@@ -237,7 +237,7 @@ const SignIn = () => {
                 }}
               >
                 <GoogleLogin
-                  clientId="284615821327-2o4kocgfiqid8dtbmosb4ookl2du0c7k.apps.googleusercontent.com"
+                  clientId="188844152504-6cfeoicbmi1ioo4gsiaf8uf7d1petuhb.apps.googleusercontent.com"
                   buttonText="Sign In"
                   onSuccess={googleSuccess}
                   onFailure={googleSuccess}
