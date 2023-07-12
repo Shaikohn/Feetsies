@@ -22,10 +22,11 @@ export function updateItemQuantity(payload) {
   return async function (dispatch) {
     try {
       var json = await axios.put("/cart/updateitem", payload);
-      return dispatch({
+      dispatch({
         type: UPDATE_ITEM_QUANTITY,
         payload: json.data,
       });
+      payload.forceUpdate()
     } catch (error) {
       console.log(error);
       Swal.fire({

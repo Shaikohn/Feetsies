@@ -8,10 +8,11 @@ export function addToCart(payload) {
   return async function (dispatch) {
     try {
       var json = await axios.post("/cart/additem", payload);
-      return dispatch({
+      dispatch({
         type: ADD_TO_CART,
         payload: json.data,
       });
+      payload.navigate("/home/products")
     } catch (error) {
       console.log(error);
       Swal.fire({
@@ -24,28 +25,30 @@ export function addToCart(payload) {
   };
 }
 
-export function removeOneFromCart(id) {
+export function removeOneFromCart(id, forceUpdate) {
   return async function (dispatch) {
     try {
       var json = await axios.delete(`/cart/remove/${id}`);
-      return dispatch({
+      dispatch({
         type: REMOVE_ONE_FROM_CART,
         payload: json.data,
       });
+      forceUpdate()
     } catch (error) {
       console.log(error);
     }
   };
 }
 
-export function removeWholeCart(id) {
+export function removeWholeCart(id, forceUpdate) {
   return async function (dispatch) {
     try {
       var json = await axios.delete(`/cart/clear/${id}`);
-      return dispatch({
+      dispatch({
         type: REMOVE_WHOLE_CART,
         payload: json.data,
       });
+      forceUpdate()
     } catch (error) {
       console.log(error);
     }

@@ -55,28 +55,20 @@ export default function ShoppingView() {
     setLoad(false);
   }, [reducerValue, userId]);
 
-  function handleDeleteOne(e) {
+  function handleDeleteOne(e, cartItemId) {
     e.preventDefault();
-    dispatch(removeOneFromCart(e.target.value));
-    Swal.fire({
-      title: 'Product removed', 
-      text: 'The product has been removed from the cart', 
-      icon: 'success',
-      timer: 1000
-    });
-    forceUpdate();
+    dispatch(removeOneFromCart(cartItemId, forceUpdate));
   }
 
   function handleClearCart(e) {
     e.preventDefault();
-    dispatch(removeWholeCart(userId));
-    forceUpdate();
+    dispatch(removeWholeCart(userId, forceUpdate));
   }
 
   function handleChangeQuantity(e, newQuant, cartItemId) {
     e.preventDefault();
     setLoad(true);
-    dispatch(updateItemQuantity({cartItemId, newQuant}));
+    dispatch(updateItemQuantity({cartItemId, newQuant, forceUpdate}));
     forceUpdate();
   }
 
@@ -285,7 +277,7 @@ export default function ShoppingView() {
                       }}
                     >
                       <IconButton 
-                        onClick={(e) => {handleChangeQuantity(e, c.quantity - 1, c.cartItemid)}} 
+                        onClick={c.quantity > 1 ? (e) => {handleChangeQuantity(e, c.quantity - 1, c.cartItemid)} : (e) => handleDeleteOne(e, c.cartItemid)} 
                         disabled={load}
                       >
                         <RemoveIcon sx={{color: "#567900"}}/>
@@ -307,7 +299,7 @@ export default function ShoppingView() {
                   variant="contained"
                   sx={{bgcolor: "black", color: "white", maxWidth: "auto"}}
                   onClick={(e) => {
-                    handleDeleteOne(e);
+                    handleDeleteOne(e, c.cartItemid);
                   }}
                   value={c.cartItemid}
                 >

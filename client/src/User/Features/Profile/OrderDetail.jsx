@@ -16,6 +16,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import { Card, Typography } from '@mui/material';
+import HeaderMUI from '../Header/HeaderMUI'
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -48,9 +49,11 @@ export default function OrderDetail() {
   }, [dispatch])
     
   return ( 
-    <Card sx={{height:'fit-content', overflowWrap:'anywhere', marginTop:'1%'}}>
+    <div>
+    <HeaderMUI />
+    <Card sx={{height:'fit-content', marginLeft: '20%', marginTop:'1%', maxWidth: 800}}>
       <TableContainer component={Paper} sx={{ mt: 2,}}>
-        <Table sx={{ minWidth: 700, bgcolor: "#87a827", color: "#3a0ca3" }} aria-label="customized table">
+        <Table sx={{ maxWidth: 800, bgcolor: "#87a827", color: "#3a0ca3" }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell align="left">Name</StyledTableCell>
@@ -96,6 +99,7 @@ export default function OrderDetail() {
         </Stack>
       </TableContainer>
     </Card>
+    </div>
   );
 }
 

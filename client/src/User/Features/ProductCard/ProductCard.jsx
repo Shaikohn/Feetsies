@@ -67,7 +67,6 @@ export default function ProductCard({
 
   function handlerAddToCart(e) {
     e.preventDefault();
-    dispatch(addToCart({ userId, productId: id, quantity }));
     if (quantity === "") {
       Swal.fire({
         title: "Product not added",
@@ -77,13 +76,13 @@ export default function ProductCard({
       });
     }
     if (quantity >= 1) {
+      dispatch(addToCart({ userId, productId: id, quantity, navigate }));
       Swal.fire({
         title: "Product added",
         text: "Now you can see it in your cart",
         icon: "success",
         timer: 1000,
       });
-      forceUpdate()
     }
     dispatch(getShoppingCart(userId));
   }

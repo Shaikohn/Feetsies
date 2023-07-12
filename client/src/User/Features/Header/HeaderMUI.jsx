@@ -44,7 +44,7 @@ export default function ResponsiveAppBar() {
   );
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
-  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
+  const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -97,7 +97,7 @@ export default function ResponsiveAppBar() {
     if (userId) {
       dispatch(getShoppingCart(userId));
     }
-  }, [userId, dispatch, ignored]);
+  }, [userId, dispatch, location, reducerValue]);
 
   useEffect(() => {
     const token = user?.token;
@@ -106,7 +106,7 @@ export default function ResponsiveAppBar() {
       if (decodedToken.exp * 1000 < new Date().getTime()) handleLogout();
     }
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location, ignored]);
+  }, [location, reducerValue]);
 
   return (
     <AppBar position="static" sx={{ bgcolor: "black", color: "#87a827" }}>
@@ -227,9 +227,20 @@ export default function ResponsiveAppBar() {
                 ANIMALS
               </Button>
             </Link>
-            <Link to="/home/inquiry">
+            {/* <Link to="/home/inquiry"> */}
               <Button
-                onClick={handleCloseNavMenu}
+                onClick={user ? () => navigate("/home/inquiry") : () => Swal.fire({
+                  title: "YOU HAVE TO BE LOGGED TO SEND A INQUIRY!",
+                  icon: "warning",
+                  showDenyButton: true,
+                  denyButtonText: "Cancel",
+                  confirmButtonText: "Sign in",
+                  confirmButtonColor: "green",
+                }).then((res) => {
+                  if (res.isConfirmed) {
+                    navigate("/signUp");
+                  }
+                })}
                 sx={{
                   my: 2,
                   display: "block",
@@ -243,7 +254,7 @@ export default function ResponsiveAppBar() {
               >
                 INQUIRY
               </Button>
-            </Link>
+            {/* </Link> */}
           </Box>
           {!user ? (
             ""
@@ -270,7 +281,7 @@ export default function ResponsiveAppBar() {
           )}
           {!user ? (
             <Box sx={{ flexGrow: 0 }} size="large">
-              <Link to="/signUp">
+              <Link to="/signIn">
                 <Tooltip
                   title="Login / Register"
                   TransitionComponent={Zoom}

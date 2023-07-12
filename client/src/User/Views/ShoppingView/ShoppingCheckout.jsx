@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 import Spinner from '../../Features/CheckoutForm/Spinner';
 import { postPurchaseOrder } from '../../../redux/actions/purchaseOrderAction';
 import { useNavigate } from 'react-router-dom';
+import { useReducer } from 'react';
 
 export default function ShoppingCheckout() {
 
@@ -19,10 +20,11 @@ export default function ShoppingCheckout() {
     const dispatch = useDispatch();
     const [userId, setUserId] = useState(JSON.parse(localStorage?.getItem('profile')).data.id);
     const navigate = useNavigate()
+    const [reducerValue, forceUpdate] = useReducer((x) => x + 1, 0);
 
     useEffect(() => {
         dispatch(getShoppingCart(userId));
-    }, []);
+    }, [reducerValue]);
 
     function handleClearCart(e) {
         e.preventDefault();
@@ -56,6 +58,7 @@ export default function ShoppingCheckout() {
             })
             handleClearCart(e)
             navigate("/home/products")
+            forceUpdate()
             Swal.fire({
                 title: 'Payment done', 
                 text: data.message, 

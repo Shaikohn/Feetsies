@@ -73,7 +73,7 @@ function App() {
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home/products" element={<ProductHome />} />
           <Route exact path="/home/animals" element={<HomeAnimals />} />
-          <Route exact path="/home/inquiry" element={<Inquiry />} />
+          <Route exact path="/home/inquiry" element={user ? <Inquiry /> : <Navigate to="/" replace />} />
           <Route
             exact
             path="/home/products/:id"

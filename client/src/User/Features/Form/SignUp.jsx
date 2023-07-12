@@ -25,7 +25,7 @@ import FormControl from "@mui/material/FormControl";
 // Google
 import { gapi } from "gapi-script";
 import { GoogleLogin } from "react-google-login";
-
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 // React Hook Form
@@ -134,12 +134,12 @@ const SignUp = () => {
 
     try {
       dispatch(google(token, navigateTo));
-      Swal.fire({
+      /* Swal.fire({
         title: "LOGGED IN",
         text: "Your google account is now connected with the page!",
         icon: "success",
         timer: 5000,
-      });
+      }); */
     } catch (error) {
       console.log(error);
       Swal.fire({
@@ -152,11 +152,13 @@ const SignUp = () => {
   };
 
   return (
+    <div>
+      <ResponsiveAppBar />
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -173,7 +175,7 @@ const SignUp = () => {
           component="form"
           noValidate
           onSubmit={handleSubmit(onSubmit)}
-          sx={{ mt: 3 }}
+          sx={{ mt: 1 }}
         >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -303,8 +305,9 @@ const SignUp = () => {
                   )
                 : ""}
             </Grid>
-            <Grid item xs={12}>
-              <FormControl variant="outlined" style={{ width: "100%" }}>
+            <Grid container spacing={2} style={{marginTop: '5px'}}>
+            <Grid item xs={12} sm={6}>
+              <FormControl variant="outlined" style={{ width: "97%", marginLeft: '13px' }}>
                 <InputLabel htmlFor="outlined-adornment-password1">
                   Password
                 </InputLabel>
@@ -350,8 +353,8 @@ const SignUp = () => {
                 )}
               </FormControl>
             </Grid>
-            <Grid item xs={12}>
-              <FormControl variant="outlined" style={{ width: "100%" }}>
+            <Grid item xs={12} sm={6}>
+              <FormControl variant="outlined" style={{ width: "97%" }}>
                 <InputLabel>Confirm password</InputLabel>
                 <OutlinedInput
                   type={values2.showPasswordConfirm ? "text" : "password"}
@@ -400,6 +403,7 @@ const SignUp = () => {
                 )}
               </FormControl>
             </Grid>
+            </Grid>
           </Grid>
 
           <Button
@@ -411,9 +415,9 @@ const SignUp = () => {
             Sign Up
           </Button>
 
-          <hr />
+          {/* <hr />
           <h3>Or sign in with</h3>
-          <hr />
+          <hr /> */}
           {/* Google Auth */}
           <Grid container style={{ width: "100%" }} justifyContent="center">
             <Grid
@@ -454,6 +458,7 @@ const SignUp = () => {
         }}
       /> */}
     </Container>
+    </div>
   );
 };
 

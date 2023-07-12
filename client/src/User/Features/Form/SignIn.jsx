@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 
 // React Hook Form
 import { useForm } from "react-hook-form";
@@ -117,12 +118,12 @@ const SignIn = () => {
 
     try {
       dispatch(google(token, navigateTo));
-      Swal.fire({
+      /* Swal.fire({
         title: "Logged in",
         text: "Your Google account is now connected with the page!",
         icon: "success",
         timer: 2000,
-      });
+      }); */
     } catch (error) {
       console.log(error);
       Swal.fire({
@@ -136,7 +137,9 @@ const SignIn = () => {
 
   return (
     // <ThemeProvider theme={theme}>
-    <Grid container component="main" sx={{ height: "100vh" }}>
+    <div>
+      <ResponsiveAppBar />
+    <Grid container component="main" sx={{ height: "499px" }}>
       <CssBaseline />
       <Grid
         item
@@ -145,7 +148,7 @@ const SignIn = () => {
         md={7}
         sx={{
           backgroundImage:
-            "url(https://www.comfortzone.com/-/media/Images/ComfortZone-NA/US/Blog/cats-playing-or-fighting.jpg)",
+            "url(https://s1.abcstatics.com/media/sociedad/2019/10/10/gatosperros1-k8mG--1248x698@abc.jpg)",
           backgroundRepeat: "no-repeat",
           backgroundColor: (t) =>
             t.palette.mode === "light"
@@ -158,8 +161,7 @@ const SignIn = () => {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
-            my: 8,
-            mx: 4,
+            marginTop: '10px',
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -224,9 +226,9 @@ const SignIn = () => {
               Sign In
             </Button>
 
-            <hr />
+            {/* <hr />
             <h3>Or sign in with</h3>
-            <hr />
+            <hr /> */}
             {/* Google Auth */}
             <Grid container style={{ width: "100%" }} justifyContent="center">
               <Grid
@@ -258,11 +260,12 @@ const SignIn = () => {
                 </Link>
               </Grid>
             </Grid>
-            <Copyright sx={{ mt: 5 }} />
+            {/* <Copyright sx={{ mt: 5 }} /> */}
           </Box>
         </Box>
       </Grid>
     </Grid>
+    </div>
     // </ThemeProvider>
   );
 };

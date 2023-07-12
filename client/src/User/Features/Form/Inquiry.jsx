@@ -50,20 +50,6 @@ const Inquiry = () => {
 
   const onSubmit = async (data) => {
     try {
-      if (!userId) {
-        Swal.fire({
-          title: "YOU HAVE TO BE LOGGED TO SEND A INQUIRY!",
-          icon: "warning",
-          showDenyButton: true,
-          denyButtonText: "Cancel",
-          confirmButtonText: "Sign in",
-          confirmButtonColor: "green",
-        }).then((res) => {
-          if (res.isConfirmed) {
-            navigate("/signUp");
-          }
-        });
-      } else {
         await axios.post("/admin/inquiry", {
           userId: userId,
           topic: data.topic,
@@ -77,7 +63,6 @@ const Inquiry = () => {
         });
         dispatch(getAllInquieres());
         navigate("/");
-      }
     } catch (error) {
       console.log(error);
       Swal.fire({

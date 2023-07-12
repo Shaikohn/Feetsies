@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import axios from "axios";
 import Swal from 'sweetalert2'
+import ResponsiveAppBar from "../../Features/Header/HeaderMUI.jsx";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -44,17 +45,20 @@ const ForgotPassword = () => {
   } = useForm();
 
   return (
+    <div>
+      <ResponsiveAppBar />
     <Container>
       <Box
         //   sx={{ bgcolor: "#cfe8fc", height: "50vh" }}
         sx={{
           bgcolor: "#cfe8fc",
-          marginTop: 20,
+          marginTop: 10,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
           height: "50vh",
+          borderRadius: '10px',
         }}
       >
         <h1>Forgot Password</h1>
@@ -94,6 +98,7 @@ const ForgotPassword = () => {
         </Container>
       </Box>
     </Container>
+    </div>
   );
 };
 
