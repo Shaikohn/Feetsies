@@ -135,12 +135,14 @@ export default function UserData({open, setOpen}) {
   async function handleSubmit(e) {
     e.preventDefault();
     if (
-      input.name !== usuario.name ||
+      (input.name !== usuario.name ||
       input.lastName !== usuario.lastName ||
       input.phone_number !== usuario.phoneNumber ||
       input.email !== usuario.email ||
       input.location !== usuario.location ||
-      image !== usuario.image & !errors
+      image !== usuario.image) && (
+        !errors.name && !errors.password
+      )
     ) {
       try {
         await axios.put("/users/update", {

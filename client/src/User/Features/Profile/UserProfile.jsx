@@ -473,14 +473,14 @@ export default function UserProfile() {
                       adoptions.map((adop, id) => {
                         return (
                           <Box key={`${id}`}>
-                            <img src={adop.animal.main_image} width="100px" height="100px" alt="pet"/>
+                            <img style={{float: 'left', marginRight: '10px'}} src={adop.animal.main_image} width="100px" height="100px" alt="pet"/>
                             <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
-                              Name: {adop.animal.name}{" "}
+                              <span style={{fontWeight: 'bold'}}>{adop.animal.name}</span> ({adop.animal.sex})
                             </Typography>
 
-                            <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
-                              Sex: {adop.animal.sex}
-                            </Typography>
+                            {/* <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
+                              Sex: ()
+                            </Typography> */}
 
                             <Typography sx={{ p: 0.5, pb: 0, color: "black" }}>
                               Age: {adop.animal.age}

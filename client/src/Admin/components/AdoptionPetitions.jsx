@@ -175,6 +175,7 @@ function TableMenu({ row, read, unread }) {
             onClick={() => deletePetitionfn(row.id)}
             size="small"
             startIcon={<DeleteForever />}
+            style={{width: '200px'}}
           >
             Delete
           </Button>
@@ -185,6 +186,7 @@ function TableMenu({ row, read, unread }) {
               onClick={() => unread(row.id)}
               size="small"
               startIcon={<MarkAsUnread />}
+              style={{width: '200px'}}
             >
               Mark as unread
             </Button>
@@ -193,6 +195,7 @@ function TableMenu({ row, read, unread }) {
               onClick={() => read(row.id)}
               size="small"
               startIcon={<MarkEmailRead />}
+              style={{width: '200px'}}
             >
               Mark as read
             </Button>

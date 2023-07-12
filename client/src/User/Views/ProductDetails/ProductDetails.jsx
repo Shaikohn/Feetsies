@@ -177,7 +177,7 @@ export default function ProductDetails({ product }) {
                   height: "100px",
                   width: "100%",
                 }}
-                maxWidth="auto"
+                maxwidth="auto"
               />
             ))}
           </Box>
@@ -538,21 +538,25 @@ export default function ProductDetails({ product }) {
         </Grid>
       </Grid>
       <Container>
-        {productDetails.revs.map((reviews) => (
-          <>
+        {productDetails.revs.map((reviews, i) => (
+          <div key={i}>
             {/* <h1>{reviews.author}</h1>
             <h1>{reviews.score}</h1>
             <h1>{reviews.review}</h1> */}
 
             <Stack
-              direction="row"
+              direction="column"
               spacing={2}
               sx={{
+                borderRadius: '10px',
                 display: "flex",
                 mt: 2.5,
                 justifyContent: "center",
                 alignContent: "center",
                 alignItems: "center",
+                backgroundColor: "white",
+                maxHeight: '200px',
+                maxWidth: '200px',
               }}
               // overflow="auto"
             >
@@ -562,7 +566,7 @@ export default function ProductDetails({ product }) {
                 height={120}
                 sx={{
                   m: 1,
-                  px: 1.5,
+                  px: 1,
                   py: 1,
                   display: "flex",
                   justifyContent: "center",
@@ -575,7 +579,7 @@ export default function ProductDetails({ product }) {
                 </Typography>
               </Box>
             </Stack>
-          </>
+          </div>
         ))}
       </Container>
     </Elements>
